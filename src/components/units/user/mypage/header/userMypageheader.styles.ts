@@ -3,21 +3,20 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
-  width: 1200px;
+  width: 1100px;
   margin: 0 auto;
 `;
 
 export const MyPageTitle = styled.h1`
   padding-bottom: 25px;
   border-bottom: 1px solid #4f4f4f;
-  font-size: 40px;
+  font-size: 30px;
 `;
 
 export const UserWrapper = styled.aside`
   display: flex;
   flex-direction: row;
   margin-top: 35px;
-  background-color: aliceblue;
 `;
 
 export const UserWrapperLight = styled.aside``;
@@ -41,7 +40,6 @@ export const ProfileImage = styled.img`
 export const EditProfileIcon = styled.img`
   width: 30px;
   height: 30px;
-  z-index: 1000;
   position: absolute;
   left: 60px;
   top: 60px;
@@ -55,6 +53,7 @@ export const UserWrapperRight = styled.aside`
 export const UserInfo = styled.header`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   margin-left: 30px;
 `;
 
@@ -74,7 +73,7 @@ export const UserPointWrapper = styled.footer`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: calc(1200px - 580px);
+  margin-left: calc(1100px - 580px);
 `;
 
 export const Icon = styled.img`
