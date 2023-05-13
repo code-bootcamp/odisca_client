@@ -26,6 +26,7 @@ export const LeftWrapper = styled.div``;
 export const CafeImg = styled.img`
   width: 320px;
   height: 200px;
+  cursor: pointer;
 `;
 
 export const RightWrapper = styled.div`
@@ -42,6 +43,7 @@ export const CafeName = styled.h3`
   color: #4f4f4f;
   margin-bottom: 8px;
   font-size: 20px;
+  cursor: pointer;
 `;
 
 export const SeatInfo = styled.div`
@@ -71,4 +73,5 @@ export const TerminateBtn = styled.button`
   font-size: 14px;
   width: 65px;
   height: 22px;
+  cursor: pointer;
 `;

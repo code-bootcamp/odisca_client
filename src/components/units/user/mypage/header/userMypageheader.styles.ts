@@ -43,6 +43,7 @@ export const EditProfileIcon = styled.img`
   position: absolute;
   left: 60px;
   top: 60px;
+  cursor: pointer;
 `;
 
 export const UserWrapperRight = styled.aside`
@@ -98,4 +99,5 @@ export const ChargeBtn = styled.button`
   height: 26px;
   font-size: 15px;
   margin-bottom: 6px;
+  cursor: pointer;
 `;
