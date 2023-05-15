@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
-  width: 1100px;
+  width: 1000px;
   margin: 0 auto;
 `;
 
@@ -74,7 +74,7 @@ export const RevenueWrapper = styled.footer`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: calc(1100px - 580px);
+  margin-left: calc(1000px - 580px);
 `;
 
 export const RevenueText = styled.label`

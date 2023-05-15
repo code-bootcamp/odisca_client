@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.aside`
-  width: 1100px;
+  width: 1000px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -52,7 +52,7 @@ export const Remark = styled.div`
 `;
 
 export const Bottom = styled.div`
-  width: calc(1100px - 360px);
+  width: calc(1000px - 360px);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -85,6 +85,6 @@ export const CreateSeatingChart = styled.button`
   color: white;
   font-size: 16px;
   font-weight: 600;
-  margin-left: calc(1100px - 180px);
+  margin-left: calc(1000px - 180px);
   cursor: pointer;
 `;
