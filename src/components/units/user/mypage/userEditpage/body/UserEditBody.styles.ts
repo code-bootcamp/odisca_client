@@ -7,8 +7,12 @@ export const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 64px;
+`;
+
+export const ProfileImgBox = styled.section`
+  position: relative;
+  margin-bottom: 40px;
 `;
 
 export const ProfileImg = styled.img`
@@ -20,8 +24,16 @@ export const ProfileImg = styled.img`
 
 export const ProfileImgEdit = styled.img`
   position: absolute;
-  right: 650px;
-  top: 270px;
+  right: 5px;
+  top: 100px;
+`;
+
+export const InputForm = styled.form`
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
 `;
 
 export const NonEditList = styled.div`
@@ -35,6 +47,7 @@ export const EditListBox = styled.section`
 `;
 
 export const EditList = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   margin-bottom: 11px;
