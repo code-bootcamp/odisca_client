@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.aside`
-  width: 1100px;
+  width: 1000px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -52,7 +52,7 @@ export const SeatInfo = styled.div`
 `;
 
 export const Bottom = styled.div`
-  width: calc(1100px - 360px);
+  width: calc(1000px - 360px);
   display: flex;
   flex-direction: row;
   align-items: center;
