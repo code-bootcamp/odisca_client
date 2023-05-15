@@ -1,5 +1,5 @@
 import * as S from "./UserDetailBody.styles";
-import { StyledSlider } from "./UserDetailBody.styles";
+import { StyledSlider, SliderItem } from "./UserDetailBody.styles";
 
 export default function UserDetailBody(): JSX.Element {
   const settings = {
@@ -19,19 +19,19 @@ export default function UserDetailBody(): JSX.Element {
     <S.Body>
       <StyledSlider {...settings}>
         <div>
-          <img src="/cafe1.png" />
+          <SliderItem src="/cafe1.png" />
         </div>
         <div>
-          <img src="/cafe2.png" />
+          <SliderItem src="/cafe2.png" />
         </div>
         <div>
-          <img src="/cafe3.png" />
+          <SliderItem src="/cafe3.png" />
         </div>
         <div>
-          <img src="/cafe1.png" />
+          <SliderItem src="/cafe1.png" />
         </div>
         <div>
-          <img src="/cafe2.png" />
+          <SliderItem src="/cafe2.png" />
         </div>
       </StyledSlider>
       <S.ContentsBox>
