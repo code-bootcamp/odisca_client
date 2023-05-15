@@ -1,27 +1,91 @@
 import * as S from "./userLogin.style";
+import { gql, useMutation } from "@apollo/client";
+import { useRecoilState } from "recoil";
+import { accessTokenState } from "../../../../commons/stores";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "./validation";
+import { useRouter } from "next/router";
+import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
+
+interface IFormData {
+  email: string;
+  password: string;
+}
+
+const LOG_IN = gql`
+  mutation Login($loginInput: LoginInput!) {
+    Login(loginInput: $loginInput)
+  }
+`;
 
 export default function UserLoginPage(): JSX.Element {
+  const router = useRouter();
+  const [Login] = useMutation(LOG_IN);
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+  });
+
+  const onClickMoveSignUp = (): void => {
+    void router.push(`/user/signup`);
+  };
+
+  const onClickSubmit = async (data: IFormData): void => {
+    try {
+      const result = await Login({
+        variables: {
+          email: data.email,
+          password: data.password,
+        },
+      });
+      const accessToken = result.data?.Login.accessToken;
+      // setAccessToken(accessToken);
+      if (accessToken) {
+        setAccessToken(accessToken || "");
+        alert("로그인이 완료되었습니다!");
+        // void router.push(`/main/landingPage`);
+        localStorage.setItem("accessToken", accessToken);
+      }
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
+  };
+
   return (
     <>
       <S.Wrapper>
         <S.SignUpWrapper>
           <S.SignUpTitle>아직 회원이 아니신가요?</S.SignUpTitle>
-          <S.SignUpButton>SIGNUP</S.SignUpButton>
+          <S.SignUpButton onClick={onClickMoveSignUp}>SIGNUP</S.SignUpButton>
         </S.SignUpWrapper>
         <S.LogInWrapper>
-          <S.LogInWrapperContainer>
+          <S.LogInWrapperContainer
+            onSubmit={wrapFormAsync(handleSubmit(onClickSubmit))}
+          >
             <S.LoginTitle>LOGIN</S.LoginTitle>
             <S.InputContainer>
               <S.LogInInputBox>
                 <S.LogInInputTitle>EMAIL</S.LogInInputTitle>
-                <S.LogInInput></S.LogInInput>
+                <S.LogInInput
+                  type="text"
+                  placeholder="email을 입력해주세요."
+                  {...register("email")}
+                ></S.LogInInput>
               </S.LogInInputBox>
-              <S.ErrorMessage>이메일 형식이 아닙니다.</S.ErrorMessage>
+              <S.ErrorMessage>{formState.errors.email?.message}</S.ErrorMessage>
               <S.LogInInputBox>
                 <S.LogInInputTitle>PASS</S.LogInInputTitle>
-                <S.LogInInput type="password"></S.LogInInput>
+                <S.LogInInput
+                  type="password"
+                  placeholder="비밀번호를 입력해주세요."
+                  {...register("password")}
+                ></S.LogInInput>
               </S.LogInInputBox>
               <S.ErrorMessage>
+                {formState.errors.password?.message}
                 특수문자를 포함하여 8~16자리를 입력해주세요.
               </S.ErrorMessage>
             </S.InputContainer>
