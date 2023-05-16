@@ -1,50 +1,120 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Modal } from "antd";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { adminSignUpSchema } from "../../../../commons/adminValidation/validation";
+import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
+import { useMutationCreateAdminister } from "../../../commons/hooks/mutations/useMutationCreateAdminister";
 import * as S from "./adminSignup.style";
 
+interface IFormData {
+  name: string;
+  password: string;
+  email: string;
+  confirmPw: string;
+  phone: string;
+}
+
 export default function UserSignUpPage(): JSX.Element {
+  const router = useRouter();
+  const { register, handleSubmit, formState } = useForm<IFormData>({
+    resolver: yupResolver(adminSignUpSchema),
+    mode: "onChange",
+  });
+
+  const [createAdminister] = useMutationCreateAdminister();
+
+  const onClickSingUp = async (data: IFormData): Promise<void> => {
+    try {
+      const result = await createAdminister({
+        variables: {
+          createAdministerInput: {
+            email: data.email,
+            name: data.name,
+            password: data.password,
+            phone: data.phone,
+          },
+        },
+      });
+      console.log(result);
+    } catch (error) {
+      if (error instanceof Error)
+        Modal.error({
+          content: error.message,
+        });
+      return;
+    }
+
+    Modal.success({
+      content: "회원가입이 완료되었습니다. 로그인해주세요!",
+    });
+    void router.push("/user/login"); // 로그인이 된 상태로 로그인 페이지 이동함.
+    console.log(data);
+  };
+
   return (
     <>
       <S.Wrapper>
         <S.LogInWrapper>
           <S.LogInTitle>관리자이신가요?</S.LogInTitle>
-          <S.LogInButton>LOGIN</S.LogInButton>
+          <S.LogInButton type="button">LOGIN</S.LogInButton>
         </S.LogInWrapper>
         <S.SignUpWrapper>
-          <S.SignUpWrapperContainer>
+          <S.SignUpWrapperContainer
+            onSubmit={wrapFormAsync(handleSubmit(onClickSingUp))}
+          >
             <S.SignUpTitle>SIGN UP</S.SignUpTitle>
             <S.InputContainer>
               <S.SignUpInputBox>
                 <S.SignUpInputTitle>NAME</S.SignUpInputTitle>
-                <S.SignUpInput placeholder="이름"></S.SignUpInput>
+                <S.SignUpInput
+                  type="text"
+                  {...register("name")}
+                  placeholder="이름"
+                ></S.SignUpInput>
               </S.SignUpInputBox>
-              <S.ErrorMessage>이름을 입력해 주세요.</S.ErrorMessage>
+              <S.ErrorMessage>{formState.errors.name?.message}</S.ErrorMessage>
               <S.SignUpInputBox>
                 <S.SignUpInputTitle>EMAIL</S.SignUpInputTitle>
-                <S.SignUpInput placeholder="user@google.com"></S.SignUpInput>
+                <S.SignUpInput
+                  type="text"
+                  {...register("email")}
+                  placeholder="user@google.com"
+                ></S.SignUpInput>
               </S.SignUpInputBox>
-              <S.ErrorMessage>이메일 형식이 아닙니다.</S.ErrorMessage>
+              <S.ErrorMessage>{formState.errors.email?.message}</S.ErrorMessage>
               <S.SignUpInputBox>
                 <S.SignUpInputTitle>PASS</S.SignUpInputTitle>
-                <S.SignUpInput type="password"></S.SignUpInput>
+                <S.SignUpInput
+                  {...register("password")}
+                  type="password"
+                ></S.SignUpInput>
               </S.SignUpInputBox>
               <S.ErrorMessage>
-                특수문자를 포함하여 8~16자리를 입력해주세요.
+                {formState.errors.password?.message}
               </S.ErrorMessage>
               <S.SignUpInputBox>
                 <S.SignUpInputTitle>PASS</S.SignUpInputTitle>
-                <S.SignUpInput type="password"></S.SignUpInput>
+                <S.SignUpInput
+                  {...register("confirmPw")}
+                  type="password"
+                ></S.SignUpInput>
               </S.SignUpInputBox>
               <S.ErrorMessage>
-                특수문자를 포함하여 8~16자리를 입력해주세요.
+                {formState.errors.confirmPw?.message}
               </S.ErrorMessage>
               <S.SignUpInputBox>
                 <S.SignUpInputTitle>PHONE</S.SignUpInputTitle>
-                <S.SignUpInputPhone placeholder="010-1234-5678"></S.SignUpInputPhone>
-                <S.PhoneButton>CLICK</S.PhoneButton>
+                <S.SignUpInputPhone
+                  {...register("phone")}
+                  placeholder="010-1234-5678"
+                ></S.SignUpInputPhone>
+                <S.PhoneButton type="button">CLICK</S.PhoneButton>
               </S.SignUpInputBox>
-              <S.ErrorMessage>휴대폰 번호를 입력해주세요.</S.ErrorMessage>
+              <S.ErrorMessage>{formState.errors.phone?.message}</S.ErrorMessage>
             </S.InputContainer>
             <S.ButtonContainer>
-              <S.CancelButton>CANCEL</S.CancelButton>
+              <S.CancelButton type="button">CANCEL</S.CancelButton>
               <S.SignUpButton>SIGN UP</S.SignUpButton>
             </S.ButtonContainer>
           </S.SignUpWrapperContainer>
