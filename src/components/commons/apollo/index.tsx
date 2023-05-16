@@ -28,6 +28,7 @@ export default function ApolloSetting(props: IApolloSettingProps): JSX.Element {
   });
 
   const client = new ApolloClient({
+    uri: "http://backend-practice.codebootcamp.co.kr/graphql",
     link: ApolloLink.from([uploadLink]),
     cache: new InMemoryCache(),
   });
