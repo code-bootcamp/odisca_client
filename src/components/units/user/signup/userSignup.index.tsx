@@ -53,13 +53,15 @@ export default function UserSignUpPage(): JSX.Element {
   };
   return (
     <>
-      <S.Wrapper onSubmit={wrapFormAsync(handleSubmit(onClickSingUp))}>
+      <S.Wrapper>
         <S.LogInWrapper>
           <S.LogInTitle>어디스카 회원이신가요?</S.LogInTitle>
-          <S.LogInButton>LOGIN</S.LogInButton>
+          <S.LogInButton type="button">LOGIN</S.LogInButton>
         </S.LogInWrapper>
         <S.SignUpWrapper>
-          <S.SignUpWrapperContainer>
+          <S.SignUpWrapperContainer
+            onSubmit={wrapFormAsync(handleSubmit(onClickSingUp))}
+          >
             <S.SignUpTitle>SIGN UP</S.SignUpTitle>
             <S.InputContainer>
               <S.SignUpInputBox>
