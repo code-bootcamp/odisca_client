@@ -1,5 +1,4 @@
-# schema: http://backend-example.codebootcamp.co.kr/graphql
-# schema 주소 -> 백엔드 주소로 변경
+schema: http://34.64.94.142:3000/graphql
 generates:
   ./src/commons/types/generated/types.ts:
     plugins:

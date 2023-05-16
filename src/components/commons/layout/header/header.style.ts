@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Drawer, Space } from "antd";
+import { Drawer } from "antd";
 
 export const Wrapper = styled.div`
   height: 150px;
@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
+  margin-bottom: 65px;
 `;
 
 export const LightWrapper = styled.div``;

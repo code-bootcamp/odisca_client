@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
-  width: 1100px;
+  width: 1000px;
   margin: 0 auto;
 `;
 
@@ -43,6 +43,7 @@ export const EditProfileIcon = styled.img`
   position: absolute;
   left: 60px;
   top: 60px;
+  cursor: pointer;
 `;
 
 export const UserWrapperRight = styled.aside`
@@ -73,7 +74,7 @@ export const UserPointWrapper = styled.footer`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: calc(1100px - 580px);
+  margin-left: calc(1000px - 580px);
 `;
 
 export const Icon = styled.img`
@@ -98,4 +99,5 @@ export const ChargeBtn = styled.button`
   height: 26px;
   font-size: 15px;
   margin-bottom: 6px;
+  cursor: pointer;
 `;

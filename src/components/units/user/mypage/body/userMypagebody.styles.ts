@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.aside`
-  width: 1100px;
+  width: 1000px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -26,6 +26,7 @@ export const LeftWrapper = styled.div``;
 export const CafeImg = styled.img`
   width: 320px;
   height: 200px;
+  cursor: pointer;
 `;
 
 export const RightWrapper = styled.div`
@@ -42,6 +43,7 @@ export const CafeName = styled.h3`
   color: #4f4f4f;
   margin-bottom: 8px;
   font-size: 20px;
+  cursor: pointer;
 `;
 
 export const SeatInfo = styled.div`
@@ -50,7 +52,7 @@ export const SeatInfo = styled.div`
 `;
 
 export const Bottom = styled.div`
-  width: calc(1100px - 360px);
+  width: calc(1000px - 356px);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -63,7 +65,7 @@ export const RemainingTime = styled.div`
   margin-right: 10px;
 `;
 
-export const TerminateBtn = styled.button`
+export const Btn = styled.button`
   border: none;
   background-color: #40e0d0;
   border-radius: 15px;
@@ -71,4 +73,6 @@ export const TerminateBtn = styled.button`
   font-size: 14px;
   width: 65px;
   height: 22px;
+  cursor: pointer;
+  margin-right: 9px;
 `;
