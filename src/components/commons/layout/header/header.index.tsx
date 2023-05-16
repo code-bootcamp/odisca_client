@@ -1,9 +1,10 @@
 import * as S from "./header.style";
 import React, { useEffect, useState } from "react";
 import { Modal, Select, Space } from "antd";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { IRsp } from "./header.type";
 import { FETCH_LOGIN_USER } from "./header.queries";
+import { useMutationCreatePointTransaction } from "../../hooks/mutations/useMutationCreatePointTransaction";
 
 declare const window: typeof globalThis & {
   IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
@@ -25,7 +26,7 @@ export default function LayoutHeader(): JSX.Element {
   // 결제 모달 관련
   const [isModal, setIsModal] = useState(false);
   const [price, setPrice] = useState(1000);
-  const [createPointTransaction] = useMutation(CREATE_POINT_TRANSACTION);
+  const [createPointTransaction] = useMutationCreatePointTransaction();
 
   const showModal = (): void => {
     setPrice(1000);
