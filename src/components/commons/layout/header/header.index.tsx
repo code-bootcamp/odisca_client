@@ -1,9 +1,9 @@
 import * as S from "./header.style";
 import React, { useEffect, useState } from "react";
 import { Modal, Select, Space } from "antd";
-import { useMutation } from "@apollo/client";
-import { CREATE_POINT_TRANSACTION } from "./header.queries";
+import { useMutation, useQuery } from "@apollo/client";
 import { IRsp } from "./header.type";
+import { FETCH_LOGIN_USER } from "./header.queries";
 
 declare const window: typeof globalThis & {
   IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
@@ -11,6 +11,8 @@ declare const window: typeof globalThis & {
 
 export default function LayoutHeader(): JSX.Element {
   const [open, setOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const { data } = useQuery(FETCH_LOGIN_USER);
 
   const showDrawer = (): void => {
     setOpen(true);
@@ -81,6 +83,12 @@ export default function LayoutHeader(): JSX.Element {
     script.src = "https://cdn.iamport.kr/v1/iamport.js";
     document.head.appendChild(script);
     script.onload = () => {};
+
+    if (localStorage.getItem("accessToken") === null) {
+      setIsLogin(false);
+    } else {
+      setIsLogin(true);
+    }
   }, []);
 
   return (
@@ -90,12 +98,17 @@ export default function LayoutHeader(): JSX.Element {
           <S.Logo src="/logo.png"></S.Logo>
         </S.LightWrapper>
         <S.RightWrapper>
-          <S.ProfileWrapper>
-            <S.ProfileIcon src="/ProfileIcon.png"></S.ProfileIcon>
-            <S.Name>윤달콩</S.Name>
-            <S.Text>님 안녕하세요!</S.Text>
-            <S.PayButton onClick={showModal}>충전</S.PayButton>
-          </S.ProfileWrapper>
+          {!isLogin ? (
+            <div></div>
+          ) : (
+            <S.ProfileWrapper>
+              <S.ProfileIcon src="/ProfileIcon.png"></S.ProfileIcon>
+              <S.Name>{data?.fetchLoginUser.name}</S.Name>
+              <S.Text>님 안녕하세요!</S.Text>
+              <S.PayButton onClick={showModal}>충전</S.PayButton>
+            </S.ProfileWrapper>
+          )}
+
           <Space>
             <S.Menu type="primary" onClick={showDrawer}>
               <S.MenuIcon></S.MenuIcon>
