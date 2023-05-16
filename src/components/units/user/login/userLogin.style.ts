@@ -83,8 +83,8 @@ export const LogInInput = styled.input`
   border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
   background-color: #f7f7f7;
   border: none;
-  font-size: 27px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 400;
   padding-left: 2%;
 `;
 
