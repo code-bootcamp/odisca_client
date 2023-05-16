@@ -22,7 +22,7 @@ export const FETCH_LOGIN_ADMINISTER = gql`
   }
 `;
 
-export const useQueryFetchLoginUser = (): IFetchLoginUserQueryResult => {
+export const useQueryFetchLoginAdminister = (): IFetchLoginUserQueryResult => {
   const query = useQuery<Pick<IQuery, "fetchLoginAdminister">, IUser>(
     FETCH_LOGIN_ADMINISTER
   );
