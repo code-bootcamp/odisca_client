@@ -1,6 +1,11 @@
+import { Modal } from "antd";
+import UseModal from "../../../../commons/hooks/customs/useModal";
+import Review from "../../../../commons/reviews/review.index";
 import * as S from "./userMypagebody.styles";
 
 export default function UserMyPageBody(): JSX.Element {
+  const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
+
   return (
     <>
       <S.Wrapper>
@@ -17,7 +22,19 @@ export default function UserMyPageBody(): JSX.Element {
             <S.Bottom>
               <S.RemainingTime>남은시간 30분</S.RemainingTime>
               <S.Btn>이용종료</S.Btn>
-              <S.Btn>리뷰쓰기</S.Btn>
+              <S.Btn onClick={showModal}>리뷰쓰기</S.Btn>
+              {isModalOpen && (
+                <S.ReviewModal
+                  // style={{ width: "600px" }}
+                  okButtonProps={{ style: { display: "none" } }}
+                  cancelButtonProps={{ style: { display: "none" } }}
+                  open={isModalOpen}
+                  onOk={handleOk}
+                  onCancel={handleCancel}
+                >
+                  <Review handleCancel={handleCancel} />
+                </S.ReviewModal>
+              )}
             </S.Bottom>
           </S.RightWrapper>
         </S.ReservationWrapper>

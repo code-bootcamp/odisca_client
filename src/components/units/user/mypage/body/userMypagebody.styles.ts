@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Modal } from "antd";
 
 export const Wrapper = styled.aside`
   width: 1000px;
@@ -75,4 +76,19 @@ export const Btn = styled.button`
   height: 22px;
   cursor: pointer;
   margin-right: 9px;
+`;
+
+export const ReviewModal = styled(Modal)`
+  .ant-modal-content {
+    width: 800px;
+    height: 900px;
+  }
+  /* .ant-modal-header {
+    background-color: red;
+    // 다른 헤더 스타일 속성을 추가로 설정할 수 있습니다.
+  }
+  
+  .ant-modal-body {
+    // 모달 본문의 스타일을 설정할 수 있습니다.
+  } */
 `;
