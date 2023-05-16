@@ -1,9 +1,14 @@
 import * as S from "./header.style";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Space } from "antd";
+import { FETCH_LOGIN_USER } from "./header.queries";
+import { useQuery } from "@apollo/client";
 
 export default function LayoutHeader(): JSX.Element {
   const [open, setOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+
+  const { data } = useQuery(FETCH_LOGIN_USER);
 
   const showDrawer = (): void => {
     setOpen(true);
@@ -13,6 +18,14 @@ export default function LayoutHeader(): JSX.Element {
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("accessToken") === null) {
+      setIsLogin(false);
+    } else {
+      setIsLogin(true);
+    }
+  }, []);
+
   return (
     <>
       <S.Wrapper>
@@ -20,11 +33,16 @@ export default function LayoutHeader(): JSX.Element {
           <S.Logo src="/logo.png"></S.Logo>
         </S.LightWrapper>
         <S.RightWrapper>
-          <S.ProfileWrapper>
-            <S.ProfileIcon src="/ProfileIcon.png"></S.ProfileIcon>
-            <S.Name>윤달콩</S.Name>
-            <S.Text>님 안녕하세요!</S.Text>
-          </S.ProfileWrapper>
+          {!isLogin ? (
+            <div></div>
+          ) : (
+            <S.ProfileWrapper>
+              <S.ProfileIcon src="/ProfileIcon.png"></S.ProfileIcon>
+              <S.Name>{data?.fetchLoginUser.name}</S.Name>
+              <S.Text>님 안녕하세요!</S.Text>
+            </S.ProfileWrapper>
+          )}
+
           <Space>
             <S.Menu type="primary" onClick={showDrawer}>
               <S.MenuIcon></S.MenuIcon>
