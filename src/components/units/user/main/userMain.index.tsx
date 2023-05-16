@@ -56,10 +56,12 @@ export default function UserMain(): JSX.Element {
   }, []);
 
   return (
-    <Wrapper>
-      <CafeList />
-      <Map id="map"></Map>
-      <SearchBar01 />
-    </Wrapper>
+    <>
+      <Wrapper>
+        <CafeList />
+        <Map id="map"></Map>
+        <SearchBar01 />
+      </Wrapper>
+    </>
   );
 }
