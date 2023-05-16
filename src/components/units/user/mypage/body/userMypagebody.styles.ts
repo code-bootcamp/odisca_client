@@ -52,7 +52,7 @@ export const SeatInfo = styled.div`
 `;
 
 export const Bottom = styled.div`
-  width: calc(1000px - 360px);
+  width: calc(1000px - 356px);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -65,7 +65,7 @@ export const RemainingTime = styled.div`
   margin-right: 10px;
 `;
 
-export const TerminateBtn = styled.button`
+export const Btn = styled.button`
   border: none;
   background-color: #40e0d0;
   border-radius: 15px;
@@ -74,4 +74,5 @@ export const TerminateBtn = styled.button`
   width: 65px;
   height: 22px;
   cursor: pointer;
+  margin-right: 9px;
 `;

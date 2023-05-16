@@ -16,7 +16,8 @@ export default function UserMyPageBody(): JSX.Element {
             </S.Top>
             <S.Bottom>
               <S.RemainingTime>남은시간 30분</S.RemainingTime>
-              <S.TerminateBtn>이용종료</S.TerminateBtn>
+              <S.Btn>이용종료</S.Btn>
+              <S.Btn>리뷰쓰기</S.Btn>
             </S.Bottom>
           </S.RightWrapper>
         </S.ReservationWrapper>
@@ -31,7 +32,8 @@ export default function UserMyPageBody(): JSX.Element {
             </S.Top>
             <S.Bottom>
               <S.RemainingTime>남은시간 30분</S.RemainingTime>
-              <S.TerminateBtn>이용종료</S.TerminateBtn>
+              <S.Btn>이용종료</S.Btn>
+              <S.Btn>리뷰쓰기</S.Btn>
             </S.Bottom>
           </S.RightWrapper>
         </S.ReservationWrapper>
