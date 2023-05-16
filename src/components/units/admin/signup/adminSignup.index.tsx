@@ -53,14 +53,16 @@ export default function UserSignUpPage(): JSX.Element {
   };
 
   return (
-    <form onSubmit={wrapFormAsync(handleSubmit(onClickSingUp))}>
+    <>
       <S.Wrapper>
         <S.LogInWrapper>
           <S.LogInTitle>관리자이신가요?</S.LogInTitle>
           <S.LogInButton type="button">LOGIN</S.LogInButton>
         </S.LogInWrapper>
         <S.SignUpWrapper>
-          <S.SignUpWrapperContainer>
+          <S.SignUpWrapperContainer
+            onSubmit={wrapFormAsync(handleSubmit(onClickSingUp))}
+          >
             <S.SignUpTitle>SIGN UP</S.SignUpTitle>
             <S.InputContainer>
               <S.SignUpInputBox>
@@ -118,6 +120,6 @@ export default function UserSignUpPage(): JSX.Element {
           </S.SignUpWrapperContainer>
         </S.SignUpWrapper>
       </S.Wrapper>
-    </form>
+    </>
   );
 }
