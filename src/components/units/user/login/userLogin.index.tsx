@@ -4,9 +4,9 @@ import { useRecoilState } from "recoil";
 import { accessTokenState } from "../../../../commons/stores";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "./validation";
 import { useRouter } from "next/router";
 import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
+import { schema } from "../../../../commons/validations/validation";
 
 interface IFormData {
   email: string;
@@ -43,7 +43,7 @@ export default function UserLoginPage(): JSX.Element {
           },
         },
       });
-      console.log(result);
+      console.log(data);
       const accessToken = result.data?.LoginUser;
       // setAccessToken(accessToken);
       if (accessToken) {
