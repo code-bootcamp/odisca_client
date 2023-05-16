@@ -79,3 +79,15 @@ export const MenuDrawer = styled(Drawer)`
     font-size: 20px;
   }
 `;
+
+export const PayButton = styled.button`
+  cursor: pointer;
+  background-color: #ffffff;
+  color: #40e0d0;
+  border-radius: 10px;
+  width: 48px;
+  height: 26px;
+  font-size: 15px;
+  margin-bottom: 6px;
+  border: none;
+`;

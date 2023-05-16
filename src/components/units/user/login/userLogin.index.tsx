@@ -14,14 +14,14 @@ interface IFormData {
 }
 
 const LOG_IN = gql`
-  mutation Login($loginInput: LoginInput!) {
-    Login(loginInput: $loginInput)
+  mutation LoginUser($loginInput: LoginInput!) {
+    LoginUser(loginInput: $loginInput)
   }
 `;
 
 export default function UserLoginPage(): JSX.Element {
   const router = useRouter();
-  const [Login] = useMutation(LOG_IN);
+  const [LoginUser] = useMutation(LOG_IN);
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 
   const { register, handleSubmit, formState } = useForm({
@@ -35,13 +35,16 @@ export default function UserLoginPage(): JSX.Element {
 
   const onClickSubmit = async (data: IFormData): void => {
     try {
-      const result = await Login({
+      const result = await LoginUser({
         variables: {
-          email: data.email,
-          password: data.password,
+          loginInput: {
+            email: data.email,
+            password: data.password,
+          },
         },
       });
-      const accessToken = result.data?.Login.accessToken;
+      console.log(result);
+      const accessToken = result.data?.LoginUser;
       // setAccessToken(accessToken);
       if (accessToken) {
         setAccessToken(accessToken || "");
@@ -86,11 +89,10 @@ export default function UserLoginPage(): JSX.Element {
               </S.LogInInputBox>
               <S.ErrorMessage>
                 {formState.errors.password?.message}
-                특수문자를 포함하여 8~16자리를 입력해주세요.
               </S.ErrorMessage>
             </S.InputContainer>
             <S.ButtonContainer>
-              <S.CancelButton>CANCEL</S.CancelButton>
+              <S.CancelButton type="button">CANCEL</S.CancelButton>
               <S.LogInButton>LOGIN</S.LogInButton>
             </S.ButtonContainer>
             <S.SessionLoginContainer>
