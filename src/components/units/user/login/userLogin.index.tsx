@@ -33,7 +33,7 @@ export default function UserLoginPage(): JSX.Element {
     void router.push(`/user/signup`);
   };
 
-  const onClickSubmit = async (data: IFormData): void => {
+  const onClickSubmit = async (data: IFormData): Promise<void> => {
     try {
       const result = await LoginUser({
         variables: {
@@ -46,14 +46,14 @@ export default function UserLoginPage(): JSX.Element {
       console.log(data);
       const accessToken = result.data?.LoginUser;
       // setAccessToken(accessToken);
-      if (accessToken) {
-        setAccessToken(accessToken || "");
-      }
-      // if (accessToken === undefined) {
-      //   alert();
-      //   return;
+      // if (accessToken) {
+      //   setAccessToken(accessToken || "");
       // }
-      // setAccessToken(accessToken);
+      if (accessToken === undefined) {
+        alert("다시 로그인해주세요.");
+        return;
+      }
+      setAccessToken(accessToken);
       alert("로그인이 완료되었습니다!");
       // void router.push(`/main/landingPage`);
       localStorage.setItem("accessToken", accessToken);
