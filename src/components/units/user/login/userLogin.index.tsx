@@ -22,7 +22,7 @@ const LOG_IN = gql`
 export default function UserLoginPage(): JSX.Element {
   const router = useRouter();
   const [LoginUser] = useMutation(LOG_IN);
-  const [, setAccessToken] = useRecoilState(accessTokenState);
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(schema),
@@ -33,7 +33,7 @@ export default function UserLoginPage(): JSX.Element {
     void router.push(`/user/signup`);
   };
 
-  const onClickSubmit = async (data: IFormData): Promise<void> => {
+  const onClickSubmit = async (data: IFormData): void => {
     try {
       const result = await LoginUser({
         variables: {
@@ -46,13 +46,17 @@ export default function UserLoginPage(): JSX.Element {
       console.log(data);
       const accessToken = result.data?.LoginUser;
       // setAccessToken(accessToken);
-      if (accessToken === undefined) {
-        alert();
-        return;
+      if (accessToken) {
+        setAccessToken(accessToken || "");
       }
-      setAccessToken(accessToken);
+      // if (accessToken === undefined) {
+      //   alert();
+      //   return;
+      // }
+      // setAccessToken(accessToken);
       alert("로그인이 완료되었습니다!");
       // void router.push(`/main/landingPage`);
+      localStorage.setItem("accessToken", accessToken);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
