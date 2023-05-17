@@ -54,11 +54,11 @@ export const Point = styled.div`
   font-weight: 600;
   font-size: 15px;
   color: #4f4f4f;
-  margin: 10px 0px 50px 0px;
+  margin: 10px 0px 30px 0px;
 `;
 
 export const Date = styled.div`
-  font-size: 16px;
+  font-size: 13px;
   color: #4f4f4f;
 `;
 

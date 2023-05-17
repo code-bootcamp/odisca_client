@@ -1,6 +1,9 @@
 import * as S from "./TransactionListBody.styles";
 
 export default function TransactionListBody(): JSX.Element {
+  // 결제취소 버튼 클릭 시 포인트 결제 취소
+  const onClickCancelTransaction = (): void => {};
+
   return (
     <S.Body>
       <S.Wrapper>
@@ -16,7 +19,7 @@ export default function TransactionListBody(): JSX.Element {
               <S.Date>2023.05.17</S.Date>
             </S.Top>
             <S.Bottom>
-              <S.Btn>결제취소</S.Btn>
+              <S.Btn onClick={onClickCancelTransaction}>결제취소</S.Btn>
             </S.Bottom>
           </S.RightWrapper>
         </S.ReservationWrapper>
