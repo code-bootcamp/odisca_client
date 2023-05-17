@@ -101,3 +101,9 @@ export const Address = styled.input`
   background: #f7f7f7;
   text-indent: 10px;
 `;
+export const Error = styled.div`
+  color: red;
+  /* display: block;
+  position: absolute;
+  top: calc(100% + 6px); */
+`;

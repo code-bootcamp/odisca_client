@@ -25,7 +25,7 @@ const Btn = styled.button`
 export default function AdminWriteFooter(): JSX.Element {
   return (
     <Footer>
-      <Btn>등록하기</Btn>
+      <Btn isActive={formState.isValid}>등록하기</Btn>
       <Btn>취소하기</Btn>
     </Footer>
   );
