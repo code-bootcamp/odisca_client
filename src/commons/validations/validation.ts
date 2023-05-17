@@ -38,7 +38,7 @@ export const schema = yup.object({
 });
 
 export const userEditSchema = yup.object({
-  password: yup.string().nullable().required("새로운 비밀번호를 입력해주세요."),
+  // password: yup.string().nullable().required("새로운 비밀번호를 입력해주세요."),
   phoneNumber: yup
     .string()
     .nullable()

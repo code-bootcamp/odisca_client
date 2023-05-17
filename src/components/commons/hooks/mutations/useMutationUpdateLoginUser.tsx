@@ -10,6 +10,7 @@ export const UPDATE_LOGIN_USER = gql`
       name
       email
       password
+      phone
     }
   }
 `;

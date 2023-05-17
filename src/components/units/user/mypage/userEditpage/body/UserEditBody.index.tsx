@@ -1,54 +1,70 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Modal } from "antd";
 import { useForm } from "react-hook-form";
+import { wrapFormAsync } from "../../../../../../commons/libraries/asyncFunc";
 import { userEditSchema } from "../../../../../../commons/validations/validation";
+import { useMutationUpdateLoginUser } from "../../../../../commons/hooks/mutations/useMutationUpdateLoginUser";
 import { useQueryFetchLoginUser } from "../../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./UserEditBody.styles";
-// import { v4 as uuidv4 } from "uuid";
-// import Uploads01 from "../../../../../commons/uploads/01/Uploads01.container";
+
+interface IFormData {
+  password: string;
+  phoneNumber: string;
+  email: string;
+  name: string;
+}
 
 export default function UserEditBody(): JSX.Element {
+  const [updateLoginUser] = useMutationUpdateLoginUser();
   const { data } = useQueryFetchLoginUser();
-  // const [fileUrls, setFileUrls] = useState([""]);
 
-  // const onChangeFileUrls = (fileUrl: string, index: number): void => {
-  //   const newFileUrls = [...fileUrls];
-  //   newFileUrls[index] = fileUrl;
-  //   setFileUrls(newFileUrls);
-  // };
-
-  const { register, formState } = useForm({
+  const { register, formState, handleSubmit } = useForm({
     resolver: yupResolver(userEditSchema),
     mode: "onChange",
   });
 
   console.log(formState);
 
+  const onClickUserUpdate = async (data: IFormData) => {
+    try {
+      const result = await updateLoginUser({
+        variables: {
+          updateLoginUserInput: {
+            password: data.password,
+            phone: data.phoneNumber,
+            name: data.name,
+            email: data.email,
+          },
+        },
+      });
+      console.log(result);
+    } catch (error) {
+      if (error instanceof Error)
+        Modal.error({
+          content: error.message,
+        });
+      Modal.success({
+        content: "회원수정 완료!",
+      });
+    }
+  };
+
   return (
     <S.Wrapper>
       <S.ProfileImgBox>
-        {/* <Uploads01
-          key={uuidv4()}
-          fileUrl={fileUrls}
-          onChangeFileUrls={onChangeFileUrls}
-        /> */}
         <S.ProfileImg src="" />
         <S.ProfileImgEdit src="/user/mypage/edit/camera.png" />
       </S.ProfileImgBox>
       <S.InputForm>
         <S.NonEditList>
           <S.ListDetail>이름</S.ListDetail>
-          <S.DetailInput
-            type="text"
-            defaultValue={data?.fetchLoginUser.name}
-            readOnly
-          />
+          <S.DetailInput type="text" defaultValue={data?.fetchLoginUser.name} />
         </S.NonEditList>
         <S.NonEditList>
           <S.ListDetail>이메일</S.ListDetail>
           <S.DetailInput
             type="text"
             defaultValue={data?.fetchLoginUser.email}
-            readOnly
           />
         </S.NonEditList>
         <S.EditListBox>
@@ -60,7 +76,7 @@ export default function UserEditBody(): JSX.Element {
               {...register("password")}
             />
           </S.EditList>
-          <S.AlertMessage>{formState.errors.password?.message}</S.AlertMessage>
+          <S.AlertMessage></S.AlertMessage>
         </S.EditListBox>
         <S.EditListBox>
           <S.EditList>
@@ -77,6 +93,10 @@ export default function UserEditBody(): JSX.Element {
           </S.AlertMessage>
         </S.EditListBox>
       </S.InputForm>
+      <S.BtnWrapper onSubmit={wrapFormAsync(handleSubmit(onClickUserUpdate))}>
+        <S.Btn>수정하기</S.Btn>
+        <S.Btn type="button">탈퇴하기</S.Btn>
+      </S.BtnWrapper>
     </S.Wrapper>
   );
 }

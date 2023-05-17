@@ -21,7 +21,6 @@ export default function UserEdit(): JSX.Element {
       <Wrapper>
         <UserEditHeader />
         <UserEditBody />
-        <UserEditFooter />
       </Wrapper>
     </Body>
   );

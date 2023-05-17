@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const Wrapper = styled.form`
+export const Wrapper = styled.main`
   margin-top: 77px;
   width: 827px;
   height: 600px;
@@ -82,4 +82,23 @@ export const AlertMessage = styled.div`
   font-weight: 400;
   font-size: 14px;
   color: #7744aa;
+`;
+
+export const BtnWrapper = styled.form`
+  width: 827px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+export const Btn = styled.button`
+  width: 200px;
+  height: 60px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 26px;
+  border: none;
+  margin-right: 37px;
+  color: #ffffff;
+  background-color: #40e0d0;
 `;
