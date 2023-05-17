@@ -1,8 +1,9 @@
+import CancelPayment from "../../../../../commons/cancelpayment/cancelPayment.index";
+import UseModal from "../../../../../commons/hooks/customs/useModal";
 import * as S from "./TransactionListBody.styles";
 
 export default function TransactionListBody(): JSX.Element {
-  // 결제취소 버튼 클릭 시 포인트 결제 취소
-  const onClickCancelTransaction = (): void => {};
+  const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
 
   return (
     <S.Body>
@@ -19,8 +20,20 @@ export default function TransactionListBody(): JSX.Element {
               <S.Date>2023.05.17</S.Date>
             </S.Top>
             <S.Bottom>
-              <S.Btn onClick={onClickCancelTransaction}>결제취소</S.Btn>
+              <S.Btn onClick={showModal}>결제취소</S.Btn>
             </S.Bottom>
+            {isModalOpen ? (
+              <S.CancelPaymentModal
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                footer={null}
+              >
+                <CancelPayment handleCancel={handleCancel} />
+              </S.CancelPaymentModal>
+            ) : (
+              <></>
+            )}
           </S.RightWrapper>
         </S.ReservationWrapper>
         <S.ReservationWrapper>

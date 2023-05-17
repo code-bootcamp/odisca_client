@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Modal } from "antd";
 
 export const Body = styled.main`
   display: flex;
@@ -81,3 +82,5 @@ export const Btn = styled.button`
   cursor: pointer;
   margin-right: 9px;
 `;
+
+export const CancelPaymentModal = styled(Modal)``;
