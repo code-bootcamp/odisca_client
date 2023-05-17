@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 
 const Wrapper = styled.section`
   width: 825px;
-  /* padding-left: 100px; */
 `;
 
 const Header = styled.header`

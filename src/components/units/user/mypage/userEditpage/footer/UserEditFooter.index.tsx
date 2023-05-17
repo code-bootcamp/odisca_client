@@ -1,57 +1,52 @@
-import styled from "@emotion/styled";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Modal } from "antd";
 import { useForm } from "react-hook-form";
 import { wrapFormAsync } from "../../../../../../commons/libraries/asyncFunc";
-import { schema } from "../validation";
+import { userEditSchema } from "../../../../../../commons/validations/validation";
+import { useMutationUpdateLoginUser } from "../../../../../commons/hooks/mutations/useMutationUpdateLoginUser";
+import * as S from "./UserEditFooter.styles";
 
-const Wrapper = styled.section`
-  margin-bottom: 97px;
-  display: flex;
-  justify-content: center;
-`;
+interface IFormData {
+  password: string;
+  phoneNumber: string;
+}
 
-const Btn = styled.button`
-  width: 200px;
-  height: 60px;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 26px;
-`;
-
-export default function UserEditFooter(props): JSX.Element {
-  // 회원정보 입력란 react-hook-form 설정
-  const { register, handleSubmit, formState } = useForm({
-    resolver: yupResolver(schema),
+export default function UserEditFooter(): JSX.Element {
+  const [updateLoginUser] = useMutationUpdateLoginUser();
+  const { handleSubmit } = useForm({
+    resolver: yupResolver(userEditSchema),
     mode: "onChange",
   });
 
+  const onClickUserUpadte = async (data: IFormData) => {
+    try {
+      const result = await updateLoginUser({
+        variables: {
+          updateLoginUserInput: {
+            password: data.password,
+            phone: data.phoneNumber,
+          },
+        },
+      });
+      console.log(result);
+    } catch (error) {
+      if (error instanceof Error)
+        Modal.error({
+          content: error.message,
+        });
+      return;
+    }
+  };
+
   return (
-    <Wrapper>
-      <form onSubmit={wrapFormAsync(handleSubmit(props.onClickSubmit))}>
+    <S.Wrapper>
+      <form onSubmit={wrapFormAsync(handleSubmit(onClickUserUpadte))}>
         {/* 수정하기 버튼 */}
-        <Btn
-          style={{
-            border: "none",
-            marginRight: "37px",
-            color: "#ffffff",
-            backgroundColor: "#40E0D0;",
-          }}
-          onClick={props.onClickSubmit}
-        >
-          수정하기
-        </Btn>
+        <S.Btn>수정하기</S.Btn>
 
         {/* 회원 탈퇴하기 버튼 */}
-        <Btn
-          style={{
-            border: "1px solid #40E0D0",
-            color: "#40E0D0",
-            backgroundColor: "#ffffff",
-          }}
-        >
-          탈퇴하기
-        </Btn>
+        <S.Btn>탈퇴하기</S.Btn>
       </form>
-    </Wrapper>
+    </S.Wrapper>
   );
 }

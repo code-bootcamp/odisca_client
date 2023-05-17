@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const Wrapper = styled.main`
+export const Wrapper = styled.form`
   margin-top: 77px;
   width: 827px;
   height: 600px;
@@ -63,9 +63,18 @@ export const ListDetail = styled.span`
 export const DetailInput = styled.input`
   width: 700px;
   height: 50px;
-  background: #f7f7f7;
+  border: 1px solid #f7f7f7;
+  background-color: #f7f7f7;
   border: none;
   border-radius: 10px;
+  color: #bdbdbd;
+  padding-left: 10px;
+  :focus {
+    outline: 2px solid #40e0d0;
+  }
+  ::placeholder {
+    color: #4f4f4f; /* 변경하고자 하는 플레이스홀더 색상 */
+  }
 `;
 
 export const AlertMessage = styled.div`
@@ -73,15 +82,4 @@ export const AlertMessage = styled.div`
   font-weight: 400;
   font-size: 14px;
   color: #7744aa;
-`;
-
-export const PhoneNumAuthBtn = styled.button`
-  border: none;
-  width: 87px;
-  height: 49px;
-  background: #40e0d0;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 16px;
-  border-radius: 10px;
 `;
