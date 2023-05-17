@@ -22,7 +22,7 @@ const LOG_IN = gql`
 export default function UserLoginPage(): JSX.Element {
   const router = useRouter();
   const [LoginUser] = useMutation(LOG_IN);
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const [, setAccessToken] = useRecoilState(accessTokenState);
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(schema),
@@ -33,7 +33,7 @@ export default function UserLoginPage(): JSX.Element {
     void router.push(`/user/signup`);
   };
 
-  const onClickSubmit = async (data: IFormData): void => {
+  const onClickSubmit = async (data: IFormData): Promise<void> => {
     try {
       const result = await LoginUser({
         variables: {
@@ -46,12 +46,13 @@ export default function UserLoginPage(): JSX.Element {
       console.log(data);
       const accessToken = result.data?.LoginUser;
       // setAccessToken(accessToken);
-      if (accessToken) {
-        setAccessToken(accessToken || "");
-        alert("로그인이 완료되었습니다!");
-        // void router.push(`/main/landingPage`);
-        localStorage.setItem("accessToken", accessToken);
+      if (accessToken === undefined) {
+        alert();
+        return;
       }
+      setAccessToken(accessToken);
+      alert("로그인이 완료되었습니다!");
+      // void router.push(`/main/landingPage`);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
@@ -65,6 +66,7 @@ export default function UserLoginPage(): JSX.Element {
           <S.SignUpButton onClick={onClickMoveSignUp}>SIGNUP</S.SignUpButton>
         </S.SignUpWrapper>
         <S.LogInWrapper>
+          {/* login form */}
           <S.LogInWrapperContainer
             onSubmit={wrapFormAsync(handleSubmit(onClickSubmit))}
           >
@@ -95,9 +97,11 @@ export default function UserLoginPage(): JSX.Element {
               <S.CancelButton type="button">CANCEL</S.CancelButton>
               <S.LogInButton>LOGIN</S.LogInButton>
             </S.ButtonContainer>
+            {/* 소셜 로그인 */}
             <S.SessionLoginContainer>
               <img src="/sessionicons.png" />
             </S.SessionLoginContainer>
+            {/* 아이디, 비밀번호 찾기 */}
             <S.FindContainer>
               <S.FindButton>아이디 찾기</S.FindButton>
               <S.FindButton>비밀번호 찾기</S.FindButton>
