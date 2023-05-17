@@ -26,7 +26,8 @@ export default function UserMyPageHeader(): JSX.Element {
                   ? data?.fetchLoginUser.point
                   : "0"}
               </S.UserPoint>
-              <S.ChargeBtn>충전</S.ChargeBtn>
+              <S.PointBtn style={{ width: "48px" }}>충전</S.PointBtn>
+              <S.PointBtn style={{ width: "77px" }}>결제내역</S.PointBtn>
             </S.UserPointWrapper>
           </S.UserWrapperRight>
         </S.UserWrapper>
