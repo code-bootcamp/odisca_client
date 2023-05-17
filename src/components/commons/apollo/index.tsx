@@ -70,6 +70,8 @@ export default function ApolloSetting(props: IApolloSettingProps): JSX.Element {
 
   const client = new ApolloClient({
     link: ApolloLink.from([errorLink, uploadLink]),
+    uri: "http://34.64.94.142:3000/graphql",
+    link: ApolloLink.from([uploadLink]),
     cache: new InMemoryCache(),
   });
 
