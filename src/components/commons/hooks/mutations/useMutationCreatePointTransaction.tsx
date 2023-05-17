@@ -21,7 +21,7 @@ export const CREATE_POINT_TRANSACTION = gql`
 
 export const useMutationCreatePointTransaction = () => {
   const mutation = useMutation<
-    Pick<IMutation, "createUser">,
+    Pick<IMutation, "createPointTransaction">,
     IMutationCreatePointTransactionArgs
   >(CREATE_POINT_TRANSACTION);
   return mutation;
