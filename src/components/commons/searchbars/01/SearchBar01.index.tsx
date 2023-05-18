@@ -69,6 +69,7 @@ export default function SearchBar01(): JSX.Element {
 
   const onSecondCityChange = (value: CityName): void => {
     setSecondCity(value);
+    // console.log(value);
   };
 
   const onClickSearchCafe = (): void => {};
