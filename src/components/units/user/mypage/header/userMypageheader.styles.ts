@@ -90,12 +90,11 @@ export const UserPoint = styled.label`
   margin-right: 8px;
 `;
 
-export const ChargeBtn = styled.button`
+export const PointBtn = styled.button`
   border: none;
   background-color: #40e0d0;
   color: white;
   border-radius: 10px;
-  width: 48px;
   height: 26px;
   font-size: 15px;
   margin-bottom: 6px;
