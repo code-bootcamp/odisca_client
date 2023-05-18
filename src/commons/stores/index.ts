@@ -11,14 +11,6 @@ export const visitedPageState = atom({
   key: "visitedPageState",
   default: "",
 });
-// export const restoreAccessTokenLoadable = selector({
-//   key: "restoreAccessTokenLoadable",
-//   get: async () => {
-//     const newAccessToken = await getAccessToken();
-//     return newAccessToken;
-//   },
-// });
-
 
 export const restoreAccessTokenLoadable = selector({
   key: "restoreAccessTokenLoadable",
@@ -27,4 +19,3 @@ export const restoreAccessTokenLoadable = selector({
     return newAccessToken;
   },
 });
-

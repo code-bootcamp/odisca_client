@@ -35,12 +35,6 @@ export type ICreateAdministerInput = {
   phone: Scalars['String'];
 };
 
-export type ICreateCafeFloorPlanInput = {
-  floorPlanX: Scalars['Int'];
-  floorPlanY: Scalars['Int'];
-  id: Scalars['String'];
-};
-
 export type ICreatePointTransactionInput = {
   amount: Scalars['Int'];
   impUid: Scalars['String'];
@@ -49,18 +43,6 @@ export type ICreatePointTransactionInput = {
 export type ICreateReviewInput = {
   content: Scalars['String'];
   visitId: Scalars['String'];
-};
-
-export type ICreateStudyCafeInput = {
-  address: Scalars['String'];
-  brn: Scalars['String'];
-  contact: Scalars['String'];
-  description: Scalars['String'];
-  lat: Scalars['Float'];
-  lon: Scalars['Float'];
-  name: Scalars['String'];
-  operatingTime: Scalars['String'];
-  timeFee: Scalars['Int'];
 };
 
 export type ICreateUserInput = {
@@ -82,9 +64,7 @@ export type IMutation = {
   cancelLoginPointTransaction: IPointTransaction;
   checkVerificationCode: Scalars['String'];
   createAdminister: IAdminister;
-  createLoginCafeFloorPlan: IStudyCafe;
   createLoginPointTransaction: IPointTransaction;
-  createLoginStudyCafe: IStudyCafe;
   createReview: IReview;
   createUser: IUser;
   deleteLoginAdminister: Scalars['Boolean'];
@@ -93,8 +73,8 @@ export type IMutation = {
   restoreAccessToken: Scalars['String'];
   sendVerificationCode: Scalars['String'];
   updateLoginAdminister: IAdminister;
-  updateLoginStudyCafe: IStudyCafe;
   updateLoginUser: IUser;
+  updateReview: IReview;
 };
 
 
@@ -123,18 +103,8 @@ export type IMutationCreateAdministerArgs = {
 };
 
 
-export type IMutationCreateLoginCafeFloorPlanArgs = {
-  createCateFloorPlanInput: ICreateCafeFloorPlanInput;
-};
-
-
 export type IMutationCreateLoginPointTransactionArgs = {
   createPointTransactionInput: ICreatePointTransactionInput;
-};
-
-
-export type IMutationCreateLoginStudyCafeArgs = {
-  createStudyCafeInput: ICreateStudyCafeInput;
 };
 
 
@@ -158,13 +128,13 @@ export type IMutationUpdateLoginAdministerArgs = {
 };
 
 
-export type IMutationUpdateLoginStudyCafeArgs = {
-  updateStudyCafeInput: IUpdateStudyCafeInput;
+export type IMutationUpdateLoginUserArgs = {
+  updateLoginUserInput: IUpdateLoginUserInput;
 };
 
 
-export type IMutationUpdateLoginUserArgs = {
-  updateLoginUserInput: IUpdateLoginUserInput;
+export type IMutationUpdateReviewArgs = {
+  updateReviewInput: IUpdateReviewInput;
 };
 
 export enum IPoint_Transaction_Status_Enum {
@@ -185,14 +155,8 @@ export type IPointTransaction = {
 export type IQuery = {
   __typename?: 'Query';
   fetchLoginAdminister: IAdminister;
-  fetchLoginStudyCafe: IStudyCafe;
-  fetchLoginStudyCafes: Array<IStudyCafe>;
   fetchLoginUser: IUser;
-};
-
-
-export type IQueryFetchLoginStudyCafeArgs = {
-  studyCafeId: Scalars['String'];
+  fetchStudyCafes?: Maybe<Scalars['String']>;
 };
 
 export type IReview = {
@@ -246,17 +210,10 @@ export type IUpdateLoginUserInput = {
   phone: Scalars['String'];
 };
 
-export type IUpdateStudyCafeInput = {
-  address: Scalars['String'];
-  brn: Scalars['String'];
-  contact: Scalars['String'];
-  description: Scalars['String'];
-  lat: Scalars['Float'];
-  lon: Scalars['Float'];
-  name: Scalars['String'];
-  operatingTime: Scalars['String'];
-  studyCafeId: Scalars['String'];
-  timeFee: Scalars['Int'];
+export type IUpdateReviewInput = {
+  content: Scalars['String'];
+  reviewId: Scalars['String'];
+  visitId: Scalars['String'];
 };
 
 export type IUser = {

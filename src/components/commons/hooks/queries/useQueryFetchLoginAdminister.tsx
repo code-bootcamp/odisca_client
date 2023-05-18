@@ -17,7 +17,6 @@ export const FETCH_LOGIN_ADMINISTER = gql`
       email
       point
       phone
-      password
     }
   }
 `;
