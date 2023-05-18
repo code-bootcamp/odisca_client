@@ -1,11 +1,12 @@
 // global state
-import { atom } from "recoil";
-// import { getAccessToken } from "../libraries/getAccessToken";
+import { atom, selector } from "recoil";
+import { getAccessToken } from "../libraries/getAccessToken";
 
 export const accessTokenState = atom({
   key: "accessTokenState",
   default: "",
 });
+
 export const visitedPageState = atom({
   key: "visitedPageState",
   default: "",
@@ -17,3 +18,13 @@ export const visitedPageState = atom({
 //     return newAccessToken;
 //   },
 // });
+
+
+export const restoreAccessTokenLoadable = selector({
+  key: "restoreAccessTokenLoadable",
+  get: async () => {
+    const newAccessToken = await getAccessToken();
+    return newAccessToken;
+  },
+});
+
