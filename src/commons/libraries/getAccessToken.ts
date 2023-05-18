@@ -10,14 +10,13 @@ const RESTORE_ACCESS_TOKEN = gql`
 export const getAccessToken = async (): Promise<string | undefined> => {
   try {
     const graphQLClient = new GraphQLClient(
-      "http://odisca.store:3000/graphql",
+      "https://odisca.store/graphql", // 설정부분
       { credentials: "include" }
     );
     const result = await graphQLClient.request<
       Pick<IMutation, "restoreAccessToken">
-    >(RESTORE_ACCESS_TOKEN);
+    >(RESTORE_ACCESS_TOKEN); // 요청부분
     const newAccessToken = result.restoreAccessToken;
-    console.log(newAccessToken, result);
     return newAccessToken;
   } catch (error) {
     if (error instanceof Error) console.log(error.message);
