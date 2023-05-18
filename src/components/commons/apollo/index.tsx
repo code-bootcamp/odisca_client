@@ -23,47 +23,47 @@ export default function ApolloSetting(props: IApolloSettingProps): JSX.Element {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const refreshToken = useRecoilValueLoadable(restoreAccessTokenLoadable);
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("accessToken")) {
-  //     setAccessToken(localStorage.getItem("accessToken") || "");
-  //   }
-  // }, []);
-
   useEffect(() => {
-    // if (localStorage.getItem("accessToken")) {
-    //   setAccessToken(localStorage.getItem("accessToken") || "");
-    // }
-    void refreshToken.toPromise().then((newAccessToken) => {
-      setAccessToken(newAccessToken ?? "");
-    });
+    if (localStorage.getItem("accessToken")) {
+      setAccessToken(localStorage.getItem("accessToken") || "");
+    }
   }, []);
 
-  const errorLink = onError(({ graphQLErrors, operation, forward }) => {
-    // 에러를 캐치
-    if (typeof graphQLErrors !== "undefined") {
-      for (const err of graphQLErrors) {
-        // 해당 에러가 토큰 만료 에러인지 체크(UNAUTHENTICATED)
-        if (err.extensions.code === "UNAUTHENTICATED") {
-          return fromPromise(
-            // refreshToken으로 accessToken 재발급 받기
-            getAccessToken().then((newAccessToken) => {
-              // 재발급 받은 accessToken으로 방금 실패한 쿼리의 정보 수정하고 재시도
-              setAccessToken(newAccessToken ?? "");
+  // useEffect(() => {
+  //   // if (localStorage.getItem("accessToken")) {
+  //   //   setAccessToken(localStorage.getItem("accessToken") || "");
+  //   // }
+  //   void refreshToken.toPromise().then((newAccessToken) => {
+  //     setAccessToken(newAccessToken ?? "");
+  //   });
+  // }, []);
 
-              operation.setContext({
-                headers: {
-                  // 방금 시도한 쿼리의 모든 것 가져오기
-                  ...operation.getContext().headers,
-                  Authorization: `Bearer ${newAccessToken ?? ""}`,
-                },
-              });
-            })
-            // 방금 수정한 쿼리 재요청
-          ).flatMap(() => forward(operation));
-        }
-      }
-    }
-  });
+  // const errorLink = onError(({ graphQLErrors, operation, forward }) => {
+  //   // 에러를 캐치
+  //   if (typeof graphQLErrors !== "undefined") {
+  //     for (const err of graphQLErrors) {
+  //       // 해당 에러가 토큰 만료 에러인지 체크(UNAUTHENTICATED)
+  //       if (err.extensions.code === "UNAUTHENTICATED") {
+  //         return fromPromise(
+  //           // refreshToken으로 accessToken 재발급 받기
+  //           getAccessToken().then((newAccessToken) => {
+  //             // 재발급 받은 accessToken으로 방금 실패한 쿼리의 정보 수정하고 재시도
+  //             setAccessToken(newAccessToken ?? "");
+
+  //             operation.setContext({
+  //               headers: {
+  //                 // 방금 시도한 쿼리의 모든 것 가져오기
+  //                 ...operation.getContext().headers,
+  //                 Authorization: `Bearer ${newAccessToken ?? ""}`,
+  //               },
+  //             });
+  //           })
+  //           // 방금 수정한 쿼리 재요청
+  //         ).flatMap(() => forward(operation));
+  //       }
+  //     }
+  //   }
+  // });
 
   const uploadLink = createUploadLink({
     uri: "http://odisca.store:3000/graphql",
@@ -72,7 +72,7 @@ export default function ApolloSetting(props: IApolloSettingProps): JSX.Element {
   });
 
   const client = new ApolloClient({
-    link: ApolloLink.from([errorLink, uploadLink]),
+    link: ApolloLink.from([uploadLink]),
     // uri: "http://34.64.94.142:3000/graphql",
     // link: ApolloLink.from([uploadLink]),
     cache: new InMemoryCache(),
