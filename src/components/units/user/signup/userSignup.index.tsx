@@ -4,7 +4,10 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
 import { signUpSchema } from "../../../../commons/validations/validation";
+import EmailValidationPage from "../../../commons/emailValidation/emailValidation.index";
+import UseModal from "../../../commons/hooks/customs/useModal";
 import { useMutationCreateUser } from "../../../commons/hooks/mutations/useMutationCreateUser";
+import { useMutationSendVerificationCode } from "../../../commons/hooks/mutations/useMutationSendVerification";
 import * as S from "./userSignup.style";
 
 interface IFormData {
@@ -16,15 +19,33 @@ interface IFormData {
 }
 
 export default function UserSignUpPage(): JSX.Element {
+  const [sendVerificationCode] = useMutationSendVerificationCode();
+  const [createUser] = useMutationCreateUser();
+  const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
+
   const router = useRouter();
   const { register, handleSubmit, formState } = useForm<IFormData>({
     resolver: yupResolver(signUpSchema),
     mode: "onChange",
   });
 
-  const [createUser] = useMutationCreateUser();
+  const onClickSendVerification = async (data: IFormData): Promise<void> => {
+    try {
+      const verificationResult = sendVerificationCode({
+        variables: { email: data.email },
+      });
+      console.log(verificationResult);
+      showModal();
+      console.log(data.email);
+    } catch (error) {
+      if (error instanceof Error)
+        Modal.error({
+          content: error.message,
+        });
+    }
+  };
 
-  const onClickSingUp = async (data: IFormData): Promise<void> => {
+  const onClickUserSingUp = async (data: IFormData): Promise<void> => {
     try {
       const result = await createUser({
         variables: {
@@ -36,6 +57,7 @@ export default function UserSignUpPage(): JSX.Element {
           },
         },
       });
+      console.log(data.email);
       console.log(result);
     } catch (error) {
       if (error instanceof Error)
@@ -60,7 +82,7 @@ export default function UserSignUpPage(): JSX.Element {
         </S.LogInWrapper>
         <S.SignUpWrapper>
           <S.SignUpWrapperContainer
-            onSubmit={wrapFormAsync(handleSubmit(onClickSingUp))}
+            onSubmit={wrapFormAsync(handleSubmit(onClickUserSingUp))}
           >
             <S.SignUpTitle>SIGN UP</S.SignUpTitle>
             <S.InputContainer>
@@ -75,11 +97,28 @@ export default function UserSignUpPage(): JSX.Element {
               <S.ErrorMessage>{formState.errors.name?.message}</S.ErrorMessage>
               <S.SignUpInputBox>
                 <S.SignUpInputTitle>Email</S.SignUpInputTitle>
-                <S.SignUpInput
+                <S.SignUpInputEmail
                   type="text"
                   {...register("email")}
                   placeholder="user@google.com"
-                ></S.SignUpInput>
+                ></S.SignUpInputEmail>
+                <S.PhoneButton
+                  type="button"
+                  onClick={wrapFormAsync(handleSubmit(onClickSendVerification))}
+                >
+                  인증하기
+                </S.PhoneButton>
+                {isModalOpen && (
+                  <S.EmailValidationModal
+                    okButtonProps={{ style: { display: "none" } }}
+                    cancelButtonProps={{ style: { display: "none" } }}
+                    open={isModalOpen}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                  >
+                    <EmailValidationPage handleCancel={handleCancel} />
+                  </S.EmailValidationModal>
+                )}
               </S.SignUpInputBox>
               <S.ErrorMessage>{formState.errors.email?.message}</S.ErrorMessage>
               <S.SignUpInputBox>
@@ -104,11 +143,10 @@ export default function UserSignUpPage(): JSX.Element {
               </S.ErrorMessage>
               <S.SignUpInputBox>
                 <S.SignUpInputTitle>Phone</S.SignUpInputTitle>
-                <S.SignUpInputPhone
+                <S.SignUpInput
                   {...register("phone")}
                   placeholder="010-1234-5678"
-                ></S.SignUpInputPhone>
-                <S.PhoneButton type="button">CLICK</S.PhoneButton>
+                ></S.SignUpInput>
               </S.SignUpInputBox>
               <S.ErrorMessage>{formState.errors.phone?.message}</S.ErrorMessage>
             </S.InputContainer>

@@ -33,7 +33,7 @@ export default function UserLoginPage(): JSX.Element {
     void router.push(`/user/signup`);
   };
 
-  const onClickSubmit = async (data: IFormData): void => {
+  const onClickSubmit = async (data: IFormData): Promise<void> => {
     try {
       const result = await LoginUser({
         variables: {

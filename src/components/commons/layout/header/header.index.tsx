@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client";
 import { IRsp } from "./header.type";
 import { FETCH_LOGIN_USER } from "./header.queries";
 import { useMutationCreatePointTransaction } from "../../hooks/mutations/useMutationCreatePointTransaction";
+import { useMutationDeleteAdmin } from "../../hooks/mutations/useMutationDeleteAdmin";
 
 declare const window: typeof globalThis & {
   IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
@@ -27,6 +28,7 @@ export default function LayoutHeader(): JSX.Element {
   const [isModal, setIsModal] = useState(false);
   const [price, setPrice] = useState(1000);
   const [createPointTransaction] = useMutationCreatePointTransaction();
+  const [deleteAdmin] = useMutationDeleteAdmin();
 
   const showModal = (): void => {
     setPrice(1000);
@@ -37,6 +39,11 @@ export default function LayoutHeader(): JSX.Element {
   };
   const onClickPrice = (value: string): void => {
     setPrice(Number(value));
+  };
+
+  const onClickDeleteAdmin = async () => {
+    const result = await deleteAdmin();
+    console.log(result);
   };
 
   const onClickPayment = (): void => {
@@ -130,6 +137,7 @@ export default function LayoutHeader(): JSX.Element {
               <p>회원정보</p>
               <p>스카찾기</p>
               <p>로그아웃</p>
+              <p onClick={onClickDeleteAdmin}>회원탈퇴</p>
             </S.MenuList>
           </S.MenuDrawer>
         </S.RightWrapper>
