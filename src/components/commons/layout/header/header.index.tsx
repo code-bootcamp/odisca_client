@@ -127,11 +127,14 @@ export default function LayoutHeader(): JSX.Element {
           <S.MenuDrawer
             title="Menu"
             placement="right"
-            closable={true}
+            closable={false}
             onClose={onClose}
             open={open}
             width={350}
-            bodyStyle={{ padding: 30 }}
+            bodyStyle={{
+              padding: 30,
+              backgroundColor: "rgba(64, 224, 208, 0.3)",
+            }}
           >
             <S.MenuList>
               <p>회원정보</p>
