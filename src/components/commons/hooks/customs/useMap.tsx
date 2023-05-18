@@ -42,6 +42,7 @@ export default function Map(): JSX.Element {
           const message = "geolocation을 사용할 수 없는 환경입니다";
           console.log(locPosition, message);
         }
+
         // 지도에 마커와 인포윈도우를 표시하는 함수
         function displayMarker(locPosition: any, message: string): void {
           // 마커 생성
