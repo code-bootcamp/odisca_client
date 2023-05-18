@@ -1,8 +1,15 @@
+import { useRouter } from "next/router";
 import { useQueryFetchLoginUser } from "../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./userMypageheader.styles";
 
 export default function UserMyPageHeader(): JSX.Element {
+  const router = useRouter();
   const { data } = useQueryFetchLoginUser();
+
+  const onClickMovePaymentList = (): void => {
+    void router.push(`/user/mypage/transactionList`);
+  };
+
   return (
     <>
       <S.Wrapper>
@@ -26,7 +33,13 @@ export default function UserMyPageHeader(): JSX.Element {
                   ? data?.fetchLoginUser.point
                   : "0"}
               </S.UserPoint>
-              <S.ChargeBtn>충전</S.ChargeBtn>
+              <S.PointBtn style={{ width: "48px" }}>충전</S.PointBtn>
+              <S.PointBtn
+                style={{ width: "77px" }}
+                onClick={onClickMovePaymentList}
+              >
+                결제내역
+              </S.PointBtn>
             </S.UserPointWrapper>
           </S.UserWrapperRight>
         </S.UserWrapper>
