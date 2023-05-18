@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Modal } from "antd";
 
 export const Wrapper = styled.main`
   width: 1920px;
@@ -88,7 +89,7 @@ export const SignUpInput = styled.input`
   padding-left: 2%;
 `;
 
-export const SignUpInputPhone = styled.input`
+export const SignUpInputEmail = styled.input`
   width: 400px;
   height: 54px;
   border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
@@ -145,4 +146,11 @@ export const PhoneButton = styled.button`
   background-color: #40e0d0;
   font-size: 16px;
   font-weight: 600;
+`;
+
+export const EmailValidationModal = styled(Modal)`
+  .ant-modal-content {
+    width: 450px;
+    height: 320px;
+  }
 `;

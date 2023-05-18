@@ -1,6 +1,8 @@
+import { useQueryFetchLoginUser } from "../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./userMypageheader.styles";
 
 export default function UserMyPageHeader(): JSX.Element {
+  const { data } = useQueryFetchLoginUser();
   return (
     <>
       <S.Wrapper>
@@ -14,12 +16,16 @@ export default function UserMyPageHeader(): JSX.Element {
           </S.UserWrapperLight>
           <S.UserWrapperRight>
             <S.UserInfo>
-              <S.UserName>userName</S.UserName>
-              <S.UserMail>user@mail.com</S.UserMail>
+              <S.UserName>{data?.fetchLoginUser.name}</S.UserName>
+              <S.UserMail>{data?.fetchLoginUser.email}</S.UserMail>
             </S.UserInfo>
             <S.UserPointWrapper>
               <S.Icon src="/Vector (14).png"></S.Icon>
-              <S.UserPoint>3000P</S.UserPoint>
+              <S.UserPoint>
+                {data?.fetchLoginUser.point !== undefined
+                  ? data?.fetchLoginUser.point
+                  : "0"}
+              </S.UserPoint>
               <S.ChargeBtn>충전</S.ChargeBtn>
             </S.UserPointWrapper>
           </S.UserWrapperRight>
