@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { ChangeEvent, useState } from "react";
 import { ISeat, IStyle } from "./mapEditor.Type";
 import * as S from "./mapEditor.Body.style";
+import { useRouter } from "next/router";
 
 export default function MapEditor(): JSX.Element {
   const [inputX, setInputX] = useState(0); // x축 범위
@@ -17,6 +18,7 @@ export default function MapEditor(): JSX.Element {
   const [, setSeatLength] = useState(0);
   const [seatCount, setSeatCount] = useState(1);
   const [positionState, setPositionState] = useState(0); // 좌석 특성 저장하는 데이터
+  const router = useRouter();
   const onChangeMapX = (event: ChangeEvent<HTMLInputElement>): void => {
     setInputX(Number(event.target.value));
   };
@@ -94,7 +96,7 @@ export default function MapEditor(): JSX.Element {
               return 1;
             });
             setMapArray(newMap);
-            setSeatLength((prev) => prev - 1);
+            // setSeatLength((prev) => prev - 1);
           }
           return answer;
         }),
@@ -151,7 +153,7 @@ export default function MapEditor(): JSX.Element {
     setMapArray([...newMapArray]);
     setPositionState(0);
     setSize([]);
-    setSeatLength((prev) => prev + 1);
+    // setSeatLength((prev) => prev + 1);
     setIsHover(false);
     setHoverSize([0, 0]);
     setHoverPosition([0, 0]);
@@ -199,6 +201,30 @@ export default function MapEditor(): JSX.Element {
     return result;
   };
 
+  const onClickSave = (): void => {
+    setSeatLength(seatArray.length);
+    const input = seatArray.map((el, index) => {
+      const seat = {
+        seats: el.seats,
+        status: el.status,
+        number: index + 1,
+      };
+      return seat;
+    });
+    console.log(
+      "X : ",
+      stateX,
+      "Y : ",
+      stateY,
+      "좌표 : ",
+      input,
+      "좌석 수 :",
+      seatArray.length,
+      "cafeId:",
+      router.query.Id
+    );
+  };
+
   return (
     <>
       X:
@@ -210,6 +236,7 @@ export default function MapEditor(): JSX.Element {
       <button onClick={onClick2X2}>2X2</button>
       <button onClick={onClick1X2}>1X2</button>
       <button onClick={onClickDeleteMap}>전체 삭제</button>
+      <button onClick={onClickSave}>저장하기</button>
       <S.Container>
         <S.Box>
           {mapArray.map((el, indY) => {
