@@ -217,12 +217,15 @@ export const Footer = styled.footer`
   flex-direction: row;
   justify-content: center;
   padding-top: 40px;
+  margin-bottom: 50px;
 `;
 export const Btn = styled.button`
   width: 130px;
   height: 50px;
   background-color: #ffffff;
   color: #40e0d0;
+  font-size: 17px;
+  font-weight: 600;
   border: 1px solid #40e0d0;
   border-radius: 30px;
   margin: 0px 12px;

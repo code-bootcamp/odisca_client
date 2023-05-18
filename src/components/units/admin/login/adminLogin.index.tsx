@@ -52,7 +52,7 @@ export default function UserLoginPage(): JSX.Element {
     <>
       <S.Wrapper>
         <S.SignUpWrapper>
-          <S.SignUpTitle>가입을 시작합니다.</S.SignUpTitle>
+          <S.SignUpTitle>가입을 시작합니다!</S.SignUpTitle>
           <S.SignUpButton type="button" onClick={onClickMoveSignUp}>
             SIGNUP
           </S.SignUpButton>
@@ -64,25 +64,34 @@ export default function UserLoginPage(): JSX.Element {
             <S.LoginTitle>LOGIN</S.LoginTitle>
             <S.InputContainer>
               <S.LogInInputBox>
-                <S.LogInInputTitle>EMAIL</S.LogInInputTitle>
-                <S.LogInInput
-                  type="text"
-                  placeholder="email을 입력해주세요."
-                  {...register("email")}
-                ></S.LogInInput>
+                <S.LogInInputDetail>
+                  <S.LogInInputTitle>EMAIL</S.LogInInputTitle>
+                  <S.LogInInput
+                    type="text"
+                    placeholder="이메일을 입력해주세요."
+                    {...register("email")}
+                  ></S.LogInInput>
+                </S.LogInInputDetail>
+
+                <S.ErrorMessage>
+                  {formState.errors.email?.message}
+                </S.ErrorMessage>
               </S.LogInInputBox>
-              <S.ErrorMessage>{formState.errors.email?.message}</S.ErrorMessage>
+
               <S.LogInInputBox>
-                <S.LogInInputTitle>PASS</S.LogInInputTitle>
-                <S.LogInInput
-                  type="password"
-                  placeholder="비밀번호를 입력해주세요."
-                  {...register("password")}
-                ></S.LogInInput>
+                <S.LogInInputDetail>
+                  <S.LogInInputTitle>PASS</S.LogInInputTitle>
+                  <S.LogInInput
+                    type="password"
+                    placeholder="비밀번호를 입력해주세요."
+                    {...register("password")}
+                  ></S.LogInInput>
+                </S.LogInInputDetail>
+
+                <S.ErrorMessage>
+                  {formState.errors.password?.message}
+                </S.ErrorMessage>
               </S.LogInInputBox>
-              <S.ErrorMessage>
-                {formState.errors.password?.message}
-              </S.ErrorMessage>
             </S.InputContainer>
             <S.ButtonContainer>
               <S.CancelButton>CANCEL</S.CancelButton>

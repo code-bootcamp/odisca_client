@@ -19,7 +19,7 @@ export const LogInWrapper = styled.div`
 `;
 
 export const LogInTitle = styled.h1`
-  margin-bottom: 5%;
+  margin-bottom: 80px;
   font-size: 64px;
   font-weight: 900;
   color: #4f4f4f;
@@ -56,6 +56,7 @@ export const SignUpTitle = styled.h1`
   font-weight: 900;
   color: #ffffff;
   margin-bottom: 7%;
+  margin-left: 70px;
 `;
 
 export const InputContainer = styled.div`
@@ -69,41 +70,54 @@ export const InputContainer = styled.div`
 export const SignUpInputBox = styled.div`
   width: 600px;
   display: flex;
+  flex-direction: column;
+`;
+
+export const SignUpInputDetail = styled.div`
+  width: 100%;
+  display: flex;
   justify-content: space-between;
-  align-items: center;
 `;
 
 export const SignUpInputTitle = styled.div`
   font-size: 27px;
   font-weight: 400;
   color: #ffffff;
+  line-height: 60px;
 `;
 export const SignUpInput = styled.input`
   width: 500px;
   height: 54px;
   border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
   background-color: #f7f7f7;
-  border: none;
-  font-size: 27px;
+  border: 1px solid #f7f7f7;
+  font-size: 18px;
   font-weight: 600;
-  padding-left: 2%;
+  padding-left: 10px;
+  :focus {
+    outline: 2px solid #40e0d0;
+  }
 `;
 
 export const SignUpInputPhone = styled.input`
-  width: 400px;
+  width: 390px;
   height: 54px;
   border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
   background-color: #f7f7f7;
-  border: none;
-  font-size: 27px;
+  border: 1px solid #f7f7f7;
+  font-size: 18px;
   font-weight: 600;
-  padding-left: 2%;
+  padding-left: 10px;
+  :focus {
+    outline: 2px solid #40e0d0;
+  }
 `;
 
 export const ErrorMessage = styled.div`
   font-size: 14px;
   font-weight: 400;
-  color: #7744aa;
+  color: #fff;
+  margin: 15px 0px 0px 105px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -112,7 +126,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 5% 0;
+  margin: 5% 0px 5% 70px;
 `;
 
 export const CancelButton = styled.button`
@@ -124,6 +138,7 @@ export const CancelButton = styled.button`
   background-color: #4f4f4f;
   font-size: 26px;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 export const SignUpButton = styled.button`
@@ -135,15 +150,17 @@ export const SignUpButton = styled.button`
   background-color: #40e0d0;
   font-size: 26px;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 export const PhoneButton = styled.button`
   width: 87px;
-  height: 46px;
-  border-radius: 25% 25% 25% 25% / 65% 65% 65% 65%;
+  height: 54px;
+  border-radius: 10px;
   border: none;
   color: #ffffff;
   background-color: #40e0d0;
   font-size: 16px;
   font-weight: 600;
+  cursor: pointer;
 `;

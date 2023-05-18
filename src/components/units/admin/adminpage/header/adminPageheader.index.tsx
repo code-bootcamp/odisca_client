@@ -20,7 +20,7 @@ export default function AdiminPageHeader(props): JSX.Element {
             </S.AdminInfo>
             <S.RevenueWrapper>
               <S.RevenueText>이번달 매출</S.RevenueText>
-              <S.Revenue>{props.adminPoint}</S.Revenue>
+              <S.Revenue>{props.adminPoint}P</S.Revenue>
             </S.RevenueWrapper>
           </S.AdminWrapperRight>
         </S.AdminWrapper>
