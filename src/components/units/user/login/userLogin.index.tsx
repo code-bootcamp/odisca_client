@@ -46,17 +46,17 @@ export default function UserLoginPage(): JSX.Element {
       console.log(data);
       const accessToken = result.data?.LoginUser;
       // setAccessToken(accessToken);
-      if (accessToken) {
-        setAccessToken(accessToken || "");
-      }
-      // if (accessToken === undefined) {
-      //   alert();
-      //   return;
+      // if (accessToken) {
+      //   setAccessToken(accessToken || "");
       // }
-      // setAccessToken(accessToken);
+      if (accessToken === undefined) {
+        alert("다시 로그인해주세요.");
+        return;
+      }
+      setAccessToken(accessToken);
       alert("로그인이 완료되었습니다!");
       // void router.push(`/main/landingPage`);
-      localStorage.setItem("accessToken", accessToken);
+      // localStorage.setItem("accessToken", accessToken);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
