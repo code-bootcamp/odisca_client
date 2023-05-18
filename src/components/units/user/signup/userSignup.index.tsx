@@ -32,7 +32,7 @@ export default function UserSignUpPage(): JSX.Element {
   const onClickSendVerification = async (data: IFormData): Promise<void> => {
     try {
       const verificationResult = sendVerificationCode({
-        variables: { email: data.email }, // 이렇게 쓰면 언디파인드 가져옴. 하드코딩하면 잘됨
+        variables: { email: data.email },
       });
       console.log(verificationResult);
       showModal();
@@ -102,7 +102,10 @@ export default function UserSignUpPage(): JSX.Element {
                   {...register("email")}
                   placeholder="user@google.com"
                 ></S.SignUpInputEmail>
-                <S.PhoneButton type="button" onClick={onClickSendVerification}>
+                <S.PhoneButton
+                  type="button"
+                  onClick={wrapFormAsync(handleSubmit(onClickSendVerification))}
+                >
                   인증하기
                 </S.PhoneButton>
                 {isModalOpen && (
