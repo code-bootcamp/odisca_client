@@ -48,12 +48,15 @@ export default function EmailValidationPage(props): JSX.Element {
       const checkVerificationResult = checkVerificationCode({
         variables: { verificationCode: data.verificationCode },
       });
+      const verificationCode = data.verificationCode;
       console.log(checkVerificationResult);
-      console.log(data.verificationCode);
+      if (checkVerificationResult === verificationCode) {
+        props.handleCancel();
+      }
     } catch (error) {
       if (error instanceof Error)
         Modal.error({
-          content: error.message,
+          content: "인증실패",
         });
     }
   };

@@ -1,6 +1,8 @@
+import { useQueryFetchLoginAdminister } from "../../../../commons/hooks/queries/useQueryFetchLoginAdminister";
 import * as S from "./adminPageheader.styles";
 
 export default function AdiminPageHeader(): JSX.Element {
+  const { data } = useQueryFetchLoginAdminister();
   return (
     <>
       <S.Wrapper>
@@ -14,12 +16,12 @@ export default function AdiminPageHeader(): JSX.Element {
           </S.AdminWrapperLight>
           <S.AdminWrapperRight>
             <S.AdminInfo>
-              <S.AdminName>집게사장</S.AdminName>
-              <S.AdminMail>adminmail@gmail.com</S.AdminMail>
+              <S.AdminName>{data?.fetchLoginAdminister.name}</S.AdminName>
+              <S.AdminMail>{data?.fetchLoginAdminister.email}</S.AdminMail>
             </S.AdminInfo>
             <S.RevenueWrapper>
               <S.RevenueText>이번달 매출</S.RevenueText>
-              <S.Revenue>3000P</S.Revenue>
+              <S.Revenue>{data?.fetchLoginAdminister.point}</S.Revenue>
             </S.RevenueWrapper>
           </S.AdminWrapperRight>
         </S.AdminWrapper>

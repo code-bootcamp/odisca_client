@@ -2,18 +2,18 @@ import {
   ApolloLink,
   ApolloClient,
   ApolloProvider,
-  // fromPromise,
+  fromPromise,
   InMemoryCache,
 } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
-// import { getAccessToken } from "../../../commons/libraries/getAccessToken";
+import { useRecoilState, useRecoilValueLoadable } from "recoil";
+import { getAccessToken } from "../../../commons/libraries/getAccessToken";
 import {
   accessTokenState,
-  // restoreAccessTokenLoadable,
+  restoreAccessTokenLoadable,
 } from "../../../commons/stores/index";
-// import { onError } from "@apollo/client/link/error";
+import { onError } from "@apollo/client/link/error";
 
 interface IApolloSettingProps {
   children: JSX.Element;
@@ -21,22 +21,23 @@ interface IApolloSettingProps {
 
 export default function ApolloSetting(props: IApolloSettingProps): JSX.Element {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
-  // const refreshToken = useRecoilValueLoadable(restoreAccessTokenLoadable);
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("accessToken")) {
-  //     setAccessToken(localStorage.getItem("accessToken") || "");
-  //   }
-  // }, []);
+  const refreshToken = useRecoilValueLoadable(restoreAccessTokenLoadable);
+  console.log(accessToken);
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       setAccessToken(localStorage.getItem("accessToken") || "");
     }
-    // void refreshToken.toPromise().then((newAccessToken) => {
-    //   setAccessToken(newAccessToken ?? "");
-    // });
   }, []);
+
+  // useEffect(() => {
+  //   // if (localStorage.getItem("accessToken")) {
+  //   //   setAccessToken(localStorage.getItem("accessToken") || "");
+  //   // }
+  //   void refreshToken.toPromise().then((newAccessToken) => {
+  //     setAccessToken(newAccessToken ?? "");
+  //   });
+  // }, []);
 
   // const errorLink = onError(({ graphQLErrors, operation, forward }) => {
   //   // 에러를 캐치
@@ -64,16 +65,14 @@ export default function ApolloSetting(props: IApolloSettingProps): JSX.Element {
   //     }
   //   }
   // });
-
+  console.log(accessToken, "ddd");
   const uploadLink = createUploadLink({
-    uri: "http://34.64.94.142:3000/graphql",
+    uri: "http://odisca.store:3000/graphql",
     headers: { Authorization: `Bearer ${accessToken}` },
     // credentials: "include",
   });
 
   const client = new ApolloClient({
-    // link: ApolloLink.from([errorLink, uploadLink]),
-    // uri: "http://34.64.94.142:3000/graphql",
     link: ApolloLink.from([uploadLink]),
     cache: new InMemoryCache(),
   });
