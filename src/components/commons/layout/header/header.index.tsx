@@ -118,14 +118,14 @@ export default function LayoutHeader(): JSX.Element {
           )}
 
           <Space>
-            <S.Menu type="primary" onClick={showDrawer}>
+            <S.Menu onClick={showDrawer}>
               <S.MenuIcon></S.MenuIcon>
               <S.MenuIcon></S.MenuIcon>
               <S.MenuIcon></S.MenuIcon>
             </S.Menu>
           </Space>
           <S.MenuDrawer
-            title="Menu"
+            title="menu"
             placement="right"
             closable={false}
             onClose={onClose}
@@ -133,7 +133,7 @@ export default function LayoutHeader(): JSX.Element {
             width={350}
             bodyStyle={{
               padding: 30,
-              backgroundColor: "rgba(64, 224, 208, 0.3)",
+              backgroundColor: "rgba(189, 189, 189, 0.3)",
             }}
           >
             <S.MenuList>

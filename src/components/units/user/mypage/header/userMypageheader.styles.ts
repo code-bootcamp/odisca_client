@@ -80,7 +80,7 @@ export const UserPointWrapper = styled.footer`
 export const Icon = styled.img`
   width: 30px;
   height: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
   margin-right: 8px;
 `;
 
@@ -91,12 +91,27 @@ export const UserPoint = styled.label`
 `;
 
 export const PointBtn = styled.button`
+  width: 48px;
   border: none;
   background-color: #40e0d0;
   color: white;
-  border-radius: 10px;
+  border-radius: 15px;
   height: 26px;
   font-size: 15px;
   margin-bottom: 6px;
+  margin-right: 8px;
+  cursor: pointer;
+`;
+
+export const PaymentBtn = styled.button`
+  width: 70px;
+  border: 1px solid #40e0d0;
+  background-color: #ffffff;
+  color: #40e0d0;
+  border-radius: 15px;
+  height: 26px;
+  font-size: 15px;
+  margin-bottom: 6px;
+  margin-right: 8px;
   cursor: pointer;
 `;

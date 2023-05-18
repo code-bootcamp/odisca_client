@@ -87,4 +87,5 @@ export const ReviewBtn = styled.button`
   border-radius: 20px;
   font-weight: 600;
   margin-left: calc(620px - 140px);
+  cursor: pointer;
 `;
