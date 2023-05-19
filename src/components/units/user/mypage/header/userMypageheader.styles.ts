@@ -25,7 +25,7 @@ export const ProfileWrapper = styled.header`
   position: relative;
   margin-left: 60px;
   width: 90px;
-  height: 90px;
+  /* background-color: aliceblue; */
 `;
 
 export const ProfileImage = styled.img`
@@ -34,16 +34,18 @@ export const ProfileImage = styled.img`
   background-color: #40e0d0;
   border-radius: 50px;
   display: flex;
-  position: absolute;
 `;
 
-export const EditProfileIcon = styled.img`
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  left: 60px;
-  top: 60px;
+export const EditBtn = styled.button`
   cursor: pointer;
+  height: 26px;
+  width: 70px;
+  border: 1px solid #40e0d0;
+  background-color: #ffffff;
+  color: #40e0d0;
+  border-radius: 20px;
+  margin-top: 8px;
+  margin-left: 9px;
 `;
 
 export const UserWrapperRight = styled.aside`
@@ -56,6 +58,12 @@ export const UserInfo = styled.header`
   flex-direction: column;
   justify-content: center;
   margin-left: 30px;
+`;
+
+export const InfoWrapper = styled.header`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 export const UserName = styled.label`

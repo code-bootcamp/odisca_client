@@ -22,8 +22,13 @@ export default function UserMyPageHeader(): JSX.Element {
           </S.UserWrapperLight>
           <S.UserWrapperRight>
             <S.UserInfo>
-              <S.UserName>{data?.fetchLoginUser.name}</S.UserName>
-              <S.UserMail>{data?.fetchLoginUser.email}</S.UserMail>
+              <S.InfoWrapper>
+                <S.UserName>{data?.fetchLoginUser.name}윤달콩</S.UserName>
+                <S.EditBtn>정보수정</S.EditBtn>
+              </S.InfoWrapper>
+              <S.UserMail>
+                {data?.fetchLoginUser.email}tjdgo@naver.com
+              </S.UserMail>
             </S.UserInfo>
             <S.UserPointWrapper>
               <S.Icon src="/point.png"></S.Icon>
