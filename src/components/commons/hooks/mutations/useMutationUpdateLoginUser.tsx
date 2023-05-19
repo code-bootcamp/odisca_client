@@ -7,9 +7,6 @@ import {
 export const UPDATE_LOGIN_USER = gql`
   mutation updateLoginUser($updateLoginUserInput: UpdateLoginUserInput!) {
     updateLoginUser(updateLoginUserInput: $updateLoginUserInput) {
-      name
-      email
-      password
       phone
     }
   }
