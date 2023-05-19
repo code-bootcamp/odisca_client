@@ -1,12 +1,12 @@
 import { useQueryFetchLoginStudyCafes } from "../../../../commons/hooks/queries/useQueryFetchLoginStudyCafes";
 import * as S from "./adminPagebody.styles";
 
-export default function AdminPageBody(): JSX.Element {
+export default function AdminPageBody(props): JSX.Element {
   return (
     <>
-      {/* <S.Wrapper>
+      <S.Wrapper>
         <S.Title>My Cafes</S.Title>
-        {data?.fetchLoginStudyCafes?.map((el) => {
+        {props.data?.fetchLoginStudyCafes?.map((el) => {
           return (
             <div key={el.id}>
               <S.MyCafeWrapper>
@@ -26,9 +26,9 @@ export default function AdminPageBody(): JSX.Element {
               </S.MyCafeWrapper>
             </div>
           );
-        })} */}
+        })}
 
-      {/* <S.MyCafeWrapper>
+        {/* <S.MyCafeWrapper>
           <S.LeftWrapper>
             <S.CafeImg src="/cafeImg.jpeg"></S.CafeImg>
           </S.LeftWrapper>
@@ -43,8 +43,8 @@ export default function AdminPageBody(): JSX.Element {
             </S.Bottom>
           </S.RightWrapper>
         </S.MyCafeWrapper> */}
-      {/* <S.CreateSeatingChart>좌석배치도 등록하기</S.CreateSeatingChart>
-      </S.Wrapper> */}
+        <S.CreateSeatingChart>좌석배치도 등록하기</S.CreateSeatingChart>
+      </S.Wrapper>
     </>
   );
 }
