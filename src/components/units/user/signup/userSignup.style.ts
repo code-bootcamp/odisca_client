@@ -4,8 +4,7 @@ import { Modal } from "antd";
 export const Wrapper = styled.main`
   width: 1920px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
 `;
 
 export const LogInWrapper = styled.div`
@@ -28,12 +27,14 @@ export const LogInTitle = styled.h1`
 export const LogInButton = styled.button`
   width: 300px;
   height: 70px;
-  border-radius: 12% 12% 12% 12% / 50% 50% 50% 50%;
+  border-radius: 50px;
   border: none;
   color: #40e0d0;
   background-color: #ffffff;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 600;
+  cursor: pointer;
+  margin-top: 26px;
 `;
 
 export const SignUpWrapper = styled.div`
@@ -51,11 +52,19 @@ export const SignUpWrapperContainer = styled.form`
   align-items: center;
 `;
 
+export const TitleWrapper = styled.div`
+  width: 530px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
 export const SignUpTitle = styled.h1`
-  font-size: 50px;
+  font-size: 45px;
   font-weight: 900;
   color: #4f4f4f;
   margin-bottom: 7%;
+  margin: 0;
 `;
 
 export const InputContainer = styled.div`
@@ -67,37 +76,71 @@ export const InputContainer = styled.div`
 `;
 
 export const SignUpInputBox = styled.div`
-  width: 600px;
+  width: 550px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
 export const SignUpInputTitle = styled.div`
-  font-size: 27px;
+  width: calc(550px - 400px);
+  font-size: 21px;
   font-weight: 400;
   color: #4f4f4f;
 `;
 export const SignUpInput = styled.input`
-  width: 500px;
+  width: calc(550px - 100px); //450
   height: 54px;
   border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
   background-color: #f7f7f7;
   border: none;
-  font-size: 27px;
-  font-weight: 600;
-  padding-left: 2%;
+  font-size: 13px;
+  font-weight: 400;
+  padding-left: 10px;
+  :focus {
+    outline: 2px solid #40e0d0; // 이게 아웃라인 색 변경
+  }
+  ::placeholder {
+    color: #999;
+  }
+`;
+
+export const Left = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Right = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const MailInputWrapper = styled.div`
+  width: 450px;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: row;
 `;
 
 export const SignUpInputEmail = styled.input`
-  width: 400px;
   height: 54px;
   border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
   background-color: #f7f7f7;
   border: none;
-  font-size: 27px;
-  font-weight: 600;
-  padding-left: 2%;
+  font-size: 13px;
+  font-weight: 400;
+  padding-left: 10px;
+  :focus {
+    outline: 2px solid #40e0d0; // 이게 아웃라인 색 변경
+  }
+  ::placeholder {
+    color: #999;
+  }
 `;
 
 export const ErrorMessage = styled.div`
@@ -137,10 +180,10 @@ export const SignUpButton = styled.button`
   font-weight: 600;
 `;
 
-export const PhoneButton = styled.button`
+export const EmailValidationBtn = styled.button`
   width: 87px;
   height: 46px;
-  border-radius: 25% 25% 25% 25% / 65% 65% 65% 65%;
+  border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
   border: none;
   color: #ffffff;
   background-color: #40e0d0;
