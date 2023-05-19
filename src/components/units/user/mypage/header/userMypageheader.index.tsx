@@ -10,6 +10,10 @@ export default function UserMyPageHeader(): JSX.Element {
     void router.push(`/user/mypage/transactionList`);
   };
 
+  const onClickMoveEditMyPage = (): void => {
+    void router.push("/user/mypage/edit");
+  };
+
   return (
     <>
       <S.Wrapper>
@@ -24,7 +28,7 @@ export default function UserMyPageHeader(): JSX.Element {
             <S.UserInfo>
               <S.InfoWrapper>
                 <S.UserName>{data?.fetchLoginUser.name}</S.UserName>
-                <S.EditBtn>정보수정</S.EditBtn>
+                <S.EditBtn onClick={onClickMoveEditMyPage}>정보수정</S.EditBtn>
               </S.InfoWrapper>
               <S.UserMail>{data?.fetchLoginUser.email}</S.UserMail>
             </S.UserInfo>
