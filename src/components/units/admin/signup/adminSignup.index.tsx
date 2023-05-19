@@ -83,11 +83,12 @@ export default function UserSignUpPage(): JSX.Element {
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
                   <S.SignUpInputTitle>EMAIL</S.SignUpInputTitle>
-                  <S.SignUpInput
+                  <S.SignUpInputEmail
                     type="text"
                     {...register("email")}
                     placeholder="user@google.com"
-                  ></S.SignUpInput>
+                  ></S.SignUpInputEmail>
+                  <S.PhoneButton type="button">CLICK</S.PhoneButton>
                 </S.SignUpInputDetail>
 
                 <S.ErrorMessage>
@@ -112,7 +113,7 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>PASS</S.SignUpInputTitle>
+                  <S.SignUpInputTitle>CONFIRM</S.SignUpInputTitle>
                   <S.SignUpInput
                     {...register("confirmPw")}
                     type="password"
@@ -128,11 +129,10 @@ export default function UserSignUpPage(): JSX.Element {
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
                   <S.SignUpInputTitle>PHONE</S.SignUpInputTitle>
-                  <S.SignUpInputPhone
+                  <S.SignUpInput
                     {...register("phone")}
                     placeholder="010-1234-5678"
-                  ></S.SignUpInputPhone>
-                  <S.PhoneButton type="button">CLICK</S.PhoneButton>
+                  ></S.SignUpInput>
                 </S.SignUpInputDetail>
 
                 <S.ErrorMessage>

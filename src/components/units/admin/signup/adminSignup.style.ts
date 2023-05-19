@@ -80,6 +80,7 @@ export const SignUpInputDetail = styled.div`
 `;
 
 export const SignUpInputTitle = styled.div`
+  width: calc(600px - 500px);
   font-size: 27px;
   font-weight: 400;
   color: #ffffff;
@@ -99,7 +100,7 @@ export const SignUpInput = styled.input`
   }
 `;
 
-export const SignUpInputPhone = styled.input`
+export const SignUpInputEmail = styled.input`
   width: 390px;
   height: 54px;
   border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
