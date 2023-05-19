@@ -10,27 +10,30 @@ interface IFetchLoginStudyCafeQueryResult
 }
 
 export const FETCH_LOGIN_STUDY_CAFES = gql`
-  query {
-    fetchLoginStudyCafes {
+  query fetchLoginStudyCafes($adminId: String!) {
+    fetchLoginStudyCafes(adminId: $adminId) {
       id
       name
       address
       contact
       timeFee
       description
-      operatingTime
     }
   }
 `;
 
-export const useQueryFetchLoginStudyCafes =
-  (): IFetchLoginStudyCafeQueryResult => {
-    const query = useQuery<Pick<IQuery, "fetchStudyCafes">, IStudyCafe>(
-      FETCH_LOGIN_STUDY_CAFES
-    );
-    const refetch = async (): Promise<void> => {
-      await query.refetch();
-    };
-
-    return { ...query, refetch };
+export const useQueryFetchLoginStudyCafes = (
+  id: string
+): IFetchLoginStudyCafeQueryResult => {
+  const query = useQuery<Pick<IQuery, "fetchStudyCafes">, IStudyCafe>(
+    FETCH_LOGIN_STUDY_CAFES,
+    {
+      variables: { adminId: id },
+    }
+  );
+  const refetch = async (): Promise<void> => {
+    await query.refetch();
   };
+
+  return { ...query, refetch };
+};
