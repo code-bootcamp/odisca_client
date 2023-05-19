@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { Modal } from "antd";
 
 export const Wrapper = styled.div`
   width: 1000px;
@@ -36,12 +37,11 @@ export const InputBox = styled.div`
   width: calc(50% - 20px);
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 `;
 export const LabelBox = styled.label`
-  width: 100px;
+  width: 80px;
   height: 45px;
   display: flex;
   flex-direction: row;
@@ -119,6 +119,7 @@ export const SearchBtn = styled.button`
   border-radius: 10px;
   border: none;
   background: #40e0d0;
+  cursor: pointer;
 `;
 export const AddressBox = styled.div`
   width: 100%;
@@ -237,3 +238,5 @@ export const Btn = styled.button`
   }
 `;
 export const Hour = styled.div``;
+
+export const AddressSearchModal = styled(Modal)``;

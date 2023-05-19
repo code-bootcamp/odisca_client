@@ -1,13 +1,38 @@
+import DaumPostcodeEmbed from "react-daum-postcode";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
+import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
 import { cafeWriteSchema } from "../../../../commons/writeValidation/validation";
+import UseModal from "../../../commons/hooks/customs/useModal";
 import { useMutationCreateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationCreateLoginStudyCafe";
 import * as S from "./adminWrite.styles";
+import OperatingTime from "../../../commons/operatingTimeSelection/operatingTimeSelect.index";
+
+interface IFormValues {
+  name: string;
+  address: string;
+  contact: string;
+  timeFee: number;
+  description: string;
+  openTime: string;
+  closeTime: string;
+  lat: number;
+  lon: number;
+  brn: string;
+  image: {
+    url: string;
+    isMain: boolean;
+  };
+}
 
 export default function AdminWrite(): JSX.Element {
+  const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
   const router = useRouter();
+  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
   const [createLoginStudyCafe] = useMutationCreateLoginStudyCafe();
 
   const { handleSubmit, register, formState } = useForm({
@@ -16,7 +41,18 @@ export default function AdminWrite(): JSX.Element {
   });
   // const { onClickCafeSubmit } = useCreateLoginStudyCafe({});
 
-  const onClickCafeSubmit = async (data): Promise<void> => {
+  const AddressDetailInput = (event: ChangeEvent<HTMLInputElement>): void => {
+    setAddressDetail(event.target.value);
+  };
+
+  const onCompleteAddressSearch = (AddressData): void => {
+    handleCancel();
+    setZipcode(AddressData.zonecode);
+    setAddress(AddressData.address);
+    console.log(AddressData);
+  };
+
+  const onClickCafeSubmit = async (data: IFormValues): Promise<void> => {
     try {
       console.log(data, "data");
 
@@ -24,11 +60,11 @@ export default function AdminWrite(): JSX.Element {
         variables: {
           createStudyCafeInput: {
             name: data.name,
-            address: "서울시 구로구",
+            // address 수정 필요. addressDetail 넣을 것인지 결정 필요(백엔드와 협의)
+            address,
             contact: data.contact,
             timeFee: Number(data.timeFee),
             description: String(data.description),
-            // operatingTime: data.operatingTime,
             openTime: "3",
             closeTime: "3",
             lat: 123.12,
@@ -41,7 +77,7 @@ export default function AdminWrite(): JSX.Element {
       alert("상품등록이 완료되었습니다.");
       void router.push(`/admin/${result.data?.createLoginStudyCafe.id}`);
     } catch (error) {
-      alert("업체등록에 실패하였습니다");
+      alert("업체등록에 실패하였습니다.");
     }
   };
 
@@ -62,7 +98,7 @@ export default function AdminWrite(): JSX.Element {
         <S.SectionTopBox>
           <S.InputBox>
             <S.LabelBox>
-              <S.Label>대표자 명</S.Label>
+              <S.Label>대표자명</S.Label>
             </S.LabelBox>
             <S.Input type="text" placeholder="ex) 홍길동" />
           </S.InputBox>
@@ -101,12 +137,34 @@ export default function AdminWrite(): JSX.Element {
           <S.AddressLabel>주소</S.AddressLabel>
           <S.AddressInputBox>
             <S.AddressZip>
-              <S.Zipcode type="text" placeholder="07250"></S.Zipcode>
-              <S.SearchBtn>검색</S.SearchBtn>
+              <S.Zipcode
+                type="text"
+                placeholder="07250"
+                value={zipcode}
+                readOnly
+              ></S.Zipcode>
+              <S.SearchBtn type="button" onClick={showModal}>
+                검색
+              </S.SearchBtn>
+              {isModalOpen ? (
+                <S.AddressSearchModal
+                  open={isModalOpen}
+                  onOk={handleOk}
+                  onCancel={handleCancel}
+                >
+                  <DaumPostcodeEmbed onComplete={onCompleteAddressSearch} />
+                </S.AddressSearchModal>
+              ) : (
+                <></>
+              )}
             </S.AddressZip>
             <S.AddressBox>
-              <S.Address type="text" />
-              <S.Address type="text" />
+              <S.Address type="text" value={address} readOnly />
+              <S.Address
+                type="text"
+                defaultValue={addressDetail}
+                onChange={AddressDetailInput}
+              />
             </S.AddressBox>
           </S.AddressInputBox>
         </S.AddressSectionBox>
@@ -115,11 +173,7 @@ export default function AdminWrite(): JSX.Element {
             <S.LabelBox>
               <S.Label>영업시간</S.Label>
             </S.LabelBox>
-            <S.Input
-              type="text"
-              placeholder="매일 07:00 - 24:00"
-              {...register("operatingTime")}
-            />
+            <OperatingTime />
           </S.InputBox>
         </S.SectionBox>
         {/* </S.SectionTop> */}
@@ -154,7 +208,11 @@ export default function AdminWrite(): JSX.Element {
             <S.Label>이용 요금표</S.Label>
             <S.InputBox>
               <S.Hour>시간 당</S.Hour>
-              <S.Input type="text" placeholder="원" {...register("timeFee")} />
+              <S.Input
+                type="text"
+                placeholder="ex) 3,000원"
+                {...register("timeFee")}
+              />
               <S.Error>{formState.errors.timeFee?.message}</S.Error>
             </S.InputBox>
           </S.SectionBox>

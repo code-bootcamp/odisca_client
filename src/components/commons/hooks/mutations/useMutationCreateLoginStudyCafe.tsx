@@ -9,7 +9,8 @@ export const CREATE_LOGIN_STUDY_CAFE = gql`
       # contact
       # timeFee
       # description
-      # operatingTime
+      # openTime
+      # closeTime
       # lat
       # lon
       # brn
