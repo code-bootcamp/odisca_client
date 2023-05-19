@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
 import { useRecoilState } from "recoil";
 import { accessTokenState } from "../../../../commons/stores";
+import { Modal } from "antd";
 
 interface IFormData {
   email: string;
@@ -16,7 +17,7 @@ interface IFormData {
 export default function UserLoginPage(): JSX.Element {
   const router = useRouter();
   const [loginAdmin] = useMutationAdminLogin();
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const [, setAccessToken] = useRecoilState(accessTokenState);
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
@@ -38,11 +39,16 @@ export default function UserLoginPage(): JSX.Element {
       });
       console.log(result);
       const accessToken = result.data?.LoginAdminister;
-      if (accessToken) {
-        setAccessToken(accessToken ?? "");
-        alert("로그인이 완료되었습니다.");
-        localStorage.setItem("accessToken", accessToken);
+      if (accessToken === undefined || !data.email || !data.password) {
+        Modal.error({
+          content: "로그인에 실패! 다시 시도해 주세요!",
+        });
+        return;
       }
+
+      setAccessToken(accessToken);
+      console.log(data);
+      localStorage.setItem("accessToken", accessToken);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
