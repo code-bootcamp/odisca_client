@@ -7,7 +7,7 @@ import {
   SeatComponent,
 } from "./AdminDetailBody.styles";
 
-export default function AdminDetailBody(): JSX.Element {
+export default function AdminDetailBody(props): JSX.Element {
   const settings = {
     dots: true,
     infinite: true,
@@ -44,11 +44,7 @@ export default function AdminDetailBody(): JSX.Element {
         </div>
       </StyledSlider>
       <ContentsBox>
-        <Contents>
-          우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜 우리카페는
-          과자공짜 우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜
-          우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜
-        </Contents>
+        <Contents>{props.cafeDescription}</Contents>
       </ContentsBox>
       <SeatComponent src="/seat.png"></SeatComponent>
     </Body>

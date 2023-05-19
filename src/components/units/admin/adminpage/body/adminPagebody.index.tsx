@@ -1,7 +1,12 @@
-import { useQueryFetchLoginStudyCafes } from "../../../../commons/hooks/queries/useQueryFetchLoginStudyCafes";
+import { useRouter } from "next/router";
 import * as S from "./adminPagebody.styles";
+import { wrapFormAsync } from "../../../../../commons/libraries/asyncFunc";
 
 export default function AdminPageBody(props): JSX.Element {
+  const router = useRouter();
+  const onClickDetail = (id: string) => async (): Promise<void> => {
+    await router.push("/admin/" + id);
+  };
   return (
     <>
       <S.Wrapper>
@@ -15,7 +20,9 @@ export default function AdminPageBody(props): JSX.Element {
                 </S.LeftWrapper>
                 <S.RightWrapper>
                   <S.Top>
-                    <S.CafeName>{el.name}</S.CafeName>
+                    <S.CafeName onClick={wrapFormAsync(onClickDetail(el.id))}>
+                      {el.name}
+                    </S.CafeName>
                     <S.Remark>{el.description}</S.Remark>
                   </S.Top>
                   <S.Bottom>
@@ -27,22 +34,6 @@ export default function AdminPageBody(props): JSX.Element {
             </div>
           );
         })}
-
-        {/* <S.MyCafeWrapper>
-          <S.LeftWrapper>
-            <S.CafeImg src="/cafeImg.jpeg"></S.CafeImg>
-          </S.LeftWrapper>
-          <S.RightWrapper>
-            <S.Top>
-              <S.CafeName>초심스터디카페</S.CafeName>
-              <S.Remark>24시간, 주차무료 간식 많아요 ..remarks</S.Remark>
-            </S.Top>
-            <S.Bottom>
-              <S.OccupiedSeat>이용중인 좌석 30석</S.OccupiedSeat>
-              <S.MoveToSeatBtn>확인하기</S.MoveToSeatBtn>
-            </S.Bottom>
-          </S.RightWrapper>
-        </S.MyCafeWrapper> */}
         <S.CreateSeatingChart>좌석배치도 등록하기</S.CreateSeatingChart>
       </S.Wrapper>
     </>
