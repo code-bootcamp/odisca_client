@@ -1,93 +1,101 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { Modal } from "antd";
 import { useForm } from "react-hook-form";
 import { wrapFormAsync } from "../../../../../../commons/libraries/asyncFunc";
-import { schema } from "../validation";
+import { userEditSchema } from "../../../../../../commons/validations/validation";
+import { useMutationUpdateLoginUser } from "../../../../../commons/hooks/mutations/useMutationUpdateLoginUser";
+import { useQueryFetchLoginUser } from "../../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./UserEditBody.styles";
-// import { v4 as uuidv4 } from "uuid";
-// import Uploads01 from "../../../../../commons/uploads/01/Uploads01.container";
 
-export default function UserEditBody(props): JSX.Element {
-  // const [fileUrls, setFileUrls] = useState([""]);
+interface IFormUpdateData {
+  password: string;
+  phoneNumber: string;
+  email: string;
+  name: string;
+}
 
-  // const onChangeFileUrls = (fileUrl: string, index: number): void => {
-  //   const newFileUrls = [...fileUrls];
-  //   newFileUrls[index] = fileUrl;
-  //   setFileUrls(newFileUrls);
-  // };
+export default function UserEditBody(): JSX.Element {
+  const [updateLoginUser] = useMutationUpdateLoginUser();
+  const { data } = useQueryFetchLoginUser();
 
-  // 회원정보 입력란 react-hook-form 설정
-  const { register, handleSubmit, formState } = useForm({
-    resolver: yupResolver(schema),
+  const { register, formState, handleSubmit } = useForm({
+    resolver: yupResolver(userEditSchema),
     mode: "onChange",
   });
 
   console.log(formState);
 
+  const onClickUserUpdate = async (data: IFormUpdateData) => {
+    try {
+      const result = await updateLoginUser({
+        variables: {
+          updateLoginUserInput: {
+            password: data.password,
+            phone: data.phoneNumber,
+            name: data.name,
+            email: data.email,
+          },
+        },
+      });
+      console.log(result);
+      Modal.success({
+        content: "회원수정 완료!",
+      });
+    } catch (error) {
+      if (error instanceof Error)
+        Modal.error({
+          content: error.message,
+        });
+    }
+  };
+
   return (
     <S.Wrapper>
-      {/* 프로필 사진 */}
       <S.ProfileImgBox>
-        {/* <Uploads01
-          key={uuidv4()}
-          fileUrl={fileUrls}
-          onChangeFileUrls={onChangeFileUrls}
-        /> */}
         <S.ProfileImg src="" />
         <S.ProfileImgEdit src="/user/mypage/edit/camera.png" />
       </S.ProfileImgBox>
-
-      {/* 입력란 */}
-
-      <S.InputForm onSubmit={wrapFormAsync(handleSubmit(props.onClickSubmit))}>
-        {/* 이름 입력란 */}
-        <S.NonEditList>
+      <S.InputForm>
+        <S.EditList>
           <S.ListDetail>이름</S.ListDetail>
-          <S.DetailInput type="text" placeholder="홍길동" readOnly />
-        </S.NonEditList>
-
-        {/* 이메일 입력란 */}
-        <S.NonEditList>
-          <S.ListDetail>이메일</S.ListDetail>
-          <S.DetailInput
+          <S.ReadOnlyDetailInput
             type="text"
-            placeholder="usermail@gmail.com"
+            defaultValue={data?.fetchLoginUser.name}
             readOnly
           />
-        </S.NonEditList>
-
-        {/* 비밀번호 입력란 */}
-        <S.EditListBox>
-          <S.EditList>
-            <S.ListDetail>비밀번호</S.ListDetail>
-            <S.DetailInput
-              type="password"
-              placeholder="비밀번호를 입력해주세요."
-              {...register("password")}
-            />
-          </S.EditList>
-          {/* 비밀번호 입력란 에러메세지 */}
-          <S.AlertMessage>{formState.errors.password?.message}</S.AlertMessage>
-        </S.EditListBox>
-
-        {/* 전화번호 입력란 */}
-        <S.EditListBox>
-          <S.EditList>
-            <S.ListDetail>전화번호</S.ListDetail>
-            <S.DetailInput
-              style={{ width: "585px" }}
-              type="text"
-              placeholder="010-1234-5678"
-              {...register("phoneNumber")}
-            />
-            <S.PhoneNumAuthBtn>CLICK</S.PhoneNumAuthBtn>
-          </S.EditList>
-          {/* 전화번호 입력란 에러 메세지 */}
-          <S.AlertMessage>
-            {formState.errors.phoneNumber?.message}
-          </S.AlertMessage>
-        </S.EditListBox>
+        </S.EditList>
+        <S.EditList>
+          <S.ListDetail>이메일</S.ListDetail>
+          <S.ReadOnlyDetailInput
+            type="text"
+            defaultValue={data?.fetchLoginUser.email}
+            readOnly
+          />
+        </S.EditList>
+        <S.EditList>
+          <S.ListDetail>비밀번호</S.ListDetail>
+          <S.DetailInput
+            type="password"
+            placeholder="새로운 비밀번호를 입력해주세요."
+            {...register("password")}
+          />
+        </S.EditList>
+        <S.AlertMessage></S.AlertMessage>
+        <S.EditList>
+          <S.ListDetail>전화번호</S.ListDetail>
+          <S.DetailInput
+            style={{ color: "#4f4f4f" }}
+            type="text"
+            defaultValue={data?.fetchLoginUser.phone}
+            {...register("phoneNumber")}
+          />
+        </S.EditList>
+        <S.AlertMessage>{formState.errors.phoneNumber?.message}</S.AlertMessage>
       </S.InputForm>
+      <S.BtnWrapper onSubmit={wrapFormAsync(handleSubmit(onClickUserUpdate))}>
+        <S.EditBtn>수정하기</S.EditBtn>
+        <S.DleteUserBtn type="button">탈퇴하기</S.DleteUserBtn>
+      </S.BtnWrapper>
     </S.Wrapper>
   );
 }

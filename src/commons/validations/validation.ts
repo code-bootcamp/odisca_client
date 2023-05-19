@@ -36,3 +36,12 @@ export const schema = yup.object({
       "비밀번호는 영문, 숫자, 특수문자를 포함한 8자리 이내로 입력해주세요"
     ),
 });
+
+export const userEditSchema = yup.object({
+  // password: yup.string().nullable().required("새로운 비밀번호를 입력해주세요."),
+  phoneNumber: yup
+    .string()
+    .nullable()
+    .required("새로운 전화번호를 입력해주세요.")
+    .matches(/^(010)-\d{4}-\d{4}$/, "올바른 전화번호 형식이 아닙니다."),
+});
