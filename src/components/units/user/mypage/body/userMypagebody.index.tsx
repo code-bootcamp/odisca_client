@@ -1,4 +1,3 @@
-import { Modal } from "antd";
 import UseModal from "../../../../commons/hooks/customs/useModal";
 import Review from "../../../../commons/reviews/review.index";
 import * as S from "./userMypagebody.styles";
