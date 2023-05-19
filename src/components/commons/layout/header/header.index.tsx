@@ -6,6 +6,8 @@ import { IRsp } from "./header.type";
 import { FETCH_LOGIN_USER } from "./header.queries";
 import { useMutationCreatePointTransaction } from "../../hooks/mutations/useMutationCreatePointTransaction";
 import { useMutationDeleteAdmin } from "../../hooks/mutations/useMutationDeleteAdmin";
+import { useMutationLogOut } from "../../hooks/mutations/useMutationLogout";
+import { useRouter } from "next/router";
 
 declare const window: typeof globalThis & {
   IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
@@ -15,6 +17,7 @@ export default function LayoutHeader(): JSX.Element {
   const [open, setOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const { data } = useQuery(FETCH_LOGIN_USER);
+  const [logout] = useMutationLogOut();
 
   const showDrawer = (): void => {
     setOpen(true);
@@ -29,6 +32,13 @@ export default function LayoutHeader(): JSX.Element {
   const [price, setPrice] = useState(1000);
   const [createPointTransaction] = useMutationCreatePointTransaction();
   const [deleteAdmin] = useMutationDeleteAdmin();
+  const router = useRouter();
+
+  const onClickLogOut = async (): Promise<void> => {
+    await logout();
+    alert("로그아웃 완료되었습니다.");
+    void router.push("/user/login");
+  };
 
   const showModal = (): void => {
     setPrice(1000);
@@ -41,7 +51,7 @@ export default function LayoutHeader(): JSX.Element {
     setPrice(Number(value));
   };
 
-  const onClickDeleteAdmin = async () => {
+  const onClickDeleteAdmin = async (): Promise<void> => {
     const result = await deleteAdmin();
     console.log(result);
   };
@@ -139,7 +149,7 @@ export default function LayoutHeader(): JSX.Element {
             <S.MenuList>
               <p>회원정보</p>
               <p>스카찾기</p>
-              <p>로그아웃</p>
+              <p onClick={onClickLogOut}>로그아웃</p>
               <p onClick={onClickDeleteAdmin}>회원탈퇴</p>
             </S.MenuList>
           </S.MenuDrawer>
