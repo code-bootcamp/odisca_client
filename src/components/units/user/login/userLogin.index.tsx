@@ -33,7 +33,7 @@ export default function UserLoginPage(): JSX.Element {
     void router.push(`/user/signup`);
   };
 
-  const onClickSubmit = async (data: IFormData): void => {
+  const onClickSubmit = async (data: IFormData): Promise<void> => {
     try {
       const result = await LoginUser({
         variables: {
@@ -46,14 +46,14 @@ export default function UserLoginPage(): JSX.Element {
       console.log(data);
       const accessToken = result.data?.LoginUser;
       // setAccessToken(accessToken);
-      if (accessToken) {
-        setAccessToken(accessToken || "");
-      }
-      // if (accessToken === undefined) {
-      //   alert();
-      //   return;
+      // if (accessToken) {
+      //   setAccessToken(accessToken || "");
       // }
-      // setAccessToken(accessToken);
+      if (accessToken === undefined) {
+        alert("다시 로그인해주세요.");
+        return;
+      }
+      setAccessToken(accessToken);
       alert("로그인이 완료되었습니다!");
       // void router.push(`/main/landingPage`);
       localStorage.setItem("accessToken", accessToken);
@@ -67,35 +67,46 @@ export default function UserLoginPage(): JSX.Element {
       <S.Wrapper>
         <S.SignUpWrapper>
           <S.SignUpTitle>아직 회원이 아니신가요?</S.SignUpTitle>
-          <S.SignUpButton onClick={onClickMoveSignUp}>SIGNUP</S.SignUpButton>
+          <S.SignUpButton onClick={onClickMoveSignUp}>
+            회원가입하기
+          </S.SignUpButton>
         </S.SignUpWrapper>
         <S.LogInWrapper>
           {/* login form */}
           <S.LogInWrapperContainer
             onSubmit={wrapFormAsync(handleSubmit(onClickSubmit))}
           >
-            <S.LoginTitle>LOGIN</S.LoginTitle>
+            <S.TitleWrapper>
+              <S.LoginTitle>로그인</S.LoginTitle>
+            </S.TitleWrapper>
             <S.InputContainer>
               <S.LogInInputBox>
-                <S.LogInInputTitle>EMAIL</S.LogInInputTitle>
-                <S.LogInInput
-                  type="text"
-                  placeholder="email을 입력해주세요."
-                  {...register("email")}
-                ></S.LogInInput>
+                <S.LogInInputTitle>email</S.LogInInputTitle>
+                <S.InputWrapper>
+                  <S.LogInInput
+                    type="text"
+                    placeholder="이메일을 입력해주세요."
+                    {...register("email")}
+                  ></S.LogInInput>
+                  <S.ErrorMessage>
+                    {formState.errors.email?.message}
+                  </S.ErrorMessage>
+                </S.InputWrapper>
               </S.LogInInputBox>
-              <S.ErrorMessage>{formState.errors.email?.message}</S.ErrorMessage>
+
               <S.LogInInputBox>
-                <S.LogInInputTitle>PASS</S.LogInInputTitle>
-                <S.LogInInput
-                  type="password"
-                  placeholder="비밀번호를 입력해주세요."
-                  {...register("password")}
-                ></S.LogInInput>
+                <S.LogInInputTitle>password</S.LogInInputTitle>
+                <S.InputWrapper>
+                  <S.LogInInput
+                    type="password"
+                    placeholder="비밀번호를 입력해주세요."
+                    {...register("password")}
+                  ></S.LogInInput>
+                  <S.ErrorMessage>
+                    {formState.errors.password?.message}
+                  </S.ErrorMessage>
+                </S.InputWrapper>
               </S.LogInInputBox>
-              <S.ErrorMessage>
-                {formState.errors.password?.message}
-              </S.ErrorMessage>
             </S.InputContainer>
             <S.ButtonContainer>
               <S.CancelButton type="button">CANCEL</S.CancelButton>

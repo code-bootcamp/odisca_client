@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { ChangeEvent, useState } from "react";
 import { ISeat, IStyle } from "./mapEditor.Type";
+import * as S from "./mapEditor.Body.style";
+import { useRouter } from "next/router";
 
 export default function MapEditor(): JSX.Element {
   const [inputX, setInputX] = useState(0); // x축 범위
@@ -13,9 +15,10 @@ export default function MapEditor(): JSX.Element {
   const [mapArray, setMapArray] = useState<number[][]>([]); // 맵을 화면에 올리기 위한 2중 배열
   const [seatArray, setSeatArray] = useState<any[]>([]); // 나중에 백엔드로 보내줄 객체들 추가하는 배열, 객체 안 속성들의 타입 지정 필요
   const [size, setSize] = useState<number[][]>([]); // 좌석 사이즈를 나타내는 배열
-  const [seatLength, setSeatLength] = useState(0);
+  const [, setSeatLength] = useState(0);
   const [seatCount, setSeatCount] = useState(1);
   const [positionState, setPositionState] = useState(0); // 좌석 특성 저장하는 데이터
+  const router = useRouter();
   const onChangeMapX = (event: ChangeEvent<HTMLInputElement>): void => {
     setInputX(Number(event.target.value));
   };
@@ -23,6 +26,14 @@ export default function MapEditor(): JSX.Element {
     setInputY(Number(event.target.value));
   };
   const onClickMap = (): void => {
+    if (isNaN(inputY) && isNaN(inputY)) {
+      alert("숫자만 입력해주세요.");
+      return;
+    }
+    if (inputY > 40 || inputX > 40) {
+      alert("40이하의 숫자를 입력해주세요");
+      return;
+    }
     setSeatArray([]);
     setStateX(inputX);
     setStateY(inputY);
@@ -85,7 +96,7 @@ export default function MapEditor(): JSX.Element {
               return 1;
             });
             setMapArray(newMap);
-            setSeatLength((prev) => prev - 1);
+            // setSeatLength((prev) => prev - 1);
           }
           return answer;
         }),
@@ -142,42 +153,11 @@ export default function MapEditor(): JSX.Element {
     setMapArray([...newMapArray]);
     setPositionState(0);
     setSize([]);
-    setSeatLength((prev) => prev + 1);
+    // setSeatLength((prev) => prev + 1);
     setIsHover(false);
     setHoverSize([0, 0]);
     setHoverPosition([0, 0]);
   };
-
-  const Pixel = styled.div`
-    width: 20px;
-    height: 20px;
-    border: 0.5px solid #e4e4e4;
-  `;
-
-  const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  `;
-
-  const Box = styled.div`
-    position: absolute;
-    top: 300px;
-    left: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 0.5px solid black;
-    z-index: 0;
-  `;
-  const Box2 = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  `;
 
   const SizeChecker = styled.div`
     width: ${String(hoverSize[0] * 20) + "px"};
@@ -185,16 +165,13 @@ export default function MapEditor(): JSX.Element {
     z-index: -1;
     position: absolute;
 
+    ${stateY > hoverPosition[1] + hoverSize[1] - 1 ? "" : "display : none"};
+    ${stateX > hoverPosition[0] + hoverSize[0] - 1 ? "" : "display : none"};
+
     top: ${String(300 + hoverPosition[1] * 20) + "px"};
     left: ${String(200 + hoverPosition[0] * 20) + "px"};
     background-color: gray;
   `;
-  /* top: ${stateY > hoverPosition[1] + 1
-            ? 90 + hoverPosition[1] * 20 + "px"
-            : 90 + 20 * (hoverPosition[1] - 1) + "px"};
-        left: ${stateX > hoverPosition[0] + 1
-            ? 90 + hoverPosition[0] * 20 + "px"
-            : 90 + 20 * (hoverPosition[0] - 1) + "px"}; */
   const onHoverTrue = (x: number, y: number) => () => {
     if (isHover) {
       setHoverPosition([x, y]);
@@ -224,6 +201,30 @@ export default function MapEditor(): JSX.Element {
     return result;
   };
 
+  const onClickSave = (): void => {
+    setSeatLength(seatArray.length);
+    const input = seatArray.map((el, index) => {
+      const seat = {
+        seats: el.seats,
+        status: el.status,
+        number: index + 1,
+      };
+      return seat;
+    });
+    console.log(
+      "X : ",
+      stateX,
+      "Y : ",
+      stateY,
+      "좌표 : ",
+      input,
+      "좌석 수 :",
+      seatArray.length,
+      "cafeId:",
+      router.query.Id
+    );
+  };
+
   return (
     <>
       X:
@@ -235,26 +236,27 @@ export default function MapEditor(): JSX.Element {
       <button onClick={onClick2X2}>2X2</button>
       <button onClick={onClick1X2}>1X2</button>
       <button onClick={onClickDeleteMap}>전체 삭제</button>
-      <Container>
-        <Box>
+      <button onClick={onClickSave}>저장하기</button>
+      <S.Container>
+        <S.Box>
           {mapArray.map((el, indY) => {
             return (
-              <Box2 key={String(el) + String(indY)}>
+              <S.Box2 key={String(el) + String(indY)}>
                 {el.map((ele, indX) => {
                   return (
-                    <Pixel
+                    <S.Pixel
                       onClick={onClickCenter(indX, indY)}
                       style={image(ele, indX, indY)}
                       onMouseEnter={onHoverTrue(indX, indY)}
                       key={String(el) + String(ele)}
-                    ></Pixel>
+                    ></S.Pixel>
                   );
                 })}
-              </Box2>
+              </S.Box2>
             );
           })}
-        </Box>
-      </Container>
+        </S.Box>
+      </S.Container>
       {isHover ? <SizeChecker></SizeChecker> : <></>}
     </>
   );

@@ -18,7 +18,7 @@ export const SignUpWrapper = styled.div`
 `;
 
 export const SignUpTitle = styled.h1`
-  margin-bottom: 5%;
+  margin-bottom: 80px;
   font-size: 64px;
   font-weight: 900;
   color: #4f4f4f;
@@ -56,6 +56,7 @@ export const LoginTitle = styled.h1`
   font-weight: 900;
   color: #ffffff;
   margin-bottom: 7%;
+  margin-left: 80px;
 `;
 
 export const InputContainer = styled.div`
@@ -69,30 +70,41 @@ export const InputContainer = styled.div`
 export const LogInInputBox = styled.div`
   width: 600px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+`;
+
+export const LogInInputDetail = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 13px;
 `;
 
 export const LogInInputTitle = styled.div`
   font-size: 27px;
   font-weight: 400;
   color: #ffffff;
+  line-height: 55px;
 `;
 export const LogInInput = styled.input`
   width: 500px;
   height: 54px;
   border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
   background-color: #f7f7f7;
-  border: none;
-  font-size: 27px;
+  border: 1px solid #f7f7f7;
+  font-size: 18px;
   font-weight: 600;
-  padding-left: 2%;
+  padding-left: 10px;
+  :focus {
+    outline: 2px solid #40e0d0;
+  }
 `;
 
 export const ErrorMessage = styled.div`
+  margin-left: 105px;
   font-size: 14px;
   font-weight: 400;
-  color: #7744aa;
+  color: #fff;
 `;
 
 export const ButtonContainer = styled.div`
@@ -101,7 +113,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 5% 0;
+  margin: 5% 0px 5% 80px;
 `;
 
 export const CancelButton = styled.button`
@@ -130,7 +142,7 @@ export const SessionLoginContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 5% 0;
+  margin: 5% 0px 5% 80px;
 `;
 
 export const FindContainer = styled.div`
@@ -139,10 +151,12 @@ export const FindContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left: 80px;
 `;
 
-export const FindButton = styled.div`
+export const FindButton = styled.a`
   font-size: 16px;
   font-weight: 400;
   color: #ffffff;
+  cursor: pointer;
 `;

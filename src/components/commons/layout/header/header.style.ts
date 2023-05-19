@@ -67,16 +67,22 @@ export const MenuIcon = styled.div`
 // drawer의 메뉴 리스트 속성 바꾸는 코드
 export const MenuList = styled.div`
   p {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: #4f4f4f;
+    font-weight: 600;
     font-size: 18px;
+    transition: margin-left 0.3s ease;
+    :hover {
+      margin-left: 30px;
+    }
+    cursor: pointer;
   }
 `;
 
 // drawer의 title 속성 바꾸는 코드
 export const MenuDrawer = styled(Drawer)`
   .ant-drawer-title {
-    font-size: 20px;
+    font-size: 25px;
   }
 `;
 

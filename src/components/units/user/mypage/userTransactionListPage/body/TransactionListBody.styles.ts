@@ -1,17 +1,16 @@
 import styled from "@emotion/styled";
 import { Modal } from "antd";
 
+export const Body = styled.main`
+  display: flex;
+  justify-content: center;
+`;
+
 export const Wrapper = styled.aside`
   width: 1000px;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-`;
-
-export const Title = styled.a`
-  font-size: 18px;
-  color: #828282;
-  margin: 35px 0 20px 0;
+  margin-top: 70px;
 `;
 
 export const ReservationWrapper = styled.main`
@@ -52,18 +51,24 @@ export const SeatInfo = styled.div`
   font-size: 15px;
 `;
 
+export const Point = styled.div`
+  font-weight: 600;
+  font-size: 15px;
+  color: #4f4f4f;
+  margin: 10px 0px 30px 0px;
+`;
+
+export const Date = styled.div`
+  font-size: 13px;
+  color: #4f4f4f;
+`;
+
 export const Bottom = styled.div`
   width: calc(1000px - 356px);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: end;
-`;
-
-export const RemainingTime = styled.div`
-  color: #828282;
-  font-size: 15px;
-  margin-right: 10px;
 `;
 
 export const Btn = styled.button`
@@ -78,19 +83,4 @@ export const Btn = styled.button`
   margin-right: 9px;
 `;
 
-export const ReviewModal = styled(Modal)`
-  .ant-modal-content {
-    width: 800px;
-    height: 900px;
-  }
-  /* .ant-modal-header {
-    background-color: red;
-    // 다른 헤더 스타일 속성을 추가로 설정할 수 있습니다.
-  } */
-
-  .ant-modal-body {
-    /* height: 180px;
-    background-color: rgba(64, 224, 208, 0.3); */
-    // 모달 본문의 스타일을 설정할 수 있습니다.
-  }
-`;
+export const CancelPaymentModal = styled(Modal)``;
