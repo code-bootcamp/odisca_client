@@ -1,5 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { useRecoilState } from "recoil";
+import { imageUrlsState } from "../../../../commons/stores";
+import * as D from "../../../units/user/mypage/userEditpage/body/UserEditBody.styles";
 
 interface MyDropzoneReturn {
   getRootProps: <T extends DropzoneRootProps>(props?: T) => T;
@@ -18,10 +21,12 @@ export interface DropzoneInputProps
   refKey?: string;
 }
 
-function MyDropzone(): MyDropzoneReturn {
+function MyDropzone(): JSX.Element {
+  const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
+
   const [imageDataArray, setImageDataArray] = useState([]);
   const onDrop = useCallback((acceptedFiles) => {
-    acceptedFiles.forEach((file) => {
+    acceptedFiles.forEach((file: any) => {
       const reader = new FileReader();
       reader.onload = (event) => {
         const arrayBuffer = reader.result;
@@ -35,18 +40,48 @@ function MyDropzone(): MyDropzoneReturn {
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  const imageUrls = imageDataArray.map((imageData, index) =>
-    URL.createObjectURL(new Blob([imageData]))
-  );
+  // const imageUrls = imageDataArray.map((imageData, index) =>
+  //   URL.createObjectURL(new Blob([imageData]))
+  // );
+  // setImageUrls(updatedImageUrls);
 
+  useEffect(() => {
+    const updatedImageUrls = imageDataArray.map((imageData, index) =>
+      URL.createObjectURL(new Blob([imageData]))
+    );
+
+    // Recoil 상태 업데이트
+    setImageUrls(updatedImageUrls);
+  }, [imageDataArray, setImageUrls]);
   const previewImagesJsonString = JSON.stringify(imageUrls);
 
-  return [
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    previewImagesJsonString,
-    imageUrls,
-  ];
+  console.log(previewImagesJsonString);
+
+  // const myDropzoneReturn: MyDropzoneReturn = {
+  //   getRootProps,
+  //   getInputProps,
+  //   isDragActive,
+  //   previewImages: previewImagesJsonString,
+  //   imageUrls,
+  // };
+
+  // return [
+  //   getRootProps,
+  //   getInputProps,
+  //   isDragActive,
+  //   previewImagesJsonString,
+  //   imageUrls,
+  // ];
+
+  return (
+    <>
+      <D.ProfileImgBox {...getRootProps()}>
+        <input {...getInputProps()} />
+        <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
+        <D.ProfileImg src={JSON.parse(previewImagesJsonString)}></D.ProfileImg>
+      </D.ProfileImgBox>
+      {/* <D.ProfileImg src={JSON.parse(previewImagesJsonString)}></D.ProfileImg> */}
+    </>
+  );
 }
 export default MyDropzone;

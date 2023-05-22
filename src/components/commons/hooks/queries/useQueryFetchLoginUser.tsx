@@ -14,7 +14,7 @@ export const FETCH_LOGIN_USER = gql`
       user_email
       user_phone
       user_point
-      user_image
+      # user_image
     }
   }
 `;

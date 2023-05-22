@@ -19,12 +19,12 @@ interface IFormUpdateData {
 }
 
 export default function UserEditBody(props): JSX.Element {
-  // const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
+  const [imageUrls] = useRecoilState(imageUrlsState);
   // const [files, setFiles] = useRecoilState<File[]>(filesState);
   const [updateLoginUser] = useMutationUpdateLoginUser();
   const { data } = useQueryFetchLoginUser();
-  const [getRootProps, getInputProps, , previewImagesJsonString, imageUrls] =
-    MyDropzone();
+  // const [getRootProps, getInputProps, , previewImagesJsonString, imageUrls] =
+  //   MyDropzone();
 
   const { register, formState, handleSubmit } = useForm({
     resolver: yupResolver(userEditSchema),
@@ -44,7 +44,7 @@ export default function UserEditBody(props): JSX.Element {
     });
 
     const previewImagesJsonString1 = JSON.stringify(previewImagesBase64);
-    console.log(previewImagesJsonString1);
+    console.log(previewImagesJsonString1, "dddd");
 
     try {
       const result = await updateLoginUser({
@@ -69,15 +69,15 @@ export default function UserEditBody(props): JSX.Element {
     }
   };
   // console.log(previewImagesJsonString);
-
+  console.log(data?.fetchLoginUser.user_name, "ddddddddkdk");
   return (
     <S.Wrapper>
-      <S.ProfileImgBox {...getRootProps([])}>
-        <input {...getInputProps()} />
-        <S.ProfileImg src={JSON.parse(previewImagesJsonString)} />
-        <S.ProfileImgEdit src="/user/mypage/edit/camera.png" />
-        <MyDropzone />
-      </S.ProfileImgBox>
+      {/* <S.ProfileImgBox {...getRootProps()}> */}
+      {/* <input {...getInputProps()} /> */}
+      {/* <S.ProfileImg /> */}
+      {/* <S.ProfileImgEdit src="/user/mypage/edit/camera.png" /> */}
+      <MyDropzone />
+      {/* </S.ProfileImgBox> */}
       <S.InputForm>
         <S.EditList>
           <S.ListDetail>이름</S.ListDetail>
