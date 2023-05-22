@@ -12,6 +12,7 @@ export const signUpSchema = yup.object({
     .string()
     .oneOf([yup.ref("password"), ""], "비밀번호와 일치하지 않습니다.")
     .required("비밀번호를 확인해주세요"),
+
   email: yup
     .string()
     .email("이메일 형식에 적합하지 않습니다.")

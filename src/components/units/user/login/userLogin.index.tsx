@@ -14,7 +14,7 @@ interface IFormData {
 }
 
 const LOG_IN = gql`
-  mutation LoginUser($loginInput: LoginInput!) {
+  mutation LoginUser($loginInput: LoginUserInput!) {
     LoginUser(loginInput: $loginInput)
   }
 `;
@@ -38,8 +38,8 @@ export default function UserLoginPage(): JSX.Element {
       const result = await LoginUser({
         variables: {
           loginInput: {
-            email: data.email,
-            password: data.password,
+            user_email: data.email,
+            user_password: data.password,
           },
         },
       });

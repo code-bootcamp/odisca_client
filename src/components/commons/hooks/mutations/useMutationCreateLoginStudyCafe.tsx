@@ -6,6 +6,9 @@ export const CREATE_LOGIN_STUDY_CAFE = gql`
       id
       # name
       # address
+      # addressDetail
+      # city
+      # district
       # contact
       # timeFee
       # description
@@ -14,14 +17,9 @@ export const CREATE_LOGIN_STUDY_CAFE = gql`
       # lat
       # lon
       # brn
-      # seatCount
-      # floorPlanX
-      # floorPlanY
       # administer {
       # id
       # name
-      # email
-      # password
       # }
     }
   }

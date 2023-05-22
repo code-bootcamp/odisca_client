@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { PlusCircleOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 
 export const Wrapper = styled.div`
@@ -86,6 +85,11 @@ export const AddressLabel = styled.label`
   color: #4f4f4f;
 `;
 
+export const LabelDetail = styled.span`
+  margin-left: 10px;
+  font-weight: 600;
+`;
+
 export const AddressInputBox = styled.div`
   width: 100%;
   margin-left: 55px;
@@ -163,16 +167,6 @@ export const ImageSection = styled.div`
 // `;
 export const ImageListBox = styled.div`
   display: flex;
-  flex-direction: column;
-`;
-export const ImageListOne = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding-bottom: 20px;
-`;
-export const ImageListTwo = styled.div`
-  display: flex;
-  flex-direction: row;
 `;
 
 export const ImageBox = styled.div`
@@ -186,8 +180,35 @@ export const ImageBox = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  position: relative;
 `;
-export const Icon = styled(PlusCircleOutlined)``;
+
+export const CafeImg = styled.img`
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  border: none;
+`;
+
+export const MainImgCheckBtn = styled.input`
+  position: absolute;
+  left: 8px;
+  top: 8px;
+`;
+
+export const ImageInput = styled.input`
+  display: none;
+`;
+
+export const PlusIcon = styled.button`
+  width: 100%;
+  height: 100%;
+  border: none;
+  color: #4f4f4f;
+  background-color: #f7f7f7;
+  cursor: pointer;
+`;
+
 export const SectionBottom = styled.section`
   width: 100%;
   display: flex;
