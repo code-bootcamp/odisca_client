@@ -1,15 +1,26 @@
+// 라이브러리
 import DaumPostcodeEmbed from "react-daum-postcode";
-import { yupResolver } from "@hookform/resolvers/yup";
+
+// hooks
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
-import { cafeWriteSchema } from "../../../../commons/writeValidation/validation";
 import UseModal from "../../../commons/hooks/customs/useModal";
 import { useMutationCreateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationCreateLoginStudyCafe";
+import { useMutationUpdateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationUpdateLoginStudyCafe";
+import { useQueryFetchLoginAdminister } from "../../../commons/hooks/queries/useQueryFetchLoginAdminister";
+
+// 검증 및 설정
+import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
+import { cafeWriteSchema } from "../../../../commons/writeValidation/validation";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+// components
 import * as S from "./adminWrite.styles";
 import OperatingTime from "../../../commons/operatingTimeSelection/operatingTimeSelect.index";
+import { useMutationUploadImageFile } from "../../../commons/hooks/mutations/useMutationUploadLoginImageFile";
 
+// 등록 사항들 타입 지정
 interface IFormValues {
   name: string;
   contact: string;
@@ -26,9 +37,14 @@ declare const window: typeof globalThis & {
   kakao: any;
 };
 
-export default function AdminWrite(): JSX.Element {
+export default function AdminWrite(props): JSX.Element {
+  // useModal 사용
   const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
+
+  // router
   const router = useRouter();
+
+  // useState
   const [zipcode, setZipcode] = useState("");
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
@@ -38,8 +54,23 @@ export default function AdminWrite(): JSX.Element {
   const [lon, setLon] = useState("");
   const [openTime, setOpenTime] = useState("");
   const [closeTime, setCloseTime] = useState("");
-  const [createLoginStudyCafe] = useMutationCreateLoginStudyCafe();
+  const [imageUrls, setImageUrls] = useState(["", "", "", "", ""]);
+  const [files, setFiles] = useState([]);
+  const [imageButtonArray] = useState(["", "", "", "", ""]);
+  const [isMain, setIsMain] = useState(false);
 
+  // useRef
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  // useMutation(admin 등록)
+  const [createLoginStudyCafe] = useMutationCreateLoginStudyCafe();
+  const [updateLoginStudyCafe] = useMutationUpdateLoginStudyCafe();
+  const [uploadImageFile] = useMutationUploadImageFile();
+
+  // useQuery
+  const { data: fetchAdministerData } = useQueryFetchLoginAdminister();
+
+  // kakao map 사용해서 daumpostcode에서 선택한 주소의 위도와 경도 데이터 추출
   useEffect(() => {
     const script = document.createElement("script"); // script tag 만들기
     script.src =
@@ -58,9 +89,9 @@ export default function AdminWrite(): JSX.Element {
         const map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
 
         const geocoder = new window.kakao.maps.services.Geocoder();
-        // 주소-좌표 변환 객체를 생성합니다
+        // 주소-좌표 변환 객체 생성
         geocoder.addressSearch(`${address}`, function (result, status) {
-          // 주소로 좌표를 검색합니다
+          // 주소로 좌표 검색
 
           // 정상적으로 검색이 완료됐으면
           if (status === window.kakao.maps.services.Status.OK) {
@@ -76,28 +107,33 @@ export default function AdminWrite(): JSX.Element {
     };
   }, [address, lon, lat]);
 
+  // useForm 사용
   const { handleSubmit, register, formState } = useForm({
     mode: "onChange",
     resolver: yupResolver(cafeWriteSchema),
   });
   // const { onClickCafeSubmit } = useCreateLoginStudyCafe({});
 
+  // AddressDetail 입력값
   const AddressDetailInput = (event: ChangeEvent<HTMLInputElement>): void => {
     setAddressDetail(event.target.value);
   };
 
+  // openTime Select
   const onChangeSelectOpenTime = (
     event: ChangeEvent<HTMLSelectElement>
   ): void => {
     setOpenTime(event?.target.value);
   };
 
+  // CloseTime Select
   const onChangeSelectCloseTime = (
     event: ChangeEvent<HTMLSelectElement>
   ): void => {
     setCloseTime(event?.target.value);
   };
 
+  // daumpostcode에서 주소 검색 완료 시 로직
   const onCompleteAddressSearch = (AddressData): void => {
     handleCancel();
     setZipcode(AddressData.zonecode);
@@ -107,39 +143,39 @@ export default function AdminWrite(): JSX.Element {
     console.log(AddressData);
   };
 
+  // + 버튼 클릭 시 이미지 파일 업로드
+  const onClickUpload = (): void => {
+    fileRef.current?.click();
+  };
+
+  // 등록하기 버튼 눌렀을 때(admin 등록)
   const onClickCafeSubmit = async (data: IFormValues): Promise<void> => {
+    const results = await Promise.all(
+      files.map((el) => el && uploadImageFile({ variables: { images: el } }))
+    );
+    console.log(results);
+    const resultUrls = results.map((el) =>
+      el ? el.data?.uploadImageFile : ""
+    );
+
     try {
-      console.log(
-        data,
-        address,
-        addressDetail,
-        city,
-        district,
-        openTime,
-        closeTime,
-        lat,
-        lon
-      );
       const result = await createLoginStudyCafe({
         variables: {
           createStudyCafeInput: {
-            name: data.name,
-            address,
-            addressDetail,
-            city,
-            district,
-            contact: data.contact,
-            timeFee: Number(data.timeFee),
-            description: String(data.description),
-            openTime,
-            closeTime,
-            lat: Number(lat),
-            lon: Number(lon),
-            brn: data.brn,
-            // image: [
-            //   url: ,
-            //   isMain: ,
-            // ]
+            studyCafe_name: data.name,
+            studyCafe_address: address,
+            studyCafe_addressDetail: addressDetail,
+            studyCafe_city: city,
+            studyCafe_district: district,
+            studyCafe_contact: data.contact,
+            studyCafe_timeFee: Number(data.timeFee),
+            studyCafe_description: String(data.description),
+            studyCafe_openTime: openTime,
+            studyCafe_closeTime: closeTime,
+            studyCafe_lat: Number(lat),
+            studyCafe_lon: Number(lon),
+            studyCafe_brn: data.brn,
+            image: { image_url: results, image_isMain: isMain },
           },
         },
       });
@@ -150,6 +186,70 @@ export default function AdminWrite(): JSX.Element {
     }
   };
 
+  const onChangeFile = () => async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file === undefined) return;
+
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = (event) => {
+      if (typeof event.target?.result === "string") {
+        const newTemp = [...imageUrls.filter((el) => el !== "")];
+        newTemp.push(event.target?.result);
+        while (newTemp.length < 5) {
+          newTemp.push("");
+        }
+
+        console.log(newTemp, "newTemp");
+        setImageUrls(newTemp);
+
+        const tempFiles = [...files.filter((el) => el !== "")];
+        tempFiles.push(event.target?.result);
+        while (tempFiles.length < 5) {
+          tempFiles.push("");
+        }
+        setFiles(tempFiles);
+        console.log(tempFiles, "tempFiles");
+      }
+    };
+  };
+
+  // 수정하기 버튼 눌렀을 때(admin 수정)
+  const onClickUpdateCafe = async (data: IFormValues) => {
+    try {
+      const updateResult = await updateLoginStudyCafe({
+        variables: {
+          updateStudyCafeInput: {
+            studyCafe_name: data.name,
+            studyCafe_address: address,
+            studyCafe_addressDetail: addressDetail,
+            studyCafe_city: city,
+            studyCafe_district: district,
+            studyCafe_contact: data.contact,
+            studyCafe_timeFee: Number(data.timeFee),
+            studyCafe_description: String(data.description),
+            studyCafe_openTime: openTime,
+            studyCafe_closeTime: closeTime,
+            studyCafe_lat: Number(lat),
+            studyCafe_lon: Number(lon),
+            studyCafe_brn: data.brn,
+            image: { image_url: results, image_isMain: isMain },
+          },
+        },
+      });
+      console.log(updateResult);
+      router.push(`/admin/${updateResult.data?.updateLoginStudyCafe.id}`);
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
+  };
+
+  // 이미지 등록 시 메인 이미지 설정
+  const onChangeCheckMain = (event: ChangeEvent<HTMLInputElement>): void => {
+    setIsMain(true);
+  };
+
+  // return 값
   return (
     <form
       onSubmit={
@@ -169,7 +269,11 @@ export default function AdminWrite(): JSX.Element {
             <S.LabelBox>
               <S.Label>대표자명</S.Label>
             </S.LabelBox>
-            <S.Input type="text" placeholder="ex) 홍길동" />
+            <S.Input
+              type="text"
+              readOnly
+              defaultValue={fetchAdministerData?.fetchLoginAdminister.name}
+            />
           </S.InputBox>
           <S.InputBox>
             <S.LabelBox>
@@ -179,7 +283,7 @@ export default function AdminWrite(): JSX.Element {
               type="text"
               placeholder="ex) 000-000-000"
               {...register("brn")}
-              // defaultvalue={data?.fetchLoginStudyCafe.brn}
+              value={props.data?.fetchStudyCafe.brn}
             />
             <S.Error>{formState.errors.brn?.message}</S.Error>
           </S.InputBox>
@@ -189,7 +293,11 @@ export default function AdminWrite(): JSX.Element {
             <S.LabelBox>
               <S.Label>업체명</S.Label>
             </S.LabelBox>
-            <S.Input type="text" {...register("name")} />
+            <S.Input
+              type="text"
+              {...register("name")}
+              Value={props.data?.fetchStudyCafe.name}
+            />
             <S.Error>{formState.errors.name?.message}</S.Error>
           </S.InputBox>
         </S.SectionBox>
@@ -198,7 +306,11 @@ export default function AdminWrite(): JSX.Element {
             <S.LabelBox>
               <S.Label>연락처</S.Label>
             </S.LabelBox>
-            <S.Input type="text" {...register("contact")} />
+            <S.Input
+              type="text"
+              {...register("contact")}
+              defaultValue={props.data?.fetchStudyCafe.contact}
+            />
             <S.Error>{formState.errors.contact?.message}</S.Error>
           </S.InputBox>
         </S.SectionBox>
@@ -229,11 +341,16 @@ export default function AdminWrite(): JSX.Element {
               )}
             </S.AddressZip>
             <S.AddressBox>
-              <S.Address type="text" value={address} readOnly />
+              <S.Address
+                type="text"
+                readOnly
+                value={address}
+                defaultValue={props.data?.fetchStudyCafe.address}
+              />
               <S.Address
                 placeholder="상세주소를 입력해주세요."
                 type="text"
-                defaultValue={addressDetail}
+                defaultValue={props.data?.fetchStudyCafe.addressDetail}
                 onChange={AddressDetailInput}
               />
             </S.AddressBox>
@@ -245,6 +362,7 @@ export default function AdminWrite(): JSX.Element {
               <S.Label>영업시간</S.Label>
             </S.LabelBox>
             <OperatingTime
+              data={props.data}
               onChangeSelectOpenTime={onChangeSelectOpenTime}
               onChangeSelectCloseTime={onChangeSelectCloseTime}
             />
@@ -253,27 +371,61 @@ export default function AdminWrite(): JSX.Element {
         {/* </S.SectionTop> */}
         <S.SectionMiddle>
           <S.ImageSection>
-            <S.Label>카페 내부 사진</S.Label>
+            <S.Label>
+              카페 내부 사진
+              <S.LabelDetail>
+                (메인으로 올라갈 사진 한 장을 체크해주세요!)
+              </S.LabelDetail>
+            </S.Label>
+
             <S.ImageListBox>
-              <S.ImageListOne>
+              {imageButtonArray.map((el, index) => {
+                console.log(el, "contents");
+                return (
+                  <S.ImageBox key={el}>
+                    {imageUrls[index] !== "" ? (
+                      <>
+                        <S.CafeImg
+                          src={imageUrls[index]}
+                          onClick={onClickUpload}
+                        />
+                        <S.MainImgCheckBtn
+                          type="radio"
+                          onChange={onChangeCheckMain}
+                          name="check"
+                        />
+                      </>
+                    ) : (
+                      <S.PlusIcon type="button" onClick={onClickUpload}>
+                        +
+                      </S.PlusIcon>
+                    )}
+                    <S.ImageInput
+                      type="file"
+                      onChange={onChangeFile()}
+                      accept="image/jpeg,image/png"
+                      ref={fileRef}
+                    />
+                  </S.ImageBox>
+                );
+              })}
+              {/* 
                 <S.ImageBox>
-                  <S.Icon />
+                  {imageUrls[0] ? (
+                    <S.CafeImg src={imageUrls[0]} onClick={onClickUpload} />
+                  ) : (
+                    <S.PlusIcon type="button" onClick={onClickUpload}>
+                      +
+                    </S.PlusIcon>
+                  )}
+                  <S.ImageInput
+                    type="file"
+                    onChange={onChangeFile(0)}
+                    accept="image/jpeg,image/png"
+                    ref={fileRef}
+                  />
                 </S.ImageBox>
-                <S.ImageBox>
-                  <S.Icon />
-                </S.ImageBox>
-              </S.ImageListOne>
-              <S.ImageListTwo>
-                <S.ImageBox>
-                  <S.Icon />
-                </S.ImageBox>
-                <S.ImageBox>
-                  <S.Icon />
-                </S.ImageBox>
-                <S.ImageBox>
-                  <S.Icon />
-                </S.ImageBox>
-              </S.ImageListTwo>
+                */}
             </S.ImageListBox>
           </S.ImageSection>
         </S.SectionMiddle>
@@ -284,19 +436,24 @@ export default function AdminWrite(): JSX.Element {
               <S.Hour>시간 당</S.Hour>
               <S.Input
                 type="text"
-                placeholder="ex) 3,000원"
+                placeholder="ex) 3,000"
                 {...register("timeFee")}
+                defaultValue={props.data?.fetchStudyCafe.timeFee}
               />
               <S.Error>{formState.errors.timeFee?.message}</S.Error>
             </S.InputBox>
           </S.SectionBox>
           <S.SectionBox>
             <S.Label>이용안내 및 설명</S.Label>
-            <S.Notice type="text" {...register("description")} />
+            <S.Notice
+              type="text"
+              {...register("description")}
+              defaultValue={props.data?.fetchStudyCafe.description}
+            />
           </S.SectionBox>
         </S.SectionBottom>
         <S.Footer>
-          <S.Btn>등록하기</S.Btn>
+          <S.Btn>{props.isEdit ? "수정" : "등록"}하기</S.Btn>
           <S.Btn type="button">취소하기</S.Btn>
         </S.Footer>
       </S.Wrapper>

@@ -7,7 +7,7 @@ import {
 export const CREATE_USER = gql`
   mutation createUser($createUserInput: CreateUserInput!) {
     createUser(createUserInput: $createUserInput) {
-      id
+      user_id
     }
   }
 `;
