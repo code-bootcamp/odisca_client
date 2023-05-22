@@ -18,7 +18,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import * as S from "./adminWrite.styles";
 import OperatingTime from "../../../commons/operatingTimeSelection/operatingTimeSelect.index";
-import { useMutationUploadImageFile } from "../../../commons/hooks/mutations/useMutationUploadLoginImageFile";
+import { useMutationUploadImageFile } from "../../../commons/hooks/mutations/useMutationUploadImageFile";
 
 // 등록 사항들 타입 지정
 interface IFormValues {
