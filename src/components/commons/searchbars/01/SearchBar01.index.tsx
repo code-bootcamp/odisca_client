@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Select } from "antd";
+
 import * as S from "./SearchBar.styles";
 import { useRouter } from "next/router";
 
@@ -111,7 +111,8 @@ export default function SearchBar01(): JSX.Element {
   return (
     <>
       <S.SearchBar>
-        <Select
+        <S.SelectBox
+          className="select"
           defaultValue={provinceData[0]}
           style={{ marginRight: "10px" }}
           onChange={handleProvinceChange}
@@ -120,7 +121,7 @@ export default function SearchBar01(): JSX.Element {
             value: province,
           }))}
         />
-        <Select
+        <S.SelectBox
           style={{ width: "80px" }}
           value={secondCity}
           onChange={onSecondCityChange}
