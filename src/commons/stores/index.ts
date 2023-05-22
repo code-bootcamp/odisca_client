@@ -22,7 +22,7 @@ export const restoreAccessTokenLoadable = selector({
 
 export const imageUrlsState = atom({
   key: "imageUrlsState",
-  default: ["", "", ""],
+  default: [""],
 });
 
 export const filesState = atom<File[]>({
