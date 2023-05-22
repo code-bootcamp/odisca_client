@@ -1,15 +1,15 @@
 import { QueryResult, gql, useQuery } from "@apollo/client";
-import { IQuery, IStudyCafe } from "../../../../commons/types/generated/types";
+import { IStudyCafe } from "../../../../commons/types/generated/types";
 
 interface IFetchStudyCafeQueryResult
   extends Omit<
-    QueryResult<Pick<IQuery, "fetchStudyCafe">, IStudyCafe>,
+    QueryResult<{ fetchOneStudyCafe: IStudyCafe }, { studyCafe_id: string }>,
     "refetch"
   > {
   refetch: () => Promise<void>;
 }
 
-export const FETCH_STUDY_CAFE = gql`
+export const FETCH_ONE_STUDY_CAFE = gql`
   query fetchOneStudyCafe($studyCafe_id: String!) {
     fetchOneStudyCafe(studyCafe_id: $studyCafe_id) {
       studyCafe_id
@@ -35,13 +35,16 @@ export const FETCH_STUDY_CAFE = gql`
   }
 `;
 
-export const useQueryFetchStudyCafe = (
+export const useQueryFetchOneStudyCafe = (
   id: string
 ): IFetchStudyCafeQueryResult => {
-  const query = useQuery<PICK<isTypeQueryNode, "fetchStudyCafe">, IStudyCafe>(
-    FETCH_STUDY_CAFE,
-    { variables: { studyCafe_id: id } }
-  );
+  const query = useQuery<
+    { fetchOneStudyCafe: IStudyCafe },
+    { studyCafe_id: string }
+  >(FETCH_ONE_STUDY_CAFE, {
+    variables: { studyCafe_id: id },
+  });
+
   const refetch = async (): Promise<void> => {
     await query.refetch();
   };
