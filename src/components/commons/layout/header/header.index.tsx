@@ -86,8 +86,8 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
           const result = await createPointTransaction({
             variables: {
               createPointTransactionInput: {
-                impUid: rsp.imp_uid,
-                amount: price,
+                pointTransaction_impUid: rsp.imp_uid,
+                pointTransaction_amount: price,
               },
             },
           });
