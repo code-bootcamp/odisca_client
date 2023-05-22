@@ -2,53 +2,45 @@
 // import { useQuery } from "@apollo/client";
 
 import InfiniteScroll from "react-infinite-scroller";
+import { useQueryFetchAllStudyCafes } from "../../../../../commons/hooks/queries/useQueryFetchAllStudyCafes";
 import CafeListItem from "./cafelistItem/CafeListItem.index";
 
 export default function CafeListBody(): JSX.Element {
   //   const router = useRouter();
 
-  // cafe data fetch 필요..
-  //   const { data, fetchMore } = useQuery<
-  //     Pick<IQuery, "fetchBoardComments">,
-  //     IQueryFetchBoardCommentsArgs
-  //   >(FETCH_BOARD_COMMENTS, {
-  //     variables: { boardId: router.query.id },
-  //   });
+  const { data, fetchMore } = useQueryFetchAllStudyCafes();
 
-  // 무한스크롤
-  //   const onLoadMore = (): void => {
-  //     if (data === undefined) return;
+  console.log(data);
+  const onLoadMore = (): void => {
+    if (data === undefined) return;
 
-  //     void fetchMore({
-  //       variables: {
-  //         page: Math.ceil((data?.fetchBoardComments.length ?? 10) / 10) + 1,
-  //       },
-  //       updateQuery: (prev, { fetchMoreResult }) => {
-  //         if (fetchMoreResult.fetchBoardComments === undefined) {
-  //           return {
-  //             fetchBoardComments: [...prev.fetchBoardComments],
-  //           };
-  //         }
-  //         return {
-  //           fetchBoardComments: [
-  //             ...prev.fetchBoardComments,
-  //             ...fetchMoreResult.fetchBoardComments,
-  //           ],
-  //         };
-  //       },
-  //     });
-  //   };
+    void fetchMore({
+      variables: {
+        page: Math.ceil((data?.fetchAllStudyCafes.length ?? 10) / 10) + 1,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (fetchMoreResult.fetchAllStudyCafes === undefined) {
+          return {
+            fetchAllStudyCafes: [...prev.fetchAllStudyCafes],
+          };
+        }
+        return {
+          fetchAllStudyCafes: [
+            ...prev.fetchAllStudyCafes,
+            ...fetchMoreResult.fetchAllStudyCafes,
+          ],
+        };
+      },
+    });
+  };
 
   return (
     <>
-      {/* <InfiniteScroll pageStart={0} loadMore={onLoadMore} hasMore={true}> */}
-
-      <CafeListItem
-      // key={el._id}
-      // el={el}
-      />
-
-      {/* </InfiniteScroll> */}
+      <InfiniteScroll pageStart={0} loadMore={onLoadMore} hasMore={true}>
+        {data?.fetchAllStudyCafes.map((el) => (
+          <CafeListItem key={el.studyCafe_id} el={el} />
+        )) ?? <></>}
+      </InfiniteScroll>
     </>
   );
 }

@@ -8,16 +8,19 @@ import { useMutationCreatePointTransaction } from "../../hooks/mutations/useMuta
 import { useMutationDeleteAdmin } from "../../hooks/mutations/useMutationDeleteAdmin";
 import { useMutationLogOut } from "../../hooks/mutations/useMutationLogout";
 import { useRouter } from "next/router";
+import { WrapperWithoutMargin, Wrapper } from "./header.style";
 
 declare const window: typeof globalThis & {
   IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
 };
 
-export default function LayoutHeader(): JSX.Element {
+export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
   const [open, setOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const { data } = useQuery(FETCH_LOGIN_USER);
   const [logout] = useMutationLogOut();
+  const HeaderWrapper =
+    isHiddenMargin === true ? WrapperWithoutMargin : Wrapper;
 
   const showDrawer = (): void => {
     setOpen(true);
@@ -112,7 +115,7 @@ export default function LayoutHeader(): JSX.Element {
 
   return (
     <>
-      <S.Wrapper>
+      <HeaderWrapper>
         <S.LightWrapper>
           <S.Logo src="/logo.png"></S.Logo>
         </S.LightWrapper>
@@ -155,7 +158,7 @@ export default function LayoutHeader(): JSX.Element {
             </S.MenuList>
           </S.MenuDrawer>
         </S.RightWrapper>
-      </S.Wrapper>
+      </HeaderWrapper>
 
       {/* 여기서부터 결제 쪽입니다. */}
       {isModal ? (

@@ -1,24 +1,15 @@
 // 메인페이지
-
-import styled from "@emotion/styled";
-import SearchBar01 from "../../../commons/searchbars/01/SearchBar01.index";
 import CafeList from "./cafelist/CafeList.index";
 import Map from "../../../commons/hooks/customs/useMap";
 
-const Wrapper = styled.div`
-  width: 1920px;
-  height: 1080px;
-  display: flex;
-`;
-
 export default function UserMain(): JSX.Element {
   return (
-    <>
-      <Wrapper>
-        <CafeList />
-        <Map id="map"></Map>
-        <SearchBar01 />
-      </Wrapper>
-    </>
+    <div style={{ width: "100vw", height: "100vh", display: "flex" }}>
+      <CafeList />
+      <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
+        <p>※ 현재 강남구/구로구/노원구/동대문구/마포구만 위치이동 가능</p>
+        <Map />
+      </div>
+    </div>
   );
 }
