@@ -9,7 +9,7 @@ interface IFetchStudyCafeQueryResult
   refetch: () => Promise<void>;
 }
 
-export const FETCH_STUDY_CAFE = gql`
+export const FETCH_ONE_STUDY_CAFE = gql`
   query fetchOneStudyCafe($studyCafe_id: String!) {
     fetchOneStudyCafe(studyCafe_id: $studyCafe_id) {
       studyCafe_id
@@ -35,11 +35,11 @@ export const FETCH_STUDY_CAFE = gql`
   }
 `;
 
-export const useQueryFetchStudyCafe = (
+export const useQueryFetchOneStudyCafe = (
   id: string
 ): IFetchStudyCafeQueryResult => {
   const query = useQuery<PICK<isTypeQueryNode, "fetchStudyCafe">, IStudyCafe>(
-    FETCH_STUDY_CAFE,
+    FETCH_ONE_STUDY_CAFE,
     { variables: { studyCafe_id: id } }
   );
   const refetch = async (): Promise<void> => {

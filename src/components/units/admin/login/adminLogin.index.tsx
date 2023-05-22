@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import * as S from "./adminLogin.style";
 import { useMutationAdminLogin } from "../../../commons/hooks/mutations/useMutationAdminLogin";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "../../../../commons/validations/validation";
+import { schemaAdmin } from "../../../../commons/validations/validation";
 import { useForm } from "react-hook-form";
 import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
 import { useRecoilState } from "recoil";
@@ -19,7 +19,7 @@ export default function UserLoginPage(): JSX.Element {
   const [loginAdmin] = useMutationAdminLogin();
   const [, setAccessToken] = useRecoilState(accessTokenState);
   const { register, handleSubmit, formState } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schemaAdmin),
     mode: "onChange",
   });
 
