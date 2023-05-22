@@ -1,4 +1,4 @@
-schema: http://odisca.store:3000/graphql
+schema: https://odisca.store/graphql
 generates:
   ./src/commons/types/generated/types.ts:
     plugins:
