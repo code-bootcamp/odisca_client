@@ -37,8 +37,6 @@ function MyDropzone({ onFilesChange }: MyDropzoneProps): JSX.Element {
   }, [imageDataArray, setImageUrls, onFilesChange]);
   const previewImagesJsonString = JSON.stringify(imageUrls);
 
-  console.log(previewImagesJsonString);
-
   return (
     <>
       <D.ProfileImgBox {...getRootProps()}>

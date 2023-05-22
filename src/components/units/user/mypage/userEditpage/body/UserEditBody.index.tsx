@@ -9,10 +9,13 @@ import { useQueryFetchLoginUser } from "../../../../../commons/hooks/queries/use
 import * as S from "./UserEditBody.styles";
 import { filesState, imageUrlsState } from "../../../../../../commons/stores";
 import { useRecoilState } from "recoil";
+import { useMutationUploadImageFile } from "../../../../../commons/hooks/mutations/useMutationUploadImageFile";
+import { useState } from "react";
 
 interface IFormUpdateData {
   user_password: string;
   user_phone: string;
+  user_image: string;
 }
 
 export default function UserEditBody(): JSX.Element {
@@ -21,53 +24,18 @@ export default function UserEditBody(): JSX.Element {
   // const [files, setFiles] = useRecoilState<File[]>(filesState);
   const [updateLoginUser] = useMutationUpdateLoginUser();
   const { data } = useQueryFetchLoginUser();
-  // const [getRootProps, getInputProps, , previewImagesJsonString, imageUrls] =
-  //   MyDropzone();
+  const [uploadImageFile] = useMutationUploadImageFile();
 
   const { register, formState, handleSubmit } = useForm({
     resolver: yupResolver(userEditSchema),
     mode: "onChange",
   });
 
-  // const onClickUserUpdate = async (data: IFormUpdateData) => {
-  //   const previewImagesBase64 = imageUrls.map((imageUrl) => {
-  //     const canvas = document.createElement("canvas");
-  //     const ctx = canvas.getContext("2d");
-  //     const img = new Image();
-  //     img.src = imageUrl;
-  //     ctx.drawImage(img, 0, 0);
-
-  //     const base64 = canvas.toDataURL();
-  //     return base64;
-  //   });
-
-  //   const previewImagesJsonString1 = JSON.stringify(previewImagesBase64);
-  //   console.log(previewImagesJsonString1, "dddd");
-
-  //   try {
-  //     const result = await updateLoginUser({
-  //       variables: {
-  //         updateLoginUserInput: {
-  //           user_password: data.user_password,
-  //           user_phone: data.user_phone,
-  //         },
-  //       },
-  //     });
-  //     console.log(result, "dd");
-  //     Modal.success({
-  //       content: "회원수정 완료!",
-  //     });
-  //   } catch (error) {
-  //     if (error instanceof Error)
-  //       Modal.error({
-  //         content: error.message,
-  //       });
-  //   }
-  // };
-  // console.log(previewImagesJsonString);
-
   const onClickUserUpdate = async (data: IFormUpdateData) => {
     try {
+      if (imageUrls.length === 0) {
+        return;
+      }
       const previewImagesBase64 = await Promise.all(
         imageUrls.map((imageUrl) => {
           return new Promise<File>((resolve, reject) => {
@@ -98,20 +66,29 @@ export default function UserEditBody(): JSX.Element {
           });
         })
       );
-      const previewImagesJsonString1 = JSON.stringify(previewImagesBase64);
-      console.log(JSON.parse(previewImagesJsonString1), "이거뭐니");
+      // const previewImagesJsonString1 = JSON.stringify(previewImagesBase64);
+      // console.log(JSON.parse(previewImagesJsonString1), "이거뭐니");
+      // const aaa = JSON.parse(previewImagesJsonString1);
+      // console.log(previewImagesBase64, "ㅇㅇ??");
+      // console.log(aaa, "ㄷ만");
 
-      const result = await updateLoginUser({
+      const results = await uploadImageFile({
+        variables: { images: previewImagesBase64 },
+      });
+
+      console.log(results);
+      const url = results.data?.uploadImageFile[0];
+
+      const updateResult = await updateLoginUser({
         variables: {
           updateLoginUserInput: {
             user_password: data.user_password,
             user_phone: data.user_phone,
-            // previewImagesBase64,
+            user_image: url,
           },
         },
       });
-      console.log(result);
-      console.log(previewImagesBase64, "ddd");
+      console.log(updateResult);
 
       Modal.success({
         content: "회원수정 완료!",
