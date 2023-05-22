@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
+import { useEffect, useState } from "react";
 
 const Footer = styled.footer`
   width: 850px;
@@ -26,9 +28,19 @@ const Btn = styled.button`
 export default function AdminDetailFooter(): JSX.Element {
   const router = useRouter();
 
+  const { data } = useQueryFetchAllSeatsByStudyCafeId(String(router.query.Id));
+
   const onClickEditSeats = () => {
     router.push("/admin/" + router.query.Id + "/mapEditor");
   };
+
+  const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+    if (data?.fetchAllSeatsByStudyCafeId.length === 0) {
+      setIsSaved(true);
+    }
+  }, [data]);
 
   const onClickScanSeats = () => {
     router.push("/admin/" + router.query.Id + "/mapScaner");
@@ -36,7 +48,7 @@ export default function AdminDetailFooter(): JSX.Element {
   return (
     <Footer>
       <Btn>정보수정</Btn>
-      <Btn onClick={onClickEditSeats}>배치도 수정</Btn>
+      {isSaved ? <Btn onClick={onClickEditSeats}>배치도 등록</Btn> : <></>}
       <Btn onClick={onClickScanSeats}>배치도 보기</Btn>
       <Btn>취소하기</Btn>
     </Footer>

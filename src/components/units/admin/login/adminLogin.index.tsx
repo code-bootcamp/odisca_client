@@ -31,9 +31,9 @@ export default function UserLoginPage(): JSX.Element {
     try {
       const result = await loginAdmin({
         variables: {
-          loginInput: {
-            email: data.email,
-            password: data.password,
+          loginAdministerInput: {
+            administer_email: data.email,
+            administer_password: data.password,
           },
         },
       });

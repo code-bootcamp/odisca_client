@@ -12,11 +12,11 @@ interface IFetchLoginUserQueryResult
 export const FETCH_LOGIN_ADMINISTER = gql`
   query {
     fetchLoginAdminister {
-      id
-      name
-      email
-      point
-      phone
+      administer_id
+      administer_name
+      administer_email
+      administer_phone
+      administer_point
     }
   }
 `;

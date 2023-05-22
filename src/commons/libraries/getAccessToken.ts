@@ -3,7 +3,7 @@ import { IMutation } from "../types/generated/types";
 
 const RESTORE_ACCESS_TOKEN = gql`
   mutation {
-    restoreAccessToken
+    restoreAccessTokenForAdminister
   }
 `;
 
@@ -16,7 +16,7 @@ export const getAccessToken = async (): Promise<string | undefined> => {
     const result = await graphQLClient.request<
       Pick<IMutation, "restoreAccessToken">
     >(RESTORE_ACCESS_TOKEN); // 요청부분
-    const newAccessToken = result.restoreAccessToken;
+    const newAccessToken = result.restoreAccessTokenForAdminister;
     return newAccessToken;
   } catch (error) {
     if (error instanceof Error) console.log(error.message);
