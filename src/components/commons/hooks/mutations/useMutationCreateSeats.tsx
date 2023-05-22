@@ -4,16 +4,8 @@ import { IMutation } from "../../../../commons/types/generated/types";
 export const CREATE_SEATS = gql`
   mutation createSeats($createSeatsInput: CreateSeatsInput!) {
     createSeats(createSeatsInput: $createSeatsInput) {
-      id
-      number
-      location
-      studyCafe {
-        id
-      }
-      expiredTime
-      user {
-        id
-      }
+      seat_id
+      seat_number
     }
   }
 `;

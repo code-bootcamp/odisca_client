@@ -10,26 +10,37 @@ interface IFetchStudyCafeQueryResult
 }
 
 export const FETCH_STUDY_CAFE = gql`
-  query fetchStudyCafe($studyCafeId: String!) {
-    fetchStudyCafe(studyCafeId: $studyCafeId) {
-      name
-      address
-      contact
-      timeFee
-      description
-      brn
-      openTime
-      closeTime
+  query fetchOneStudyCafe($studyCafe_id: String!) {
+    fetchOneStudyCafe(studyCafe_id: $studyCafe_id) {
+      studyCafe_id
+      studyCafe_name
+      studyCafe_address
+      studyCafe_addressDetail
+      studyCafe_city
+      studyCafe_district
+      studyCafe_contact
+      studyCafe_timeFee
+      studyCafe_description
+      studyCafe_openTime
+      studyCafe_closeTime
+      studyCafe_brn
+      studyCafe_seatCount
+      studyCafe_floorPlanX
+      studyCafe_floorPlanY
+      administer {
+        administer_name
+        administer_email
+      }
     }
   }
 `;
 
-export const useQueryFetchStudyCafes = (
+export const useQueryFetchStudyCafe = (
   id: string
 ): IFetchStudyCafeQueryResult => {
   const query = useQuery<PICK<isTypeQueryNode, "fetchStudyCafe">, IStudyCafe>(
     FETCH_STUDY_CAFE,
-    { variables: { studyCafeId: id } }
+    { variables: { studyCafe_id: id } }
   );
   const refetch = async (): Promise<void> => {
     await query.refetch();

@@ -11,7 +11,7 @@ export default function AdminPageBody(props): JSX.Element {
     <>
       <S.Wrapper>
         <S.Title>My Cafes</S.Title>
-        {props.data?.fetchLoginStudyCafes?.map((el) => {
+        {props.data?.fetchAllStudyCafesByAdminId?.map((el) => {
           return (
             <div key={el.id}>
               <S.MyCafeWrapper>
@@ -20,10 +20,12 @@ export default function AdminPageBody(props): JSX.Element {
                 </S.LeftWrapper>
                 <S.RightWrapper>
                   <S.Top>
-                    <S.CafeName onClick={wrapFormAsync(onClickDetail(el.id))}>
-                      {el.name}
+                    <S.CafeName
+                      onClick={wrapFormAsync(onClickDetail(el.studyCafe_id))}
+                    >
+                      {el.studyCafe_name}
                     </S.CafeName>
-                    <S.Remark>{el.description}</S.Remark>
+                    <S.Remark>{el.studyCafe_description}</S.Remark>
                   </S.Top>
                   <S.Bottom>
                     <S.OccupiedSeat>이용중인 좌석 30석</S.OccupiedSeat>

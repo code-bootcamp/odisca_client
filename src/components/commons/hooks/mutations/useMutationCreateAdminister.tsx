@@ -7,7 +7,7 @@ import {
 export const CREATE_ADMINISTER = gql`
   mutation createAdminister($createAdministerInput: CreateAdministerInput!) {
     createAdminister(createAdministerInput: $createAdministerInput) {
-      id
+      administer_id
     }
   }
 `;

@@ -1,10 +1,10 @@
+import SeatScanPage from "../../seat/seatScan/seatScan.index";
 import {
   Body,
   StyledSlider,
   SliderItem,
   ContentsBox,
   Contents,
-  SeatComponent,
 } from "./AdminDetailBody.styles";
 
 export default function AdminDetailBody(props): JSX.Element {
@@ -46,7 +46,8 @@ export default function AdminDetailBody(props): JSX.Element {
       <ContentsBox>
         <Contents>{props.cafeDescription}</Contents>
       </ContentsBox>
-      <SeatComponent src="/seat.png"></SeatComponent>
+      <SeatScanPage></SeatScanPage>
+      {/* <SeatComponent src="/seat.png"></SeatComponent> */}
     </Body>
   );
 }
