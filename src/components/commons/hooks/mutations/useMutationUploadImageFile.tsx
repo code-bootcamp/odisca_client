@@ -1,7 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 
 export const UPLOAD_IMAGE_FILE = gql`
-  mutation uploadImageFile($images: Upload!) {
+  mutation uploadImageFile($images: [Upload!]!) {
     uploadImageFile(images: $images)
   }
 `;

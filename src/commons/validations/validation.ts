@@ -38,6 +38,20 @@ export const schema = yup.object({
     ),
 });
 
+export const schemaAdmin = yup.object({
+  email: yup
+    .string()
+    .email("올바른 이메일 형태가 아닙니다.")
+    .required("이메일을 입력해주세요."),
+  password: yup
+    .string()
+    .required("비밀번호를 입력해주세요.")
+    .matches(
+      /(?=.*\d)(?=.*[~`!@#$%\\^&*()-+=])(?=.*[a-zA-Z]).{1,8}$/,
+      "비밀번호는 영문, 숫자, 특수문자를 포함한 8자리 이내로 입력해주세요"
+    ),
+});
+
 export const userEditSchema = yup.object({
   // password: yup.string().nullable().required("새로운 비밀번호를 입력해주세요."),
   user_phone: yup
