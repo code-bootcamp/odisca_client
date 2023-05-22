@@ -80,6 +80,7 @@ export default function LayoutHeader(): JSX.Element {
         if (rsp.success) {
           // 여기에 뮤테이션을 보내야 합니다!
           // console.log(String(price) + "원 결제 성공");
+          console.log(rsp.imp_uid, "결제진행");
           const result = await createPointTransaction({
             variables: {
               createPointTransactionInput: {
@@ -121,7 +122,7 @@ export default function LayoutHeader(): JSX.Element {
           ) : (
             <S.ProfileWrapper>
               <S.ProfileIcon src="/ProfileIcon.png"></S.ProfileIcon>
-              <S.Name>{data?.fetchLoginUser.name}</S.Name>
+              <S.Name>{data?.fetchLoginUser.user_name}</S.Name>
               <S.Text>님 안녕하세요!</S.Text>
               <S.PayButton onClick={showModal}>충전</S.PayButton>
             </S.ProfileWrapper>
