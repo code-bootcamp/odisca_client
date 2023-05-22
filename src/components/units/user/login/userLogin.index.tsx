@@ -83,7 +83,7 @@ export default function UserLoginPage(): JSX.Element {
                     {...register("user_email")}
                   ></S.LogInInput>
                   <S.ErrorMessage>
-                    {formState.errors.email?.message}
+                    {formState.errors.user_email?.message}
                   </S.ErrorMessage>
                 </S.InputWrapper>
               </S.LogInInputBox>
@@ -97,7 +97,7 @@ export default function UserLoginPage(): JSX.Element {
                     {...register("user_password")}
                   ></S.LogInInput>
                   <S.ErrorMessage>
-                    {formState.errors.password?.message}
+                    {formState.errors.user_password?.message}
                   </S.ErrorMessage>
                 </S.InputWrapper>
               </S.LogInInputBox>
