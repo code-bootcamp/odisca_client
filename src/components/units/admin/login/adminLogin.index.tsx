@@ -37,6 +37,7 @@ export default function UserLoginPage(): JSX.Element {
           },
         },
       });
+      alert("로그인 성공");
       console.log(result);
       const accessToken = result.data?.LoginAdminister;
       if (accessToken === undefined || !data.email || !data.password) {

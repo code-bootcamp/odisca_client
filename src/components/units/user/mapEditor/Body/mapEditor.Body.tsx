@@ -5,6 +5,7 @@ import * as S from "./mapEditor.Body.style";
 import { useRouter } from "next/router";
 import { useMutationCreateSeats } from "../../../../commons/hooks/mutations/useMutationCreateSeats";
 import { useMutationCreateLoginCafeFloorPlanAndSeats } from "../../../../commons/hooks/mutations/useMutationCreateCateFloorPlan";
+import { wrapFormAsync } from "../../../../../commons/libraries/asyncFunc";
 
 export default function MapEditor(): JSX.Element {
   const [inputX, setInputX] = useState(0); // x축 범위
@@ -17,7 +18,7 @@ export default function MapEditor(): JSX.Element {
   const [mapArray, setMapArray] = useState<number[][]>([]); // 맵을 화면에 올리기 위한 2중 배열
   const [seatArray, setSeatArray] = useState<any[]>([]); // 나중에 백엔드로 보내줄 객체들 추가하는 배열, 객체 안 속성들의 타입 지정 필요
   const [size, setSize] = useState<number[][]>([]); // 좌석 사이즈를 나타내는 배열
-  const [, setSeatLength] = useState(0);
+
   const [seatCount, setSeatCount] = useState(1);
   const [positionState, setPositionState] = useState(0); // 좌석 특성 저장하는 데이터
   const router = useRouter();
@@ -207,8 +208,7 @@ export default function MapEditor(): JSX.Element {
 
   const onClickSave = async (): Promise<void> => {
     try {
-      console.log(stateX, stateY, seatArray.length);
-      const floor = createFloor({
+      await createFloor({
         variables: {
           createCateFloorPlanInput: {
             studyCafe_id: router.query.Id,
@@ -237,18 +237,17 @@ export default function MapEditor(): JSX.Element {
     };
     console.log(seatsInput);
     try {
-      const result = await createSeats({
+      await createSeats({
         variables: {
           createSeatsInput: seatsInput,
         },
       });
-      console.log(result);
+      router.push("/admin/adminPage");
     } catch (error) {
       if (error instanceof Error) {
         alert("등록실패");
       }
     }
-    router.push("/admin/adminPage");
   };
 
   return (
@@ -262,7 +261,7 @@ export default function MapEditor(): JSX.Element {
       <button onClick={onClick2X2}>2X2</button>
       <button onClick={onClick1X2}>1X2</button>
       <button onClick={onClickDeleteMap}>전체 삭제</button>
-      <button onClick={onClickSave}>저장하기</button>
+      <button onClick={wrapFormAsync(onClickSave)}>저장하기</button>
       <S.Container>
         <S.Box>
           {mapArray.map((el, indY) => {
