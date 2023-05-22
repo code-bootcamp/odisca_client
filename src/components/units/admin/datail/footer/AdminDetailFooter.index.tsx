@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 
 const Footer = styled.footer`
   width: 850px;
@@ -23,10 +24,20 @@ const Btn = styled.button`
   }
 `;
 export default function AdminDetailFooter(): JSX.Element {
+  const router = useRouter();
+
+  const onClickEditSeats = () => {
+    router.push("/admin/" + router.query.Id + "/mapEditor");
+  };
+
+  const onClickScanSeats = () => {
+    router.push("/admin/" + router.query.Id + "/mapScaner");
+  };
   return (
     <Footer>
       <Btn>정보수정</Btn>
-      <Btn>배치도 수정</Btn>
+      <Btn onClick={onClickEditSeats}>배치도 수정</Btn>
+      <Btn onClick={onClickScanSeats}>배치도 보기</Btn>
       <Btn>취소하기</Btn>
     </Footer>
   );

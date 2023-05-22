@@ -3,9 +3,13 @@ import { Modal } from "antd";
 import { useForm } from "react-hook-form";
 import { wrapFormAsync } from "../../../../../../commons/libraries/asyncFunc";
 import { userEditSchema } from "../../../../../../commons/validations/validation";
+import MyDropzone from "../../../../../commons/hooks/customs/useDropzone";
 import { useMutationUpdateLoginUser } from "../../../../../commons/hooks/mutations/useMutationUpdateLoginUser";
 import { useQueryFetchLoginUser } from "../../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./UserEditBody.styles";
+import { useDropzone } from "react-dropzone";
+import { filesState, imageUrlsState } from "../../../../../../commons/stores";
+import { useRecoilState } from "recoil";
 
 interface IFormUpdateData {
   password: string;
@@ -14,9 +18,12 @@ interface IFormUpdateData {
   name: string;
 }
 
-export default function UserEditBody(): JSX.Element {
+export default function UserEditBody(props): JSX.Element {
+  // const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
+  // const [files, setFiles] = useRecoilState<File[]>(filesState);
   const [updateLoginUser] = useMutationUpdateLoginUser();
   const { data } = useQueryFetchLoginUser();
+  const [getRootProps, getInputProps, , previewImagesJsonString] = MyDropzone();
 
   const { register, formState, handleSubmit } = useForm({
     resolver: yupResolver(userEditSchema),
@@ -48,12 +55,15 @@ export default function UserEditBody(): JSX.Element {
         });
     }
   };
+  console.log(previewImagesJsonString);
 
   return (
     <S.Wrapper>
-      <S.ProfileImgBox>
-        <S.ProfileImg src="" />
+      <S.ProfileImgBox {...getRootProps([])}>
+        <input {...getInputProps()} />
+        <S.ProfileImg src={JSON.parse(previewImagesJsonString)} />
         <S.ProfileImgEdit src="/user/mypage/edit/camera.png" />
+        <MyDropzone />
       </S.ProfileImgBox>
       <S.InputForm>
         <S.EditList>
