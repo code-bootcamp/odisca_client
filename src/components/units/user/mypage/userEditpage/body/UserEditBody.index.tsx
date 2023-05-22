@@ -14,8 +14,8 @@ import { useRecoilState } from "recoil";
 interface IFormUpdateData {
   user_password: string;
   user_phone: string;
-  user_email: string;
-  user_name: string;
+  // user_email: string;
+  // user_name: string;
 }
 
 export default function UserEditBody(props): JSX.Element {
@@ -23,28 +23,41 @@ export default function UserEditBody(props): JSX.Element {
   // const [files, setFiles] = useRecoilState<File[]>(filesState);
   const [updateLoginUser] = useMutationUpdateLoginUser();
   const { data } = useQueryFetchLoginUser();
-  const [getRootProps, getInputProps, , previewImagesJsonString] = MyDropzone();
+  const [getRootProps, getInputProps, , previewImagesJsonString, imageUrls] =
+    MyDropzone();
 
   const { register, formState, handleSubmit } = useForm({
     resolver: yupResolver(userEditSchema),
     mode: "onChange",
   });
 
-  console.log(formState);
-
   const onClickUserUpdate = async (data: IFormUpdateData) => {
+    const previewImagesBase64 = imageUrls.map((imageUrl) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const img = new Image();
+      img.src = imageUrl;
+      ctx.drawImage(img, 0, 0);
+
+      const base64 = canvas.toDataURL();
+      return base64;
+    });
+
+    const previewImagesJsonString1 = JSON.stringify(previewImagesBase64);
+    console.log(previewImagesJsonString1);
+
     try {
       const result = await updateLoginUser({
         variables: {
           updateLoginUserInput: {
             user_password: data.user_password,
             user_phone: data.user_phone,
-            user_name: data.user_name,
-            user_email: data.user_email,
+            // user_name: data.user_name,
+            // user_email: data.user_email,
           },
         },
       });
-      console.log(result);
+      console.log(result, "dd");
       Modal.success({
         content: "회원수정 완료!",
       });
@@ -55,7 +68,7 @@ export default function UserEditBody(props): JSX.Element {
         });
     }
   };
-  console.log(previewImagesJsonString);
+  // console.log(previewImagesJsonString);
 
   return (
     <S.Wrapper>
@@ -72,6 +85,7 @@ export default function UserEditBody(props): JSX.Element {
             type="text"
             defaultValue={data?.fetchLoginUser.user_name}
             readOnly
+            // {...register("user_name")}
           />
         </S.EditList>
         <S.EditList>
@@ -80,6 +94,7 @@ export default function UserEditBody(props): JSX.Element {
             type="text"
             defaultValue={data?.fetchLoginUser.user_email}
             readOnly
+            // {...register("user_email")}
           />
         </S.EditList>
         <S.EditList>

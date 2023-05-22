@@ -41,6 +41,12 @@ function MyDropzone(): MyDropzoneReturn {
 
   const previewImagesJsonString = JSON.stringify(imageUrls);
 
-  return [getRootProps, getInputProps, isDragActive, previewImagesJsonString];
+  return [
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    previewImagesJsonString,
+    imageUrls,
+  ];
 }
 export default MyDropzone;
