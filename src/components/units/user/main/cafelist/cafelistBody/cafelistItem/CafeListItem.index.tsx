@@ -1,6 +1,6 @@
 import * as S from "./CafeListItem.styles";
 
-export default function CafeListItem(props): JSX.Element {
+export default function CafeListItem(props: any): JSX.Element {
   return (
     <S.Wrapper>
       <S.ListBox>
