@@ -5,8 +5,8 @@ import {
 } from "../../../../commons/types/generated/types";
 
 export const ADMIN_LOG_IN = gql`
-  mutation LoginAdminister($loginInput: LoginInput!) {
-    LoginAdminister(loginInput: $loginInput)
+  mutation LoginAdminister($loginAdministerInput: LoginAdministerInput!) {
+    LoginAdminister(loginAdministerInput: $loginAdministerInput)
   }
 `;
 
