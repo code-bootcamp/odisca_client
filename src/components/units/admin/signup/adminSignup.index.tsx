@@ -29,10 +29,10 @@ export default function UserSignUpPage(): JSX.Element {
       const result = await createAdminister({
         variables: {
           createAdministerInput: {
-            email: data.email,
-            name: data.name,
-            password: data.password,
-            phone: data.phone,
+            administer_email: data.email,
+            administer_name: data.name,
+            administer_password: data.password,
+            administer_phone: data.phone,
           },
         },
       });

@@ -3,14 +3,21 @@ import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../src/components/c
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Modal } from "antd";
+import { useQueryFetchStudyCafe } from "../../../../src/components/commons/hooks/queries/useQueryFetchStudyCafe";
 
-export default function SeatScanPage(): JSX.Element {
+export default function SeatMapScanPage(): JSX.Element {
   const router = useRouter();
-  const { data } = useQueryFetchAllSeatsByStudyCafeId(router.query.Id);
+  const { data: dataCafe } = useQueryFetchStudyCafe(String(router.query.Id));
+  const { data } = useQueryFetchAllSeatsByStudyCafeId(String(router.query.Id));
   const [isModal, setIsModal] = useState(false);
   // 아직 카페에 x길이 y길이가 등록되지 않아서 하드 코딩한 것
-  const [stateX] = useState(35);
-  const [stateY] = useState(35);
+  const [stateX, setStateX] = useState(
+    dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX ?? 40
+  );
+  const [stateY, setStateY] = useState(
+    dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanY ?? 40
+  );
+  console.log(dataCafe, "카페");
   const [seatId, setSeatId] = useState("");
   const [seatStatus, setSeatStatus] = useState("");
   const [seatNumber, setSeatNumber] = useState(0);
@@ -19,25 +26,37 @@ export default function SeatScanPage(): JSX.Element {
 
   console.log(data?.fetchAllSeatsByStudyCafeId);
   useEffect(() => {
-    const newArray = Array.from(Array(stateY), () => {
-      const result = [];
-      for (let i = 0; i < stateX; i++) {
-        result.push({ status: 0, seatId: "i", number: 0 });
-      }
-      return result;
-    });
-    data?.fetchAllSeatsByStudyCafeId.map((el) => {
-      const seat = JSON.parse(el.location);
+    if (dataCafe !== undefined && data !== undefined) {
+      setStateX(dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX);
+      setStateY(dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanY);
+      const newArray = Array.from(
+        Array(dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanY),
+        () => {
+          const result = [];
+          for (
+            let i = 0;
+            i < dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX;
+            i++
+          ) {
+            result.push({ status: 0, seatId: "i", number: 0 });
+          }
+          return result;
+        }
+      );
+      console.log(newArray);
+      data?.fetchAllSeatsByStudyCafeId.map((el) => {
+        const seat = JSON.parse(el.seat_location);
 
-      seat.map((ele) => {
-        newArray[ele[1]][ele[0]].status = el.number;
-        newArray[ele[1]][ele[0]].seatId = el.id;
-        newArray[ele[1]][ele[0]].number = el.number;
-        return 1;
+        seat.map((ele) => {
+          newArray[ele[1]][ele[0]].status = el.seat_number;
+          newArray[ele[1]][ele[0]].seatId = el.seat_id;
+          newArray[ele[1]][ele[0]].number = el.seat_number;
+          return 1;
+        });
       });
-    });
-    setMap(newArray);
-  }, [data]);
+      setMap(newArray);
+    }
+  }, [data, dataCafe]);
 
   const Pixel = styled.div`
     width: 20px;

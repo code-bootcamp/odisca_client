@@ -5,3 +5,9 @@ export const wrapFormAsync =
     event.preventDefault();
     void asyncFunc();
   };
+
+// export const wrapAsync =
+//   (asyncFunc: (event: ChangeEvent<HTMLInputElement>) => Promise<void>) =>
+//   (event: ChangeEvent<HTMLInputElement>) => {
+//     void asyncFunc(event);
+//   };

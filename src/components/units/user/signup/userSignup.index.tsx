@@ -50,10 +50,10 @@ export default function UserSignUpPage(): JSX.Element {
       const result = await createUser({
         variables: {
           createUserInput: {
-            email: data.email,
-            name: data.name,
-            password: data.password,
-            phone: data.phone,
+            user_email: data.email,
+            user_name: data.name,
+            user_password: data.password,
+            user_phone: data.phone,
           },
         },
       });
@@ -157,7 +157,7 @@ export default function UserSignUpPage(): JSX.Element {
                 <S.SignUpInputTitle>confirm password</S.SignUpInputTitle>
                 <S.InputWrapper>
                   <S.SignUpInput
-                    {...register("password")}
+                    {...register("confirmPw")}
                     type="password"
                   ></S.SignUpInput>
                   <S.ErrorMessage>

@@ -12,7 +12,10 @@ const OperatingTimeSpan = styled.span`
 export default function OperatingTime(props): JSX.Element {
   return (
     <>
-      <SelectOperatingTime onChange={props.onChangeSelectOpenTime}>
+      <SelectOperatingTime
+        onChange={props.onChangeSelectOpenTime}
+        defaultValue={props.data?.fetchStudyCafe.openTime}
+      >
         <option>영업시작시간</option>
         <option value={"00:00"} label={"00:00"}>
           00:00
@@ -52,7 +55,10 @@ export default function OperatingTime(props): JSX.Element {
         </option>
       </SelectOperatingTime>
       <OperatingTimeSpan>-</OperatingTimeSpan>
-      <SelectOperatingTime onChange={props.onChangeSelectCloseTime}>
+      <SelectOperatingTime
+        onChange={props.onChangeSelectCloseTime}
+        defaultValue={props.data?.fetchStudyCafe.closeTime}
+      >
         <option>영업종료시간</option>
         <option value={"18:00"} label={"18:00"}>
           18:00

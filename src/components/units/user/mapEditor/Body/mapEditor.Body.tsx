@@ -4,6 +4,7 @@ import { ISeat, IStyle } from "./mapEditor.Type";
 import * as S from "./mapEditor.Body.style";
 import { useRouter } from "next/router";
 import { useMutationCreateSeats } from "../../../../commons/hooks/mutations/useMutationCreateSeats";
+import { useMutationCreateLoginCafeFloorPlanAndSeats } from "../../../../commons/hooks/mutations/useMutationCreateCateFloorPlan";
 
 export default function MapEditor(): JSX.Element {
   const [inputX, setInputX] = useState(0); // x축 범위
@@ -21,6 +22,7 @@ export default function MapEditor(): JSX.Element {
   const [positionState, setPositionState] = useState(0); // 좌석 특성 저장하는 데이터
   const router = useRouter();
   const [createSeats] = useMutationCreateSeats();
+  const [createFloor] = useMutationCreateLoginCafeFloorPlanAndSeats();
   const onChangeMapX = (event: ChangeEvent<HTMLInputElement>): void => {
     setInputX(Number(event.target.value));
   };
@@ -204,17 +206,34 @@ export default function MapEditor(): JSX.Element {
   };
 
   const onClickSave = async (): Promise<void> => {
-    setSeatLength(seatArray.length);
+    try {
+      console.log(stateX, stateY, seatArray.length);
+      const floor = createFloor({
+        variables: {
+          createCateFloorPlanInput: {
+            studyCafe_id: router.query.Id,
+            studyCafe_floorPlanX: stateX,
+            studyCafe_floorPlanY: stateY,
+            studyCafe_seatCount: seatArray.length,
+          },
+        },
+      });
+    } catch (err) {
+      if (err instanceof Error) {
+        alert("등록 실패했습니다.");
+      }
+    }
+
     const input = seatArray.map((el, index) => {
       const seat = {
         seat: el.seats,
-        number: String(index + 1),
+        seat_number: String(index + 1),
       };
       return seat;
     });
     const seatsInput = {
       seatInformation: input,
-      studyCafeId: router.query.Id,
+      studyCafe_id: router.query.Id,
     };
     console.log(seatsInput);
     try {
@@ -229,6 +248,7 @@ export default function MapEditor(): JSX.Element {
         alert("등록실패");
       }
     }
+    router.push("/admin/adminPage");
   };
 
   return (
