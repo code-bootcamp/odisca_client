@@ -5,11 +5,11 @@ interface IFetchStudyCafeQueryResult
   extends Omit<
     QueryResult<{ fetchOneStudyCafe: IStudyCafe }, { studyCafe_id: string }>,
     "refetch"
-  > {
+{
   refetch: () => Promise<void>;
 }
 
-export const FETCH_ONE_STUDY_CAFE = gql`
+export const FETCH_ONE_STUDY_CAFE = gql
   query fetchOneStudyCafe($studyCafe_id: String!) {
     fetchOneStudyCafe(studyCafe_id: $studyCafe_id) {
       studyCafe_id
@@ -33,7 +33,7 @@ export const FETCH_ONE_STUDY_CAFE = gql`
       }
     }
   }
-`;
+;
 
 export const useQueryFetchOneStudyCafe = (
   id: string

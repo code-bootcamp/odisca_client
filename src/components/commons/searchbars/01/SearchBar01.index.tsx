@@ -1,101 +1,60 @@
-import styled from "@emotion/styled";
 import { useState } from "react";
-import { Select } from "antd";
 
-const SearchBar = styled.div`
-  position: absolute;
-  width: 500px;
-  height: 68px;
-  left: 1360px;
-  top: 70px;
-  z-index: 1;
-  border: none;
-  border-radius: 30px;
-  background: #ffffff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 15px;
-`;
+import * as S from "./SearchBar.styles";
 
-const SearchBtn = styled.img`
-  cursor: pointer;
-`;
+type CityData = Record<string, string[]>;
 
 const provinceData = ["서울"];
-
-const cityData = {
+// prettier-ignore
+const cityData:CityData = {
   서울: [
-    "강남구",
-    "강동구",
-    "강북구",
-    "강서구",
-    "관악구",
-    "광진구",
-    "구로구",
-    "금천구",
-    "노원구",
-    "도봉구",
-    "동대문구",
-    "동작구",
-    "마포구",
-    "서대문구",
-    "서초구",
-    "성동구",
-    "성북구",
-    "송파구",
-    "양천구",
-    "영등포구",
-    "용산구",
-    "은평구",
-    "종로구",
-    "중구",
-    "중랑구",
+    "강남구", "강동구","강북구","강서구","관악구","광진구","구로구","금천구",
+    "노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구",
+    "성북구", "송파구","양천구", "영등포구","용산구","은평구", "종로구","중구","중랑구",
   ],
 };
 
-type CityName = keyof typeof cityData;
+// const cafeDatas = [
+//   { district: "강남구", lon: 127.0495556, lat: 37.514575 },
+//   { district: "구로구", lon: 126.8895972, lat: 37.49265 },
+//   { district: "노원구", lon: 127.0583889, lat: 37.65146111 },
+//   { district: "동대문구", lon: 127.0421417, lat: 37.571625 },
+//   { district: "마포구", lon: 126.9105306, lat: 37.50965556 },
+// ];
 
 export default function SearchBar01(): JSX.Element {
-  const [cities, setCities] = useState(cityData[provinceData[0] as CityName]);
-  const [secondCity, setSecondCity] = useState(
-    cityData[provinceData[0] as CityName][0]
-  );
+  const [cities, setCities] = useState(cityData[provinceData[0]]);
+  const [secondCity, setSecondCity] = useState(cityData[provinceData[0]][0]);
 
-  const handleProvinceChange = (value: CityName): void => {
+  const handleProvinceChange = (value: string): void => {
     setCities(cityData[value]);
     setSecondCity(cityData[value][0]);
   };
 
-  const onSecondCityChange = (value: CityName): void => {
+  const onSecondCityChange = (value: string): void => {
     setSecondCity(value);
-    // console.log(value);
   };
-
-  const onClickSearchCafe = (): void => {};
 
   return (
     <>
-      <SearchBar>
-        <section>
-          <Select
-            defaultValue={provinceData[0]}
-            style={{ width: 80, marginRight: "10px" }}
-            onChange={handleProvinceChange}
-            options={provinceData.map((province) => ({
-              label: province,
-              value: province,
-            }))}
-          />
-          <Select
-            style={{ width: 80 }}
-            value={secondCity}
-            onChange={onSecondCityChange}
-            options={cities.map((city) => ({ label: city, value: city }))}
-          />
-        </section>
-        <SearchBtn src="/user/main/search.png" onClick={onClickSearchCafe} />
-      </SearchBar>
+      <S.SearchBar>
+        <S.SelectBox
+          className="select"
+          defaultValue={provinceData[0]}
+          style={{ marginRight: "10px" }}
+          onChange={handleProvinceChange}
+          options={provinceData.map((province) => ({
+            label: province,
+            value: province,
+          }))}
+        />
+        <S.SelectBox
+          style={{ width: "80px" }}
+          value={secondCity}
+          onChange={onSecondCityChange}
+          options={cities.map((city) => ({ label: city, value: city }))}
+        />
+      </S.SearchBar>
     </>
   );
 }

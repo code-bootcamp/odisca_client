@@ -12,39 +12,52 @@ import { filesState, imageUrlsState } from "../../../../../../commons/stores";
 import { useRecoilState } from "recoil";
 
 interface IFormUpdateData {
-  password: string;
-  phoneNumber: string;
-  email: string;
-  name: string;
+  user_password: string;
+  user_phone: string;
+  // user_email: string;
+  // user_name: string;
 }
 
 export default function UserEditBody(props): JSX.Element {
-  // const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
+  const [imageUrls] = useRecoilState(imageUrlsState);
   // const [files, setFiles] = useRecoilState<File[]>(filesState);
   const [updateLoginUser] = useMutationUpdateLoginUser();
   const { data } = useQueryFetchLoginUser();
-  const [getRootProps, getInputProps, , previewImagesJsonString] = MyDropzone();
+  // const [getRootProps, getInputProps, , previewImagesJsonString, imageUrls] =
+  //   MyDropzone();
 
   const { register, formState, handleSubmit } = useForm({
     resolver: yupResolver(userEditSchema),
     mode: "onChange",
   });
 
-  console.log(formState);
-
   const onClickUserUpdate = async (data: IFormUpdateData) => {
+    const previewImagesBase64 = imageUrls.map((imageUrl) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const img = new Image();
+      img.src = imageUrl;
+      ctx.drawImage(img, 0, 0);
+
+      const base64 = canvas.toDataURL();
+      return base64;
+    });
+
+    const previewImagesJsonString1 = JSON.stringify(previewImagesBase64);
+    console.log(previewImagesJsonString1, "dddd");
+
     try {
       const result = await updateLoginUser({
         variables: {
           updateLoginUserInput: {
-            password: data.password,
-            phone: data.phoneNumber,
-            name: data.name,
-            email: data.email,
+            user_password: data.user_password,
+            user_phone: data.user_phone,
+            // user_name: data.user_name,
+            // user_email: data.user_email,
           },
         },
       });
-      console.log(result);
+      console.log(result, "dd");
       Modal.success({
         content: "회원수정 완료!",
       });
@@ -55,31 +68,33 @@ export default function UserEditBody(props): JSX.Element {
         });
     }
   };
-  console.log(previewImagesJsonString);
-
+  // console.log(previewImagesJsonString);
+  console.log(data?.fetchLoginUser.user_name, "ddddddddkdk");
   return (
     <S.Wrapper>
-      <S.ProfileImgBox {...getRootProps([])}>
-        <input {...getInputProps()} />
-        <S.ProfileImg src={JSON.parse(previewImagesJsonString)} />
-        <S.ProfileImgEdit src="/user/mypage/edit/camera.png" />
-        <MyDropzone />
-      </S.ProfileImgBox>
+      {/* <S.ProfileImgBox {...getRootProps()}> */}
+      {/* <input {...getInputProps()} /> */}
+      {/* <S.ProfileImg /> */}
+      {/* <S.ProfileImgEdit src="/user/mypage/edit/camera.png" /> */}
+      <MyDropzone />
+      {/* </S.ProfileImgBox> */}
       <S.InputForm>
         <S.EditList>
           <S.ListDetail>이름</S.ListDetail>
           <S.ReadOnlyDetailInput
             type="text"
-            defaultValue={data?.fetchLoginUser.name}
+            defaultValue={data?.fetchLoginUser.user_name}
             readOnly
+            // {...register("user_name")}
           />
         </S.EditList>
         <S.EditList>
           <S.ListDetail>이메일</S.ListDetail>
           <S.ReadOnlyDetailInput
             type="text"
-            defaultValue={data?.fetchLoginUser.email}
+            defaultValue={data?.fetchLoginUser.user_email}
             readOnly
+            // {...register("user_email")}
           />
         </S.EditList>
         <S.EditList>
@@ -87,7 +102,7 @@ export default function UserEditBody(props): JSX.Element {
           <S.DetailInput
             type="password"
             placeholder="새로운 비밀번호를 입력해주세요."
-            {...register("password")}
+            {...register("user_password")}
           />
         </S.EditList>
         <S.AlertMessage></S.AlertMessage>
@@ -96,11 +111,11 @@ export default function UserEditBody(props): JSX.Element {
           <S.DetailInput
             style={{ color: "#4f4f4f" }}
             type="text"
-            defaultValue={data?.fetchLoginUser.phone}
-            {...register("phoneNumber")}
+            defaultValue={data?.fetchLoginUser.user_phone}
+            {...register("user_phone")}
           />
         </S.EditList>
-        <S.AlertMessage>{formState.errors.phoneNumber?.message}</S.AlertMessage>
+        <S.AlertMessage>{formState.errors.user_phone?.message}</S.AlertMessage>
       </S.InputForm>
       <S.BtnWrapper onSubmit={wrapFormAsync(handleSubmit(onClickUserUpdate))}>
         <S.EditBtn>수정하기</S.EditBtn>

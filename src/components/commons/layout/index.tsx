@@ -9,17 +9,17 @@ const HIDDEN_HEADER = [
   "/admin/signup",
 ];
 
-export const Wrapper = styled.div``;
-
-export const Contents = styled.div``;
-
-export const Children = styled.div``;
+const Wrapper = styled.div``;
+const Contents = styled.div``;
+const Children = styled.div``;
 
 export default function Layout(props: IProps): JSX.Element {
   const router = useRouter();
   console.log(router.asPath);
 
   const isHiddenHeader = HIDDEN_HEADER.includes(router.asPath);
+  // const isMainPage = router.pathname === "/user/main";
+  // const shouldExcludeMargin = isMainPage && !isHiddenHeader;
   return (
     <>
       <Wrapper>

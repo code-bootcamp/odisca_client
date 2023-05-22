@@ -1,4 +1,12 @@
 import { gql, useQuery } from "@apollo/client";
+import { ISeat } from "../../../../commons/types/generated/types";
+
+interface IFetchAllSeatsQueryResult {
+  refetch: () => Promise<void>;
+  data?: {
+    fetchAllSeatsByStudyCafeId: ISeat[];
+  };
+}
 
 export const FETCH_ALL_SEATS = gql`
   query fetchAllSeatsByStudyCafeId($studyCafe_id: String!) {
@@ -12,7 +20,9 @@ export const FETCH_ALL_SEATS = gql`
   }
 `;
 
-export const useQueryFetchAllSeatsByStudyCafeId = (id: string) => {
+export const useQueryFetchAllSeatsByStudyCafeId = (
+  id: string
+): IFetchAllSeatsQueryResult => {
   const query = useQuery(FETCH_ALL_SEATS, { variables: { studyCafe_id: id } });
 
   const refetch = async (): Promise<void> => {

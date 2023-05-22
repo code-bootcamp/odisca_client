@@ -18,7 +18,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import * as S from "./adminWrite.styles";
 import OperatingTime from "../../../commons/operatingTimeSelection/operatingTimeSelect.index";
-import { useMutationUploadImageFile } from "../../../commons/hooks/mutations/useMutationUploadLoginImageFile";
+import { useMutationUploadImageFile } from "../../../commons/hooks/mutations/useMutationUploadImageFile";
+import { checkValidationFile } from "../../../../commons/libraries/validationFile";
 
 // 등록 사항들 타입 지정
 interface IFormValues {
@@ -57,7 +58,7 @@ export default function AdminWrite(props): JSX.Element {
   const [imageUrls, setImageUrls] = useState(["", "", "", "", ""]);
   const [files, setFiles] = useState([]);
   const [imageButtonArray] = useState(["", "", "", "", ""]);
-  const [isMain, setIsMain] = useState(false);
+  const [isMain, setIsMain] = useState([true, false, false, false, false]);
 
   // useRef
   const fileRef = useRef<HTMLInputElement>(null);
@@ -158,6 +159,15 @@ export default function AdminWrite(props): JSX.Element {
       el ? el.data?.uploadImageFile : ""
     );
 
+    const images = resultUrls.map((el, index) => {
+      return {
+        image_url: el,
+        image_isMain: isMain[index],
+      };
+    });
+
+    console.log(images);
+
     try {
       const result = await createLoginStudyCafe({
         variables: {
@@ -175,12 +185,14 @@ export default function AdminWrite(props): JSX.Element {
             studyCafe_lat: Number(lat),
             studyCafe_lon: Number(lon),
             studyCafe_brn: data.brn,
-            image: { image_url: results, image_isMain: isMain },
+            image: images,
           },
         },
       });
       alert("업체등록이 완료되었습니다.");
-      void router.push(`/admin/${result.data?.createLoginStudyCafe.id}`);
+      void router.push(
+        `/admin/${result.data?.createLoginStudyCafe.studyCafe_id}`
+      );
     } catch (error) {
       alert("업체등록에 실패하였습니다.");
     }
@@ -188,7 +200,9 @@ export default function AdminWrite(props): JSX.Element {
 
   const onChangeFile = () => async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file === undefined) return;
+
+    const isValid = checkValidationFile(file);
+    if (!isValid) return;
 
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -238,15 +252,19 @@ export default function AdminWrite(props): JSX.Element {
         },
       });
       console.log(updateResult);
-      router.push(`/admin/${updateResult.data?.updateLoginStudyCafe.id}`);
+      router.push(
+        `/admin/${updateResult.data?.updateLoginStudyCafe.studyCafe_id}`
+      );
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
   };
 
   // 이미지 등록 시 메인 이미지 설정
-  const onChangeCheckMain = (event: ChangeEvent<HTMLInputElement>): void => {
-    setIsMain(true);
+  const onChangeCheckMain = (index: number) => (): void => {
+    const newMain = new Array(5).fill(false);
+    newMain[index] = true;
+    setIsMain(newMain);
   };
 
   // return 값
@@ -272,7 +290,9 @@ export default function AdminWrite(props): JSX.Element {
             <S.Input
               type="text"
               readOnly
-              defaultValue={fetchAdministerData?.fetchLoginAdminister.name}
+              defaultValue={
+                fetchAdministerData?.fetchLoginAdminister.administer_name
+              }
             />
           </S.InputBox>
           <S.InputBox>
@@ -296,7 +316,7 @@ export default function AdminWrite(props): JSX.Element {
             <S.Input
               type="text"
               {...register("name")}
-              Value={props.data?.fetchStudyCafe.name}
+              value={props.data?.fetchStudyCafe.name}
             />
             <S.Error>{formState.errors.name?.message}</S.Error>
           </S.InputBox>
@@ -391,7 +411,7 @@ export default function AdminWrite(props): JSX.Element {
                         />
                         <S.MainImgCheckBtn
                           type="radio"
-                          onChange={onChangeCheckMain}
+                          onChange={onChangeCheckMain(index)}
                           name="check"
                         />
                       </>
@@ -403,29 +423,11 @@ export default function AdminWrite(props): JSX.Element {
                     <S.ImageInput
                       type="file"
                       onChange={onChangeFile()}
-                      accept="image/jpeg,image/png"
                       ref={fileRef}
                     />
                   </S.ImageBox>
                 );
               })}
-              {/* 
-                <S.ImageBox>
-                  {imageUrls[0] ? (
-                    <S.CafeImg src={imageUrls[0]} onClick={onClickUpload} />
-                  ) : (
-                    <S.PlusIcon type="button" onClick={onClickUpload}>
-                      +
-                    </S.PlusIcon>
-                  )}
-                  <S.ImageInput
-                    type="file"
-                    onChange={onChangeFile(0)}
-                    accept="image/jpeg,image/png"
-                    ref={fileRef}
-                  />
-                </S.ImageBox>
-                */}
             </S.ImageListBox>
           </S.ImageSection>
         </S.SectionMiddle>

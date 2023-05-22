@@ -27,16 +27,16 @@ export default function UserMyPageHeader(): JSX.Element {
           <S.UserWrapperRight>
             <S.UserInfo>
               <S.InfoWrapper>
-                <S.UserName>{data?.fetchLoginUser.name}</S.UserName>
+                <S.UserName>{data?.fetchLoginUser.user_name}</S.UserName>
                 <S.EditBtn onClick={onClickMoveEditMyPage}>정보수정</S.EditBtn>
               </S.InfoWrapper>
-              <S.UserMail>{data?.fetchLoginUser.email}</S.UserMail>
+              <S.UserMail>{data?.fetchLoginUser.user_email}</S.UserMail>
             </S.UserInfo>
             <S.UserPointWrapper>
               <S.Icon src="/point.png"></S.Icon>
               <S.UserPoint>
-                {data?.fetchLoginUser.point !== undefined
-                  ? data?.fetchLoginUser.point
+                {data?.fetchLoginUser.user_point !== undefined
+                  ? data?.fetchLoginUser.user_point
                   : "0"}
               </S.UserPoint>
               <S.PointBtn>충전</S.PointBtn>

@@ -1,5 +1,5 @@
 import { useQueryFetchLoginAdminister } from "../../../commons/hooks/queries/useQueryFetchLoginAdminister";
-import { useQueryFetchLoginStudyCafes } from "../../../commons/hooks/queries/useQueryFetchLoginStudyCafes";
+import { useQueryFetchLoginStudyCafes } from "../../../commons/hooks/queries/useQueryFetchAllStudyCafesByAdminId";
 import AdminPageBody from "./body/adminPagebody.index";
 import AdiminPageHeader from "./header/adminPageheader.index";
 
