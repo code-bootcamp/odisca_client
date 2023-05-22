@@ -11,10 +11,7 @@ export const CREATE_POINT_TRANSACTION = gql`
     createLoginPointTransaction(
       createPointTransactionInput: $createPointTransactionInput
     ) {
-      id
-      impUid
-      amount
-      status
+      pointTransaction_status
     }
   }
 `;

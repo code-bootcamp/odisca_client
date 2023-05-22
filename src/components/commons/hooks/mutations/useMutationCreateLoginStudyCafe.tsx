@@ -1,31 +1,29 @@
 import { gql, MutationTuple, useMutation } from "@apollo/client";
 import {
   IMutation,
-  IStudyCafe,
+  IMutationCreateLoginStudyCafeArgs,
 } from "../../../../commons/types/generated/types";
 
 export const CREATE_LOGIN_STUDY_CAFE = gql`
   mutation createLoginStudyCafe($createStudyCafeInput: CreateStudyCafeInput!) {
     createLoginStudyCafe(createStudyCafeInput: $createStudyCafeInput) {
-      id
-      # name
-      # address
-      # contact
-      # timeFee
-      # description
-      # openTime
-      # closeTime
-      # lat
-      # lon
-      # brn
-      # seatCount
-      # floorPlanX
-      # floorPlanY
+      studyCafe_id
+      # studyCafe_name
+      # studyCafe_address
+      # studyCafe_addressDetail
+      # studyCafe_city
+      # studyCafe_district
+      # studyCafe_contact
+      # studyCafe_timeFee
+      # studyCafe_description
+      # studyCafe_openTime
+      # studyCafe_closeTime
+      # studyCafe_lat
+      # studyCafe_lon
+      # studyCafe_brn
       # administer {
-      # id
-      # name
-      # email
-      # password
+      # administer_id
+      # administer_name
       # }
     }
   }
@@ -33,11 +31,11 @@ export const CREATE_LOGIN_STUDY_CAFE = gql`
 
 export const useMutationCreateLoginStudyCafe = (): MutationTuple<
   Pick<IMutation, "createLoginStudyCafe">,
-  IStudyCafe
+  IMutationCreateLoginStudyCafeArgs
 > => {
   const mutation = useMutation<
     Pick<IMutation, "createLoginStudyCafe">,
-    IStudyCafe
+    IMutationCreateLoginStudyCafeArgs
   >(CREATE_LOGIN_STUDY_CAFE);
 
   return mutation;

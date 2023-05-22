@@ -12,6 +12,7 @@ export const signUpSchema = yup.object({
     .string()
     .oneOf([yup.ref("password"), ""], "비밀번호와 일치하지 않습니다.")
     .required("비밀번호를 확인해주세요"),
+
   email: yup
     .string()
     .email("이메일 형식에 적합하지 않습니다.")
@@ -24,11 +25,11 @@ export const signUpSchema = yup.object({
 });
 
 export const schema = yup.object({
-  email: yup
+  user_email: yup
     .string()
     .email("올바른 이메일 형태가 아닙니다.")
     .required("이메일을 입력해주세요."),
-  password: yup
+  user_password: yup
     .string()
     .required("비밀번호를 입력해주세요.")
     .matches(
@@ -39,7 +40,7 @@ export const schema = yup.object({
 
 export const userEditSchema = yup.object({
   // password: yup.string().nullable().required("새로운 비밀번호를 입력해주세요."),
-  phoneNumber: yup
+  user_phone: yup
     .string()
     .nullable()
     .required("새로운 전화번호를 입력해주세요.")

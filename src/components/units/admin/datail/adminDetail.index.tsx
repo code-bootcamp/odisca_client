@@ -1,24 +1,24 @@
 import { useRouter } from "next/router";
-import { useQueryFetchStudyCafes } from "../../../commons/hooks/queries/useQueryFetchStudyCafe";
+import { useQueryFetchStudyCafe } from "../../../commons/hooks/queries/useQueryFetchStudyCafe";
 import AdminDetailBody from "./body/AdminDetailBody.index";
 import AdminDetailFooter from "./footer/AdminDetailFooter.index";
 import AdminDetailHeader from "./header/AdminDetailHeader.index";
 
 export default function AdminDetail(): JSX.Element {
   const router = useRouter();
-  const { data } = useQueryFetchStudyCafes(String(router.query.Id));
-  console.log(data);
+  const { data } = useQueryFetchStudyCafe(String(router.query.Id));
+  console.log(data, String(router.query.Id));
   return (
     <>
       <AdminDetailHeader
-        cafeName={data?.fetchStudyCafe.name}
-        cafeBrn={data?.fetchStudyCafe.brn}
-        cafeContact={data?.fetchStudyCafe.contact}
-        cafeFee={data?.fetchStudyCafe.timeFee}
-        cafeOpenTime={data?.fetchStudyCafe.openTime}
-        cafeClosTime={data?.fetchStudyCafe.closeTime}
+        cafeName={data?.fetchOneStudyCafe.studyCafe_name}
+        cafeBrn={data?.fetchOneStudyCafe.studyCafe_brn}
+        cafeContact={data?.fetchOneStudyCafe.studyCafe_contact}
+        cafeFee={data?.fetchOneStudyCafe.studyCafe_timeFee}
+        cafeOpenTime={data?.fetchOneStudyCafe.studyCafe_openTime}
+        cafeClosTime={data?.fetchOneStudyCafe.studyCafe_closeTime}
       />
-      <AdminDetailBody cafeDescription={data?.fetchStudyCafe.description} />
+      <AdminDetailBody cafeDescription={data?.fetchOneStudyCafe.description} />
       <AdminDetailFooter />
     </>
   );

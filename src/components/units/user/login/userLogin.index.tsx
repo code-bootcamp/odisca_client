@@ -1,5 +1,4 @@
 import * as S from "./userLogin.style";
-import { gql, useMutation } from "@apollo/client";
 import { useRecoilState } from "recoil";
 import { accessTokenState } from "../../../../commons/stores";
 import { useForm } from "react-hook-form";
@@ -7,21 +6,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
 import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
 import { schema } from "../../../../commons/validations/validation";
+import { useMutationUserLogin } from "../../../commons/hooks/mutations/useMutationLogin";
 
 interface IFormData {
-  email: string;
-  password: string;
+  user_email: string;
+  user_password: string;
 }
-
-const LOG_IN = gql`
-  mutation LoginUser($loginInput: LoginInput!) {
-    LoginUser(loginInput: $loginInput)
-  }
-`;
 
 export default function UserLoginPage(): JSX.Element {
   const router = useRouter();
-  const [LoginUser] = useMutation(LOG_IN);
+  const [LoginUser] = useMutationUserLogin();
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 
   const { register, handleSubmit, formState } = useForm({
@@ -37,9 +31,9 @@ export default function UserLoginPage(): JSX.Element {
     try {
       const result = await LoginUser({
         variables: {
-          loginInput: {
-            email: data.email,
-            password: data.password,
+          loginUserInput: {
+            user_email: data.user_email,
+            user_password: data.user_password,
           },
         },
       });
@@ -55,7 +49,7 @@ export default function UserLoginPage(): JSX.Element {
       }
       setAccessToken(accessToken);
       alert("로그인이 완료되었습니다!");
-      // void router.push(`/main/landingPage`);
+      void router.push(`/user/mainpage`);
       localStorage.setItem("accessToken", accessToken);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
@@ -86,10 +80,10 @@ export default function UserLoginPage(): JSX.Element {
                   <S.LogInInput
                     type="text"
                     placeholder="이메일을 입력해주세요."
-                    {...register("email")}
+                    {...register("user_email")}
                   ></S.LogInInput>
                   <S.ErrorMessage>
-                    {formState.errors.email?.message}
+                    {formState.errors.user_email?.message}
                   </S.ErrorMessage>
                 </S.InputWrapper>
               </S.LogInInputBox>
@@ -100,10 +94,10 @@ export default function UserLoginPage(): JSX.Element {
                   <S.LogInInput
                     type="password"
                     placeholder="비밀번호를 입력해주세요."
-                    {...register("password")}
+                    {...register("user_password")}
                   ></S.LogInInput>
                   <S.ErrorMessage>
-                    {formState.errors.password?.message}
+                    {formState.errors.user_password?.message}
                   </S.ErrorMessage>
                 </S.InputWrapper>
               </S.LogInInputBox>
