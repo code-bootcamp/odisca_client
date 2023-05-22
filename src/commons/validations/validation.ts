@@ -25,11 +25,11 @@ export const signUpSchema = yup.object({
 });
 
 export const schema = yup.object({
-  email: yup
+  user_email: yup
     .string()
     .email("올바른 이메일 형태가 아닙니다.")
     .required("이메일을 입력해주세요."),
-  password: yup
+  user_password: yup
     .string()
     .required("비밀번호를 입력해주세요.")
     .matches(
