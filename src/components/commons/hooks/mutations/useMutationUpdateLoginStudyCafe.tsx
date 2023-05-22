@@ -1,4 +1,8 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql, MutationTuple, useMutation } from "@apollo/client";
+import {
+  IMutation,
+  IMutationUpdateLoginStudyCafeArgs,
+} from "../../../../commons/types/generated/types";
 
 export const UPDATE_LOGIN_STUDY_CAFE = gql`
   mutation updateLoginStudyCafe($updateStudyCafeInput: UpdateStudyCafeInput!) {
@@ -24,8 +28,14 @@ export const UPDATE_LOGIN_STUDY_CAFE = gql`
   }
 `;
 
-export const useMutationUpdateLoginStudyCafe = () => {
-  const mutation = useMutation(UPDATE_LOGIN_STUDY_CAFE);
+export const useMutationUpdateLoginStudyCafe = (): MutationTuple<
+  Pick<IMutation, "updateLoginStudyCafe">,
+  IMutationUpdateLoginStudyCafeArgs
+> => {
+  const mutation = useMutation<
+    Pick<IMutation, "updateLoginStudyCafe">,
+    IMutationUpdateLoginStudyCafeArgs
+  >(UPDATE_LOGIN_STUDY_CAFE);
 
   return mutation;
 };

@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql, MutationTuple, useMutation } from "@apollo/client";
 import {
   IMutation,
   IMutationCreateUserArgs,
@@ -12,7 +12,10 @@ export const CREATE_USER = gql`
   }
 `;
 
-export const useMutationCreateUser = () => {
+export const useMutationCreateUser = (): MutationTuple<
+  Pick<IMutation, "createUser">,
+  IMutationCreateUserArgs
+> => {
   const mutation = useMutation<
     Pick<IMutation, "createUser">,
     IMutationCreateUserArgs

@@ -49,7 +49,7 @@ export type ICreateCafeFloorPlanInput = {
 
 export type ICreateImageInput = {
   image_isMain: Scalars['Boolean'];
-  image_url: Scalars['String'];
+  image_url?: InputMaybe<Scalars['String']>;
 };
 
 export type ICreatePaymentInput = {
@@ -99,15 +99,20 @@ export type ICreateUserInput = {
 };
 
 export type IFetchAllStudyCafesInput = {
-  studyCafe_city: Scalars['String'];
-  studyCafe_district: Scalars['String'];
+  page: Scalars['Int'];
+  studyCafe_city: Array<Scalars['String']>;
+  studyCafe_district: Array<Scalars['String']>;
+};
+
+export type IFetchImageByVisitIdInput = {
+  visit_id: Scalars['String'];
 };
 
 export type IImage = {
   __typename?: 'Image';
   image_id: Scalars['String'];
   image_isMain: Scalars['Boolean'];
-  image_url: Scalars['String'];
+  image_url?: Maybe<Scalars['String']>;
   studyCafe: IStudyCafe;
 };
 
@@ -177,7 +182,7 @@ export type IMutationCreateAdministerArgs = {
 
 
 export type IMutationCreateLoginCafeFloorPlanAndSeatsArgs = {
-  createCateFloorPlanInput: ICreateCafeFloorPlanInput;
+  createCafeFloorPlanInput: ICreateCafeFloorPlanInput;
 };
 
 
@@ -278,6 +283,7 @@ export type IQuery = {
   fetchAllStudyCafesByAdminId: Array<IStudyCafe>;
   fetchCafeMainImage: IImage;
   fetchLoginAdminister: IAdminister;
+  fetchLoginImageByVisitId: Array<IImage>;
   fetchLoginPointTransactions: Array<IPointTransaction>;
   fetchLoginReviewsByUserId: Array<IReview>;
   fetchLoginUser: IUser;
@@ -302,6 +308,11 @@ export type IQueryFetchAllStudyCafesByAdminIdArgs = {
 
 export type IQueryFetchCafeMainImageArgs = {
   studyCafe_id: Scalars['String'];
+};
+
+
+export type IQueryFetchLoginImageByVisitIdArgs = {
+  fetchImageByVisitIdInput: IFetchImageByVisitIdInput;
 };
 
 
@@ -337,7 +348,7 @@ export type ISeatInformationInput = {
 export type IStudyCafe = {
   __typename?: 'StudyCafe';
   administer: IAdminister;
-  images: IImage;
+  images: Array<IImage>;
   studyCafe_address: Scalars['String'];
   studyCafe_addressDetail: Scalars['String'];
   studyCafe_brn: Scalars['String'];
@@ -359,8 +370,26 @@ export type IStudyCafe = {
 
 export type IStudyCafesWithImages = {
   __typename?: 'StudyCafesWithImages';
-  images: Array<IImage>;
-  studyCafes: Array<IStudyCafe>;
+  image_id?: Maybe<Scalars['String']>;
+  image_isMain?: Maybe<Scalars['Boolean']>;
+  image_url?: Maybe<Scalars['String']>;
+  studyCafe_address: Scalars['String'];
+  studyCafe_addressDetail: Scalars['String'];
+  studyCafe_brn: Scalars['String'];
+  studyCafe_city: Scalars['String'];
+  studyCafe_closeTime: Scalars['String'];
+  studyCafe_contact: Scalars['String'];
+  studyCafe_description: Scalars['String'];
+  studyCafe_district: Scalars['String'];
+  studyCafe_floorPlanX: Scalars['Int'];
+  studyCafe_floorPlanY: Scalars['Int'];
+  studyCafe_id: Scalars['String'];
+  studyCafe_lat: Scalars['Float'];
+  studyCafe_lon: Scalars['Float'];
+  studyCafe_name: Scalars['String'];
+  studyCafe_openTime: Scalars['String'];
+  studyCafe_seatCount: Scalars['Int'];
+  studyCafe_timeFee: Scalars['Int'];
 };
 
 export type IUpdateLoginAdministerInput = {
@@ -369,8 +398,6 @@ export type IUpdateLoginAdministerInput = {
 };
 
 export type IUpdateLoginUserInput = {
-  user_email: Scalars['String'];
-  user_name: Scalars['String'];
   user_password: Scalars['String'];
   user_phone: Scalars['String'];
 };
@@ -406,6 +433,7 @@ export type IUser = {
   user_name: Scalars['String'];
   user_phone: Scalars['String'];
   user_point: Scalars['Int'];
+  visits: Array<IVisit>;
 };
 
 export type IVisit = {

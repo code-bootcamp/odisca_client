@@ -1,7 +1,7 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql, MutationTuple, useMutation } from "@apollo/client";
 import {
   IMutation,
-  IMutationCreatePointTransactionArgs,
+  IMutationCreateLoginPointTransactionArgs,
 } from "../../../../commons/types/generated/types";
 
 export const CREATE_POINT_TRANSACTION = gql`
@@ -22,11 +22,13 @@ export const CREATE_POINT_TRANSACTION = gql`
     }
   }
 `;
-
-export const useMutationCreatePointTransaction = () => {
+export const useMutationCreatePointTransaction = (): MutationTuple<
+  Pick<IMutation, "createLoginPointTransaction">,
+  IMutationCreateLoginPointTransactionArgs
+> => {
   const mutation = useMutation<
     Pick<IMutation, "createLoginPointTransaction">,
-    IMutationCreatePointTransactionArgs
+    IMutationCreateLoginPointTransactionArgs
   >(CREATE_POINT_TRANSACTION);
   return mutation;
 };
