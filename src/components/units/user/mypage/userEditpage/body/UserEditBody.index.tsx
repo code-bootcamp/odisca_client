@@ -12,10 +12,10 @@ import { filesState, imageUrlsState } from "../../../../../../commons/stores";
 import { useRecoilState } from "recoil";
 
 interface IFormUpdateData {
-  password: string;
-  phoneNumber: string;
-  email: string;
-  name: string;
+  user_password: string;
+  user_phone: string;
+  user_email: string;
+  user_name: string;
 }
 
 export default function UserEditBody(props): JSX.Element {
@@ -37,10 +37,10 @@ export default function UserEditBody(props): JSX.Element {
       const result = await updateLoginUser({
         variables: {
           updateLoginUserInput: {
-            password: data.password,
-            phone: data.phoneNumber,
-            name: data.name,
-            email: data.email,
+            user_password: data.user_password,
+            user_phone: data.user_phone,
+            user_name: data.user_name,
+            user_email: data.user_email,
           },
         },
       });
@@ -70,7 +70,7 @@ export default function UserEditBody(props): JSX.Element {
           <S.ListDetail>이름</S.ListDetail>
           <S.ReadOnlyDetailInput
             type="text"
-            defaultValue={data?.fetchLoginUser.name}
+            defaultValue={data?.fetchLoginUser.user_name}
             readOnly
           />
         </S.EditList>
@@ -78,7 +78,7 @@ export default function UserEditBody(props): JSX.Element {
           <S.ListDetail>이메일</S.ListDetail>
           <S.ReadOnlyDetailInput
             type="text"
-            defaultValue={data?.fetchLoginUser.email}
+            defaultValue={data?.fetchLoginUser.user_email}
             readOnly
           />
         </S.EditList>
@@ -87,7 +87,7 @@ export default function UserEditBody(props): JSX.Element {
           <S.DetailInput
             type="password"
             placeholder="새로운 비밀번호를 입력해주세요."
-            {...register("password")}
+            {...register("user_password")}
           />
         </S.EditList>
         <S.AlertMessage></S.AlertMessage>
@@ -96,11 +96,11 @@ export default function UserEditBody(props): JSX.Element {
           <S.DetailInput
             style={{ color: "#4f4f4f" }}
             type="text"
-            defaultValue={data?.fetchLoginUser.phone}
-            {...register("phoneNumber")}
+            defaultValue={data?.fetchLoginUser.user_phone}
+            {...register("user_phone")}
           />
         </S.EditList>
-        <S.AlertMessage>{formState.errors.phoneNumber?.message}</S.AlertMessage>
+        <S.AlertMessage>{formState.errors.user_phone?.message}</S.AlertMessage>
       </S.InputForm>
       <S.BtnWrapper onSubmit={wrapFormAsync(handleSubmit(onClickUserUpdate))}>
         <S.EditBtn>수정하기</S.EditBtn>
