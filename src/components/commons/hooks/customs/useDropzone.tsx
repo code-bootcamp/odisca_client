@@ -26,8 +26,8 @@ function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
       const imageUrl = URL.createObjectURL(selectedFile);
       setImageUrls([imageUrl]);
       onFileChange(selectedFile);
-    } else if (data?.fetchLoginUser.user.user_image) {
-      const imageUrl = data.fetchLoginUser.user.user_image;
+    } else if (data?.fetchLoginUser.user_image) {
+      const imageUrl = data.fetchLoginUser.user_image;
       setImageUrls([imageUrl]);
     } else {
       setImageUrls([]);
@@ -37,7 +37,7 @@ function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
     selectedFile,
     setImageUrls,
     onFileChange,
-    data?.fetchLoginUser.user.user_image,
+    data?.fetchLoginUser.user_image,
   ]);
 
   // useEffect(() => {
@@ -50,13 +50,11 @@ function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
 
   return (
     <>
-      {data?.fetchLoginUser.user.user_image ? (
+      {data?.fetchLoginUser.user_image ? (
         <D.ProfileImgBox {...getRootProps()}>
           <input {...getInputProps()} />
           <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
-          <D.ProfileImg
-            src={data.fetchLoginUser.user.user_image}
-          ></D.ProfileImg>
+          <D.ProfileImg src={data.fetchLoginUser.user_image}></D.ProfileImg>
         </D.ProfileImgBox>
       ) : (
         <D.ProfileImgBox {...getRootProps()}>

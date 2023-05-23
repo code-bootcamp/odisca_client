@@ -24,23 +24,21 @@ export default function UserMyPageHeader(): JSX.Element {
           <S.UserWrapperLight>
             <S.ProfileWrapper>
               <S.ProfileImage
-                src={data?.fetchLoginUser.user.user_image}
+                src={data?.fetchLoginUser.user_image}
               ></S.ProfileImage>
             </S.ProfileWrapper>
           </S.UserWrapperLight>
           <S.UserWrapperRight>
             <S.UserInfo>
               <S.InfoWrapper>
-                <S.UserName>{data?.fetchLoginUser.user.user_name}</S.UserName>
+                <S.UserName>{data?.fetchLoginUser.user_name}</S.UserName>
                 <S.EditBtn onClick={onClickMoveEditMyPage}>정보수정</S.EditBtn>
               </S.InfoWrapper>
-              <S.UserMail>{data?.fetchLoginUser.user.user_email}</S.UserMail>
+              <S.UserMail>{data?.fetchLoginUser.user_email}</S.UserMail>
             </S.UserInfo>
             <S.UserPointWrapper>
               <S.Icon src="/point.png"></S.Icon>
-              <S.UserPoint>
-                {data?.fetchLoginUser.user.user_point ?? 0}
-              </S.UserPoint>
+              <S.UserPoint>{data?.fetchLoginUser.user_point ?? 0}</S.UserPoint>
               <S.PointBtn>충전</S.PointBtn>
               <S.PaymentBtn onClick={onClickMovePaymentList}>
                 결제내역

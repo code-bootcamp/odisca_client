@@ -145,7 +145,7 @@ export default function UserEditBody(): JSX.Element {
           <S.ListDetail>이름</S.ListDetail>
           <S.ReadOnlyDetailInput
             type="text"
-            defaultValue={data?.fetchLoginUser.user.user_name}
+            defaultValue={data?.fetchLoginUser.user_name}
             readOnly
           />
         </S.EditList>
@@ -153,7 +153,7 @@ export default function UserEditBody(): JSX.Element {
           <S.ListDetail>이메일</S.ListDetail>
           <S.ReadOnlyDetailInput
             type="text"
-            defaultValue={data?.fetchLoginUser.user.user_email}
+            defaultValue={data?.fetchLoginUser.user_email}
             readOnly
           />
         </S.EditList>
@@ -171,7 +171,7 @@ export default function UserEditBody(): JSX.Element {
           <S.DetailInput
             style={{ color: "#4f4f4f" }}
             type="text"
-            defaultValue={data?.fetchLoginUser.user.user_phone}
+            defaultValue={data?.fetchLoginUser.user_phone}
             {...register("user_phone")}
           />
         </S.EditList>
