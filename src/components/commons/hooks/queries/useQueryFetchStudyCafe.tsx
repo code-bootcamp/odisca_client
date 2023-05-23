@@ -27,10 +27,10 @@ export const FETCH_ONE_STUDY_CAFE = gql`
       studyCafe_seatCount
       studyCafe_floorPlanX
       studyCafe_floorPlanY
-      administer {
-        administer_name
-        administer_email
-      }
+      # administer {
+      #   administer_name
+      #   administer_email
+      # }
     }
   }
 `;
