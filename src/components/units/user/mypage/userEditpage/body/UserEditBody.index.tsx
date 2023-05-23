@@ -8,13 +8,12 @@ import { useMutationUpdateLoginUser } from "../../../../../commons/hooks/mutatio
 import { useQueryFetchLoginUser } from "../../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./UserEditBody.styles";
 import {
-  filesState,
   imageUrlsState,
   selectedFileState,
 } from "../../../../../../commons/stores";
 import { useRecoilState } from "recoil";
 import { useMutationUploadImageFile } from "../../../../../commons/hooks/mutations/useMutationUploadImageFile";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 interface IFormUpdateData {
   user_password: string;
@@ -23,10 +22,8 @@ interface IFormUpdateData {
 }
 
 export default function UserEditBody(): JSX.Element {
-  const [imageUrls] = useRecoilState(imageUrlsState);
-  const [selectedFile] = useRecoilState(selectedFileState);
-  // const [files, setFiles] = useRecoilState<File[]>(filesState);
-  // const [files, setFiles] = useRecoilState<File[]>(filesState);
+  const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
+  const [selectedFile, setSelectedFile] = useRecoilState(selectedFileState);
   const [updateLoginUser] = useMutationUpdateLoginUser();
   const { data } = useQueryFetchLoginUser();
   const [uploadImageFile] = useMutationUploadImageFile();
@@ -109,9 +106,14 @@ export default function UserEditBody(): JSX.Element {
     }
   };
 
-  const onFileChange = useCallback((selectedFiles: File[]) => {
-    console.log(selectedFiles);
-  }, []);
+  const onFileChange = useCallback(
+    (selectedFiles: File[]) => {
+      console.log(selectedFiles);
+      setSelectedFile(selectedFiles[0]);
+      setImageUrls([URL.createObjectURL(selectedFiles[0])]);
+    },
+    [setImageUrls]
+  );
 
   return (
     <S.Wrapper>
@@ -126,7 +128,7 @@ export default function UserEditBody(): JSX.Element {
           <S.ListDetail>이름</S.ListDetail>
           <S.ReadOnlyDetailInput
             type="text"
-            defaultValue={data?.fetchLoginUser.user_name}
+            defaultValue={data?.fetchLoginUser.user.user_name}
             readOnly
             // {...register("user_name")}
           />
@@ -135,7 +137,7 @@ export default function UserEditBody(): JSX.Element {
           <S.ListDetail>이메일</S.ListDetail>
           <S.ReadOnlyDetailInput
             type="text"
-            defaultValue={data?.fetchLoginUser.user_email}
+            defaultValue={data?.fetchLoginUser.user.user_email}
             readOnly
             // {...register("user_email")}
           />
@@ -154,7 +156,7 @@ export default function UserEditBody(): JSX.Element {
           <S.DetailInput
             style={{ color: "#4f4f4f" }}
             type="text"
-            defaultValue={data?.fetchLoginUser.user_phone}
+            defaultValue={data?.fetchLoginUser.user.user_phone}
             {...register("user_phone")}
           />
         </S.EditList>
