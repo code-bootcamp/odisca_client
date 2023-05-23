@@ -24,5 +24,5 @@ export default function Map(): JSX.Element {
     };
   }, []);
 
-  return <div id="map" style={{ width: "100%", height: "100vh" }}></div>;
+  return <div id="map" style={{ width: "100%", height: "100%" }}></div>;
 }

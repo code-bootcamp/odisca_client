@@ -107,6 +107,7 @@ export type ICreateUserInput = {
 export type IFetchAllStudyCafesInput = {
   studyCafe_city: Scalars["String"];
   studyCafe_district: Scalars["String"];
+  page?: InputMaybe<Scalars["Int"]>;
 };
 
 export type IImage = {

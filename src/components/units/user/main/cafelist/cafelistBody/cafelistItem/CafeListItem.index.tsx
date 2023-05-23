@@ -1,4 +1,10 @@
+// import { useEffect } from "react";
+import { useEffect } from "react";
 import * as S from "./CafeListItem.styles";
+
+declare const window: typeof globalThis & {
+  kakao: any;
+};
 
 interface CafeListItemProps {
   el: {
@@ -6,6 +12,8 @@ interface CafeListItemProps {
     studyCafe_name: string;
     studyCafe_timeFee: string;
     studyCafe_description: string;
+    studyCafe_lat: GLfloat;
+    studyCafe_lon: GLfloat;
     image?: {
       image_url: string;
     };
@@ -13,10 +21,38 @@ interface CafeListItemProps {
 }
 
 export default function CafeListItem(props: CafeListItemProps): JSX.Element {
+  const cafeId = props.el.studyCafe_id;
+
+  const handleClick = () => {
+    const lat = props.el.studyCafe_lat;
+    const lon = props.el.studyCafe_lon;
+
+    const script = document.createElement("script");
+    script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=12e2554bb6ebf42463e132c31315b011&libraries=services";
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      window.kakao.maps.load(function () {
+        const container = document.getElementById("map");
+        const map = new window.kakao.maps.Map(container, {
+          center: new window.kakao.maps.LatLng(lat, lon),
+          level: 3,
+        });
+
+        const marker = new window.kakao.maps.Marker({
+          position: new window.kakao.maps.LatLng(lat, lon),
+        });
+
+        marker.setMap(map);
+      });
+    };
+  };
+
   return (
     <S.Wrapper>
-      <S.ListBox key={props.el.studyCafe_id}>
-        <S.CafeBox>
+      <S.ListBox key={cafeId}>
+        <S.CafeBox onClick={handleClick} id={cafeId}>
           <S.CafeName>{props.el.studyCafe_name}</S.CafeName>
           <S.CafeList>
             <S.CafeImg

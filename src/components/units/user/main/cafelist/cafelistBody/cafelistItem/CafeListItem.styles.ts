@@ -23,6 +23,7 @@ export const CafeBox = styled.div`
   display: flex;
   flex-direction: column;
   padding: 55px;
+  cursor: pointer;
 `;
 export const DevidedLine = styled.div`
   width: 100%;

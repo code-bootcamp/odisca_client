@@ -14,14 +14,6 @@ const cityData:CityData = {
   ],
 };
 
-// const cafeDatas = [
-//   { district: "강남구", lon: 127.0495556, lat: 37.514575 },
-//   { district: "구로구", lon: 126.8895972, lat: 37.49265 },
-//   { district: "노원구", lon: 127.0583889, lat: 37.65146111 },
-//   { district: "동대문구", lon: 127.0421417, lat: 37.571625 },
-//   { district: "마포구", lon: 126.9105306, lat: 37.50965556 },
-// ];
-
 interface SearchBar01Props {
   onSecondCityChange: (value: string) => void;
 }
@@ -40,7 +32,7 @@ export default function SearchBar01({
   const handleSecondCityChange = (value: string): void => {
     setSecondCity(value);
     onSecondCityChange(value);
-    // console.log(onSecondCityChange, "ddd");
+    console.log(onSecondCityChange, "ddd");
   };
 
   return (
