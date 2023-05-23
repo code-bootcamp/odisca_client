@@ -1,4 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
+import {
+  IQueryFetchAllStudyCafesArgs,
+  IStudyCafesWithImages,
+} from "../../../../commons/types/generated/types";
 
 export const FETCH_ALL_STUDY_CAFES = gql`
   query fetchAllStudyCafes($fetchAllStudyCafesInput: FetchAllStudyCafesInput!) {
@@ -20,21 +24,29 @@ export const FETCH_ALL_STUDY_CAFES = gql`
       studyCafe_seatCount
       studyCafe_floorPlanX
       studyCafe_floorPlanY
-      administer {
-        administer_name
-        administer_email
-      }
       image_id
-      # image_url
+      image_url
     }
   }
 `;
-
-export const useQueryFetchAllStudyCafes = () => {
-  const query = useQuery(FETCH_ALL_STUDY_CAFES);
+export const useQueryFetchAllStudyCafes = (
+  fetchAllStudyCafesInput: IQueryFetchAllStudyCafesArgs
+): {
+  data: IStudyCafesWithImages;
+  refetch: () => Promise<void>;
+  fetchMore: (variables: { page: number }) => Promise<void>;
+} => {
+  const query = useQuery(FETCH_ALL_STUDY_CAFES, {
+    variables: {
+      fetchAllStudyCafesInput,
+    },
+  });
   const refetch = async (): Promise<void> => {
     await query.refetch();
   };
+  const fetchMore = async (variables: { page: number }): Promise<void> => {
+    await query.fetchMore({ variables });
+  };
 
-  return { ...query, refetch };
+  return { data: query.data, refetch, fetchMore };
 };

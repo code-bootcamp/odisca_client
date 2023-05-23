@@ -31,7 +31,6 @@ export const DevidedLine = styled.div`
 export const CafeImg = styled.img`
   width: 500px;
   height: 200px;
-  background-color: #bdbdbd;
   margin-bottom: 27px;
 `;
 

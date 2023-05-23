@@ -22,7 +22,13 @@ const cityData:CityData = {
 //   { district: "마포구", lon: 126.9105306, lat: 37.50965556 },
 // ];
 
-export default function SearchBar01(): JSX.Element {
+interface SearchBar01Props {
+  onSecondCityChange: (value: string) => void;
+}
+
+export default function SearchBar01({
+  onSecondCityChange,
+}: SearchBar01Props): JSX.Element {
   const [cities, setCities] = useState(cityData[provinceData[0]]);
   const [secondCity, setSecondCity] = useState(cityData[provinceData[0]][0]);
 
@@ -31,8 +37,10 @@ export default function SearchBar01(): JSX.Element {
     setSecondCity(cityData[value][0]);
   };
 
-  const onSecondCityChange = (value: string): void => {
+  const handleSecondCityChange = (value: string): void => {
     setSecondCity(value);
+    onSecondCityChange(value);
+    // console.log(onSecondCityChange, "ddd");
   };
 
   return (
@@ -51,7 +59,7 @@ export default function SearchBar01(): JSX.Element {
         <S.SelectBox
           style={{ width: "80px" }}
           value={secondCity}
-          onChange={onSecondCityChange}
+          onChange={handleSecondCityChange}
           options={cities.map((city) => ({ label: city, value: city }))}
         />
       </S.SearchBar>
