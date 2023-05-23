@@ -3,7 +3,7 @@ import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../src/components/c
 import { ChangeEvent, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Modal } from "antd";
-import { useQueryFetchOneStudyCafe } from "../../../../src/components/commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
+import { useQueryFetchOneStudyCafe } from "../../../../src/components/commons/hooks/queries/useQueryFetchStudyCafeForUser";
 import { ISeat } from "../../../../src/commons/types/generated/types";
 import { useMutationCreatePayment } from "../../../../src/components/commons/hooks/mutations/useMutationCreatePayment";
 
@@ -13,10 +13,10 @@ export default function SeatMapScanPage(): JSX.Element {
   const { data } = useQueryFetchAllSeatsByStudyCafeId(String(router.query.Id));
   const [isModal, setIsModal] = useState(false);
   const [stateX, setStateX] = useState(
-    dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX ?? 40
+    dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX ?? 40
   );
   const [stateY, setStateY] = useState(
-    dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanY ?? 40
+    dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanY ?? 40
   );
   console.log(dataCafe, "카페");
   const [seatId, setSeatId] = useState("");
@@ -30,18 +30,18 @@ export default function SeatMapScanPage(): JSX.Element {
   console.log(data?.fetchAllSeatsByStudyCafeId);
   useEffect(() => {
     if (dataCafe !== undefined && data !== undefined) {
-      setStateX(dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX);
-      setStateY(dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanY);
+      setStateX(dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX);
+      setStateY(dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanY);
       const newArray = Array.from(
-        Array(dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanY),
+        Array(dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanY),
         () => {
           const result = [];
           for (
             let i = 0;
-            i < dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX;
+            i < dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX;
             i++
           ) {
-            result.push({ status: "", seatId: "i", number: "" });
+            result.push({ status: "empty", seatId: "i", number: "" });
           }
           return result;
         }
@@ -50,7 +50,7 @@ export default function SeatMapScanPage(): JSX.Element {
         const seat = JSON.parse(el.seat_location);
 
         seat.map((ele) => {
-          newArray[ele[1]][ele[0]].status = el.seat_number;
+          newArray[ele[1]][ele[0]].status = el.user ? el.user?.user_name : "";
           newArray[ele[1]][ele[0]].seatId = el.seat_id;
           newArray[ele[1]][ele[0]].number = el.seat_number;
           return 1;
@@ -64,6 +64,8 @@ export default function SeatMapScanPage(): JSX.Element {
     width: 20px;
     height: 20px;
     font-size: 14px;
+    /* border: 0.5px solid black; */
+    /* margin: 0.5px; */
   `;
 
   const Container = styled.div`
@@ -105,8 +107,11 @@ export default function SeatMapScanPage(): JSX.Element {
         result.borderRight = "1px solid black";
       }
     }
-    if (ele.number >= 1) {
+    if (ele.status === "") {
       result.backgroundColor = "#e4e4e4";
+    }
+    if (ele.status !== "empty" && ele.status !== "") {
+      result.backgroundColor = "#323232";
     }
     // if (ele.number === 2) {
     //   result.backgroundColor = "#323232";
@@ -116,10 +121,10 @@ export default function SeatMapScanPage(): JSX.Element {
   };
 
   const onClickInfo = (seat: any) => () => {
-    if (seat.number === 0) {
+    if (seat.status === "empty") {
       return;
     }
-    if (seat.number >= 1) {
+    if (seat.status === "") {
       setSeatStatus("예약 가능한 좌석입니다.");
       setSeatUsable(true);
     }
@@ -127,30 +132,38 @@ export default function SeatMapScanPage(): JSX.Element {
     setSeatNumber(seat.number);
     setIsModal(true);
   };
+
   const toggleModal = (): void => {
+    setSeatUsable(false);
     setIsModal(false);
   };
+
   const submitReservation = async (): Promise<void> => {
-    try {
-      await createPayment({
-        variables: {
-          createPaymentInput: {
-            studyCafe_id: String(router.query.Id),
-            payment_point: dataCafe?.fetchOneStudyCafe.studyCafe_timeFee ?? 0,
-            payment_time: duringTime,
-            seat_id: seatId,
-          },
+    // console.log(
+    //   String(router.query.Id),
+    //   dataCafe?.fetchOneStudyCafe.studyCafe_timeFee * duringTime,
+    //   seatId
+    // );
+    await createPayment({
+      variables: {
+        createPaymentInput: {
+          studyCafe_id: String(router.query.Id),
+          payment_point:
+            duringTime *
+            Number(dataCafe?.fetchOneStudyCafeForUser.studyCafe_timeFee),
+          payment_time: duringTime,
+          seat_id: seatId,
         },
-      });
-      console.log(seatId, seatNumber);
-      setIsModal(false);
-    } catch (err) {
-      alert(err);
-    }
+      },
+    });
+    console.log(seatId, seatNumber);
+    setSeatUsable(false);
+    setIsModal(false);
   };
+
   const onChangeTime = (event: ChangeEvent<HTMLSelectElement>): void => {
     setDuringTime(Number(event.target.value));
-    console.log();
+    console.log(Number(event.target.value));
   };
 
   return (
@@ -162,7 +175,7 @@ export default function SeatMapScanPage(): JSX.Element {
           {map.map((el, indY) => {
             return (
               <Box2 key={indY}>
-                {el.map((ele, indX) => {
+                {el.map((ele, indX: number) => {
                   return (
                     <>
                       <Pixel
@@ -198,6 +211,7 @@ export default function SeatMapScanPage(): JSX.Element {
         >
           <div>좌석 번호 : {seatNumber}</div>
           <div>좌석 종류 : {seatStatus}</div>
+
           <select onChange={onChangeTime} disabled={!seatUsable}>
             <option value={1}>1시간</option>
             <option value={2}>2시간</option>

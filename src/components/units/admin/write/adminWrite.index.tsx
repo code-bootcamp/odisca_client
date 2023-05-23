@@ -1,5 +1,6 @@
 // 라이브러리
 import DaumPostcodeEmbed from "react-daum-postcode";
+import { Modal } from "antd";
 
 // hooks
 import { useRouter } from "next/router";
@@ -9,6 +10,7 @@ import UseModal from "../../../commons/hooks/customs/useModal";
 import { useMutationCreateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationCreateLoginStudyCafe";
 import { useMutationUpdateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationUpdateLoginStudyCafe";
 import { useQueryFetchLoginAdminister } from "../../../commons/hooks/queries/useQueryFetchLoginAdminister";
+import { useMutationUploadImageFile } from "../../../commons/hooks/mutations/useMutationUploadImageFile";
 
 // 검증 및 설정
 import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
@@ -18,8 +20,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import * as S from "./adminWrite.styles";
 import OperatingTime from "../../../commons/operatingTimeSelection/operatingTimeSelect.index";
-import { useMutationUploadImageFile } from "../../../commons/hooks/mutations/useMutationUploadImageFile";
 import { checkValidationFile } from "../../../../commons/libraries/validationFile";
+import SubmitSuccessAlertModal from "../../../commons/submitSuccessModal/submitSuccessModal.index";
 
 // 등록 사항들 타입 지정
 interface IFormValues {
@@ -39,8 +41,7 @@ declare const window: typeof globalThis & {
 };
 
 export default function AdminWrite(props): JSX.Element {
-  // useModal 사용
-  const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
+  // const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
 
   // router
   const router = useRouter();
@@ -59,6 +60,8 @@ export default function AdminWrite(props): JSX.Element {
   const [files, setFiles] = useState([]);
   const [imageButtonArray] = useState(["", "", "", "", ""]);
   const [isMain, setIsMain] = useState([true, false, false, false, false]);
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
 
   // useRef
   const fileRef = useRef<HTMLInputElement>(null);
@@ -134,9 +137,17 @@ export default function AdminWrite(props): JSX.Element {
     setCloseTime(event?.target.value);
   };
 
+  const AddressModal = (): void => {
+    setIsAddressModalOpen((prev) => !prev);
+  };
+
+  const SubmitModal = (): void => {
+    setIsSubmitModalOpen((prev) => !prev);
+  };
+
   // daumpostcode에서 주소 검색 완료 시 로직
   const onCompleteAddressSearch = (AddressData): void => {
-    handleCancel();
+    AddressModal();
     setZipcode(AddressData.zonecode);
     setAddress(AddressData.address);
     setCity(AddressData.sido);
@@ -225,12 +236,12 @@ export default function AdminWrite(props): JSX.Element {
           },
         },
       });
-      alert("업체등록이 완료되었습니다.");
+      setIsSubmitModalOpen(true);
       void router.push(
         `/admin/${result.data?.createLoginStudyCafe.studyCafe_id}`
       );
     } catch (error) {
-      alert("업체등록에 실패하였습니다.");
+      if (error instanceof Error) alert("업체 등록에 실패했습니다!");
     }
   };
 
@@ -258,7 +269,7 @@ export default function AdminWrite(props): JSX.Element {
         },
       });
       console.log(updateResult);
-      router.push(
+      void router.push(
         `/admin/${updateResult.data?.updateLoginStudyCafe.studyCafe_id}`
       );
     } catch (error) {
@@ -352,14 +363,14 @@ export default function AdminWrite(props): JSX.Element {
                 value={zipcode}
                 readOnly
               ></S.Zipcode>
-              <S.SearchBtn type="button" onClick={showModal}>
+              <S.SearchBtn type="button" onClick={AddressModal}>
                 검색
               </S.SearchBtn>
-              {isModalOpen ? (
+              {isAddressModalOpen ? (
                 <S.AddressSearchModal
-                  open={isModalOpen}
-                  onOk={handleOk}
-                  onCancel={handleCancel}
+                  open={true}
+                  onOk={AddressModal}
+                  onCancel={AddressModal}
                 >
                   <DaumPostcodeEmbed onComplete={onCompleteAddressSearch} />
                 </S.AddressSearchModal>
@@ -464,6 +475,19 @@ export default function AdminWrite(props): JSX.Element {
         </S.SectionBottom>
         <S.Footer>
           <S.Btn>{props.isEdit ? "수정" : "등록"}하기</S.Btn>
+          {isSubmitModalOpen ? (
+            <S.SubmitSuccessModal
+              open={SubmitModal}
+              onOk={SubmitModal}
+              onCancel={SubmitModal}
+              okButtonProps={{ style: { display: "none" } }}
+              cancelButtonProps={{ style: { display: "none" } }}
+            >
+              <SubmitSuccessAlertModal />
+            </S.SubmitSuccessModal>
+          ) : (
+            <></>
+          )}
           <S.Btn type="button">취소하기</S.Btn>
         </S.Footer>
       </S.Wrapper>

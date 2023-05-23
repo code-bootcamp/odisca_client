@@ -7,10 +7,9 @@ interface IFetchLoginUserQueryResult
 }
 
 export const FETCH_LOGIN_USER = gql`
-  query fetchLoginUser($page: Int! = 1) {
-    fetchLoginUser(page: $page) {
+  query {
+    fetchLoginUser(page: 1) {
       user {
-        user_id
         user_name
         user_email
         user_phone

@@ -261,3 +261,5 @@ export const Btn = styled.button`
 export const Hour = styled.div``;
 
 export const AddressSearchModal = styled(Modal)``;
+
+export const SubmitSuccessModal = styled(Modal)``;

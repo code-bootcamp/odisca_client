@@ -6,6 +6,8 @@ export default function UserMyPageHeader(): JSX.Element {
   const router = useRouter();
   const { data } = useQueryFetchLoginUser();
 
+  console.log(data);
+
   const onClickMovePaymentList = (): void => {
     void router.push(`/user/mypage/transactionList`);
   };
@@ -27,17 +29,15 @@ export default function UserMyPageHeader(): JSX.Element {
           <S.UserWrapperRight>
             <S.UserInfo>
               <S.InfoWrapper>
-                <S.UserName>{data?.fetchLoginUser.user_name}</S.UserName>
+                <S.UserName>{data?.fetchLoginUser.user.user_name}</S.UserName>
                 <S.EditBtn onClick={onClickMoveEditMyPage}>정보수정</S.EditBtn>
               </S.InfoWrapper>
-              <S.UserMail>{data?.fetchLoginUser.user_email}</S.UserMail>
+              <S.UserMail>{data?.fetchLoginUser.user.user_email}</S.UserMail>
             </S.UserInfo>
             <S.UserPointWrapper>
               <S.Icon src="/point.png"></S.Icon>
               <S.UserPoint>
-                {data?.fetchLoginUser.user_point !== undefined
-                  ? data?.fetchLoginUser.user_point
-                  : "0"}
+                {data?.fetchLoginUser.user.user_point ?? 0}
               </S.UserPoint>
               <S.PointBtn>충전</S.PointBtn>
               <S.PaymentBtn onClick={onClickMovePaymentList}>
