@@ -3,6 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { useRecoilState } from "recoil";
 import { imageUrlsState } from "../../../../commons/stores";
 import * as D from "../../../units/user/mypage/userEditpage/body/UserEditBody.styles";
+import { useQueryFetchLoginUser } from "../queries/useQueryFetchLoginUser";
 
 interface MyDropzoneProps {
   onFilesChange: (selectedFiles: File[]) => void;
@@ -10,6 +11,7 @@ interface MyDropzoneProps {
 
 function MyDropzone({ onFilesChange }: MyDropzoneProps): JSX.Element {
   const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
+  const { data } = useQueryFetchLoginUser();
 
   const [imageDataArray, setImageDataArray] = useState([]);
   const onDrop = useCallback((acceptedFiles) => {
@@ -37,12 +39,20 @@ function MyDropzone({ onFilesChange }: MyDropzoneProps): JSX.Element {
   }, [imageDataArray, setImageUrls, onFilesChange]);
   const previewImagesJsonString = JSON.stringify(imageUrls);
 
+  console.log(data?.fetchLoginUser.user_image, "dddddd");
   return (
     <>
       <D.ProfileImgBox {...getRootProps()}>
         <input {...getInputProps()} />
         <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
-        <D.ProfileImg src={JSON.parse(previewImagesJsonString)}></D.ProfileImg>
+        <D.ProfileImg
+          // src={
+          //   data?.fetchLoginUser.user_image
+          //     ? `https://storage.googleapis.com/${data.fetchLoginUser.user_image}`
+          //     : JSON.parse(previewImagesJsonString)
+          // }
+          src={JSON.parse(previewImagesJsonString)}
+        ></D.ProfileImg>
       </D.ProfileImgBox>
       {/* <D.ProfileImg src={JSON.parse(previewImagesJsonString)}></D.ProfileImg> */}
     </>
