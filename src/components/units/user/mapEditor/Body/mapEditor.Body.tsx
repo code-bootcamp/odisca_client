@@ -210,42 +210,41 @@ export default function MapEditor(): JSX.Element {
     try {
       await createFloor({
         variables: {
-          createCateFloorPlanInput: {
-            studyCafe_id: router.query.Id,
+          createCafeFloorPlanInput: {
+            studyCafe_id: String(router.query.Id),
             studyCafe_floorPlanX: stateX,
             studyCafe_floorPlanY: stateY,
             studyCafe_seatCount: seatArray.length,
           },
         },
       });
+      const input = seatArray.map((el, index) => {
+        const seat = {
+          seat: el.seats,
+          seat_number: String(index + 1),
+        };
+        return seat;
+      });
+      const seatsInput = {
+        seatInformation: input,
+        studyCafe_id: router.query.Id,
+      };
+      console.log(seatsInput);
+      try {
+        await createSeats({
+          variables: {
+            createSeatsInput: seatsInput,
+          },
+        });
+        router.push("/admin/adminPage");
+      } catch (error) {
+        if (error instanceof Error) {
+          alert("등록실패");
+        }
+      }
     } catch (err) {
       if (err instanceof Error) {
         alert("등록 실패했습니다.");
-      }
-    }
-
-    const input = seatArray.map((el, index) => {
-      const seat = {
-        seat: el.seats,
-        seat_number: String(index + 1),
-      };
-      return seat;
-    });
-    const seatsInput = {
-      seatInformation: input,
-      studyCafe_id: router.query.Id,
-    };
-    console.log(seatsInput);
-    try {
-      await createSeats({
-        variables: {
-          createSeatsInput: seatsInput,
-        },
-      });
-      router.push("/admin/adminPage");
-    } catch (error) {
-      if (error instanceof Error) {
-        alert("등록실패");
       }
     }
   };

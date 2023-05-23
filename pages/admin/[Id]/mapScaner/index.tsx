@@ -3,14 +3,14 @@ import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../src/components/c
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Modal } from "antd";
-import { useQueryFetchStudyCafe } from "../../../../src/components/commons/hooks/queries/useQueryFetchStudyCafe";
+import { useQueryFetchOneStudyCafe } from "../../../../src/components/commons/hooks/queries/useQueryFetchStudyCafe";
+import { ISeat } from "../../../../src/commons/types/generated/types";
 
 export default function SeatMapScanPage(): JSX.Element {
   const router = useRouter();
-  const { data: dataCafe } = useQueryFetchStudyCafe(String(router.query.Id));
+  const { data: dataCafe } = useQueryFetchOneStudyCafe(String(router.query.Id));
   const { data } = useQueryFetchAllSeatsByStudyCafeId(String(router.query.Id));
   const [isModal, setIsModal] = useState(false);
-  // 아직 카페에 x길이 y길이가 등록되지 않아서 하드 코딩한 것
   const [stateX, setStateX] = useState(
     dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX ?? 40
   );
@@ -38,13 +38,12 @@ export default function SeatMapScanPage(): JSX.Element {
             i < dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX;
             i++
           ) {
-            result.push({ status: 0, seatId: "i", number: 0 });
+            result.push({ status: "", seatId: "i", number: "" });
           }
           return result;
         }
       );
-      console.log(newArray);
-      data?.fetchAllSeatsByStudyCafeId.map((el) => {
+      data?.fetchAllSeatsByStudyCafeId.map((el: ISeat) => {
         const seat = JSON.parse(el.seat_location);
 
         seat.map((ele) => {
@@ -56,7 +55,7 @@ export default function SeatMapScanPage(): JSX.Element {
       });
       setMap(newArray);
     }
-  }, [data, dataCafe]);
+  }, [data, dataCafe, router]);
 
   const Pixel = styled.div`
     width: 20px;

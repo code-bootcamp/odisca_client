@@ -9,6 +9,9 @@ import { useMutationDeleteAdmin } from "../../hooks/mutations/useMutationDeleteA
 import { useMutationLogOut } from "../../hooks/mutations/useMutationLogout";
 import { useRouter } from "next/router";
 import { WrapperWithoutMargin, Wrapper } from "./header.style";
+import axios from "axios";
+import { accessTokenState } from "../../../../commons/stores";
+import { useRecoilState } from "recoil";
 
 declare const window: typeof globalThis & {
   IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
@@ -19,6 +22,7 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
   const [isLogin, setIsLogin] = useState(false);
   const { data } = useQuery(FETCH_LOGIN_USER);
   const [logout] = useMutationLogOut();
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const HeaderWrapper =
     isHiddenMargin === true ? WrapperWithoutMargin : Wrapper;
 
@@ -33,7 +37,7 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
   // 결제 모달 관련
   const [isModal, setIsModal] = useState(false);
   const [price, setPrice] = useState(1000);
-  const [createPointTransaction] = useMutationCreatePointTransaction();
+  const [createLoginPointTransaction] = useMutationCreatePointTransaction();
   const [deleteAdmin] = useMutationDeleteAdmin();
   const router = useRouter();
 
@@ -83,17 +87,38 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
         if (rsp.success) {
           // 여기에 뮤테이션을 보내야 합니다!
           // console.log(String(price) + "원 결제 성공");
-          console.log(rsp.imp_uid, "결제진행");
-          const result = await createPointTransaction({
-            variables: {
-              createPointTransactionInput: {
-                pointTransaction_impUid: rsp.imp_uid,
-                pointTransaction_amount: price,
+          console.log(rsp, "결제진행");
+          try {
+            await createLoginPointTransaction({
+              variables: {
+                createPointTransactionInput: {
+                  pointTransaction_impUid: rsp.imp_uid,
+                  pointTransaction_amount: rsp.paid_amount,
+                },
               },
-            },
-          });
-          console.log(result);
-          closeModal();
+            });
+            closeModal();
+            // await axios.post(
+            //   "https://odisca.store/graphql",
+            //   {
+            //     query: `
+            //         mutation {
+            //           createLoginPointTransaction(createPointTransactionInput:{pointTransaction_impUid: "${rsp.imp_uid}", pointTransaction_amount: ${price}}) {
+            //             pointTransaction_id
+            //           }
+            //         }
+            //       `,
+            //   },
+            //   {
+            //     headers: {
+            //       Authorization: "Bearer " + accessToken,
+            //     },
+            //   }
+            // );
+            // alert("결제에 성공했습니다!!");
+          } catch (err) {
+            console.log(err);
+          }
         } else {
           alert("결제 실패");
         }
