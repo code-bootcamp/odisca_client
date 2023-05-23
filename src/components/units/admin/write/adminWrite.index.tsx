@@ -149,15 +149,51 @@ export default function AdminWrite(props): JSX.Element {
     fileRef.current?.click();
   };
 
+  const onChangeFile = () => async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    console.log(file);
+
+    const isValid = checkValidationFile(file);
+    if (!isValid) return;
+
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = (event) => {
+      if (typeof event.target?.result === "string") {
+        const newTemp = [...imageUrls.filter((el) => el !== "")];
+        newTemp.push(event.target?.result);
+        while (newTemp.length < 5) {
+          newTemp.push("");
+        }
+
+        // console.log(newTemp, "newTemp");
+        setImageUrls(newTemp);
+
+        const tempFiles = [...files.filter((el) => el !== "")];
+        tempFiles.push(file);
+        while (tempFiles.length < 5) {
+          tempFiles.push("");
+        }
+        setFiles(tempFiles);
+        console.log(tempFiles, "tempFiles");
+        console.log(event.target?.result);
+      }
+    };
+  };
+
   // 등록하기 버튼 눌렀을 때(admin 등록)
   const onClickCafeSubmit = async (data: IFormValues): Promise<void> => {
-    const results = await Promise.all(
-      files.map((el) => el && uploadImageFile({ variables: { images: el } }))
-    );
-    console.log(results);
-    const resultUrls = results.map((el) =>
-      el ? el.data?.uploadImageFile : ""
-    );
+    console.log(files, "파일이당");
+    // const results = await Promise.all(
+    //   files.map((el) => el && uploadImageFile({ variables: { images: el } }))
+    // );
+    const results = await uploadImageFile({ variables: { images: files } });
+    console.log(results, "results");
+
+    let resultUrls = [];
+    if (Array.isArray(results)) {
+      resultUrls = results.map((el) => (el ? el.data?.uploadImageFile : ""));
+    }
 
     const images = resultUrls.map((el, index) => {
       return {
@@ -198,36 +234,6 @@ export default function AdminWrite(props): JSX.Element {
     }
   };
 
-  const onChangeFile = () => async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
-    const isValid = checkValidationFile(file);
-    if (!isValid) return;
-
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = (event) => {
-      if (typeof event.target?.result === "string") {
-        const newTemp = [...imageUrls.filter((el) => el !== "")];
-        newTemp.push(event.target?.result);
-        while (newTemp.length < 5) {
-          newTemp.push("");
-        }
-
-        console.log(newTemp, "newTemp");
-        setImageUrls(newTemp);
-
-        const tempFiles = [...files.filter((el) => el !== "")];
-        tempFiles.push(event.target?.result);
-        while (tempFiles.length < 5) {
-          tempFiles.push("");
-        }
-        setFiles(tempFiles);
-        console.log(tempFiles, "tempFiles");
-      }
-    };
-  };
-
   // 수정하기 버튼 눌렀을 때(admin 수정)
   const onClickUpdateCafe = async (data: IFormValues) => {
     try {
@@ -265,6 +271,7 @@ export default function AdminWrite(props): JSX.Element {
     const newMain = new Array(5).fill(false);
     newMain[index] = true;
     setIsMain(newMain);
+    console.log(newMain);
   };
 
   // return 값
@@ -303,7 +310,7 @@ export default function AdminWrite(props): JSX.Element {
               type="text"
               placeholder="ex) 000-000-000"
               {...register("brn")}
-              value={props.data?.fetchStudyCafe.brn}
+              value={props.data?.fetchOneStudyCafe.brn}
             />
             <S.Error>{formState.errors.brn?.message}</S.Error>
           </S.InputBox>
@@ -316,7 +323,7 @@ export default function AdminWrite(props): JSX.Element {
             <S.Input
               type="text"
               {...register("name")}
-              value={props.data?.fetchStudyCafe.name}
+              value={props.data?.fetchOneStudyCafe.studyCafe_name}
             />
             <S.Error>{formState.errors.name?.message}</S.Error>
           </S.InputBox>
@@ -329,7 +336,7 @@ export default function AdminWrite(props): JSX.Element {
             <S.Input
               type="text"
               {...register("contact")}
-              defaultValue={props.data?.fetchStudyCafe.contact}
+              defaultValue={props.data?.fetchOneStudyCafe.studyCafe_contact}
             />
             <S.Error>{formState.errors.contact?.message}</S.Error>
           </S.InputBox>
@@ -365,12 +372,14 @@ export default function AdminWrite(props): JSX.Element {
                 type="text"
                 readOnly
                 value={address}
-                defaultValue={props.data?.fetchStudyCafe.address}
+                defaultValue={props.data?.fetchOneStudyCafe.studyCafe_address}
               />
               <S.Address
                 placeholder="상세주소를 입력해주세요."
                 type="text"
-                defaultValue={props.data?.fetchStudyCafe.addressDetail}
+                defaultValue={
+                  props.data?.fetchOneStudyCafe.studyCafe_addressDetail
+                }
                 onChange={AddressDetailInput}
               />
             </S.AddressBox>
@@ -400,7 +409,6 @@ export default function AdminWrite(props): JSX.Element {
 
             <S.ImageListBox>
               {imageButtonArray.map((el, index) => {
-                console.log(el, "contents");
                 return (
                   <S.ImageBox key={el}>
                     {imageUrls[index] !== "" ? (
@@ -440,7 +448,7 @@ export default function AdminWrite(props): JSX.Element {
                 type="text"
                 placeholder="ex) 3,000"
                 {...register("timeFee")}
-                defaultValue={props.data?.fetchStudyCafe.timeFee}
+                defaultValue={props.data?.fetchOneStudyCafe.studyCafe_timeFee}
               />
               <S.Error>{formState.errors.timeFee?.message}</S.Error>
             </S.InputBox>
@@ -450,7 +458,7 @@ export default function AdminWrite(props): JSX.Element {
             <S.Notice
               type="text"
               {...register("description")}
-              defaultValue={props.data?.fetchStudyCafe.description}
+              defaultValue={props.data?.fetchOneStudyCafe.studyCafe_description}
             />
           </S.SectionBox>
         </S.SectionBottom>
