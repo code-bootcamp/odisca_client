@@ -106,14 +106,31 @@ export default function UserEditBody(): JSX.Element {
     }
   };
 
+  // const onFileChange = useCallback(
+  //   (selectedFiles: File[]) => {
+  //     console.log(selectedFiles);
+  //     setSelectedFile(selectedFiles[0]);
+  //     setImageUrls([URL.createObjectURL(selectedFiles[0])]);
+  //   },
+  //   [setImageUrls]
+  // );
+
   const onFileChange = useCallback(
     (selectedFiles: File[]) => {
-      console.log(selectedFiles);
-      setSelectedFile(selectedFiles[0]);
-      setImageUrls([URL.createObjectURL(selectedFiles[0])]);
+      if (selectedFiles && selectedFiles.length > 0) {
+        setSelectedFile(selectedFiles[0]);
+        setImageUrls(selectedFiles.map((file) => URL.createObjectURL(file)));
+      } else {
+        setSelectedFile(null);
+        setImageUrls([]);
+      }
     },
-    [setImageUrls]
+    [setSelectedFile, setImageUrls]
   );
+
+  // const onFileChange = useCallback((selectedFiles: File[]) => {
+  //   console.log(selectedFiles);
+  // }, []);
 
   return (
     <S.Wrapper>
