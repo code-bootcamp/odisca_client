@@ -7,10 +7,13 @@ import MyDropzone from "../../../../../commons/hooks/customs/useDropzone";
 import { useMutationUpdateLoginUser } from "../../../../../commons/hooks/mutations/useMutationUpdateLoginUser";
 import { useQueryFetchLoginUser } from "../../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./UserEditBody.styles";
-import { filesState, imageUrlsState } from "../../../../../../commons/stores";
+import {
+  imageUrlsState,
+  selectedFileState,
+} from "../../../../../../commons/stores";
 import { useRecoilState } from "recoil";
 import { useMutationUploadImageFile } from "../../../../../commons/hooks/mutations/useMutationUploadImageFile";
-import { useState } from "react";
+import { useCallback } from "react";
 
 interface IFormUpdateData {
   user_password: string;
@@ -20,8 +23,7 @@ interface IFormUpdateData {
 
 export default function UserEditBody(): JSX.Element {
   const [imageUrls] = useRecoilState(imageUrlsState);
-  // const [files, setFiles] = useRecoilState<File[]>(filesState);
-  // const [files, setFiles] = useRecoilState<File[]>(filesState);
+  const [selectedFile] = useRecoilState(selectedFileState);
   const [updateLoginUser] = useMutationUpdateLoginUser();
   const { data } = useQueryFetchLoginUser();
   const [uploadImageFile] = useMutationUploadImageFile();
@@ -55,7 +57,10 @@ export default function UserEditBody(): JSX.Element {
                   reject(new Error("Failed to convert canvas to blob."));
                   return;
                 }
-                const file = new File([blob], "image.png");
+                const file = new File(
+                  [blob],
+                  selectedFile?.name || "image.png"
+                );
                 resolve(file);
               });
             };
@@ -101,13 +106,39 @@ export default function UserEditBody(): JSX.Element {
     }
   };
 
+  // const onFileChange = useCallback(
+  //   (selectedFiles: File[]) => {
+  //     console.log(selectedFiles);
+  //     setSelectedFile(selectedFiles[0]);
+  //     setImageUrls([URL.createObjectURL(selectedFiles[0])]);
+  //   },
+  //   [setImageUrls]
+  // );
+
+  // const onFileChange = useCallback(
+  //   (selectedFiles: File[]) => {
+  //     if (selectedFiles && selectedFiles.length > 0) {
+  //       setSelectedFile(selectedFiles[0]);
+  //       setImageUrls(selectedFiles.map((file) => URL.createObjectURL(file)));
+  //     } else {
+  //       setSelectedFile(null);
+  //       setImageUrls([]);
+  //     }
+  //   },
+  //   [setSelectedFile, setImageUrls]
+  // );
+
+  const onFileChange = useCallback((selectedFiles: File[]) => {
+    console.log(selectedFiles);
+  }, []);
+
   return (
     <S.Wrapper>
       {/* <S.ProfileImgBox {...getRootProps()}> */}
       {/* <input {...getInputProps()} /> */}
       {/* <S.ProfileImg /> */}
       {/* <S.ProfileImgEdit src="/user/mypage/edit/camera.png" /> */}
-      <MyDropzone />
+      <MyDropzone onFileChange={onFileChange} />
       {/* </S.ProfileImgBox> */}
       <S.InputForm>
         <S.EditList>
@@ -116,7 +147,6 @@ export default function UserEditBody(): JSX.Element {
             type="text"
             defaultValue={data?.fetchLoginUser.user_name}
             readOnly
-            // {...register("user_name")}
           />
         </S.EditList>
         <S.EditList>
@@ -125,7 +155,6 @@ export default function UserEditBody(): JSX.Element {
             type="text"
             defaultValue={data?.fetchLoginUser.user_email}
             readOnly
-            // {...register("user_email")}
           />
         </S.EditList>
         <S.EditList>
