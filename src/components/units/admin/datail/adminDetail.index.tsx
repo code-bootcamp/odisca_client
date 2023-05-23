@@ -11,15 +11,20 @@ export default function AdminDetail(): JSX.Element {
   return (
     <>
       <AdminDetailHeader
-        cafeName={data?.fetchOneStudyCafe.studyCafe_name}
-        cafeBrn={data?.fetchOneStudyCafe.studyCafe_brn}
-        cafeContact={data?.fetchOneStudyCafe.studyCafe_contact}
-        cafeFee={data?.fetchOneStudyCafe.studyCafe_timeFee}
-        cafeOpenTime={data?.fetchOneStudyCafe.studyCafe_openTime}
-        cafeClosTime={data?.fetchOneStudyCafe.studyCafe_closeTime}
+        cafeName={data?.fetchOneStudyCafeForAdminister.studyCafe_name}
+        cafeBrn={data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
+        cafeContact={data?.fetchOneStudyCafeForAdminister.studyCafe_contact}
+        cafeFee={data?.fetchOneStudyCafeForAdminister.studyCafe_timeFee}
+        cafeOpenTime={data?.fetchOneStudyCafeForAdminister.studyCafe_openTime}
+        cafeClosTime={data?.fetchOneStudyCafeForAdminister.studyCafe_closeTime}
       />
       <AdminDetailBody
-        cafeDescription={data?.fetchOneStudyCafe.studyCafe_description}
+        // cafeImageUrl={data?.fetchOneStudyCafeForAdminister.images.image_url}
+        // cafeImageIsMain={data?.fetchOneStudyCafeForAdminister.images.image_isMain}
+        cafeImage={data?.fetchOneStudyCafeForAdminister.images}
+        cafeDescription={
+          data?.fetchOneStudyCafeForAdminister.studyCafe_description
+        }
       />
       <AdminDetailFooter />
     </>
