@@ -35,6 +35,10 @@ export const FETCH_ONE_STUDY_CAFE = gql`
         image_url
         image_isMain
       }
+      # administer {
+      #   administer_name
+      #   administer_email
+      # }
     }
   }
 `;

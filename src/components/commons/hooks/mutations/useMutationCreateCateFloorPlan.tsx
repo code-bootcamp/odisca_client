@@ -6,14 +6,11 @@ import {
 
 export const CREATE_LOGIN_CAFE_FLOOR_PLAN_AND_SEATS = gql`
   mutation createLoginCafeFloorPlanAndSeats(
-    $createCateFloorPlanInput: CreateCafeFloorPlanInput!
+    $createCafeFloorPlanInput: CreateCafeFloorPlanInput!
   ) {
     createLoginCafeFloorPlanAndSeats(
-      createCateFloorPlanInput: $createCateFloorPlanInput
-    ) {
-      studyCafe_id
-      # studyCafe_name
-    }
+      createCafeFloorPlanInput: $createCafeFloorPlanInput
+    )
   }
 `;
 

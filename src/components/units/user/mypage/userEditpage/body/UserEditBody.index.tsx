@@ -7,24 +7,24 @@ import MyDropzone from "../../../../../commons/hooks/customs/useDropzone";
 import { useMutationUpdateLoginUser } from "../../../../../commons/hooks/mutations/useMutationUpdateLoginUser";
 import { useQueryFetchLoginUser } from "../../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./UserEditBody.styles";
-import { useDropzone } from "react-dropzone";
 import { filesState, imageUrlsState } from "../../../../../../commons/stores";
 import { useRecoilState } from "recoil";
+import { useMutationUploadImageFile } from "../../../../../commons/hooks/mutations/useMutationUploadImageFile";
+import { useState } from "react";
 
 interface IFormUpdateData {
   user_password: string;
   user_phone: string;
-  // user_email: string;
-  // user_name: string;
+  user_image: string;
 }
 
-export default function UserEditBody(props): JSX.Element {
+export default function UserEditBody(): JSX.Element {
   const [imageUrls] = useRecoilState(imageUrlsState);
+  // const [files, setFiles] = useRecoilState<File[]>(filesState);
   // const [files, setFiles] = useRecoilState<File[]>(filesState);
   const [updateLoginUser] = useMutationUpdateLoginUser();
   const { data } = useQueryFetchLoginUser();
-  // const [getRootProps, getInputProps, , previewImagesJsonString, imageUrls] =
-  //   MyDropzone();
+  const [uploadImageFile] = useMutationUploadImageFile();
 
   const { register, formState, handleSubmit } = useForm({
     resolver: yupResolver(userEditSchema),
@@ -32,32 +32,64 @@ export default function UserEditBody(props): JSX.Element {
   });
 
   const onClickUserUpdate = async (data: IFormUpdateData) => {
-    const previewImagesBase64 = imageUrls.map((imageUrl) => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      const img = new Image();
-      img.src = imageUrl;
-      ctx.drawImage(img, 0, 0);
-
-      const base64 = canvas.toDataURL();
-      return base64;
-    });
-
-    const previewImagesJsonString1 = JSON.stringify(previewImagesBase64);
-    console.log(previewImagesJsonString1, "dddd");
-
     try {
-      const result = await updateLoginUser({
+      if (imageUrls.length === 0) {
+        return;
+      }
+      const previewImagesBase64 = await Promise.all(
+        imageUrls.map((imageUrl) => {
+          return new Promise<File>((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+              const canvas = document.createElement("canvas");
+              const ctx = canvas.getContext("2d");
+              if (!ctx) {
+                reject(new Error("Failed to create canvas context."));
+                return;
+              }
+              canvas.width = img.width;
+              canvas.height = img.height;
+              ctx.drawImage(img, 0, 0);
+              canvas.toBlob((blob) => {
+                if (!blob) {
+                  reject(new Error("Failed to convert canvas to blob."));
+                  return;
+                }
+                const file = new File([blob], "image.png");
+                resolve(file);
+              });
+            };
+            img.onerror = () => {
+              reject(new Error("Failed to load image."));
+            };
+            img.src = imageUrl;
+          });
+        })
+      );
+      // const previewImagesJsonString1 = JSON.stringify(previewImagesBase64);
+      // console.log(JSON.parse(previewImagesJsonString1), "이거뭐니");
+      // const aaa = JSON.parse(previewImagesJsonString1);
+      // console.log(previewImagesBase64, "ㅇㅇ??");
+      // console.log(aaa, "ㄷ만");
+
+      const results = await uploadImageFile({
+        variables: { images: previewImagesBase64 },
+      });
+
+      console.log(results);
+      const url = results.data?.uploadImageFile[0];
+
+      const updateResult = await updateLoginUser({
         variables: {
           updateLoginUserInput: {
             user_password: data.user_password,
             user_phone: data.user_phone,
-            // user_name: data.user_name,
-            // user_email: data.user_email,
+            user_image: url,
           },
         },
       });
-      console.log(result, "dd");
+      console.log(updateResult);
+
       Modal.success({
         content: "회원수정 완료!",
       });
@@ -68,8 +100,7 @@ export default function UserEditBody(props): JSX.Element {
         });
     }
   };
-  // console.log(previewImagesJsonString);
-  console.log(data?.fetchLoginUser.user_name, "ddddddddkdk");
+
   return (
     <S.Wrapper>
       {/* <S.ProfileImgBox {...getRootProps()}> */}

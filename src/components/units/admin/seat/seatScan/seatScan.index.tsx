@@ -2,11 +2,11 @@ import { useRouter } from "next/router";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../../components/commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
 import { useEffect, useState } from "react";
 import * as S from "./seatScan.Style";
-import { useQueryFetchStudyCafe } from "../../../../../components/commons/hooks/queries/useQueryFetchStudyCafe";
+import { useQueryFetchOneStudyCafe } from "../../../../../components/commons/hooks/queries/useQueryFetchStudyCafe";
 
 export default function SeatScanPage(): JSX.Element {
   const router = useRouter();
-  const { data: dataCafe } = useQueryFetchStudyCafe(String(router.query.Id));
+  const { data: dataCafe } = useQueryFetchOneStudyCafe(String(router.query.Id));
   const { data } = useQueryFetchAllSeatsByStudyCafeId(String(router.query.Id));
   const [stateX, setStateX] = useState(
     dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX ?? 40
@@ -17,7 +17,7 @@ export default function SeatScanPage(): JSX.Element {
   console.log(dataCafe, "카페");
   const [map, setMap] = useState([]);
 
-  console.log(data?.fetchAllSeatsByStudyCafeId);
+  console.log(data, "좌석");
   useEffect(() => {
     if (dataCafe !== undefined && data !== undefined) {
       setStateX(dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX);
@@ -31,7 +31,7 @@ export default function SeatScanPage(): JSX.Element {
             i < dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX;
             i++
           ) {
-            result.push({ status: 0, seatId: "i", number: 0 });
+            result.push({ status: "", seatId: "i", number: "" });
           }
           return result;
         }

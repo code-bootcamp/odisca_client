@@ -10,16 +10,17 @@ export const CREATE_POINT_TRANSACTION = gql`
   ) {
     createLoginPointTransaction(
       createPointTransactionInput: $createPointTransactionInput
-    ) {
-      # pointTransaction_id
-      # pointTransaction_impUid
-      # pointTransaction_amount
-      # pointTransaction_status
-      # pointTransaction_date
-      user {
-        visit
-      }
-    }
+    )
+    # ) {
+    #   pointTransaction_id
+    #   # pointTransaction_impUid
+    #   # pointTransaction_amount
+    #   # pointTransaction_status
+    #   # pointTransaction_date
+    #   # user {
+    #   #   visit
+    #   # }
+    # }
   }
 `;
 export const useMutationCreatePointTransaction = (): MutationTuple<
