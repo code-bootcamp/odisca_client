@@ -1,7 +1,17 @@
 import * as S from "./UserDetailBody.styles";
 import { StyledSlider, SliderItem } from "./UserDetailBody.styles";
 
-export default function UserDetailBody(): JSX.Element {
+interface IPropsUserDetailBody {
+  cafeDescription: string;
+  cafeOpenTime: string;
+  cafeCloseTime: string;
+  cafeContact: string;
+  cafeAddress: string;
+}
+
+export default function UserDetailBody(
+  props: IPropsUserDetailBody
+): JSX.Element {
   const settings = {
     dots: true,
     infinite: true,
@@ -35,11 +45,7 @@ export default function UserDetailBody(): JSX.Element {
         </div>
       </StyledSlider>
       <S.ContentsBox>
-        <S.Contents>
-          우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜 우리카페는
-          과자공짜 우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜
-          우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜
-        </S.Contents>
+        <S.Contents>{props.cafeDescription}</S.Contents>
       </S.ContentsBox>
       <S.InfoBox>
         <S.Box>
@@ -49,8 +55,10 @@ export default function UserDetailBody(): JSX.Element {
           </S.Title>
           <S.DevidedLine></S.DevidedLine>
           <S.Detail>
-            <S.Contents>매일 07:00 - 23:00</S.Contents>
-            <S.Contents>공휴일 휴무</S.Contents>
+            <S.Contents>
+              {props.cafeOpenTime} - {props.cafeCloseTime}
+            </S.Contents>
+            {/* <S.Contents>공휴일 휴무</S.Contents> */}
           </S.Detail>
         </S.Box>
         <S.Box>
@@ -60,8 +68,8 @@ export default function UserDetailBody(): JSX.Element {
           </S.Title>
           <S.DevidedLine></S.DevidedLine>
           <S.Detail>
-            <S.Contents>서울특별시 구로구 구로구 디지털로 300</S.Contents>
-            <S.Contents>02) 2000-2000</S.Contents>
+            <S.Contents>{props.cafeAddress}</S.Contents>
+            <S.Contents>{props.cafeContact}</S.Contents>
           </S.Detail>
         </S.Box>
       </S.InfoBox>
