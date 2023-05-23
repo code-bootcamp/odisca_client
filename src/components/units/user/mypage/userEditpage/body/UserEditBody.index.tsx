@@ -22,8 +22,8 @@ interface IFormUpdateData {
 }
 
 export default function UserEditBody(): JSX.Element {
-  const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
-  const [selectedFile, setSelectedFile] = useRecoilState(selectedFileState);
+  const [imageUrls] = useRecoilState(imageUrlsState);
+  const [selectedFile] = useRecoilState(selectedFileState);
   const [updateLoginUser] = useMutationUpdateLoginUser();
   const { data } = useQueryFetchLoginUser();
   const [uploadImageFile] = useMutationUploadImageFile();
@@ -115,22 +115,22 @@ export default function UserEditBody(): JSX.Element {
   //   [setImageUrls]
   // );
 
-  const onFileChange = useCallback(
-    (selectedFiles: File[]) => {
-      if (selectedFiles && selectedFiles.length > 0) {
-        setSelectedFile(selectedFiles[0]);
-        setImageUrls(selectedFiles.map((file) => URL.createObjectURL(file)));
-      } else {
-        setSelectedFile(null);
-        setImageUrls([]);
-      }
-    },
-    [setSelectedFile, setImageUrls]
-  );
+  // const onFileChange = useCallback(
+  //   (selectedFiles: File[]) => {
+  //     if (selectedFiles && selectedFiles.length > 0) {
+  //       setSelectedFile(selectedFiles[0]);
+  //       setImageUrls(selectedFiles.map((file) => URL.createObjectURL(file)));
+  //     } else {
+  //       setSelectedFile(null);
+  //       setImageUrls([]);
+  //     }
+  //   },
+  //   [setSelectedFile, setImageUrls]
+  // );
 
-  // const onFileChange = useCallback((selectedFiles: File[]) => {
-  //   console.log(selectedFiles);
-  // }, []);
+  const onFileChange = useCallback((selectedFiles: File[]) => {
+    console.log(selectedFiles);
+  }, []);
 
   return (
     <S.Wrapper>
@@ -147,7 +147,6 @@ export default function UserEditBody(): JSX.Element {
             type="text"
             defaultValue={data?.fetchLoginUser.user.user_name}
             readOnly
-            // {...register("user_name")}
           />
         </S.EditList>
         <S.EditList>
@@ -156,7 +155,6 @@ export default function UserEditBody(): JSX.Element {
             type="text"
             defaultValue={data?.fetchLoginUser.user.user_email}
             readOnly
-            // {...register("user_email")}
           />
         </S.EditList>
         <S.EditList>

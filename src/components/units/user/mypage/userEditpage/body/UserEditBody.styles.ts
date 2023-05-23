@@ -20,6 +20,7 @@ export const ProfileImg = styled.img`
   height: 130px;
   border-radius: 50%;
   background-color: #bdbdbd;
+  display: flex;
 `;
 
 export const ProfileImgEdit = styled.img`

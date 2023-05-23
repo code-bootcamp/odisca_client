@@ -23,7 +23,9 @@ export default function UserMyPageHeader(): JSX.Element {
         <S.UserWrapper>
           <S.UserWrapperLight>
             <S.ProfileWrapper>
-              <S.ProfileImage></S.ProfileImage>
+              <S.ProfileImage
+                src={data?.fetchLoginUser.user.user_image}
+              ></S.ProfileImage>
             </S.ProfileWrapper>
           </S.UserWrapperLight>
           <S.UserWrapperRight>

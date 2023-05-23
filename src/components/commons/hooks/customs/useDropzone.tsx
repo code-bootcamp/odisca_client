@@ -8,7 +8,6 @@ import { useQueryFetchLoginUser } from "../queries/useQueryFetchLoginUser";
 interface MyDropzoneProps {
   onFileChange: (selectedFile: File) => void;
 }
-
 function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
   const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
   const [selectedFile, setSelectedFile] = useRecoilState(selectedFileState);
@@ -17,28 +16,18 @@ function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       setSelectedFile(acceptedFiles[0] || null);
-      if (acceptedFiles[0]) {
-        const imageUrl = URL.createObjectURL(acceptedFiles[0]);
-        setImageUrls([imageUrl]);
-        onFileChange(acceptedFiles[0]);
-      } else {
-        setImageUrls([]);
-        onFileChange(null);
-      }
     },
-    [setSelectedFile, setImageUrls, onFileChange]
+    [setSelectedFile]
   );
-  console.log(setImageUrls, "여기 잘 ㄷㄹ?");
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
   useEffect(() => {
     if (selectedFile) {
       const imageUrl = URL.createObjectURL(selectedFile);
       setImageUrls([imageUrl]);
       onFileChange(selectedFile);
     } else if (data?.fetchLoginUser.user.user_image) {
-      const imageUrl = `https://storage.googleapis.com/${data.fetchLoginUser.user.user_image}`;
+      const imageUrl = data.fetchLoginUser.user.user_image;
       setImageUrls([imageUrl]);
     } else {
       setImageUrls([]);
@@ -51,34 +40,32 @@ function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
     data?.fetchLoginUser.user.user_image,
   ]);
 
-  useEffect(() => {
-    return () => {
-      if (imageUrls.length > 0) {
-        URL.revokeObjectURL(imageUrls[0]);
-      }
-    };
-  }, [imageUrls]);
-
-  console.log(data?.fetchLoginUser.user.user_image, "dd");
-  console.log(imageUrls, "이미지유알엘스");
+  // useEffect(() => {
+  //   return () => {
+  //     if (imageUrls.length > 0) {
+  //       URL.revokeObjectURL(imageUrls[0]);
+  //     }
+  //   };
+  // }, [imageUrls]);
 
   return (
     <>
-      <D.ProfileImgBox {...getRootProps()}>
-        <input {...getInputProps()} />
-        <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
-        {selectedFile ? (
-          <D.ProfileImg src={URL.createObjectURL(selectedFile)} />
-        ) : data?.fetchLoginUser.user.user_image ? (
+      {data?.fetchLoginUser.user.user_image ? (
+        <D.ProfileImgBox {...getRootProps()}>
+          <input {...getInputProps()} />
+          <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
           <D.ProfileImg
-            src={`https://storage.googleapis.com/${data.fetchLoginUser.user.user_image}`}
-          />
-        ) : (
-          <D.ProfileImg src={imageUrls} />
-        )}
-        {/* <D.ProfileImg src={imageUrls[0]}></D.ProfileImg> */}
-      </D.ProfileImgBox>
-      {console.log(selectedFile, imageUrls, "ㅇㅇㅇㅇㅇ")}
+            src={data.fetchLoginUser.user.user_image}
+          ></D.ProfileImg>
+        </D.ProfileImgBox>
+      ) : (
+        <D.ProfileImgBox {...getRootProps()}>
+          <input {...getInputProps()} />
+          <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
+
+          <D.ProfileImg src={imageUrls[0]}></D.ProfileImg>
+        </D.ProfileImgBox>
+      )}
     </>
   );
 }
