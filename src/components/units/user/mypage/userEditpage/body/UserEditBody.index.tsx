@@ -7,10 +7,14 @@ import MyDropzone from "../../../../../commons/hooks/customs/useDropzone";
 import { useMutationUpdateLoginUser } from "../../../../../commons/hooks/mutations/useMutationUpdateLoginUser";
 import { useQueryFetchLoginUser } from "../../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./UserEditBody.styles";
-import { filesState, imageUrlsState } from "../../../../../../commons/stores";
+import {
+  filesState,
+  imageUrlsState,
+  selectedFileState,
+} from "../../../../../../commons/stores";
 import { useRecoilState } from "recoil";
 import { useMutationUploadImageFile } from "../../../../../commons/hooks/mutations/useMutationUploadImageFile";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 interface IFormUpdateData {
   user_password: string;
@@ -20,6 +24,7 @@ interface IFormUpdateData {
 
 export default function UserEditBody(): JSX.Element {
   const [imageUrls] = useRecoilState(imageUrlsState);
+  const [selectedFile] = useRecoilState(selectedFileState);
   // const [files, setFiles] = useRecoilState<File[]>(filesState);
   // const [files, setFiles] = useRecoilState<File[]>(filesState);
   const [updateLoginUser] = useMutationUpdateLoginUser();
@@ -55,7 +60,10 @@ export default function UserEditBody(): JSX.Element {
                   reject(new Error("Failed to convert canvas to blob."));
                   return;
                 }
-                const file = new File([blob], "image.png");
+                const file = new File(
+                  [blob],
+                  selectedFile?.name || "image.png"
+                );
                 resolve(file);
               });
             };
@@ -101,13 +109,17 @@ export default function UserEditBody(): JSX.Element {
     }
   };
 
+  const onFileChange = useCallback((selectedFiles: File[]) => {
+    console.log(selectedFiles);
+  }, []);
+
   return (
     <S.Wrapper>
       {/* <S.ProfileImgBox {...getRootProps()}> */}
       {/* <input {...getInputProps()} /> */}
       {/* <S.ProfileImg /> */}
       {/* <S.ProfileImgEdit src="/user/mypage/edit/camera.png" /> */}
-      <MyDropzone />
+      <MyDropzone onFileChange={onFileChange} />
       {/* </S.ProfileImgBox> */}
       <S.InputForm>
         <S.EditList>
