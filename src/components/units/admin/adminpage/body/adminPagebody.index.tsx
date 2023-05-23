@@ -11,7 +11,7 @@ export default function AdminPageBody(props): JSX.Element {
     <>
       <S.Wrapper>
         <S.Title>My Cafes</S.Title>
-        {props.data?.fetchAllStudyCafesByAdminId?.map((el) => {
+        {props.data?.fetchLoginAdminister.studyCafes?.map((el) => {
           return (
             <div key={el.id}>
               <S.MyCafeWrapper>
