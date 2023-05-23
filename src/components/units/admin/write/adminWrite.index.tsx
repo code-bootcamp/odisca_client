@@ -1,12 +1,10 @@
 // 라이브러리
 import DaumPostcodeEmbed from "react-daum-postcode";
-import { Modal } from "antd";
 
 // hooks
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import UseModal from "../../../commons/hooks/customs/useModal";
 import { useMutationCreateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationCreateLoginStudyCafe";
 import { useMutationUpdateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationUpdateLoginStudyCafe";
 import { useQueryFetchLoginAdminister } from "../../../commons/hooks/queries/useQueryFetchLoginAdminister";
@@ -309,7 +307,8 @@ export default function AdminWrite(props): JSX.Element {
               type="text"
               readOnly
               defaultValue={
-                fetchAdministerData?.fetchLoginAdminister.administer_name
+                fetchAdministerData?.fetchLoginAdminister.administer
+                  .administer_name
               }
             />
           </S.InputBox>

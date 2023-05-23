@@ -59,8 +59,8 @@ export type ICreatePaymentInput = {
   studyCafe_id: Scalars['String'];
 };
 
-export type ICreatePaymentReturn = {
-  __typename?: 'CreatePaymentReturn';
+export type ICreatePaymentObject = {
+  __typename?: 'CreatePaymentObject';
   payment: IPayment;
   seat: ISeat;
   studyCafe: IStudyCafe;
@@ -121,6 +121,13 @@ export type IFetchImageByVisitIdInput = {
   visit_id: Scalars['String'];
 };
 
+export type IFetchReviewPageObject = {
+  __typename?: 'FetchReviewPageObject';
+  image: IImage;
+  seat: ISeat;
+  studyCafe: IStudyCafe;
+};
+
 export type IFetchUser = {
   __typename?: 'FetchUser';
   images: Array<IImage>;
@@ -154,11 +161,11 @@ export type IMutation = {
   checkVerificationCode: Scalars['String'];
   createAdminister: IAdminister;
   createLoginCafeFloorPlanAndSeats: Scalars['Boolean'];
-  createLoginPayment: ICreatePaymentReturn;
-  createLoginPointTransaction: IPointTransaction;
+  createLoginPayment: ICreatePaymentObject;
+  createLoginPointTransaction: Scalars['Boolean'];
   createLoginReview: Scalars['Boolean'];
   createLoginStudyCafe: IStudyCafe;
-  createSeats: ISeat;
+  createSeats: Scalars['Boolean'];
   createUser: IUser;
   deleteLoginAdminister: Scalars['Boolean'];
   deleteLoginReview: Scalars['Boolean'];
@@ -304,8 +311,8 @@ export type IQuery = {
   fetchAllStudyCafesByAdminId: Array<IStudyCafe>;
   fetchCafeMainImage: IImage;
   fetchLoginAdminister: IFetchAdministerWithStudyCafes;
-  fetchLoginImageByVisitId: Array<IImage>;
   fetchLoginPointTransactions: Array<IPointTransaction>;
+  fetchLoginReviewPage: IFetchReviewPageObject;
   fetchLoginReviewsByUserId: Array<IReview>;
   fetchLoginUser: IFetchUser;
   fetchOneSeatsBySeatId: ISeat;
@@ -339,7 +346,7 @@ export type IQueryFetchCafeMainImageArgs = {
 };
 
 
-export type IQueryFetchLoginImageByVisitIdArgs = {
+export type IQueryFetchLoginReviewPageArgs = {
   fetchImageByVisitIdInput: IFetchImageByVisitIdInput;
 };
 
