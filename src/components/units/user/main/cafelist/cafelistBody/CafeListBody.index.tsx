@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useQueryFetchAllStudyCafes } from "../../../../../commons/hooks/queries/useQueryFetchAllStudyCafes";
@@ -13,22 +14,15 @@ declare const window: typeof globalThis & {
 
 export default function CafeListBody(props: Props): JSX.Element {
   const { selectedDistrict } = props;
+  const router = useRouter();
+  const infoWindows = [];
+
   const { data, fetchMore } = useQueryFetchAllStudyCafes({
     studyCafe_city: "서울",
     studyCafe_district: selectedDistrict,
     page: 1,
   });
   console.log(data, "cafes");
-
-  // 지도 중심좌표
-  // const cafeDatas = [
-  //   { district: "강남구", lon: 127.0495556, lat: 37.514575 },
-  //   { district: "구로구", lon: 126.8895972, lat: 37.49265 },
-  //   { district: "노원구", lon: 127.0583889, lat: 37.65146111 },
-  //   { district: "동대문구", lon: 127.0421417, lat: 37.571625 },
-  //   { district: "마포구", lon: 126.9105306, lat: 37.50965556 },
-  // ];
-
   const filteredCafes = data?.fetchAllStudyCafes.filter(
     (cafe) => cafe.studyCafe_district === selectedDistrict
   );
@@ -72,7 +66,7 @@ export default function CafeListBody(props: Props): JSX.Element {
         // const map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
         // console.log(map);
         const map = new window.kakao.maps.Map(container, {
-          center: new window.kakao.maps.LatLng(37.514575, 127.0495556),
+          center: new window.kakao.maps.LatLng(37.514575, 127.0495556), // 기본 강남구
           level: 3,
         });
 
@@ -86,6 +80,61 @@ export default function CafeListBody(props: Props): JSX.Element {
               ),
             });
             marker.setMap(map);
+
+            const positions = {
+              content:
+                '<div class="wrap">' +
+                '    <div class="info" style="padding:10px" id=image>' +
+                '        <div class="title" style="display: flex; flex-direction: row; justify-content: space-between; align-items:center;">' +
+                `<div style="font-size:20px;">${data?.studyCafe_name}</div>` +
+                '            <div style="cursor:pointer; padding:10px" id="closeBtn">X</div>' +
+                "        </div>" +
+                '        <div class="body" style="display:flex;">' +
+                '            <div class="img">' +
+                '                <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70" id="image" style="cursor:pointer;">' +
+                "           </div>" +
+                '            <div class="desc" style="margin-left:10px;">' +
+                `                <div class="ellipsis">${data?.studyCafe_address} ${data?.studyCafe_addressDetail}</div>` +
+                "            </div>" +
+                "        </div>" +
+                "    </div>" +
+                "</div>",
+              latlng: new window.kakao.maps.LatLng(
+                data?.studyCafe_lat,
+                data?.studyCafe_lon
+              ),
+            };
+
+            const infowindow = new window.kakao.maps.InfoWindow({
+              content: positions.content,
+            });
+
+            infoWindows.push(infowindow);
+
+            window.kakao.maps.event.addListener(marker, "click", function () {
+              closeAllInfoWindows();
+              infowindow.setContent(positions.content);
+              infowindow.open(map, marker);
+            });
+
+            document.addEventListener("click", function (event) {
+              const target = event.target as HTMLElement;
+              if (target.matches("#closeBtn")) {
+                infowindow.close();
+              }
+            });
+
+            document.addEventListener("click", function (event) {
+              const target = event.target as HTMLElement;
+              if (target.matches("#image")) {
+                void router.push(`/user/${data?.studyCafe_id}`);
+              }
+            });
+            const closeAllInfoWindows = (): void => {
+              infoWindows.forEach((infowindow) => {
+                infowindow.close();
+              });
+            };
           });
         }
       });

@@ -14,11 +14,14 @@ const Wrapper = styled.div``;
 const Contents = styled.div``;
 const Children = styled.div``;
 
-export default function Layout(props: IProps): JSX.Element {
+export default function Layout(props): JSX.Element {
   const router = useRouter();
-  console.log(router.asPath);
+  // console.log(router.asPath, "DDddd");
+  console.log(router, "ddd");
+  console.log(router.asPath, "papaap");
+  console.log(router.pathname, "ssss");
 
-  const isHiddenHeader = HIDDEN_HEADER.includes(router.asPath);
+  const isHiddenHeader = HIDDEN_HEADER.includes(router.pathname);
   // const isMainPage = router.pathname === "/user/main";
   // const shouldExcludeMargin = isMainPage && !isHiddenHeader;
   return (

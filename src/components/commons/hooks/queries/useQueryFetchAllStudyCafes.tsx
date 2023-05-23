@@ -78,8 +78,10 @@ export const FETCH_ALL_STUDY_CAFES = gql`
       studyCafe_seatCount
       studyCafe_floorPlanX
       studyCafe_floorPlanY
-      image_id
-      image_url
+      images {
+        image_id
+        image_url
+      }
     }
   }
 `;

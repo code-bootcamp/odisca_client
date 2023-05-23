@@ -1,5 +1,12 @@
 // import { useEffect } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
+import {
+  IQuery,
+  IQueryFetchOneStudyCafeForUserArgs,
+} from "../../../../../../../commons/types/generated/types";
+import { FETCH_ONE_STUDY_CAFE } from "../../../../../../commons/hooks/queries/useQueryFetchStudyCafeForUser";
 import * as S from "./CafeListItem.styles";
 
 declare const window: typeof globalThis & {
@@ -22,31 +29,78 @@ interface CafeListItemProps {
 
 export default function CafeListItem(props: CafeListItemProps): JSX.Element {
   const cafeId = props.el.studyCafe_id;
+  const infoWindows = [];
+  const router = useRouter();
 
-  const handleClick = () => {
+  const handleClick = (cafeId: string) => {
     const lat = props.el.studyCafe_lat;
     const lon = props.el.studyCafe_lon;
 
-    const script = document.createElement("script");
-    script.src =
-      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=12e2554bb6ebf42463e132c31315b011&libraries=services";
-    document.head.appendChild(script);
-
-    script.onload = () => {
-      window.kakao.maps.load(function () {
-        const container = document.getElementById("map");
-        const map = new window.kakao.maps.Map(container, {
-          center: new window.kakao.maps.LatLng(lat, lon),
-          level: 3,
-        });
-
-        const marker = new window.kakao.maps.Marker({
-          position: new window.kakao.maps.LatLng(lat, lon),
-        });
-
-        marker.setMap(map);
+    window.kakao.maps.load(function () {
+      const container = document.getElementById("map");
+      const map = new window.kakao.maps.Map(container, {
+        center: new window.kakao.maps.LatLng(lat, lon),
+        level: 3,
       });
-    };
+
+      const marker = new window.kakao.maps.Marker({
+        position: new window.kakao.maps.LatLng(lat, lon),
+      });
+      marker.setMap(map);
+
+      const positions = {
+        content:
+          '<div class="wrap">' +
+          '    <div class="info" style="padding:10px" id=image>' +
+          '        <div class="title" style="display: flex; flex-direction: row; justify-content: space-between; align-items:center;">' +
+          `<div style="font-size:20px;">${props.el.studyCafe_name}</div>` +
+          '            <div style="cursor:pointer; padding:10px" id="closeBtn">X</div>' +
+          "        </div>" +
+          '        <div class="body" style="display:flex;">' +
+          '            <div class="img">' +
+          '                <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70" id="image" style="cursor:pointer;">' +
+          "           </div>" +
+          '            <div class="desc" style="margin-left:10px;">' +
+          `                <div class="ellipsis">${props.el.studyCafe_address} ${props.el.studyCafe_addressDetail}</div>` +
+          "            </div>" +
+          "        </div>" +
+          "    </div>" +
+          "</div>",
+        latlng: new window.kakao.maps.LatLng(lat, lon),
+      };
+
+      const infowindow = new window.kakao.maps.InfoWindow({
+        content: positions.content,
+      });
+
+      infoWindows.push(infowindow);
+
+      window.kakao.maps.event.addListener(marker, "click", function () {
+        closeAllInfoWindows();
+        infowindow.setContent(positions.content);
+        infowindow.open(map, marker);
+      });
+
+      document.addEventListener("click", function (event) {
+        const target = event.target as HTMLElement;
+        if (target.matches("#closeBtn")) {
+          infowindow.close();
+        }
+      });
+
+      document.addEventListener("click", function (event) {
+        const target = event.target as HTMLElement;
+        if (target.matches("#image")) {
+          console.log(cafeId, "dddd");
+          void router.push(`/user/${event.currentTarget.id}`);
+        }
+      });
+      const closeAllInfoWindows = (): void => {
+        infoWindows.forEach((infowindow) => {
+          infowindow.close();
+        });
+      };
+    });
   };
 
   return (
