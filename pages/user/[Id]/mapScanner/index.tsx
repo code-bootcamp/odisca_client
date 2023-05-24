@@ -20,7 +20,7 @@ export default function SeatMapScanPage(): JSX.Element {
   const [stateY, setStateY] = useState(
     dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanY ?? 40
   );
-  console.log(dataCafe, "카페");
+  // console.log(dataCafe, "카페");
   const [seatId, setSeatId] = useState("");
   const [seatStatus, setSeatStatus] = useState("");
   const [seatNumber, setSeatNumber] = useState(0);
@@ -29,7 +29,7 @@ export default function SeatMapScanPage(): JSX.Element {
   const [duringTime, setDuringTime] = useState(1);
   const [createPayment] = useMutationCreatePayment();
 
-  console.log(data?.fetchAllSeatsByStudyCafeId);
+  // console.log(data?.fetchAllSeatsByStudyCafeId);
   useEffect(() => {
     if (dataCafe !== undefined && data !== undefined) {
       setStateX(dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX);

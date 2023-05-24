@@ -170,6 +170,7 @@ export default function AdminWrite(props): JSX.Element {
     fileReader.onload = (event) => {
       if (typeof event.target?.result === "string") {
         const newTemp = [...imageUrls.filter((el) => el !== "")];
+        console.log(newTemp, "ㅇㅇㅇㅇㅇㅇㅇㅇ");
         newTemp.push(event.target?.result);
         while (newTemp.length < 5) {
           newTemp.push("");
@@ -199,11 +200,19 @@ export default function AdminWrite(props): JSX.Element {
     const results = await uploadImageFile({ variables: { images: files } });
     console.log(results, "results");
 
-    let resultUrls = [];
-    if (Array.isArray(results)) {
-      resultUrls = results.map((el) => (el ? el.data?.uploadImageFile : ""));
+    const resultUrls = [];
+    if (results) {
+      // resultUrls = results.map((el, index) =>
+      //   el ? el.data?.uploadImageFile[index] : ""
+      // );
+      for (let i = 0; i < results.data?.uploadImageFile.length; i++) {
+        results.data?.uploadImageFile[i]
+          ? resultUrls.push(results.data?.uploadImageFile[i])
+          : "";
+      }
     }
-
+    console.log(results.data?.uploadImageFile[1]);
+    console.log(resultUrls, "!!!!!");
     const images = resultUrls.map((el, index) => {
       return {
         image_url: el,
@@ -211,7 +220,7 @@ export default function AdminWrite(props): JSX.Element {
       };
     });
 
-    console.log(images);
+    console.log(images, resultUrls, "아아아아아아아악");
 
     try {
       const result = await createLoginStudyCafe({
@@ -235,9 +244,9 @@ export default function AdminWrite(props): JSX.Element {
         },
       });
       setIsSubmitModalOpen(true);
-      void router.push(
-        `/admin/${result.data?.createLoginStudyCafe.studyCafe_id}`
-      );
+      // void router.push(
+      //   `/admin/${result.data?.createLoginStudyCafe.studyCafe_id}`
+      // );
     } catch (error) {
       if (error instanceof Error) alert("업체 등록에 실패했습니다!");
     }
@@ -307,8 +316,7 @@ export default function AdminWrite(props): JSX.Element {
               type="text"
               readOnly
               defaultValue={
-                fetchAdministerData?.fetchLoginAdminister.administer
-                  .administer_name
+                fetchAdministerData?.fetchLoginAdminister.administer_name
               }
             />
           </S.InputBox>
@@ -320,7 +328,7 @@ export default function AdminWrite(props): JSX.Element {
               type="text"
               placeholder="ex) 000-000-000"
               {...register("brn")}
-              value={props.data?.fetchOneStudyCafe.brn}
+              value={props.data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
             />
             <S.Error>{formState.errors.brn?.message}</S.Error>
           </S.InputBox>
@@ -333,7 +341,7 @@ export default function AdminWrite(props): JSX.Element {
             <S.Input
               type="text"
               {...register("name")}
-              value={props.data?.fetchOneStudyCafe.studyCafe_name}
+              value={props.data?.fetchOneStudyCafeForAdminister.studyCafe_name}
             />
             <S.Error>{formState.errors.name?.message}</S.Error>
           </S.InputBox>
@@ -346,7 +354,9 @@ export default function AdminWrite(props): JSX.Element {
             <S.Input
               type="text"
               {...register("contact")}
-              defaultValue={props.data?.fetchOneStudyCafe.studyCafe_contact}
+              defaultValue={
+                props.data?.fetchOneStudyCafeForAdminister.studyCafe_contact
+              }
             />
             <S.Error>{formState.errors.contact?.message}</S.Error>
           </S.InputBox>
@@ -382,13 +392,16 @@ export default function AdminWrite(props): JSX.Element {
                 type="text"
                 readOnly
                 value={address}
-                defaultValue={props.data?.fetchOneStudyCafe.studyCafe_address}
+                defaultValue={
+                  props.data?.fetchOneStudyCafeForAdminister.studyCafe_address
+                }
               />
               <S.Address
                 placeholder="상세주소를 입력해주세요."
                 type="text"
                 defaultValue={
-                  props.data?.fetchOneStudyCafe.studyCafe_addressDetail
+                  props.data?.fetchOneStudyCafeForAdminister
+                    .studyCafe_addressDetail
                 }
                 onChange={AddressDetailInput}
               />
@@ -458,7 +471,9 @@ export default function AdminWrite(props): JSX.Element {
                 type="text"
                 placeholder="ex) 3,000"
                 {...register("timeFee")}
-                defaultValue={props.data?.fetchOneStudyCafe.studyCafe_timeFee}
+                defaultValue={
+                  props.data?.fetchOneStudyCafeForAdminister.studyCafe_timeFee
+                }
               />
               <S.Error>{formState.errors.timeFee?.message}</S.Error>
             </S.InputBox>
@@ -468,7 +483,9 @@ export default function AdminWrite(props): JSX.Element {
             <S.Notice
               type="text"
               {...register("description")}
-              defaultValue={props.data?.fetchOneStudyCafe.studyCafe_description}
+              defaultValue={
+                props.data?.fetchOneStudyCafeForAdminister.studyCafe_description
+              }
             />
           </S.SectionBox>
         </S.SectionBottom>
