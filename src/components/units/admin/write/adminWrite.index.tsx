@@ -314,6 +314,11 @@ export default function AdminWrite(props): JSX.Element {
     console.log(newMain);
   };
 
+  console.log(
+    props.data?.fetchOneStudyCafeForAdminister.images[0].image_url,
+    "집좀가자!!!!!!!!"
+  );
+
   // return 값
   return (
     <form
@@ -461,10 +466,17 @@ export default function AdminWrite(props): JSX.Element {
               {imageButtonArray.map((el, index) => {
                 return (
                   <S.ImageBox key={el}>
-                    {imageUrls[index] !== "" ? (
+                    {imageUrls[index] !== "" ||
+                    props.data?.fetchOneStudyCafeForAdminister.images[index]
+                      .image_url !== undefined ? (
                       <>
                         <S.CafeImg
-                          src={imageUrls[index]}
+                          src={
+                            imageUrls[index] ??
+                            props.data?.fetchOneStudyCafeForAdminister.images[
+                              index
+                            ].image_url
+                          }
                           onClick={onClickUpload}
                         />
                         <S.MainImgCheckBtn
