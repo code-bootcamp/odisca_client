@@ -1,9 +1,17 @@
 import { QueryResult, gql, useQuery } from "@apollo/client";
-import { IStudyCafe } from "../../../../commons/types/generated/types";
+import { useRouter } from "next/router";
+import {
+  IQuery,
+  IQueryFetchOneStudyCafeForUserArgs,
+  IStudyCafe,
+} from "../../../../commons/types/generated/types";
 
 interface IFetchStudyCafeQueryResult
   extends Omit<
-    QueryResult<{ fetchOneStudyCafe: IStudyCafe }, { studyCafe_id: string }>,
+    QueryResult<
+      { fetchOneStudyCafeForUser: IStudyCafe },
+      { studyCafe_id: string }
+    >,
     "refetch"
   > {
   refetch: () => Promise<void>;
@@ -35,10 +43,6 @@ export const FETCH_ONE_STUDY_CAFE_FOR_USER = gql`
         image_url
         image_isMain
       }
-      # administer {
-      #   administer_name
-      #   administer_email
-      # }
     }
   }
 `;
@@ -47,8 +51,8 @@ export const useQueryFetchOneStudyCafeForUser = (
   id: string
 ): IFetchStudyCafeQueryResult => {
   const query = useQuery<
-    { fetchOneStudyCafe: IStudyCafe },
-    { studyCafe_id: string }
+    Pick<IQuery, "fetchOneStudyCafeForUser">,
+    IQueryFetchOneStudyCafeForUserArgs
   >(FETCH_ONE_STUDY_CAFE_FOR_USER, {
     variables: { studyCafe_id: id },
   });

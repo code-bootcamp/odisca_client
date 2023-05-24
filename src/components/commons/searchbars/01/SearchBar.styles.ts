@@ -1,10 +1,7 @@
 import styled from "@emotion/styled";
 import { Select } from "antd";
 export const SearchBar = styled.div`
-  position: absolute;
-  /* width: 240px; */
-  left: 380px;
-  top: 200px;
+  left: 280px;
   z-index: 1;
   border: none;
   background: none;

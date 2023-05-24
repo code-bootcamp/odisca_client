@@ -7,6 +7,7 @@ import UserDetailHeader from "./header/UserDetailHeader.index";
 export default function UserDetail(): JSX.Element {
   const router = useRouter();
   const { data } = useQueryFetchOneStudyCafe(String(router.query.Id));
+
   return (
     <>
       <UserDetailHeader

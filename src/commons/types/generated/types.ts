@@ -112,6 +112,26 @@ export type IFetchAllStudyCafesInput = {
   studyCafe_district: Scalars['String'];
 };
 
+
+export type IFetchImageByVisitIdInput = {
+  visit_id: Scalars['String'];
+};
+
+export type IFetchReviewPageObject = {
+  __typename?: 'FetchReviewPageObject';
+  image: IImage;
+  seat: ISeat;
+  studyCafe: IStudyCafe;
+};
+
+export type IFetchUser = {
+  __typename?: 'FetchUser';
+  images: Array<IImage>;
+  user: IUser;
+  visits: Array<IVisit>;
+};
+
+
 export type IImage = {
   __typename?: 'Image';
   image_id: Scalars['String'];
@@ -287,8 +307,9 @@ export type IQuery = {
   fetchAllStudyCafes: Array<IStudyCafe>;
   fetchAllStudyCafesByAdminId: Array<IStudyCafe>;
   fetchCafeMainImage: IImage;
-  fetchLoginAdminister: IAdminister;
+  fetchLoginAdminister: IFetchAdministerWithStudyCafes;
   fetchLoginPointTransactions: Array<IPointTransaction>;
+  fetchLoginReviewPage: IFetchReviewPageObject;
   fetchLoginReviewsByUserId: Array<IReview>;
   fetchLoginUser: IUser;
   fetchOneSeatsBySeatId: ISeat;
@@ -319,6 +340,17 @@ export type IQueryFetchAllStudyCafesByAdminIdArgs = {
 
 export type IQueryFetchCafeMainImageArgs = {
   studyCafe_id: Scalars['String'];
+};
+
+
+
+export type IQueryFetchLoginReviewPageArgs = {
+  fetchImageByVisitIdInput: IFetchImageByVisitIdInput;
+};
+
+
+export type IQueryFetchLoginUserArgs = {
+  page: Scalars['Int'];
 };
 
 

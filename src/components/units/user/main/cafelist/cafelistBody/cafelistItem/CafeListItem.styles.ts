@@ -23,6 +23,7 @@ export const CafeBox = styled.div`
   display: flex;
   flex-direction: column;
   padding: 55px;
+  cursor: pointer;
 `;
 export const DevidedLine = styled.div`
   width: 100%;
@@ -31,7 +32,6 @@ export const DevidedLine = styled.div`
 export const CafeImg = styled.img`
   width: 500px;
   height: 200px;
-  background-color: #bdbdbd;
   margin-bottom: 27px;
 `;
 
