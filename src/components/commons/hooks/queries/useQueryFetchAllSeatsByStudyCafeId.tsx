@@ -18,7 +18,7 @@ export const FETCH_ALL_SEATS = gql`
       seat_remainTime
       user {
         user_id
-        # user_name
+        user_name
         # user_email
         # user_phone
         # user_point

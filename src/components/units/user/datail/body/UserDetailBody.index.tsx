@@ -1,3 +1,4 @@
+import SeatScanPage from "../../../admin/seat/seatScan/seatScan.User";
 import * as S from "./UserDetailBody.styles";
 import { StyledSlider, SliderItem } from "./UserDetailBody.styles";
 
@@ -73,6 +74,7 @@ export default function UserDetailBody(
           </S.Detail>
         </S.Box>
       </S.InfoBox>
+      <SeatScanPage></SeatScanPage>
     </S.Body>
   );
 }

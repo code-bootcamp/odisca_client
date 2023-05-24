@@ -1,4 +1,4 @@
-import SeatScanPage from "../../seat/seatScan/seatScan.index";
+import SeatScanPage from "../../seat/seatScan/seatScan.Admin";
 import {
   Body,
   StyledSlider,

@@ -1,28 +1,19 @@
 import * as S from "./header.style";
 import React, { useEffect, useState } from "react";
-import { Modal, Select, Space } from "antd";
+import { Space } from "antd";
 import { useQuery } from "@apollo/client";
-import { IRsp } from "./header.type";
 import { FETCH_LOGIN_USER } from "./header.queries";
-import { useMutationCreatePointTransaction } from "../../hooks/mutations/useMutationCreatePointTransaction";
 import { useMutationDeleteAdmin } from "../../hooks/mutations/useMutationDeleteAdmin";
 import { useMutationLogOut } from "../../hooks/mutations/useMutationLogout";
 import { useRouter } from "next/router";
 import { WrapperWithoutMargin, Wrapper } from "./header.style";
-import axios from "axios";
-import { accessTokenState } from "../../../../commons/stores";
-import { useRecoilState } from "recoil";
-
-declare const window: typeof globalThis & {
-  IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
-};
+import PayModal from "../../../units/user/mapScanner/mapSanner.PayModal";
 
 export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
   const [open, setOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const { data } = useQuery(FETCH_LOGIN_USER);
   const [logout] = useMutationLogOut();
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const HeaderWrapper =
     isHiddenMargin === true ? WrapperWithoutMargin : Wrapper;
 
@@ -36,8 +27,6 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
 
   // 결제 모달 관련
   const [isModal, setIsModal] = useState(false);
-  const [price, setPrice] = useState(1000);
-  const [createLoginPointTransaction] = useMutationCreatePointTransaction();
   const [deleteAdmin] = useMutationDeleteAdmin();
   const router = useRouter();
 
@@ -48,14 +37,7 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
   };
 
   const showModal = (): void => {
-    setPrice(1000);
     setIsModal(true);
-  };
-  const closeModal = (): void => {
-    setIsModal(false);
-  };
-  const onClickPrice = (value: string): void => {
-    setPrice(Number(value));
   };
 
   const onClickDeleteAdmin = async (): Promise<void> => {
@@ -63,68 +45,6 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
     console.log(result);
   };
 
-  const onClickPayment = (): void => {
-    console.log("시작");
-    const IMP = window.IMP;
-    IMP.init("imp56618747");
-
-    IMP.request_pay(
-      {
-        pg: "kakaopay",
-        pay_method: "card",
-        // merchant_uid: "ORD20180131-0000011",
-        name: String(price) + "포인트",
-        amount: price,
-        buyer_email: "123@123123.com",
-        buyer_name: "문재준",
-        buyer_tel: "010-4242-4242",
-        buyer_addr: "서울특별시 강남구 신사동",
-        buyer_postcode: "01181",
-        m_redirect_url: "http://localhost:3000/payment/",
-      },
-      // rsp는 아임포트 api에서 받아오는 객체 관련 Docs https://portone.gitbook.io/docs/sdk/javascript-sdk/cft-rt#request_pay-rsp
-      async (rsp: IRsp) => {
-        if (rsp.success) {
-          // 여기에 뮤테이션을 보내야 합니다!
-          // console.log(String(price) + "원 결제 성공");
-          console.log(rsp, "결제진행");
-          try {
-            await createLoginPointTransaction({
-              variables: {
-                createPointTransactionInput: {
-                  pointTransaction_impUid: rsp.imp_uid,
-                  pointTransaction_amount: rsp.paid_amount,
-                },
-              },
-            });
-            closeModal();
-            // await axios.post(
-            //   "https://odisca.store/graphql",
-            //   {
-            //     query: `
-            //         mutation {
-            //           createLoginPointTransaction(createPointTransactionInput:{pointTransaction_impUid: "${rsp.imp_uid}", pointTransaction_amount: ${price}}) {
-            //             pointTransaction_id
-            //           }
-            //         }
-            //       `,
-            //   },
-            //   {
-            //     headers: {
-            //       Authorization: "Bearer " + accessToken,
-            //     },
-            //   }
-            // );
-            // alert("결제에 성공했습니다!!");
-          } catch (err) {
-            console.log(err);
-          }
-        } else {
-          alert("결제 실패");
-        }
-      }
-    );
-  };
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://cdn.iamport.kr/v1/iamport.js";
@@ -186,28 +106,7 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
       </HeaderWrapper>
 
       {/* 여기서부터 결제 쪽입니다. */}
-      {isModal ? (
-        <Modal
-          title="포인트 결제"
-          open={isModal}
-          onOk={onClickPayment}
-          onCancel={closeModal}
-        >
-          <Select
-            defaultValue="1천원"
-            style={{ width: 400, boxShadow: "0 0 0 0" }}
-            onChange={onClickPrice}
-            options={[
-              { value: "1000", label: "1천원" },
-              { value: "5000", label: "5천원" },
-              { value: "30000", label: "3만원" },
-              { value: "50000", label: "5만원" },
-            ]}
-          />
-        </Modal>
-      ) : (
-        <></>
-      )}
+      <PayModal isPayModal={isModal} setIsPayModal={setIsModal}></PayModal>
     </>
   );
 }
