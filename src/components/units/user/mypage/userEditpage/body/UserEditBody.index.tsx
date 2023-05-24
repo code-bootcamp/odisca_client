@@ -14,6 +14,7 @@ import {
 import { useRecoilState } from "recoil";
 import { useMutationUploadImageFile } from "../../../../../commons/hooks/mutations/useMutationUploadImageFile";
 import { useCallback } from "react";
+import { useRouter } from "next/router";
 
 interface IFormUpdateData {
   user_password: string;
@@ -22,10 +23,11 @@ interface IFormUpdateData {
 }
 
 export default function UserEditBody(): JSX.Element {
+  const router = useRouter();
   const [imageUrls] = useRecoilState(imageUrlsState);
   const [selectedFile] = useRecoilState(selectedFileState);
   const [updateLoginUser] = useMutationUpdateLoginUser();
-  const { data } = useQueryFetchLoginUser();
+  const { data, refetch: loginUserRefetch } = useQueryFetchLoginUser();
   const [uploadImageFile] = useMutationUploadImageFile();
 
   const { register, formState, handleSubmit } = useForm({
@@ -71,11 +73,6 @@ export default function UserEditBody(): JSX.Element {
           });
         })
       );
-      // const previewImagesJsonString1 = JSON.stringify(ImageFile);
-      // console.log(JSON.parse(previewImagesJsonString1), "이거뭐니");
-      // const aaa = JSON.parse(previewImagesJsonString1);
-      // console.log(ImageFile, "ㅇㅇ??");
-      // console.log(aaa, "ㄷ만");
 
       const results = await uploadImageFile({
         variables: { images: ImageFile },
@@ -93,6 +90,8 @@ export default function UserEditBody(): JSX.Element {
           },
         },
       });
+      await loginUserRefetch();
+      void router.push("/user/mypage");
       console.log(updateResult);
 
       Modal.success({
@@ -106,40 +105,13 @@ export default function UserEditBody(): JSX.Element {
     }
   };
 
-  // const onFileChange = useCallback(
-  //   (selectedFiles: File[]) => {
-  //     console.log(selectedFiles);
-  //     setSelectedFile(selectedFiles[0]);
-  //     setImageUrls([URL.createObjectURL(selectedFiles[0])]);
-  //   },
-  //   [setImageUrls]
-  // );
-
-  // const onFileChange = useCallback(
-  //   (selectedFiles: File[]) => {
-  //     if (selectedFiles && selectedFiles.length > 0) {
-  //       setSelectedFile(selectedFiles[0]);
-  //       setImageUrls(selectedFiles.map((file) => URL.createObjectURL(file)));
-  //     } else {
-  //       setSelectedFile(null);
-  //       setImageUrls([]);
-  //     }
-  //   },
-  //   [setSelectedFile, setImageUrls]
-  // );
-
   const onFileChange = useCallback((selectedFiles: File[]) => {
     console.log(selectedFiles);
   }, []);
 
   return (
     <S.Wrapper>
-      {/* <S.ProfileImgBox {...getRootProps()}> */}
-      {/* <input {...getInputProps()} /> */}
-      {/* <S.ProfileImg /> */}
-      {/* <S.ProfileImgEdit src="/user/mypage/edit/camera.png" /> */}
       <MyDropzone onFileChange={onFileChange} />
-      {/* </S.ProfileImgBox> */}
       <S.InputForm>
         <S.EditList>
           <S.ListDetail>이름</S.ListDetail>

@@ -49,9 +49,9 @@ export const useQueryFetchLoginUser = (): IFetchLoginUserQueryResult => {
   const query = useQuery<Pick<IQuery, "fetchLoginUser">, IUser>(
     FETCH_LOGIN_USER
   );
-  const refetch = async (): Promise<void> => {
+  const loginUserRefetch = async (): Promise<void> => {
     await query.refetch();
   };
 
-  return { ...query, refetch };
+  return { ...query, refetch: loginUserRefetch };
 };
