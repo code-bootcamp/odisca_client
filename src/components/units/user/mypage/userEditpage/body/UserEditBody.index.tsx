@@ -38,7 +38,7 @@ export default function UserEditBody(): JSX.Element {
       if (imageUrls.length === 0) {
         return;
       }
-      const previewImagesBase64 = await Promise.all(
+      const ImageFile = await Promise.all(
         imageUrls.map((imageUrl) => {
           return new Promise<File>((resolve, reject) => {
             const img = new Image();
@@ -71,14 +71,14 @@ export default function UserEditBody(): JSX.Element {
           });
         })
       );
-      // const previewImagesJsonString1 = JSON.stringify(previewImagesBase64);
+      // const previewImagesJsonString1 = JSON.stringify(ImageFile);
       // console.log(JSON.parse(previewImagesJsonString1), "이거뭐니");
       // const aaa = JSON.parse(previewImagesJsonString1);
-      // console.log(previewImagesBase64, "ㅇㅇ??");
+      // console.log(ImageFile, "ㅇㅇ??");
       // console.log(aaa, "ㄷ만");
 
       const results = await uploadImageFile({
-        variables: { images: previewImagesBase64 },
+        variables: { images: ImageFile },
       });
 
       console.log(results);

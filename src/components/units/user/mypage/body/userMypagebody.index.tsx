@@ -15,13 +15,6 @@ export default function UserMyPageBody(): JSX.Element {
   console.log(data?.fetchLoginUser.seat[0].seat_number, "구매한 좌석"); // 첫 번째 seat의 seat_number 출력
   console.log(data?.fetchLoginUser.seat[0], "구매한 좌석정보");
 
-  // const remainSeconds = data?.fetchLoginUser.seat[0].seat_remainTime;
-  // const remainMinutes = Math.floor(remainSeconds / 60);
-  // const remainHours = Math.floor(remainMinutes / 60);
-
-  // const minutes = remainMinutes % 60;
-  // const hours = remainHours % 24;
-
   const minutes = Math.floor(
     data?.fetchLoginUser.seat[0].seat_remainTime / (1000 * 60)
   ); // 분으로 변환
@@ -42,7 +35,7 @@ export default function UserMyPageBody(): JSX.Element {
                 {data?.fetchLoginUser.visits[0].studyCafe.studyCafe_name}
               </S.CafeName>
               <S.SeatInfo>
-                {data?.fetchLoginUser.seat[0].seat_number}
+                좌석: {data?.fetchLoginUser.seat[0].seat_number}
               </S.SeatInfo>
             </S.Top>
             <S.Bottom>
@@ -76,7 +69,7 @@ export default function UserMyPageBody(): JSX.Element {
                 {data?.fetchLoginUser.visits[1].studyCafe.studyCafe_name}
               </S.CafeName>
               <S.SeatInfo>
-                {data?.fetchLoginUser.seat[0].seat_number}
+                좌석: {data?.fetchLoginUser.seat[0].seat_number}
               </S.SeatInfo>
             </S.Top>
             <S.Bottom>

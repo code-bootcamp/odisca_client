@@ -48,6 +48,25 @@ function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
   //   };
   // }, [imageUrls]);
 
+  // return (
+  //   <>
+  //     <D.ProfileImgBox {...getRootProps()}>
+  //       <input {...getInputProps()} />
+  //       <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
+  //       {/* <D.ProfileImg src={imageUrls[0]}></D.ProfileImg> */}
+  //       {/* {data?.fetchLoginUser.user.user_image ? (
+  //         <D.ProfileImg
+  //           src={data.fetchLoginUser.user.user_image}
+  //         ></D.ProfileImg>
+  //       ) : (
+  //         <D.ProfileImg src={imageUrls[0]}></D.ProfileImg>
+  //       )} */}
+  //       <D.ProfileImg src={imageUrls[0]}></D.ProfileImg>
+  //     </D.ProfileImgBox>
+  //     <D.ProfileImg src={data?.fetchLoginUser.user_image}></D.ProfileImg>
+  //   </>
+  // );
+
   return (
     <>
       {data?.fetchLoginUser.user_image ? (
