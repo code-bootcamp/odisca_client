@@ -127,6 +127,7 @@ export default function SeatReservationPage(): JSX.Element {
     }
     if (seat.status === "") {
       setSeatStatus("예약 가능한 좌석입니다.");
+      setRemainTime(0);
       setSeatUsable(true);
     } else {
       setSeatStatus("예약 불가능한 좌석입니다.");
