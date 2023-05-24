@@ -45,7 +45,6 @@ export default function AdminWrite(props): JSX.Element {
   const router = useRouter();
 
   // useState
-  const [zipcode, setZipcode] = useState("");
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
   const [city, setCity] = useState("");
@@ -146,7 +145,6 @@ export default function AdminWrite(props): JSX.Element {
   // daumpostcode에서 주소 검색 완료 시 로직
   const onCompleteAddressSearch = (AddressData): void => {
     AddressModal();
-    setZipcode(AddressData.zonecode);
     setAddress(AddressData.address);
     setCity(AddressData.sido);
     setDistrict(AddressData.sigungu);
@@ -197,7 +195,9 @@ export default function AdminWrite(props): JSX.Element {
     // const results = await Promise.all(
     //   files.map((el) => el && uploadImageFile({ variables: { images: el } }))
     // );
-    const results = await uploadImageFile({ variables: { images: files } });
+    const results = await uploadImageFile({
+      variables: { images: files.filter((el) => el !== "") },
+    });
     console.log(results, "results");
 
     const resultUrls = [];
@@ -254,6 +254,28 @@ export default function AdminWrite(props): JSX.Element {
 
   // 수정하기 버튼 눌렀을 때(admin 수정)
   const onClickUpdateCafe = async (data: IFormValues) => {
+    const results = await uploadImageFile({
+      variables: { images: files.filter((el) => el !== "") },
+    });
+    console.log(results, "results");
+
+    const resultUrls = [];
+    if (results) {
+      for (let i = 0; i < results.data?.uploadImageFile.length; i++) {
+        results.data?.uploadImageFile[i]
+          ? resultUrls.push(results.data?.uploadImageFile[i])
+          : "";
+      }
+    }
+    console.log(results.data?.uploadImageFile[1]);
+    console.log(resultUrls, "!!!!!");
+    const images = resultUrls.map((el, index) => {
+      return {
+        image_url: el,
+        image_isMain: isMain[index],
+      };
+    });
+
     try {
       const updateResult = await updateLoginStudyCafe({
         variables: {
@@ -271,7 +293,7 @@ export default function AdminWrite(props): JSX.Element {
             studyCafe_lat: Number(lat),
             studyCafe_lon: Number(lon),
             studyCafe_brn: data.brn,
-            image: { image_url: results, image_isMain: isMain },
+            image: images,
           },
         },
       });
@@ -366,14 +388,14 @@ export default function AdminWrite(props): JSX.Element {
           <div id="map" style={{ display: "none" }}></div>
           <S.AddressInputBox>
             <S.AddressZip>
-              <S.Zipcode
+              {/* <S.Zipcode
                 type="text"
                 placeholder="07250"
                 value={zipcode}
                 readOnly
-              ></S.Zipcode>
+              ></S.Zipcode> */}
               <S.SearchBtn type="button" onClick={AddressModal}>
-                검색
+                주소검색
               </S.SearchBtn>
               {isAddressModalOpen ? (
                 <S.AddressSearchModal
@@ -391,10 +413,15 @@ export default function AdminWrite(props): JSX.Element {
               <S.Address
                 type="text"
                 readOnly
-                value={address}
-                defaultValue={
-                  props.data?.fetchOneStudyCafeForAdminister.studyCafe_address
+                value={
+                  address !== ""
+                    ? address
+                    : props.data?.fetchOneStudyCafeForAdminister
+                        .studyCafe_address ?? ""
                 }
+                // defaultValue={
+                //   props.data?.fetchOneStudyCafeForAdminister.studyCafe_address
+                // }
               />
               <S.Address
                 placeholder="상세주소를 입력해주세요."

@@ -34,12 +34,9 @@ export default function AdminDetailBody(props): JSX.Element {
         <div>
           <SliderItem
             // src="/cafe1.png"
-            src={props.MaincafeImageUrl}
+            src={restImageUrls[0]}
             style={{ width: "80%", height: "auto" }}
           />
-        </div>
-        <div>
-          <SliderItem src={restImageUrls[0]} />
         </div>
         <div>
           <SliderItem src={restImageUrls[1]} />
@@ -49,6 +46,9 @@ export default function AdminDetailBody(props): JSX.Element {
         </div>
         <div>
           <SliderItem src={restImageUrls[3]} />
+        </div>
+        <div>
+          <SliderItem src={restImageUrls[4]} />
         </div>
       </StyledSlider>
       <ContentsBox>
