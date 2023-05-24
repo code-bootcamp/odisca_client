@@ -49,7 +49,7 @@ export default function UserLoginPage(): JSX.Element {
       }
       setAccessToken(accessToken);
       alert("로그인이 완료되었습니다!");
-      void router.push(`/user/mainpage`);
+      void router.push(`/user`);
       localStorage.setItem("accessToken", accessToken);
     } catch (error) {
       if (error instanceof Error) alert(error.message);

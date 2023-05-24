@@ -4,7 +4,8 @@ import { Space } from "antd";
 import { useQuery } from "@apollo/client";
 import { FETCH_LOGIN_USER } from "./header.queries";
 import { useMutationDeleteAdmin } from "../../hooks/mutations/useMutationDeleteAdmin";
-import { useMutationLogOut } from "../../hooks/mutations/useMutationLogout";
+import { useMutationLogOutUser } from "../../hooks/mutations/useMutationLogoutUser";
+import { useMutationLogOutAdmin } from "../../hooks/mutations/useMutationLogoutAdmin";
 import { useRouter } from "next/router";
 import { WrapperWithoutMargin, Wrapper } from "./header.style";
 import PayModal from "../../../units/user/mapScanner/mapSanner.PayModal";
@@ -13,7 +14,8 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
   const [open, setOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const { data } = useQuery(FETCH_LOGIN_USER);
-  const [logout] = useMutationLogOut();
+  const [logoutUser] = useMutationLogOutUser();
+  const [logoutAdmin] = useMutationLogOutAdmin();
   const HeaderWrapper =
     isHiddenMargin === true ? WrapperWithoutMargin : Wrapper;
 
@@ -31,9 +33,27 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
   const router = useRouter();
 
   const onClickLogOut = async (): Promise<void> => {
-    await logout();
-    alert("로그아웃 완료되었습니다.");
-    void router.push("/user/login");
+    if (router.asPath.includes("admin")) {
+      await logoutAdmin();
+      alert("로그아웃 완료되었습니다.");
+      void router.push("/admin/login");
+    } else {
+      await logoutUser();
+      alert("로그아웃 완료되었습니다.");
+      void router.push("/user/login");
+    }
+  };
+
+  const onClickMyPage = (): void => {
+    if (router.asPath.includes("admin")) {
+      void router.push("/admin/adminpage");
+    } else {
+      void router.push("/user/mypage");
+    }
+  };
+
+  const onClickMain = (): void => {
+    void router.push("/user");
   };
 
   const showModal = (): void => {
@@ -96,8 +116,8 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
             }}
           >
             <S.MenuList>
-              <p>회원정보</p>
-              <p>스카찾기</p>
+              <p onClick={onClickMyPage}>회원정보</p>
+              <p onClick={onClickMain}>스카찾기</p>
               <p onClick={onClickLogOut}>로그아웃</p>
               <p onClick={onClickDeleteAdmin}>회원탈퇴</p>
             </S.MenuList>
