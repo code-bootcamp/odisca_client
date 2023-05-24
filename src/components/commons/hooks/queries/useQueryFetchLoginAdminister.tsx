@@ -17,6 +17,12 @@ export const FETCH_LOGIN_ADMINISTER = gql`
       administer_email
       administer_phone
       administer_point
+
+      studyCafes {
+        studyCafe_id
+        studyCafe_name
+        studyCafe_address
+      }
     }
   }
 `;

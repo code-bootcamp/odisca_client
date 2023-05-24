@@ -6,6 +6,8 @@ export default function UserMyPageHeader(): JSX.Element {
   const router = useRouter();
   const { data } = useQueryFetchLoginUser();
 
+  console.log(data);
+
   const onClickMovePaymentList = (): void => {
     void router.push(`/user/mypage/transactionList`);
   };
@@ -21,7 +23,9 @@ export default function UserMyPageHeader(): JSX.Element {
         <S.UserWrapper>
           <S.UserWrapperLight>
             <S.ProfileWrapper>
-              <S.ProfileImage></S.ProfileImage>
+              <S.ProfileImage
+                src={data?.fetchLoginUser.user_image}
+              ></S.ProfileImage>
             </S.ProfileWrapper>
           </S.UserWrapperLight>
           <S.UserWrapperRight>
@@ -34,11 +38,7 @@ export default function UserMyPageHeader(): JSX.Element {
             </S.UserInfo>
             <S.UserPointWrapper>
               <S.Icon src="/point.png"></S.Icon>
-              <S.UserPoint>
-                {data?.fetchLoginUser.user_point !== undefined
-                  ? data?.fetchLoginUser.user_point
-                  : "0"}
-              </S.UserPoint>
+              <S.UserPoint>{data?.fetchLoginUser.user_point ?? 0}</S.UserPoint>
               <S.PointBtn>충전</S.PointBtn>
               <S.PaymentBtn onClick={onClickMovePaymentList}>
                 결제내역

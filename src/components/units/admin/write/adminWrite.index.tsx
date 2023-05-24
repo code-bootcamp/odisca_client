@@ -5,10 +5,10 @@ import DaumPostcodeEmbed from "react-daum-postcode";
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import UseModal from "../../../commons/hooks/customs/useModal";
 import { useMutationCreateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationCreateLoginStudyCafe";
 import { useMutationUpdateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationUpdateLoginStudyCafe";
 import { useQueryFetchLoginAdminister } from "../../../commons/hooks/queries/useQueryFetchLoginAdminister";
+import { useMutationUploadImageFile } from "../../../commons/hooks/mutations/useMutationUploadImageFile";
 
 // 검증 및 설정
 import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
@@ -18,8 +18,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import * as S from "./adminWrite.styles";
 import OperatingTime from "../../../commons/operatingTimeSelection/operatingTimeSelect.index";
-import { useMutationUploadImageFile } from "../../../commons/hooks/mutations/useMutationUploadImageFile";
 import { checkValidationFile } from "../../../../commons/libraries/validationFile";
+import SubmitSuccessAlertModal from "../../../commons/submitSuccessModal/submitSuccessModal.index";
 
 // 등록 사항들 타입 지정
 interface IFormValues {
@@ -39,8 +39,7 @@ declare const window: typeof globalThis & {
 };
 
 export default function AdminWrite(props): JSX.Element {
-  // useModal 사용
-  const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
+  // const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
 
   // router
   const router = useRouter();
@@ -59,6 +58,8 @@ export default function AdminWrite(props): JSX.Element {
   const [files, setFiles] = useState([]);
   const [imageButtonArray] = useState(["", "", "", "", ""]);
   const [isMain, setIsMain] = useState([true, false, false, false, false]);
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
 
   // useRef
   const fileRef = useRef<HTMLInputElement>(null);
@@ -134,9 +135,17 @@ export default function AdminWrite(props): JSX.Element {
     setCloseTime(event?.target.value);
   };
 
+  const AddressModal = (): void => {
+    setIsAddressModalOpen((prev) => !prev);
+  };
+
+  const SubmitModal = (): void => {
+    setIsSubmitModalOpen((prev) => !prev);
+  };
+
   // daumpostcode에서 주소 검색 완료 시 로직
   const onCompleteAddressSearch = (AddressData): void => {
-    handleCancel();
+    AddressModal();
     setZipcode(AddressData.zonecode);
     setAddress(AddressData.address);
     setCity(AddressData.sido);
@@ -149,15 +158,51 @@ export default function AdminWrite(props): JSX.Element {
     fileRef.current?.click();
   };
 
+  const onChangeFile = () => async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    console.log(file);
+
+    const isValid = checkValidationFile(file);
+    if (!isValid) return;
+
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = (event) => {
+      if (typeof event.target?.result === "string") {
+        const newTemp = [...imageUrls.filter((el) => el !== "")];
+        newTemp.push(event.target?.result);
+        while (newTemp.length < 5) {
+          newTemp.push("");
+        }
+
+        // console.log(newTemp, "newTemp");
+        setImageUrls(newTemp);
+
+        const tempFiles = [...files.filter((el) => el !== "")];
+        tempFiles.push(file);
+        while (tempFiles.length < 5) {
+          tempFiles.push("");
+        }
+        setFiles(tempFiles);
+        console.log(tempFiles, "tempFiles");
+        console.log(event.target?.result);
+      }
+    };
+  };
+
   // 등록하기 버튼 눌렀을 때(admin 등록)
   const onClickCafeSubmit = async (data: IFormValues): Promise<void> => {
-    const results = await Promise.all(
-      files.map((el) => el && uploadImageFile({ variables: { images: el } }))
-    );
-    console.log(results);
-    const resultUrls = results.map((el) =>
-      el ? el.data?.uploadImageFile : ""
-    );
+    console.log(files, "파일이당");
+    // const results = await Promise.all(
+    //   files.map((el) => el && uploadImageFile({ variables: { images: el } }))
+    // );
+    const results = await uploadImageFile({ variables: { images: files } });
+    console.log(results, "results");
+
+    let resultUrls = [];
+    if (Array.isArray(results)) {
+      resultUrls = results.map((el) => (el ? el.data?.uploadImageFile : ""));
+    }
 
     const images = resultUrls.map((el, index) => {
       return {
@@ -189,43 +234,13 @@ export default function AdminWrite(props): JSX.Element {
           },
         },
       });
-      alert("업체등록이 완료되었습니다.");
+      setIsSubmitModalOpen(true);
       void router.push(
         `/admin/${result.data?.createLoginStudyCafe.studyCafe_id}`
       );
     } catch (error) {
-      alert("업체등록에 실패하였습니다.");
+      if (error instanceof Error) alert("업체 등록에 실패했습니다!");
     }
-  };
-
-  const onChangeFile = () => async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
-    const isValid = checkValidationFile(file);
-    if (!isValid) return;
-
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = (event) => {
-      if (typeof event.target?.result === "string") {
-        const newTemp = [...imageUrls.filter((el) => el !== "")];
-        newTemp.push(event.target?.result);
-        while (newTemp.length < 5) {
-          newTemp.push("");
-        }
-
-        console.log(newTemp, "newTemp");
-        setImageUrls(newTemp);
-
-        const tempFiles = [...files.filter((el) => el !== "")];
-        tempFiles.push(event.target?.result);
-        while (tempFiles.length < 5) {
-          tempFiles.push("");
-        }
-        setFiles(tempFiles);
-        console.log(tempFiles, "tempFiles");
-      }
-    };
   };
 
   // 수정하기 버튼 눌렀을 때(admin 수정)
@@ -252,7 +267,7 @@ export default function AdminWrite(props): JSX.Element {
         },
       });
       console.log(updateResult);
-      router.push(
+      void router.push(
         `/admin/${updateResult.data?.updateLoginStudyCafe.studyCafe_id}`
       );
     } catch (error) {
@@ -265,6 +280,7 @@ export default function AdminWrite(props): JSX.Element {
     const newMain = new Array(5).fill(false);
     newMain[index] = true;
     setIsMain(newMain);
+    console.log(newMain);
   };
 
   // return 값
@@ -291,7 +307,8 @@ export default function AdminWrite(props): JSX.Element {
               type="text"
               readOnly
               defaultValue={
-                fetchAdministerData?.fetchLoginAdminister.administer_name
+                fetchAdministerData?.fetchLoginAdminister.administer
+                  .administer_name
               }
             />
           </S.InputBox>
@@ -303,7 +320,7 @@ export default function AdminWrite(props): JSX.Element {
               type="text"
               placeholder="ex) 000-000-000"
               {...register("brn")}
-              value={props.data?.fetchStudyCafe.brn}
+              value={props.data?.fetchOneStudyCafe.brn}
             />
             <S.Error>{formState.errors.brn?.message}</S.Error>
           </S.InputBox>
@@ -316,7 +333,7 @@ export default function AdminWrite(props): JSX.Element {
             <S.Input
               type="text"
               {...register("name")}
-              value={props.data?.fetchStudyCafe.name}
+              value={props.data?.fetchOneStudyCafe.studyCafe_name}
             />
             <S.Error>{formState.errors.name?.message}</S.Error>
           </S.InputBox>
@@ -329,7 +346,7 @@ export default function AdminWrite(props): JSX.Element {
             <S.Input
               type="text"
               {...register("contact")}
-              defaultValue={props.data?.fetchStudyCafe.contact}
+              defaultValue={props.data?.fetchOneStudyCafe.studyCafe_contact}
             />
             <S.Error>{formState.errors.contact?.message}</S.Error>
           </S.InputBox>
@@ -345,14 +362,14 @@ export default function AdminWrite(props): JSX.Element {
                 value={zipcode}
                 readOnly
               ></S.Zipcode>
-              <S.SearchBtn type="button" onClick={showModal}>
+              <S.SearchBtn type="button" onClick={AddressModal}>
                 검색
               </S.SearchBtn>
-              {isModalOpen ? (
+              {isAddressModalOpen ? (
                 <S.AddressSearchModal
-                  open={isModalOpen}
-                  onOk={handleOk}
-                  onCancel={handleCancel}
+                  open={true}
+                  onOk={AddressModal}
+                  onCancel={AddressModal}
                 >
                   <DaumPostcodeEmbed onComplete={onCompleteAddressSearch} />
                 </S.AddressSearchModal>
@@ -365,12 +382,14 @@ export default function AdminWrite(props): JSX.Element {
                 type="text"
                 readOnly
                 value={address}
-                defaultValue={props.data?.fetchStudyCafe.address}
+                defaultValue={props.data?.fetchOneStudyCafe.studyCafe_address}
               />
               <S.Address
                 placeholder="상세주소를 입력해주세요."
                 type="text"
-                defaultValue={props.data?.fetchStudyCafe.addressDetail}
+                defaultValue={
+                  props.data?.fetchOneStudyCafe.studyCafe_addressDetail
+                }
                 onChange={AddressDetailInput}
               />
             </S.AddressBox>
@@ -400,7 +419,6 @@ export default function AdminWrite(props): JSX.Element {
 
             <S.ImageListBox>
               {imageButtonArray.map((el, index) => {
-                console.log(el, "contents");
                 return (
                   <S.ImageBox key={el}>
                     {imageUrls[index] !== "" ? (
@@ -440,7 +458,7 @@ export default function AdminWrite(props): JSX.Element {
                 type="text"
                 placeholder="ex) 3,000"
                 {...register("timeFee")}
-                defaultValue={props.data?.fetchStudyCafe.timeFee}
+                defaultValue={props.data?.fetchOneStudyCafe.studyCafe_timeFee}
               />
               <S.Error>{formState.errors.timeFee?.message}</S.Error>
             </S.InputBox>
@@ -450,12 +468,25 @@ export default function AdminWrite(props): JSX.Element {
             <S.Notice
               type="text"
               {...register("description")}
-              defaultValue={props.data?.fetchStudyCafe.description}
+              defaultValue={props.data?.fetchOneStudyCafe.studyCafe_description}
             />
           </S.SectionBox>
         </S.SectionBottom>
         <S.Footer>
           <S.Btn>{props.isEdit ? "수정" : "등록"}하기</S.Btn>
+          {isSubmitModalOpen ? (
+            <S.SubmitSuccessModal
+              open={SubmitModal}
+              onOk={SubmitModal}
+              onCancel={SubmitModal}
+              okButtonProps={{ style: { display: "none" } }}
+              cancelButtonProps={{ style: { display: "none" } }}
+            >
+              <SubmitSuccessAlertModal />
+            </S.SubmitSuccessModal>
+          ) : (
+            <></>
+          )}
           <S.Btn type="button">취소하기</S.Btn>
         </S.Footer>
       </S.Wrapper>

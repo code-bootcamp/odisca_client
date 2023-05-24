@@ -40,7 +40,7 @@ export default function AdminDetailFooter(): JSX.Element {
     if (data?.fetchAllSeatsByStudyCafeId.length === 0) {
       setIsSaved(true);
     }
-  }, [data]);
+  });
 
   const onClickScanSeats = () => {
     router.push("/admin/" + router.query.Id + "/mapScaner");

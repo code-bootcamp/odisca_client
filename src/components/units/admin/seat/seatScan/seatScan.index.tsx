@@ -2,36 +2,36 @@ import { useRouter } from "next/router";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../../components/commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
 import { useEffect, useState } from "react";
 import * as S from "./seatScan.Style";
-import { useQueryFetchStudyCafe } from "../../../../../components/commons/hooks/queries/useQueryFetchStudyCafe";
+import { useQueryFetchOneStudyCafe } from "../../../../../components/commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
 
 export default function SeatScanPage(): JSX.Element {
   const router = useRouter();
-  const { data: dataCafe } = useQueryFetchStudyCafe(String(router.query.Id));
+  const { data: dataCafe } = useQueryFetchOneStudyCafe(String(router.query.Id));
   const { data } = useQueryFetchAllSeatsByStudyCafeId(String(router.query.Id));
   const [stateX, setStateX] = useState(
-    dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX ?? 40
+    dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanX ?? 40
   );
   const [stateY, setStateY] = useState(
-    dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanY ?? 40
+    dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanY ?? 40
   );
   console.log(dataCafe, "카페");
   const [map, setMap] = useState([]);
 
-  console.log(data?.fetchAllSeatsByStudyCafeId);
+  console.log(data, "좌석");
   useEffect(() => {
     if (dataCafe !== undefined && data !== undefined) {
-      setStateX(dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX);
-      setStateY(dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanY);
+      setStateX(dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanX);
+      setStateY(dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanY);
       const newArray = Array.from(
-        Array(dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanY),
+        Array(dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanY),
         () => {
           const result = [];
           for (
             let i = 0;
-            i < dataCafe?.fetchOneStudyCafe.studyCafe_floorPlanX;
+            i < dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanX;
             i++
           ) {
-            result.push({ status: 0, seatId: "i", number: 0 });
+            result.push({ status: "", seatId: "i", number: "" });
           }
           return result;
         }

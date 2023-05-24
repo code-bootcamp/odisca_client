@@ -1,60 +1,69 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useRecoilState } from "recoil";
-import { imageUrlsState } from "../../../../commons/stores";
+import { imageUrlsState, selectedFileState } from "../../../../commons/stores";
 import * as D from "../../../units/user/mypage/userEditpage/body/UserEditBody.styles";
 import { useQueryFetchLoginUser } from "../queries/useQueryFetchLoginUser";
 
 interface MyDropzoneProps {
-  onFilesChange: (selectedFiles: File[]) => void;
+  onFileChange: (selectedFile: File) => void;
 }
-
-function MyDropzone({ onFilesChange }: MyDropzoneProps): JSX.Element {
+function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
   const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
+  const [selectedFile, setSelectedFile] = useRecoilState(selectedFileState);
   const { data } = useQueryFetchLoginUser();
 
-  const [imageDataArray, setImageDataArray] = useState([]);
-  const onDrop = useCallback((acceptedFiles) => {
-    acceptedFiles.forEach((file: any) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const arrayBuffer = reader.result;
-        setImageDataArray((prevImageDataArray) => [
-          ...prevImageDataArray,
-          arrayBuffer,
-        ]);
-      };
-      reader.readAsArrayBuffer(file);
-    });
-  }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      setSelectedFile(acceptedFiles[0] || null);
+    },
+    [setSelectedFile]
+  );
 
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
   useEffect(() => {
-    const updatedImageUrls = imageDataArray.map((imageData, index) =>
-      URL.createObjectURL(new Blob([imageData]))
-    );
+    if (selectedFile) {
+      const imageUrl = URL.createObjectURL(selectedFile);
+      setImageUrls([imageUrl]);
+      onFileChange(selectedFile);
+    } else if (data?.fetchLoginUser.user_image) {
+      const imageUrl = data.fetchLoginUser.user_image;
+      setImageUrls([imageUrl]);
+    } else {
+      setImageUrls([]);
+      onFileChange(null);
+    }
+  }, [
+    selectedFile,
+    setImageUrls,
+    onFileChange,
+    data?.fetchLoginUser.user_image,
+  ]);
 
-    // Recoil 상태 업데이트
-    setImageUrls(updatedImageUrls);
-  }, [imageDataArray, setImageUrls, onFilesChange]);
-  const previewImagesJsonString = JSON.stringify(imageUrls);
+  // useEffect(() => {
+  //   return () => {
+  //     if (imageUrls.length > 0) {
+  //       URL.revokeObjectURL(imageUrls[0]);
+  //     }
+  //   };
+  // }, [imageUrls]);
 
-  console.log(data?.fetchLoginUser.user_image, "dddddd");
   return (
     <>
-      <D.ProfileImgBox {...getRootProps()}>
-        <input {...getInputProps()} />
-        <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
-        <D.ProfileImg
-          // src={
-          //   data?.fetchLoginUser.user_image
-          //     ? `https://storage.googleapis.com/${data.fetchLoginUser.user_image}`
-          //     : JSON.parse(previewImagesJsonString)
-          // }
-          src={JSON.parse(previewImagesJsonString)}
-        ></D.ProfileImg>
-      </D.ProfileImgBox>
-      {/* <D.ProfileImg src={JSON.parse(previewImagesJsonString)}></D.ProfileImg> */}
+      {data?.fetchLoginUser.user_image ? (
+        <D.ProfileImgBox {...getRootProps()}>
+          <input {...getInputProps()} />
+          <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
+          <D.ProfileImg src={data.fetchLoginUser.user_image}></D.ProfileImg>
+        </D.ProfileImgBox>
+      ) : (
+        <D.ProfileImgBox {...getRootProps()}>
+          <input {...getInputProps()} />
+          <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
+
+          <D.ProfileImg src={imageUrls[0]}></D.ProfileImg>
+        </D.ProfileImgBox>
+      )}
     </>
   );
 }

@@ -1,25 +1,32 @@
 import { useRouter } from "next/router";
-import { useQueryFetchOneStudyCafe } from "../../../commons/hooks/queries/useQueryFetchStudyCafe";
+import { useQueryFetchCafeMainImage } from "../../../commons/hooks/queries/useQueryFetchCafeMainImage";
+import { useQueryFetchOneStudyCafeForAdmin } from "../../../commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
 import AdminDetailBody from "./body/AdminDetailBody.index";
 import AdminDetailFooter from "./footer/AdminDetailFooter.index";
 import AdminDetailHeader from "./header/AdminDetailHeader.index";
 
 export default function AdminDetail(): JSX.Element {
   const router = useRouter();
-  const { data } = useQueryFetchOneStudyCafe(String(router.query.Id));
+  const { data } = useQueryFetchOneStudyCafeForAdmin(String(router.query.Id));
+  const { data: MainImgData } = useQueryFetchCafeMainImage();
   console.log(data, String(router.query.Id));
   return (
     <>
       <AdminDetailHeader
-        cafeName={data?.fetchOneStudyCafe.studyCafe_name}
-        cafeBrn={data?.fetchOneStudyCafe.studyCafe_brn}
-        cafeContact={data?.fetchOneStudyCafe.studyCafe_contact}
-        cafeFee={data?.fetchOneStudyCafe.studyCafe_timeFee}
-        cafeOpenTime={data?.fetchOneStudyCafe.studyCafe_openTime}
-        cafeClosTime={data?.fetchOneStudyCafe.studyCafe_closeTime}
+        cafeName={data?.fetchOneStudyCafeForAdminister.studyCafe_name}
+        cafeBrn={data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
+        cafeContact={data?.fetchOneStudyCafeForAdminister.studyCafe_contact}
+        cafeFee={data?.fetchOneStudyCafeForAdminister.studyCafe_timeFee}
+        cafeOpenTime={data?.fetchOneStudyCafeForAdminister.studyCafe_openTime}
+        cafeClosTime={data?.fetchOneStudyCafeForAdminister.studyCafe_closeTime}
       />
       <AdminDetailBody
-        cafeDescription={data?.fetchOneStudyCafe.studyCafe_description}
+        // cafeImageUrl={data?.fetchOneStudyCafeForAdminister.images.image_url}
+        // cafeImageIsMain={data?.fetchOneStudyCafeForAdminister.images.image_isMain}
+        cafeImage={data?.fetchOneStudyCafeForAdminister.images}
+        cafeDescription={
+          data?.fetchOneStudyCafeForAdminister.studyCafe_description
+        }
       />
       <AdminDetailFooter />
     </>
