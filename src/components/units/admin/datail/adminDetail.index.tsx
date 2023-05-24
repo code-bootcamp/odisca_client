@@ -8,14 +8,7 @@ import AdminDetailHeader from "./header/AdminDetailHeader.index";
 export default function AdminDetail(): JSX.Element {
   const router = useRouter();
   const { data } = useQueryFetchOneStudyCafeForAdmin(String(router.query.Id));
-  const { data: MainImgData } = useQueryFetchCafeMainImage(
-    String(router.query.Id)
-  );
-  console.log(
-    MainImgData?.fetchCafeMainImage.image_url,
-    String(router.query.Id),
-    "무야호오오오오오오"
-  );
+
   return (
     <>
       <AdminDetailHeader
@@ -27,8 +20,6 @@ export default function AdminDetail(): JSX.Element {
         cafeClosTime={data?.fetchOneStudyCafeForAdminister.studyCafe_closeTime}
       />
       <AdminDetailBody
-        // MaincafeImageIsMain={MainImgData?.fetchCafeMainImage.image_isMain}
-        MaincafeImageUrl={MainImgData?.fetchCafeMainImage.image_url}
         cafeImages={data?.fetchOneStudyCafeForAdminister.images}
         cafeDescription={
           data?.fetchOneStudyCafeForAdminister.studyCafe_description

@@ -119,11 +119,14 @@ export const Zipcode = styled.input`
   }
 `;
 export const SearchBtn = styled.button`
-  width: 50px;
+  width: 80px;
+  height: 30px;
   border-radius: 10px;
   border: none;
   background: #40e0d0;
   cursor: pointer;
+  color: #fff;
+  font-weight: 600;
 `;
 export const AddressBox = styled.div`
   width: 100%;

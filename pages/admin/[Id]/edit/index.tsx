@@ -6,9 +6,9 @@ import AdminWrite from "../../../../src/components/units/admin/write/adminWrite.
 
 export default function AdminEditPage(): JSX.Element {
   const router = useRouter();
-  const { data } = useQueryFetchOneStudyCafeForAdmin({
-    variables: { studyCafe_id: router.query.Id },
-  });
+  const { data } = useQueryFetchOneStudyCafeForAdmin(String(router.query.Id));
+
+  console.log(data, "didkdkdkdkdkdkd");
 
   return <AdminWrite isEdit={true} data={data} />;
 }
