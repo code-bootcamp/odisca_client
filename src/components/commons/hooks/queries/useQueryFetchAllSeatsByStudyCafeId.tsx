@@ -34,7 +34,7 @@ export const useQueryFetchAllSeatsByStudyCafeId = (
   const query = useQuery(FETCH_ALL_SEATS, { variables: { studyCafe_id: id } });
 
   const refetch = async (): Promise<void> => {
-    await query.refetch();
+    await query.refetch({ studyCafe_id: id });
   };
 
   return { ...query, refetch };
