@@ -6,10 +6,7 @@ import {
 
 export const CREATE_SEATS = gql`
   mutation createSeats($createSeatsInput: CreateSeatsInput!) {
-    createSeats(createSeatsInput: $createSeatsInput) {
-      seat_id
-      seat_number
-    }
+    createSeats(createSeatsInput: $createSeatsInput)
   }
 `;
 
