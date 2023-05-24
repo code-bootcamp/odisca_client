@@ -62,7 +62,7 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
     <>
       <HeaderWrapper>
         <S.LightWrapper>
-          <S.Logo src="/logo.png"></S.Logo>
+          <S.Logo src="/header.png"></S.Logo>
         </S.LightWrapper>
         <S.RightWrapper>
           {!isLogin ? (

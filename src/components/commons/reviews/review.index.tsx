@@ -9,17 +9,19 @@ import { useQueryFetchReview } from "../hooks/queries/useQueryFetchLoginReviews"
 import { useMutationUpdateReview } from "../hooks/mutations/useMutationUpdateReview";
 import { useMutationDeleteReview } from "../hooks/mutations/useMutationDeleteReview";
 import UseModal from "../hooks/customs/useModal";
+import { useRouter } from "next/router";
 
 interface IFormReviewData {
   review_content: string;
   visit_id: string;
 }
 
-export default function Review(): JSX.Element {
+export default function Review(props): JSX.Element {
+  const router = useRouter();
   const [createLoginReview] = useMutationCreateReview();
   const [updateLoginReview] = useMutationUpdateReview();
   const [deleteLoginReview] = useMutationDeleteReview();
-  // const { handleCancel } = UseModal();
+  const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
   const { data: reviewdata, refetch: refetchFetchReview } =
     useQueryFetchReview();
   const { data: fetchUserdata } = useQueryFetchLoginUser();
@@ -42,6 +44,7 @@ export default function Review(): JSX.Element {
       Modal.success({
         content: "리뷰가 등록되었습니다.",
       });
+      props.handleCancel();
     } catch (error) {
       if (error instanceof Error)
         Modal.error({
@@ -61,10 +64,13 @@ export default function Review(): JSX.Element {
         },
       });
       await refetchFetchReview();
+      void router.push("/user/mypage");
+
       console.log(result);
       Modal.success({
         content: "리뷰가 수정되었습니다.",
       });
+      props.handleCancel();
     } catch (error) {
       if (error instanceof Error)
         Modal.error({
@@ -87,7 +93,8 @@ export default function Review(): JSX.Element {
         content: "리뷰가 삭제되었습니다.",
       });
       await refetchFetchReview();
-      // handleCancel();
+
+      props.handleCancel();
     } catch (error) {
       if (error instanceof Error)
         Modal.error({
@@ -118,7 +125,11 @@ export default function Review(): JSX.Element {
               : wrapFormAsync(handleSubmit(onClickSubmitReview))
           }
         >
-          <S.ReviewTitle>리뷰를 작성해주세요.</S.ReviewTitle>
+          {review ? (
+            <S.ReviewTitle>작성된 리뷰를 수정해주세요.</S.ReviewTitle>
+          ) : (
+            <S.ReviewTitle>리뷰를 작성해주세요.</S.ReviewTitle>
+          )}
           <S.ReviewInput
             {...register("review_content")}
             placeholder="무분별한 비방, 욕설 등 타인을 불쾌하게 하는 리뷰는 사전 통보 없이 삭제될 수 있습니다."
