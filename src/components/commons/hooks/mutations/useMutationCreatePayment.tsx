@@ -7,9 +7,10 @@ import {
 export const CREATE_PAYMENT = gql`
   mutation createLoginPayment($createPaymentInput: CreatePaymentInput!) {
     createLoginPayment(createPaymentInput: $createPaymentInput) {
-      payment_id
-      payment_point
-      payment_time
+      payment {
+        payment_id
+        payment_point
+      }
     }
   }
 `;

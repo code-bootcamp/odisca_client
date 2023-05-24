@@ -3,13 +3,15 @@ import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../src/components/c
 import { ChangeEvent, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Modal } from "antd";
-import { useQueryFetchOneStudyCafe } from "../../../../src/components/commons/hooks/queries/useQueryFetchStudyCafeForUser";
+import { useQueryFetchOneStudyCafeForUser } from "../../../../src/components/commons/hooks/queries/useQueryFetchStudyCafeForUser";
 import { ISeat } from "../../../../src/commons/types/generated/types";
 import { useMutationCreatePayment } from "../../../../src/components/commons/hooks/mutations/useMutationCreatePayment";
 
 export default function SeatMapScanPage(): JSX.Element {
   const router = useRouter();
-  const { data: dataCafe } = useQueryFetchOneStudyCafe(String(router.query.Id));
+  const { data: dataCafe } = useQueryFetchOneStudyCafeForUser(
+    String(router.query.Id)
+  );
   const { data } = useQueryFetchAllSeatsByStudyCafeId(String(router.query.Id));
   const [isModal, setIsModal] = useState(false);
   const [stateX, setStateX] = useState(
