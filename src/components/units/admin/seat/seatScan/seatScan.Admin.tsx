@@ -2,11 +2,13 @@ import { useRouter } from "next/router";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../../components/commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
 import { useEffect, useState } from "react";
 import * as S from "./seatScan.Style";
-import { useQueryFetchOneStudyCafe } from "../../../../../components/commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
+import { useQueryFetchOneStudyCafeForAdmin } from "../../../../../components/commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
 
 export default function SeatScanPage(): JSX.Element {
   const router = useRouter();
-  const { data: dataCafe } = useQueryFetchOneStudyCafe(String(router.query.Id));
+  const { data: dataCafe } = useQueryFetchOneStudyCafeForAdmin(
+    String(router.query.Id)
+  );
   const { data } = useQueryFetchAllSeatsByStudyCafeId(String(router.query.Id));
   const [stateX, setStateX] = useState(
     dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanX ?? 40
