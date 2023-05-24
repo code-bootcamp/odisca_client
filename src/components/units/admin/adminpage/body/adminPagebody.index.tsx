@@ -14,6 +14,10 @@ export default function AdminPageBody(props): JSX.Element {
     "asdfasdfasdfasdfasd"
   );
 
+  const onClickNew = (): void => {
+    void router.push("/admin/new");
+  };
+
   return (
     <>
       <S.Wrapper>
@@ -57,7 +61,9 @@ export default function AdminPageBody(props): JSX.Element {
             </div>
           );
         })}
-        <S.CreateSeatingChart>좌석배치도 등록하기</S.CreateSeatingChart>
+        <S.CreateSeatingChart onClick={onClickNew}>
+          카페 등록하기
+        </S.CreateSeatingChart>
       </S.Wrapper>
     </>
   );
