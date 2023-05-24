@@ -46,7 +46,6 @@ export default function UserMyPageBody(): JSX.Element {
               <S.Btn onClick={showModal}>리뷰쓰기</S.Btn>
               {isModalOpen && (
                 <S.ReviewModal
-                  // style={{ width: "600px" }}
                   okButtonProps={{ style: { display: "none" } }}
                   cancelButtonProps={{ style: { display: "none" } }}
                   open={isModalOpen}

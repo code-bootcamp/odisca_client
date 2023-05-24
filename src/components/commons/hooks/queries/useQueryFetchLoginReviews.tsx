@@ -23,9 +23,9 @@ export const useQueryFetchReview = (): IFetchUserReviewQueryResult => {
   const query = useQuery<Pick<IQuery, "fetchLoginReviewsByUserId">, IVisit>(
     FETCH_REVIEW
   );
-  const refetch = async (): Promise<void> => {
+  const refetchFetchReview = async (): Promise<void> => {
     await query.refetch();
   };
 
-  return { ...query, refetch };
+  return { ...query, refetch: refetchFetchReview };
 };

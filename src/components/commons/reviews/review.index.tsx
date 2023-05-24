@@ -1,20 +1,29 @@
 import { Modal } from "antd";
 import { useForm } from "react-hook-form";
-import { wrapFormAsync } from "../../../commons/libraries/asyncFunc";
+import { wrapAsync, wrapFormAsync } from "../../../commons/libraries/asyncFunc";
 import { useMutationCreateReview } from "../hooks/mutations/useMutationCreateReview";
 import { useQueryFetchLoginUser } from "../hooks/queries/useQueryFetchLoginUser";
 import * as S from "./review.styles";
 import { getDate } from "../../../commons/libraries/utils";
 import { useQueryFetchReview } from "../hooks/queries/useQueryFetchLoginReviews";
+import { useMutationUpdateReview } from "../hooks/mutations/useMutationUpdateReview";
+import { useMutationDeleteReview } from "../hooks/mutations/useMutationDeleteReview";
+import UseModal from "../hooks/customs/useModal";
+import { useRouter } from "next/router";
 
 interface IFormReviewData {
   review_content: string;
   visit_id: string;
 }
 
-export default function Review(): JSX.Element {
+export default function Review(props): JSX.Element {
+  const router = useRouter();
   const [createLoginReview] = useMutationCreateReview();
-  const { data: reviewdata } = useQueryFetchReview();
+  const [updateLoginReview] = useMutationUpdateReview();
+  const [deleteLoginReview] = useMutationDeleteReview();
+  const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
+  const { data: reviewdata, refetch: refetchFetchReview } =
+    useQueryFetchReview();
   const { data: fetchUserdata } = useQueryFetchLoginUser();
   const { register, handleSubmit } = useForm({
     mode: "onChange",
@@ -26,14 +35,16 @@ export default function Review(): JSX.Element {
         variables: {
           createReviewInput: {
             review_content: data.review_content,
-            visit_id: reviewdata?.fetchLoginReviewsByUserId[0].review_content,
+            visit_id: fetchUserdata?.fetchLoginUser.visits[0]?.visit_id,
           },
         },
       });
+      await refetchFetchReview();
       console.log(result);
       Modal.success({
-        content: "",
+        content: "리뷰가 등록되었습니다.",
       });
+      props.handleCancel();
     } catch (error) {
       if (error instanceof Error)
         Modal.error({
@@ -42,7 +53,57 @@ export default function Review(): JSX.Element {
     }
   };
 
-  console.log(reviewdata?.fetchLoginReviewsByUserId[0].review_content, "댓글");
+  const onClickUpdateReview = async (data: IFormReviewData): Promise<void> => {
+    try {
+      const result = await updateLoginReview({
+        variables: {
+          updateReviewInput: {
+            review_content: data.review_content,
+            review_id: reviewdata?.fetchLoginReviewsByUserId[0].review_id,
+          },
+        },
+      });
+      await refetchFetchReview();
+      void router.push("/user/mypage");
+
+      console.log(result);
+      Modal.success({
+        content: "리뷰가 수정되었습니다.",
+      });
+      props.handleCancel();
+    } catch (error) {
+      if (error instanceof Error)
+        Modal.error({
+          content: "다시 시도해주세요!",
+        });
+    }
+  };
+
+  const onClickDeleteReview = async (): Promise<void> => {
+    try {
+      const result = await deleteLoginReview({
+        variables: {
+          cancelReviewInput: {
+            review_id: reviewdata?.fetchLoginReviewsByUserId[0].review_id,
+          },
+        },
+      });
+      console.log(result);
+      Modal.success({
+        content: "리뷰가 삭제되었습니다.",
+      });
+      await refetchFetchReview();
+
+      props.handleCancel();
+    } catch (error) {
+      if (error instanceof Error)
+        Modal.error({
+          content: "이미 삭제된 리뷰입니다.",
+        });
+    }
+  };
+
+  const review = reviewdata?.fetchLoginReviewsByUserId[0]?.review_content;
   return (
     <>
       <S.Wrapper>
@@ -58,17 +119,37 @@ export default function Review(): JSX.Element {
           <S.CafeImg src="/cafeImg.jpeg"></S.CafeImg>
         </S.ImgWrapper>
         <S.ReviewWrapper
-          onSubmit={wrapFormAsync(handleSubmit(onClickSubmitReview))}
+          onSubmit={
+            review
+              ? wrapFormAsync(handleSubmit(onClickUpdateReview))
+              : wrapFormAsync(handleSubmit(onClickSubmitReview))
+          }
         >
-          <S.ReviewTitle>리뷰를 작성해주세요.</S.ReviewTitle>
+          {review ? (
+            <S.ReviewTitle>작성된 리뷰를 수정해주세요.</S.ReviewTitle>
+          ) : (
+            <S.ReviewTitle>리뷰를 작성해주세요.</S.ReviewTitle>
+          )}
           <S.ReviewInput
             {...register("review_content")}
             placeholder="무분별한 비방, 욕설 등 타인을 불쾌하게 하는 리뷰는 사전 통보 없이 삭제될 수 있습니다."
             defaultValue={
-              reviewdata?.fetchLoginReviewsByUserId[0].review_content
+              reviewdata?.fetchLoginReviewsByUserId[0]?.review_content
             }
           ></S.ReviewInput>
-          <S.ReviewBtn>등록</S.ReviewBtn>
+          {review ? (
+            <S.BtnWrapper>
+              <S.ReviewEditBtn>수정</S.ReviewEditBtn>
+              <S.ReviewDeleteBtn
+                type="button"
+                onClick={wrapAsync(onClickDeleteReview)}
+              >
+                삭제
+              </S.ReviewDeleteBtn>
+            </S.BtnWrapper>
+          ) : (
+            <S.ReviewCreateBtn>등록</S.ReviewCreateBtn>
+          )}
         </S.ReviewWrapper>
       </S.Wrapper>
     </>

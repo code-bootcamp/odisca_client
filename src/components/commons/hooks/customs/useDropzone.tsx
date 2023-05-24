@@ -40,49 +40,19 @@ function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
     data?.fetchLoginUser.user_image,
   ]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     if (imageUrls.length > 0) {
-  //       URL.revokeObjectURL(imageUrls[0]);
-  //     }
-  //   };
-  // }, [imageUrls]);
-
-  // return (
-  //   <>
-  //     <D.ProfileImgBox {...getRootProps()}>
-  //       <input {...getInputProps()} />
-  //       <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
-  //       {/* <D.ProfileImg src={imageUrls[0]}></D.ProfileImg> */}
-  //       {/* {data?.fetchLoginUser.user.user_image ? (
-  //         <D.ProfileImg
-  //           src={data.fetchLoginUser.user.user_image}
-  //         ></D.ProfileImg>
-  //       ) : (
-  //         <D.ProfileImg src={imageUrls[0]}></D.ProfileImg>
-  //       )} */}
-  //       <D.ProfileImg src={imageUrls[0]}></D.ProfileImg>
-  //     </D.ProfileImgBox>
-  //     <D.ProfileImg src={data?.fetchLoginUser.user_image}></D.ProfileImg>
-  //   </>
-  // );
-
   return (
     <>
-      {data?.fetchLoginUser.user_image ? (
-        <D.ProfileImgBox {...getRootProps()}>
-          <input {...getInputProps()} />
-          <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
-          <D.ProfileImg src={data.fetchLoginUser.user_image}></D.ProfileImg>
-        </D.ProfileImgBox>
-      ) : (
-        <D.ProfileImgBox {...getRootProps()}>
-          <input {...getInputProps()} />
-          <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
-
-          <D.ProfileImg src={imageUrls[0]}></D.ProfileImg>
-        </D.ProfileImgBox>
-      )}
+      <D.ProfileImgBox {...getRootProps()}>
+        <input {...getInputProps()} />
+        <D.ProfileImgEdit src="/user/mypage/edit/camera.png" />
+        <D.ProfileImg
+          src={
+            imageUrls[0] ??
+            data?.fetchLoginUser.user_image ??
+            "/ProfileIcon.png"
+          }
+        ></D.ProfileImg>
+      </D.ProfileImgBox>
     </>
   );
 }
