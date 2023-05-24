@@ -81,6 +81,7 @@ export const FETCH_ALL_STUDY_CAFES = gql`
       images {
         image_id
         image_url
+        image_isMain
       }
     }
   }

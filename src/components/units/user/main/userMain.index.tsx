@@ -1,8 +1,15 @@
 // 메인페이지
 import CafeList from "./cafelist/CafeList.index";
 import Map from "../../../commons/hooks/customs/useMap";
+import SearchBar01 from "../../../commons/searchbars/01/SearchBar01.index";
+import { useState } from "react";
 
 export default function UserMain(): JSX.Element {
+  const [selectedDistrict, setSelectedDistrict] = useState("강남구");
+
+  const handleSecondCityChange = (value: string): void => {
+    setSelectedDistrict(value);
+  };
   return (
     <div
       style={{
@@ -20,7 +27,11 @@ export default function UserMain(): JSX.Element {
           // position: "absolute",
         }}
       >
-        <CafeList />
+        <SearchBar01
+          style={{ position: "absolute" }}
+          onSecondCityChange={handleSecondCityChange}
+        />
+        <CafeList selectedDistrict={selectedDistrict} />
       </div>
       <div
         style={{
@@ -30,8 +41,7 @@ export default function UserMain(): JSX.Element {
           flexDirection: "column",
         }}
       >
-        <p>※ 현재 강남구/구로구/노원구/동대문구/마포구만 위치이동 가능</p>
-        <Map />
+        <Map selectedDistrict={selectedDistrict} />
       </div>
     </div>
   );
