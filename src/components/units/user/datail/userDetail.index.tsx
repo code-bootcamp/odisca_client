@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import { useQueryFetchOneStudyCafe } from "../../../commons/hooks/queries/useQueryFetchStudyCafeForUser";
+import { useQueryFetchOneStudyCafeForUser } from "../../../commons/hooks/queries/useQueryFetchStudyCafeForUser";
 import UserDetailBody from "./body/UserDetailBody.index";
 import UserDetailFooter from "./footer/UserDetailFooter.index";
 import UserDetailHeader from "./header/UserDetailHeader.index";
 
 export default function UserDetail(): JSX.Element {
   const router = useRouter();
-  const { data } = useQueryFetchOneStudyCafe(String(router.query.Id));
+  const { data } = useQueryFetchOneStudyCafeForUser(String(router.query.Id));
 
   return (
     <>
