@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { useMutationCreateSeats } from "../../../../commons/hooks/mutations/useMutationCreateSeats";
 import { useMutationCreateLoginCafeFloorPlanAndSeats } from "../../../../commons/hooks/mutations/useMutationCreateCateFloorPlan";
 import { wrapFormAsync } from "../../../../../commons/libraries/asyncFunc";
+import { useQueryFetchOneStudyCafeForAdmin } from "../../../../commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
+import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
 
 export default function MapEditor(): JSX.Element {
   const [inputX, setInputX] = useState(0); // x축 범위
@@ -30,6 +32,15 @@ export default function MapEditor(): JSX.Element {
   const onChangeMapY = (event: ChangeEvent<HTMLInputElement>): void => {
     setInputY(Number(event.target.value));
   };
+
+  const { refetch } = useQueryFetchOneStudyCafeForAdmin(
+    String(router.query.Id)
+  );
+
+  const { refetch: refetchSeat } = useQueryFetchAllSeatsByStudyCafeId(
+    String(router.query.Id)
+  );
+
   const onClickMap = (): void => {
     if (isNaN(inputY) && isNaN(inputY)) {
       alert("숫자만 입력해주세요.");
@@ -218,6 +229,8 @@ export default function MapEditor(): JSX.Element {
           },
         },
       });
+      await refetch();
+      await refetchSeat();
       const input = seatArray.map((el, index) => {
         const seat = {
           seat: el.seats,
@@ -236,7 +249,7 @@ export default function MapEditor(): JSX.Element {
             createSeatsInput: seatsInput,
           },
         });
-        router.push("/admin/adminPage");
+        void router.push("/admin/adminPage");
       } catch (error) {
         if (error instanceof Error) {
           alert("등록실패");
