@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { PriceWithCommas } from "../../../../../commons/libraries/utils";
 import { useQueryFetchLoginUser } from "../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./userMypageheader.styles";
 
@@ -38,7 +39,9 @@ export default function UserMyPageHeader(): JSX.Element {
             </S.UserInfo>
             <S.UserPointWrapper>
               <S.Icon src="/point.png"></S.Icon>
-              <S.UserPoint>{data?.fetchLoginUser.user_point ?? 0}</S.UserPoint>
+              <S.UserPoint>
+                {PriceWithCommas(data?.fetchLoginUser.user_point ?? 0)}P
+              </S.UserPoint>
               <S.PointBtn>충전</S.PointBtn>
               <S.PaymentBtn onClick={onClickMovePaymentList}>
                 결제내역
