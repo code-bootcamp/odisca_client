@@ -10,9 +10,7 @@ export const CANCEL_LOGIN_POINT_TRANSACTION = gql`
   ) {
     cancelLoginPointTransaction(
       cancelPointTransactionInput: $cancelPointTransactionInput
-    ) {
-      pointTransaction_status
-    }
+    )
   }
 `;
 

@@ -23,6 +23,7 @@ export type IAdminister = {
   administer_password: Scalars['String'];
   administer_phone: Scalars['String'];
   administer_point: Scalars['Int'];
+  studyCafes: Array<IStudyCafe>;
 };
 
 export type ICancelPointTransactionInput = {
@@ -105,17 +106,12 @@ export type ICreateUserInput = {
   user_phone?: InputMaybe<Scalars['String']>;
 };
 
-export type IFetchAdministerWithStudyCafes = {
-  __typename?: 'FetchAdministerWithStudyCafes';
-  administer: IAdminister;
-  studyCafes: Array<IStudyCafe>;
-};
-
 export type IFetchAllStudyCafesInput = {
   page: Scalars['Int'];
   studyCafe_city: Scalars['String'];
   studyCafe_district: Scalars['String'];
 };
+
 
 export type IFetchImageByVisitIdInput = {
   visit_id: Scalars['String'];
@@ -134,6 +130,7 @@ export type IFetchUser = {
   user: IUser;
   visits: Array<IVisit>;
 };
+
 
 export type IImage = {
   __typename?: 'Image';
@@ -307,14 +304,14 @@ export type IQuery = {
   __typename?: 'Query';
   fetchAllLoginVisitByUserId: Array<IVisit>;
   fetchAllSeatsByStudyCafeId: Array<ISeat>;
-  fetchAllStudyCafes: Array<IStudyCafesWithImages>;
+  fetchAllStudyCafes: Array<IStudyCafe>;
   fetchAllStudyCafesByAdminId: Array<IStudyCafe>;
   fetchCafeMainImage: IImage;
   fetchLoginAdminister: IFetchAdministerWithStudyCafes;
   fetchLoginPointTransactions: Array<IPointTransaction>;
   fetchLoginReviewPage: IFetchReviewPageObject;
   fetchLoginReviewsByUserId: Array<IReview>;
-  fetchLoginUser: IFetchUser;
+  fetchLoginUser: IUser;
   fetchOneSeatsBySeatId: ISeat;
   fetchOneStudyCafeForAdminister: IStudyCafe;
   fetchOneStudyCafeForUser: IStudyCafe;
@@ -344,6 +341,7 @@ export type IQueryFetchAllStudyCafesByAdminIdArgs = {
 export type IQueryFetchCafeMainImageArgs = {
   studyCafe_id: Scalars['String'];
 };
+
 
 
 export type IQueryFetchLoginReviewPageArgs = {
@@ -382,6 +380,7 @@ export type IReview = {
 
 export type ISeat = {
   __typename?: 'Seat';
+  payment: Array<IPayment>;
   seat_expiredTime?: Maybe<Scalars['String']>;
   seat_id: Scalars['String'];
   seat_location: Scalars['String'];
@@ -422,30 +421,6 @@ export type IStudyCafe = {
   visit: IVisit;
 };
 
-export type IStudyCafesWithImages = {
-  __typename?: 'StudyCafesWithImages';
-  image_id?: Maybe<Scalars['String']>;
-  image_isMain?: Maybe<Scalars['Boolean']>;
-  image_url?: Maybe<Scalars['String']>;
-  studyCafe_address: Scalars['String'];
-  studyCafe_addressDetail: Scalars['String'];
-  studyCafe_brn: Scalars['String'];
-  studyCafe_city: Scalars['String'];
-  studyCafe_closeTime: Scalars['String'];
-  studyCafe_contact: Scalars['String'];
-  studyCafe_description: Scalars['String'];
-  studyCafe_district: Scalars['String'];
-  studyCafe_floorPlanX: Scalars['Int'];
-  studyCafe_floorPlanY: Scalars['Int'];
-  studyCafe_id: Scalars['String'];
-  studyCafe_lat: Scalars['Float'];
-  studyCafe_lon: Scalars['Float'];
-  studyCafe_name: Scalars['String'];
-  studyCafe_openTime: Scalars['String'];
-  studyCafe_seatCount: Scalars['Int'];
-  studyCafe_timeFee: Scalars['Int'];
-};
-
 export type IUpdateLoginAdministerInput = {
   administer_password: Scalars['String'];
   administer_phone: Scalars['String'];
@@ -481,6 +456,7 @@ export type IUpdateStudyCafeInput = {
 
 export type IUser = {
   __typename?: 'User';
+  seat: Array<ISeat>;
   user_deletedAt?: Maybe<Scalars['DateTime']>;
   user_email: Scalars['String'];
   user_id: Scalars['String'];

@@ -17,7 +17,7 @@ interface IFetchStudyCafeQueryResult
   refetch: () => Promise<void>;
 }
 
-export const FETCH_ONE_STUDY_CAFE = gql`
+export const FETCH_ONE_STUDY_CAFE_FOR_USER = gql`
   query fetchOneStudyCafeForUser($studyCafe_id: String!) {
     fetchOneStudyCafeForUser(studyCafe_id: $studyCafe_id) {
       studyCafe_id
@@ -47,13 +47,13 @@ export const FETCH_ONE_STUDY_CAFE = gql`
   }
 `;
 
-export const useQueryFetchOneStudyCafe = (
+export const useQueryFetchOneStudyCafeForUser = (
   id: string
 ): IFetchStudyCafeQueryResult => {
   const query = useQuery<
     Pick<IQuery, "fetchOneStudyCafeForUser">,
     IQueryFetchOneStudyCafeForUserArgs
-  >(FETCH_ONE_STUDY_CAFE, {
+  >(FETCH_ONE_STUDY_CAFE_FOR_USER, {
     variables: { studyCafe_id: id },
   });
 

@@ -1,12 +1,14 @@
 import { useRouter } from "next/router";
-import { useQueryFetchOneStudyCafe } from "../../../commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
+import { useQueryFetchCafeMainImage } from "../../../commons/hooks/queries/useQueryFetchCafeMainImage";
+import { useQueryFetchOneStudyCafeForAdmin } from "../../../commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
 import AdminDetailBody from "./body/AdminDetailBody.index";
 import AdminDetailFooter from "./footer/AdminDetailFooter.index";
 import AdminDetailHeader from "./header/AdminDetailHeader.index";
 
 export default function AdminDetail(): JSX.Element {
   const router = useRouter();
-  const { data } = useQueryFetchOneStudyCafe(String(router.query.Id));
+  const { data } = useQueryFetchOneStudyCafeForAdmin(String(router.query.Id));
+  const { data: MainImgData } = useQueryFetchCafeMainImage();
   console.log(data, String(router.query.Id));
   return (
     <>
