@@ -12,9 +12,9 @@ export default function AdminPage(): JSX.Element {
   return (
     <>
       <AdiminPageHeader
-        adminName={data?.fetchLoginAdminister.administer.administer_name}
-        adminPoint={data?.fetchLoginAdminister.administer.administer_point}
-        adminMail={data?.fetchLoginAdminister.administer.administer_email}
+        adminName={data?.fetchLoginAdminister.administer_name}
+        adminPoint={data?.fetchLoginAdminister.administer_point}
+        adminMail={data?.fetchLoginAdminister.administer_email}
       />
       <AdminPageBody data={data} />
     </>

@@ -14,7 +14,9 @@ export default function OperatingTime(props): JSX.Element {
     <>
       <SelectOperatingTime
         onChange={props.onChangeSelectOpenTime}
-        defaultValue={props.data?.fetchOneStudyCafe.studyCafe_openTime}
+        defaultValue={
+          props.data?.fetchOneStudyCafeForAdminister.studyCafe_openTime
+        }
       >
         <option>영업시작시간</option>
         <option value={"00:00"} label={"00:00"}>
@@ -57,7 +59,9 @@ export default function OperatingTime(props): JSX.Element {
       <OperatingTimeSpan>-</OperatingTimeSpan>
       <SelectOperatingTime
         onChange={props.onChangeSelectCloseTime}
-        defaultValue={props.data?.fetchOneStudyCafe.studyCafe_closeTime}
+        defaultValue={
+          props.data?.fetchOneStudyCafeForAdminister.studyCafe_closeTime
+        }
       >
         <option>영업종료시간</option>
         <option value={"18:00"} label={"18:00"}>

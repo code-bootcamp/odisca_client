@@ -45,9 +45,14 @@ export default function AdminDetailFooter(): JSX.Element {
   const onClickScanSeats = () => {
     router.push("/admin/" + router.query.Id + "/mapScaner");
   };
+
+  const onClickMoveEdit = (): void => {
+    void router.push(`/admin/${router.query.Id}/edit`);
+  };
+
   return (
     <Footer>
-      <Btn>정보수정</Btn>
+      <Btn onClick={onClickMoveEdit}>정보수정</Btn>
       {isSaved ? <Btn onClick={onClickEditSeats}>배치도 등록</Btn> : <></>}
       <Btn onClick={onClickScanSeats}>배치도 보기</Btn>
       <Btn>취소하기</Btn>

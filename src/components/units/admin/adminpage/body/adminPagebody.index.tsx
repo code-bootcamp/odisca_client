@@ -5,7 +5,7 @@ import { wrapFormAsync } from "../../../../../commons/libraries/asyncFunc";
 export default function AdminPageBody(props): JSX.Element {
   const router = useRouter();
   const onClickDetail = (id: string) => async (): Promise<void> => {
-    await router.push("/admin/" + id);
+    await router.push(`/admin/${id}`);
   };
   return (
     <>
@@ -13,10 +13,13 @@ export default function AdminPageBody(props): JSX.Element {
         <S.Title>My Cafes</S.Title>
         {props.data?.fetchLoginAdminister.studyCafes?.map((el) => {
           return (
-            <div key={el.id}>
+            <div key={el.studyCafe_id}>
               <S.MyCafeWrapper>
                 <S.LeftWrapper>
-                  <S.CafeImg src="/cafeImg.jpeg"></S.CafeImg>
+                  <S.CafeImg
+                    src="/cafeImg.jpeg"
+                    onClick={wrapFormAsync(onClickDetail(el.studyCafe_id))}
+                  ></S.CafeImg>
                 </S.LeftWrapper>
                 <S.RightWrapper>
                   <S.Top>
