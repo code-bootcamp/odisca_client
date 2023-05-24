@@ -30,6 +30,7 @@ export default function SeatReservationPage(): JSX.Element {
   const [duringTime, setDuringTime] = useState(1);
   const [createPayment] = useMutationCreatePayment();
   const [isPayModal, setIsPayModal] = useState(false);
+  const [remainTime, setRemainTime] = useState(0);
 
   console.log(data?.fetchAllSeatsByStudyCafeId);
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function SeatReservationPage(): JSX.Element {
             i < dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX;
             i++
           ) {
-            result.push({ status: "empty", seatId: "i", number: "" });
+            result.push({ status: "empty", seatId: "i", number: "", time: 0 });
           }
           return result;
         }
@@ -54,9 +55,12 @@ export default function SeatReservationPage(): JSX.Element {
         const seat = JSON.parse(el.seat_location);
 
         seat.map((ele) => {
-          newArray[ele[1]][ele[0]].status = el.user ? el.user?.user_name : "";
+          newArray[ele[1]][ele[0]].status = el.user ? el.user?.user_id : "";
           newArray[ele[1]][ele[0]].seatId = el.seat_id;
           newArray[ele[1]][ele[0]].number = el.seat_number;
+          newArray[ele[1]][ele[0]].time = Math.floor(
+            (el.seat_remainTime ?? 0) / 60000
+          );
         });
       });
       setMap(newArray);
@@ -124,6 +128,9 @@ export default function SeatReservationPage(): JSX.Element {
     if (seat.status === "") {
       setSeatStatus("예약 가능한 좌석입니다.");
       setSeatUsable(true);
+    } else {
+      setSeatStatus("예약 불가능한 좌석입니다.");
+      setRemainTime(seat.time);
     }
     setSeatId(seat.seatId);
     setSeatNumber(seat.number);
@@ -208,6 +215,11 @@ export default function SeatReservationPage(): JSX.Element {
         >
           <div>좌석 번호 : {seatNumber}</div>
           <div>좌석 종류 : {seatStatus}</div>
+          {remainTime !== 0 ? (
+            <div>{String(remainTime) + "분 남았습니다."}</div>
+          ) : (
+            <></>
+          )}
 
           <select onChange={onChangeTime} disabled={!seatUsable}>
             <option value={1}>1시간</option>
