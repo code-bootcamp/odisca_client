@@ -7,7 +7,7 @@ const HIDDEN_HEADER = [
   "/user/signup",
   "/admin/login",
   "/admin/signup",
-  // "/user",
+  "/",
 ];
 
 const Wrapper = styled.div``;
