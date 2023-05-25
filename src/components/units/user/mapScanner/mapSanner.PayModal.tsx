@@ -2,6 +2,7 @@ import { Modal, Select } from "antd";
 import { useState } from "react";
 import { IRsp } from "../../../commons/layout/header/header.type";
 import { useMutationCreatePointTransaction } from "../../../commons/hooks/mutations/useMutationCreatePointTransaction";
+import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
 
 declare const window: typeof globalThis & {
   IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
@@ -15,7 +16,7 @@ interface IPropsPayModal {
 export default function PayModal(props: IPropsPayModal): JSX.Element {
   const [price, setPrice] = useState(1000);
   const [createLoginPointTransaction] = useMutationCreatePointTransaction();
-
+  const { refetch } = useQueryFetchLoginUser();
   const closeModal = (): void => {
     props.setIsPayModal(false);
   };
@@ -31,7 +32,6 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
       {
         pg: "kakaopay",
         pay_method: "card",
-        // merchant_uid: "ORD20180131-0000011",
         name: String(price) + "포인트",
         amount: price,
         buyer_email: "123@123123.com",
@@ -54,6 +54,7 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
                 },
               },
             });
+            await refetch();
             closeModal();
           } catch (err) {
             console.log(err);
