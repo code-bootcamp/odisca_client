@@ -1,7 +1,14 @@
-import { useQueryFetchLoginAdminister } from "../../../../commons/hooks/queries/useQueryFetchLoginAdminister";
 import * as S from "./adminPageheader.styles";
 
-export default function AdiminPageHeader(props): JSX.Element {
+interface IAdminHeaderProps {
+  adminName: string | undefined;
+  adminMail: string | undefined;
+  adminPoint: number | undefined;
+}
+
+export default function AdiminPageHeader(
+  props: IAdminHeaderProps
+): JSX.Element {
   return (
     <>
       <S.Wrapper>

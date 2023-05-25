@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
+import { ChangeEvent } from "react";
 import { IQuery } from "../../../commons/types/generated/types";
 
 interface ITimeProps {
-  onChangeSelectOpenTime: () => void;
-  onChangeSelectCloseTime: () => void;
+  onChangeSelectOpenTime: (event: ChangeEvent<HTMLSelectElement>) => void;
+  onChangeSelectCloseTime: (event: ChangeEvent<HTMLSelectElement>) => void;
   data?: Pick<IQuery, "fetchOneStudyCafeForAdminister">;
 }
 

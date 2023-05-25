@@ -17,8 +17,6 @@ export default function LayoutHeader(): JSX.Element {
   const { data } = useQuery(FETCH_LOGIN_USER);
   const [logoutUser] = useMutationLogOutUser();
   const [logoutAdmin] = useMutationLogOutAdmin();
-  // const HeaderWrapper =
-  //   isHiddenMargin === true ? WrapperWithoutMargin : Wrapper;
 
   const showDrawer = (): void => {
     setOpen(true);

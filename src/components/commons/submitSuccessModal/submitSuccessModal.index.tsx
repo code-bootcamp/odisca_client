@@ -32,7 +32,12 @@ const MoveBtn = styled.button`
   cursor: pointer;
 `;
 
-export default function SubmitSuccessAlertModal(props): JSX.Element {
+interface IModalProps {
+  url: string;
+}
+export default function SubmitSuccessAlertModal(
+  props: IModalProps
+): JSX.Element {
   const router = useRouter();
 
   const onClickMoveMapEditor = (): void => {

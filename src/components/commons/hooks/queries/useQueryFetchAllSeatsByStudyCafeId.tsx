@@ -19,10 +19,6 @@ export const FETCH_ALL_SEATS = gql`
       user {
         user_id
         user_name
-        # user_email
-        # user_phone
-        # user_point
-        # user_image
       }
     }
   }

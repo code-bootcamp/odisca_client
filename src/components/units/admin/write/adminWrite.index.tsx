@@ -4,7 +4,7 @@ import DaumPostcodeEmbed from "react-daum-postcode";
 // hooks
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useMutationCreateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationCreateLoginStudyCafe";
 import { useMutationUpdateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationUpdateLoginStudyCafe";
 import { useQueryFetchLoginAdminister } from "../../../commons/hooks/queries/useQueryFetchLoginAdminister";
@@ -22,6 +22,7 @@ import OperatingTime from "../../../commons/operatingTimeSelection/operatingTime
 import { checkValidationFile } from "../../../../commons/libraries/validationFile";
 import SubmitSuccessAlertModal from "../../../commons/submitSuccessModal/submitSuccessModal.index";
 import { cafeEditSchema } from "../../../../commons/adminEditValidation/validation";
+import { IQuery } from "../../../../commons/types/generated/types";
 
 // 등록 사항들 타입 지정
 interface IFormValues {
@@ -36,13 +37,27 @@ interface IFormValues {
   };
 }
 
+interface IResult {
+  x: number;
+  y: number;
+}
+
 declare const window: typeof globalThis & {
   kakao: any;
 };
 
-export default function AdminWrite(props): JSX.Element {
-  // const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
+interface IWriteProps {
+  data?: Pick<IQuery, "fetchOneStudyCafeForAdminister"> | null;
+  isEdit: boolean;
+}
 
+interface AddressData {
+  address: string;
+  sido: string;
+  sigungu: string;
+}
+
+export default function AdminWrite(props: IWriteProps): JSX.Element {
   // router
   const router = useRouter();
 
@@ -51,16 +66,18 @@ export default function AdminWrite(props): JSX.Element {
   const [addressDetail, setAddressDetail] = useState("");
   const [city, setCity] = useState("");
   const [district, setDistrict] = useState("");
-  const [lat, setLat] = useState("");
-  const [lon, setLon] = useState("");
+  const [lat, setLat] = useState<string>("");
+  const [lon, setLon] = useState<string>("");
   const [openTime, setOpenTime] = useState("");
   const [closeTime, setCloseTime] = useState("");
   const [imageUrls, setImageUrls] = useState(["", "", "", "", ""]);
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState<File[]>([]);
   const [imageButtonArray] = useState(["", "", "", "", ""]);
   const [isMain, setIsMain] = useState([true, false, false, false, false]);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
-  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
+  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState<
+    boolean | undefined
+  >(false);
 
   // useRef
   const fileRef = useRef<HTMLInputElement>(null);
@@ -94,37 +111,52 @@ export default function AdminWrite(props): JSX.Element {
         };
 
         const map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
-
+        console.log(map);
         const geocoder = new window.kakao.maps.services.Geocoder();
         // 주소-좌표 변환 객체 생성
-        geocoder.addressSearch(`${address}`, function (result, status) {
-          // 주소로 좌표 검색
-
-          // 정상적으로 검색이 완료됐으면
-          if (status === window.kakao.maps.services.Status.OK) {
-            const coords = new window.kakao.maps.LatLng(
-              result[0].x,
-              result[0].y
-            );
-            setLat(result[0].y);
-            setLon(result[0].x);
+        geocoder.addressSearch(
+          `${address}`,
+          function (result: IResult[], status: boolean) {
+            // 주소로 좌표 검색
+            // 정상적으로 검색이 완료됐으면
+            if (status === window.kakao.maps.services.Status.OK) {
+              const coords = new window.kakao.maps.LatLng(
+                result[0].x,
+                result[0].y
+              );
+              console.log(coords);
+              setLat(result[0].y.toString());
+              setLon(result[0].x.toString());
+            }
           }
-        });
+        );
       });
     };
   }, [address, lon, lat]);
 
   useEffect(() => {
-    setAddress(data?.fetchOneStudyCafeForAdminister.studyCafe_address);
-    setAddressDetail(
-      data?.fetchOneStudyCafeForAdminister.studyCafe_addressDetail
-    );
-    setCity(data?.fetchOneStudyCafeForAdminister.studyCafe_city);
-    setDistrict(data?.fetchOneStudyCafeForAdminister.studyCafe_district);
-    setLat(data?.fetchOneStudyCafeForAdminister.studyCafe_lat);
-    setLon(data?.fetchOneStudyCafeForAdminister.studyCafe_lon);
-    setOpenTime(data?.fetchOneStudyCafeForAdminister.studyCafe_openTime);
-    setCloseTime(data?.fetchOneStudyCafeForAdminister.studyCafe_closeTime);
+    if (data?.fetchOneStudyCafeForAdminister !== undefined) {
+      setAddress(data?.fetchOneStudyCafeForAdminister.studyCafe_address ?? "");
+      setAddressDetail(
+        data?.fetchOneStudyCafeForAdminister.studyCafe_addressDetail ?? ""
+      );
+      setCity(data?.fetchOneStudyCafeForAdminister.studyCafe_city ?? "");
+      setDistrict(
+        data?.fetchOneStudyCafeForAdminister.studyCafe_district ?? ""
+      );
+      setLat(
+        data?.fetchOneStudyCafeForAdminister.studyCafe_lat.toString() ?? ""
+      );
+      setLon(
+        data?.fetchOneStudyCafeForAdminister.studyCafe_lon.toString() ?? ""
+      );
+      setOpenTime(
+        data?.fetchOneStudyCafeForAdminister.studyCafe_openTime ?? ""
+      );
+      setCloseTime(
+        data?.fetchOneStudyCafeForAdminister.studyCafe_closeTime ?? ""
+      );
+    }
   }, [data]);
 
   // useForm 사용
@@ -157,11 +189,11 @@ export default function AdminWrite(props): JSX.Element {
   };
 
   const SubmitModal = (): void => {
-    setIsSubmitModalOpen((prev) => !prev);
+    setIsSubmitModalOpen((prev) => prev !== undefined);
   };
 
   // daumpostcode에서 주소 검색 완료 시 로직
-  const onCompleteAddressSearch = (AddressData): void => {
+  const onCompleteAddressSearch = (AddressData: AddressData): void => {
     AddressModal();
     setAddress(AddressData.address);
     setCity(AddressData.sido);
@@ -174,62 +206,66 @@ export default function AdminWrite(props): JSX.Element {
     fileRef.current?.click();
   };
 
-  const onChangeFile = () => async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    console.log(file);
+  const onChangeFile =
+    () =>
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      const file = event.target.files?.[0];
 
-    const isValid = checkValidationFile(file);
-    if (!isValid) return;
+      if (file === undefined) return;
 
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = (event) => {
-      if (typeof event.target?.result === "string") {
-        console.log(imageUrls);
-        // imageUrls !== "" ? imageUrls :
-        const newTemp = [...imageUrls.filter((el) => el !== "")];
-        newTemp.push(event.target?.result);
-        while (newTemp.length < 5) {
-          newTemp.push("");
+      const isValid = checkValidationFile(file);
+      if (!isValid) return;
+
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = (event) => {
+        if (typeof event.target?.result === "string") {
+          // imageUrls !== "" ? imageUrls :
+          const newTemp = [...imageUrls.filter((el) => el !== "")];
+          newTemp.push(event.target?.result);
+          while (newTemp.length < 5) {
+            newTemp.push("");
+          }
+          setImageUrls(newTemp);
+          // const tempFiles = [...files.filter((el) => el !== "")];
+          const tempFiles = [...files.filter((el) => el instanceof File)];
+          tempFiles.push(file);
+          while (tempFiles.length < 5) {
+            tempFiles.push(new File([], ""));
+            // tempFiles.push("");
+          }
+          setFiles(tempFiles);
         }
-
-        // console.log(newTemp, "newTemp");
-        setImageUrls(newTemp);
-
-        const tempFiles = [...files.filter((el) => el !== "")];
-        tempFiles.push(file);
-        while (tempFiles.length < 5) {
-          tempFiles.push("");
-        }
-        setFiles(tempFiles);
-        console.log(tempFiles, "tempFiles");
-        console.log(event.target?.result);
-      }
+      };
     };
-  };
 
   // 등록하기 버튼 눌렀을 때(admin 등록)
-  const onClickCafeSubmit = async (data: IFormValues): Promise<void> => {
-    console.log(files, "파일이당");
+  const onClickCafeSubmit = async (data: FieldValues): Promise<void> => {
     // const results = await Promise.all(
     //   files.map((el) => el && uploadImageFile({ variables: { images: el } }))
     // );
     const results = await uploadImageFile({
-      variables: { images: files.filter((el) => el !== "") },
+      variables: { images: files.filter((el) => el instanceof File) },
     });
     console.log(results, "results");
 
     const resultUrls = [];
-    if (results) {
-      // resultUrls = results.map((el, index) =>
-      //   el ? el.data?.uploadImageFile[index] : ""
-      // );
-      for (let i = 0; i < results.data?.uploadImageFile.length; i++) {
-        results.data?.uploadImageFile[i]
-          ? resultUrls.push(results.data?.uploadImageFile[i])
-          : "";
+    // if (results.data?.uploadImageFile != null)  {
+    //   for (let i = 0; i < results.data?.uploadImageFile.length; i++) {
+    //     results.data?.uploadImageFile[i]
+    //       ? resultUrls.push(results.data?.uploadImageFile[i])
+    //       : "";
+    //   }
+    // }
+    if (results.data?.uploadImageFile != null) {
+      const uploadImageFile = results.data.uploadImageFile;
+      for (let i = 0; i < uploadImageFile.length; i++) {
+        if (uploadImageFile !== undefined) {
+          resultUrls.push(uploadImageFile[i]);
+        }
       }
     }
+
     console.log(results.data?.uploadImageFile[1]);
     console.log(resultUrls, "!!!!!");
     const images = resultUrls.map((el, index) => {
@@ -261,29 +297,36 @@ export default function AdminWrite(props): JSX.Element {
         },
       });
       setIsSubmitModalOpen(true);
-      console.log(result, "qqq");
       setRouterURL(result.data?.createLoginStudyCafe.studyCafe_id ?? "");
-      // void router.push(
-      //   `/admin/${result.data?.createLoginStudyCafe.studyCafe_id}`
-      // );
     } catch (error) {
       if (error instanceof Error) alert("업체 등록에 실패했습니다!");
     }
   };
 
   // 수정하기 버튼 눌렀을 때(admin 수정)
-  const onClickUpdateCafe = async (data: IFormValues): Promise<void> => {
-    const results = await uploadImageFile({
-      variables: { images: files.filter((el) => el !== "") },
-    });
-    console.log(results, "results");
+  const onClickUpdateCafe = async (data: FieldValues): Promise<void> => {
+    const formData: IFormValues = {
+      name: data.name as string,
+      contact: data.contact as string,
+      timeFee: data.timeFee as number,
+      description: data.description as string,
+      brn: data.brn as string,
+      image: {
+        url: data.image.url as string,
+        isMain: data.image.isMain as boolean,
+      },
+    };
 
+    const results = await uploadImageFile({
+      variables: { images: files.filter((el) => el instanceof File) },
+    });
     const resultUrls = [];
-    if (results) {
-      for (let i = 0; i < results.data?.uploadImageFile.length; i++) {
-        results.data?.uploadImageFile[i]
-          ? resultUrls.push(results.data?.uploadImageFile[i])
-          : "";
+    if (results.data?.uploadImageFile != null) {
+      const uploadImageFile = results.data.uploadImageFile;
+      for (let i = 0; i < uploadImageFile.length; i++) {
+        if (uploadImageFile !== undefined) {
+          resultUrls.push(uploadImageFile[i]);
+        }
       }
     }
     const images = resultUrls.map((el, index) => {
@@ -298,14 +341,14 @@ export default function AdminWrite(props): JSX.Element {
         variables: {
           updateStudyCafeInput: {
             studyCafe_id: String(router.query.Id),
-            studyCafe_name: data.name,
+            studyCafe_name: formData.name,
             studyCafe_address: address,
             studyCafe_addressDetail: addressDetail,
             studyCafe_city: city,
             studyCafe_district: district,
-            studyCafe_contact: data.contact,
-            studyCafe_timeFee: data.timeFee,
-            studyCafe_description: data.description,
+            studyCafe_contact: formData.contact,
+            studyCafe_timeFee: formData.timeFee,
+            studyCafe_description: formData.description,
             studyCafe_openTime: openTime,
             studyCafe_closeTime: closeTime,
             studyCafe_lat: Number(lat),
@@ -315,7 +358,9 @@ export default function AdminWrite(props): JSX.Element {
         },
       });
       console.log(updateResult, "수정결과!!!!!!!1");
-      await refetch();
+      if (refetch !== undefined) {
+        await refetch();
+      }
       void router.push(`/admin/${String(router.query.Id)}`);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
@@ -331,7 +376,7 @@ export default function AdminWrite(props): JSX.Element {
   };
 
   const onClickMoveCafeDetail = (): void => {
-    void router.push(`/admin/${router.query.Id}`);
+    void router.push(`/admin/${String(router.query.Id)}`);
   };
 
   // return 값
@@ -342,7 +387,6 @@ export default function AdminWrite(props): JSX.Element {
           props.isEdit
             ? wrapFormAsync(handleSubmit(onClickUpdateCafe))
             : wrapFormAsync(handleSubmit(onClickCafeSubmit))
-          // wrapFormAsync(handleSubmit(onClickCafeSubmit))
         }
       >
         <S.Header>
@@ -409,12 +453,6 @@ export default function AdminWrite(props): JSX.Element {
         <div id="map" style={{ display: "none" }}></div>
         <S.AddressInputBox>
           <S.AddressZip>
-            {/* <S.Zipcode
-                type="text"
-                placeholder="07250"
-                value={zipcode}
-                readOnly
-              ></S.Zipcode> */}
             <S.SearchBtn type="button" onClick={AddressModal}>
               주소검색
             </S.SearchBtn>
@@ -439,9 +477,6 @@ export default function AdminWrite(props): JSX.Element {
                   ? address
                   : data?.fetchOneStudyCafeForAdminister.studyCafe_address ?? ""
               }
-              // defaultValue={
-              //   data?.fetchOneStudyCafeForAdminister.studyCafe_address
-              // }
             />
             <S.Address
               placeholder="상세주소를 입력해주세요."
@@ -489,7 +524,7 @@ export default function AdminWrite(props): JSX.Element {
                           imageUrls[index] !== ""
                             ? imageUrls[index]
                             : data?.fetchOneStudyCafeForAdminister.images[index]
-                                .image_url
+                                .image_url ?? ""
                         }
                         onClick={onClickUpload}
                       />
@@ -534,7 +569,6 @@ export default function AdminWrite(props): JSX.Element {
         <S.SectionBox>
           <S.Label>이용안내 및 설명</S.Label>
           <S.Notice
-            type="text"
             {...register("description")}
             defaultValue={
               data?.fetchOneStudyCafeForAdminister.studyCafe_description
@@ -547,13 +581,12 @@ export default function AdminWrite(props): JSX.Element {
           props.isEdit
             ? wrapFormAsync(handleSubmit(onClickUpdateCafe))
             : wrapFormAsync(handleSubmit(onClickCafeSubmit))
-          // wrapFormAsync(handleSubmit(onClickCafeSubmit))
         }
       >
         <S.Btn>{props.isEdit ? "수정" : "등록"}하기</S.Btn>
-        {isSubmitModalOpen ? (
+        {isSubmitModalOpen !== undefined ? (
           <S.SubmitSuccessModal
-            open={SubmitModal}
+            open={true}
             onOk={SubmitModal}
             onCancel={SubmitModal}
             okButtonProps={{ style: { display: "none" } }}

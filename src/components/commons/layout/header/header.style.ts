@@ -11,11 +11,6 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   margin-bottom: 65px;
 `;
-// export const WrapperWithoutMargin = styled.div`
-//   ${Wrapper}
-//   margin-bottom:0;
-// `;
-
 export const LightWrapper = styled.div``;
 
 export const RightWrapper = styled.div`
