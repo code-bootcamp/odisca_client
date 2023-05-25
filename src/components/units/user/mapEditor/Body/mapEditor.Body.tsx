@@ -4,7 +4,7 @@ import { ISeat, IStyle } from "./mapEditor.Type";
 import * as S from "./mapEditor.Body.style";
 import { useRouter } from "next/router";
 import { useMutationCreateSeats } from "../../../../commons/hooks/mutations/useMutationCreateSeats";
-import { useMutationCreateLoginCafeFloorPlanAndSeats } from "../../../../commons/hooks/mutations/useMutationCreateCateFloorPlan";
+import { useMutationCreateLoginCafeFloorPlanAndSeats } from "../../../../commons/hooks/mutations/useMutationCreateCafeFloorPlan";
 import { wrapFormAsync } from "../../../../../commons/libraries/asyncFunc";
 import { useQueryFetchOneStudyCafeForAdmin } from "../../../../commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
@@ -230,7 +230,7 @@ export default function MapEditor(): JSX.Element {
         },
       });
       await refetch();
-      await refetchSeat();
+
       const input = seatArray.map((el, index) => {
         const seat = {
           seat: el.seats,
@@ -249,6 +249,7 @@ export default function MapEditor(): JSX.Element {
             createSeatsInput: seatsInput,
           },
         });
+        await refetchSeat();
         void router.push("/admin/adminPage");
       } catch (error) {
         if (error instanceof Error) {

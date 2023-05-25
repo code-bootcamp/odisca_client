@@ -33,25 +33,26 @@ export default function SeatScanPage(): JSX.Element {
             i < dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX;
             i++
           ) {
-            result.push({ status: "", seatId: "i", number: "" });
+            result.push({ status: "empty", seatId: "i", number: "", time: 0 });
           }
           return result;
         }
       );
-      console.log(newArray);
-      data?.fetchAllSeatsByStudyCafeId.map((el) => {
+      data?.fetchAllSeatsByStudyCafeId.map((el: ISeat) => {
         const seat = JSON.parse(el.seat_location);
 
         seat.map((ele) => {
-          newArray[ele[1]][ele[0]].status = el.seat_number;
+          newArray[ele[1]][ele[0]].status = el.user ? el.user?.user_id : "";
           newArray[ele[1]][ele[0]].seatId = el.seat_id;
           newArray[ele[1]][ele[0]].number = el.seat_number;
-          return 1;
+          newArray[ele[1]][ele[0]].time = Math.floor(
+            (el.seat_remainTime ?? 0) / 60000
+          );
         });
       });
       setMap(newArray);
     }
-  }, [data, dataCafe]);
+  }, [data, dataCafe, router]);
 
   const image = (ele: any, x: number, y: number) => {
     const result = {
@@ -71,8 +72,11 @@ export default function SeatScanPage(): JSX.Element {
         result.borderRight = "1px solid black";
       }
     }
-    if (ele.number >= 1) {
+    if (ele.status === "") {
       result.backgroundColor = "#e4e4e4";
+    }
+    if (ele.status !== "empty" && ele.status !== "") {
+      result.backgroundColor = "#323232";
     }
     return result;
   };

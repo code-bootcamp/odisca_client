@@ -9,11 +9,6 @@ export default function AdminPageBody(props): JSX.Element {
     await router.push(`/admin/${id}`);
   };
 
-  console.log(
-    props.data?.fetchLoginAdminister.studyCafes[0].images,
-    "asdfasdfasdfasdfasd"
-  );
-
   const onClickNew = (): void => {
     void router.push("/admin/new");
   };

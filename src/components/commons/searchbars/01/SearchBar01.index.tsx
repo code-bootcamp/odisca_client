@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 
 import * as S from "./SearchBar.styles";
 
@@ -15,6 +15,7 @@ const cityData:CityData = {
 };
 
 interface SearchBar01Props {
+  style?: CSSProperties;
   onSecondCityChange: (value: string) => void;
 }
 
@@ -32,7 +33,6 @@ export default function SearchBar01({
   const handleSecondCityChange = (value: string): void => {
     setSecondCity(value);
     onSecondCityChange(value);
-    console.log(onSecondCityChange, "ddd");
   };
 
   return (
@@ -42,7 +42,9 @@ export default function SearchBar01({
           className="select"
           defaultValue={provinceData[0]}
           style={{ marginRight: "10px" }}
-          onChange={handleProvinceChange}
+          onChange={(value: unknown): void => {
+            handleProvinceChange(value as string);
+          }}
           options={provinceData.map((province) => ({
             label: province,
             value: province,
@@ -51,7 +53,9 @@ export default function SearchBar01({
         <S.SelectBox
           style={{ width: "80px" }}
           value={secondCity}
-          onChange={handleSecondCityChange}
+          onChange={(value: unknown): void => {
+            handleSecondCityChange(value as string);
+          }}
           options={cities.map((city) => ({ label: city, value: city }))}
         />
       </S.SearchBar>

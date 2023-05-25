@@ -7,13 +7,17 @@ import { useQueryFetchOneStudyCafeForUser } from "../../../commons/hooks/queries
 import { ISeat } from "../../../../commons/types/generated/types";
 import { useMutationCreatePayment } from "../../../commons/hooks/mutations/useMutationCreatePayment";
 import PayModal from "./mapSanner.PayModal";
+import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
 
 export default function SeatReservationPage(): JSX.Element {
   const router = useRouter();
+  const { refetch } = useQueryFetchLoginUser();
   const { data: dataCafe } = useQueryFetchOneStudyCafeForUser(
     String(router.query.Id)
   );
-  const { data } = useQueryFetchAllSeatsByStudyCafeId(String(router.query.Id));
+  const { data, refetch: refetchSeat } = useQueryFetchAllSeatsByStudyCafeId(
+    String(router.query.Id)
+  );
   const [isModal, setIsModal] = useState(false);
   const [stateX, setStateX] = useState(
     dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX ?? 40
@@ -157,6 +161,9 @@ export default function SeatReservationPage(): JSX.Element {
           },
         },
       });
+      await refetch();
+      await refetchSeat();
+      void router.push("/user");
     } catch (err) {
       alert("포인트가 부족합니다.");
       setIsModal(false);

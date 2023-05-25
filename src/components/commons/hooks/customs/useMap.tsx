@@ -1,9 +1,26 @@
-import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useQueryFetchAllStudyCafes } from "../queries/useQueryFetchAllStudyCafes";
+import { MapCenterUpdater } from "./useEffectMapCenter";
 
 declare const window: typeof globalThis & {
   kakao: any;
 };
-export default function Map(): JSX.Element {
+
+interface Props {
+  selectedDistrict: string;
+}
+
+export default function Map({ selectedDistrict }: Props): JSX.Element {
+  const router = useRouter();
+
+  const [map, setMap] = useState(null);
+  const { data } = useQueryFetchAllStudyCafes({
+    studyCafe_city: "서울",
+    studyCafe_district: selectedDistrict,
+    page: 1,
+  });
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -12,17 +29,104 @@ export default function Map(): JSX.Element {
 
     script.onload = () => {
       window.kakao.maps.load(function () {
-        const container = document.getElementById("map"); // 지도를 담을 영역의 DOM 레퍼런스
-        const options = {
-          // 지도를 생성할 때 필요한 기본 옵션
-          center: new window.kakao.maps.LatLng(37.514575, 127.0495556), // 지도의 중심좌표.
-          level: 3, // 지도의 레벨(확대, 축소 정도)
-        };
-        const map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
-        console.log(map);
+        const container = document.getElementById("map");
+        const map = new window.kakao.maps.Map(container, {
+          center: new window.kakao.maps.LatLng(37.514575, 127.0495556),
+          level: 3,
+        });
+        setMap(map);
       });
     };
   }, []);
+  // marker와 infowindow 표시
+  useEffect(() => {
+    if (data === undefined || map === null) return;
 
-  return <div id="map" style={{ width: "100%", height: "100%" }}></div>;
+    const infoWindows = [];
+
+
+    data?.fetchAllStudyCafes.forEach((el: any, index: number) => {
+      console.log(el.studyCafe_lat, el.studyCafe_lon, "ddddddddd");
+
+      const marker = new window.kakao.maps.Marker({
+        position: new window.kakao.maps.LatLng(
+          el.studyCafe_lon,
+          el.studyCafe_lat
+        ),
+      });
+      marker.setMap(map);
+
+      const url = String(el?.images[0]?.image_url ?? "/ready.png");
+      const positions = [
+        {
+          content:
+            '<div class="wrap">' +
+            '    <div class="info" style="padding:10px;">' +
+            '        <div class="title" style="display: flex; flex-direction: row; justify-content: space-between; align-items:center;">' +
+            '<div style="font-size:20px;">' +
+            String(el?.studyCafe_name) +
+            "</div>" +
+            `            <div style="cursor:pointer; padding:10px" id="closeBtn${index}">X</div>` +
+            "        </div>" +
+            '        <div class="body" style="display:flex; flex-direction:row;">' +
+            '            <div class="img">' +
+            '<img src="' +
+            url +
+            `" width="73" height="70" id="image${index}" style="cursor:pointer;">` +
+            "</img>" +
+            '            <div class="desc" style="margin-left:10px;">' +
+            '                <div class="ellipsis">' +
+            String(el?.studyCafe_address) +
+            " " +
+            String(el?.studyCafe_addressDetail) +
+            "</div>" +
+            "            </div>" +
+            "        </div>" +
+            "    </div>" +
+            "</div>",
+          latlng: new window.kakao.maps.LatLng(
+            el.studyCafe_lon,
+            el.studyCafe_lat
+          ),
+        },
+      ];
+
+      const infowindow = new window.kakao.maps.InfoWindow({
+        content: positions[0].content,
+      });
+      infoWindows.push(infowindow);
+
+      window.kakao.maps.event.addListener(marker, "click", function () {
+        closeAllInfoWindows();
+        infowindow.setContent(positions[0].content);
+        infowindow.open(map, marker);
+      });
+      document.addEventListener("click", function (event) {
+        const target = event.target as HTMLElement;
+        if (target.matches(`#closeBtn${index}`)) {
+          infowindow.close();
+        }
+      });
+      document.addEventListener("click", function (event) {
+        const target = event.target as HTMLElement;
+        if (target.matches(`#image${index}`)) {
+          void router.push(`/user/${el?.studyCafe_id}`);
+        }
+      });
+      const closeAllInfoWindows = (): void => {
+        infoWindows.forEach((infowindow) => {
+          infowindow.close();
+        });
+      };
+    });
+  }, [data, map]);
+
+  return (
+    <>
+      <div id="map" style={{ width: "100%", height: "100%" }}></div>
+      {map !== undefined && (
+        <MapCenterUpdater map={map} selectedDistrict={selectedDistrict} />
+      )}
+    </>
+  );
 }

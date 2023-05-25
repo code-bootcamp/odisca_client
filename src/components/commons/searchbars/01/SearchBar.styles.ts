@@ -6,7 +6,7 @@ export const SearchBar = styled.div`
   border: none;
   background: none;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   padding: 0px 15px;
 `;
