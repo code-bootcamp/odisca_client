@@ -154,9 +154,8 @@ export type IMutation = {
   sendVerificationCode: Scalars['String'];
   updateLoginAdminister: IAdminister;
   updateLoginReview: Scalars['Boolean'];
-  updateLoginStudyCafe: IStudyCafe;
+  updateLoginStudyCafe: Scalars['Boolean'];
   updateLoginUser: Scalars['Boolean'];
-  updateSeatEveryMinute: Scalars['String'];
   uploadImageFile: Array<Scalars['String']>;
 };
 
@@ -380,6 +379,7 @@ export type IStudyCafe = {
   studyCafe_floorPlanX: Scalars['Int'];
   studyCafe_floorPlanY: Scalars['Int'];
   studyCafe_id: Scalars['String'];
+  studyCafe_inUseSeat?: Maybe<Scalars['Int']>;
   studyCafe_lat: Scalars['Float'];
   studyCafe_lon: Scalars['Float'];
   studyCafe_name: Scalars['String'];
@@ -415,6 +415,7 @@ export type IUpdateStudyCafeInput = {
   studyCafe_contact?: InputMaybe<Scalars['String']>;
   studyCafe_description?: InputMaybe<Scalars['String']>;
   studyCafe_district?: InputMaybe<Scalars['String']>;
+  studyCafe_id: Scalars['String'];
   studyCafe_lat?: InputMaybe<Scalars['Float']>;
   studyCafe_lon?: InputMaybe<Scalars['Float']>;
   studyCafe_name?: InputMaybe<Scalars['String']>;

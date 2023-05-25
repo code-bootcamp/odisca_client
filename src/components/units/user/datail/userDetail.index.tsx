@@ -22,7 +22,7 @@ export default function UserDetail(): JSX.Element {
         cafeContact={data?.fetchOneStudyCafeForUser.studyCafe_contact ?? ""}
         cafeAddress={data?.fetchOneStudyCafeForUser.studyCafe_address ?? ""}
       />
-      <UserDetailFooter />
+      <UserDetailFooter reviews={data?.fetchOneStudyCafeForUser.review ?? []} />
     </>
   );
 }

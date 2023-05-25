@@ -55,7 +55,6 @@ export default function AdminDetailBody(props): JSX.Element {
         <Contents>{props.cafeDescription}</Contents>
       </ContentsBox>
       <SeatScanPage></SeatScanPage>
-      {/* <SeatComponent src="/seat.png"></SeatComponent> */}
     </Body>
   );
 }

@@ -1,9 +1,5 @@
 import { gql, useQuery, QueryResult } from "@apollo/client";
-import {
-  IQuery,
-  IUser,
-  IVisit,
-} from "../../../../commons/types/generated/types";
+import { IQuery, IUser } from "../../../../commons/types/generated/types";
 
 interface IFetchLoginUserQueryResult
   extends Omit<QueryResult<Pick<IQuery, "fetchLoginUser">, IUser>, "refetch"> {
