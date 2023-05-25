@@ -1,9 +1,5 @@
 import { gql, useQuery, QueryResult } from "@apollo/client";
-import {
-  IQuery,
-  IUser,
-  IVisit,
-} from "../../../../commons/types/generated/types";
+import { IQuery, IUser } from "../../../../commons/types/generated/types";
 
 interface IFetchLoginUserQueryResult
   extends Omit<QueryResult<Pick<IQuery, "fetchLoginUser">, IUser>, "refetch"> {
@@ -22,6 +18,11 @@ export const FETCH_LOGIN_USER = gql`
       visits {
         visit_id
         visit_createdAt
+        seat {
+          seat_id
+          seat_number
+          seat_remainTime
+        }
         studyCafe {
           studyCafe_name
           images {
@@ -29,18 +30,13 @@ export const FETCH_LOGIN_USER = gql`
             image_url
             image_isMain
           }
-          # seats {
-          #   seat_number
-          # }
         }
       }
-      seat {
-        seat_id
-        seat_number
-        seat_location
-        seat_expiredTime
-        seat_remainTime
-      }
+      # seat {
+      #   seat_id
+      #   seat_number
+      #   seat_remainTime
+      # }
     }
   }
 `;

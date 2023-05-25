@@ -1,5 +1,4 @@
 import { QueryResult, gql, useQuery } from "@apollo/client";
-import { useRouter } from "next/router";
 import {
   IQuery,
   IQueryFetchOneStudyCafeForUserArgs,
@@ -42,6 +41,14 @@ export const FETCH_ONE_STUDY_CAFE_FOR_USER = gql`
       images {
         image_url
         image_isMain
+      }
+      review {
+        user {
+          user_name
+          user_image
+        }
+        review_content
+        review_id
       }
     }
   }

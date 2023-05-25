@@ -154,9 +154,8 @@ export type IMutation = {
   sendVerificationCode: Scalars['String'];
   updateLoginAdminister: IAdminister;
   updateLoginReview: Scalars['Boolean'];
-  updateLoginStudyCafe: IStudyCafe;
+  updateLoginStudyCafe: Scalars['Boolean'];
   updateLoginUser: Scalars['Boolean'];
-  updateSeatEveryMinute: Scalars['String'];
   uploadImageFile: Array<Scalars['String']>;
 };
 
@@ -356,6 +355,7 @@ export type ISeat = {
   seat_remainTime?: Maybe<Scalars['Int']>;
   studyCafe: IStudyCafe;
   user?: Maybe<IUser>;
+  visit: Array<IVisit>;
 };
 
 export type ISeatInformationInput = {
@@ -380,6 +380,7 @@ export type IStudyCafe = {
   studyCafe_floorPlanX: Scalars['Int'];
   studyCafe_floorPlanY: Scalars['Int'];
   studyCafe_id: Scalars['String'];
+  studyCafe_inUseSeat?: Maybe<Scalars['Int']>;
   studyCafe_lat: Scalars['Float'];
   studyCafe_lon: Scalars['Float'];
   studyCafe_name: Scalars['String'];
@@ -395,7 +396,7 @@ export type IUpdateLoginAdministerInput = {
 };
 
 export type IUpdateLoginUserInput = {
-  user_image: Scalars['String'];
+  user_image?: InputMaybe<Scalars['String']>;
   user_password: Scalars['String'];
   user_phone: Scalars['String'];
 };
@@ -415,6 +416,7 @@ export type IUpdateStudyCafeInput = {
   studyCafe_contact?: InputMaybe<Scalars['String']>;
   studyCafe_description?: InputMaybe<Scalars['String']>;
   studyCafe_district?: InputMaybe<Scalars['String']>;
+  studyCafe_id: Scalars['String'];
   studyCafe_lat?: InputMaybe<Scalars['Float']>;
   studyCafe_lon?: InputMaybe<Scalars['Float']>;
   studyCafe_name?: InputMaybe<Scalars['String']>;
@@ -438,6 +440,7 @@ export type IUser = {
 export type IVisit = {
   __typename?: 'Visit';
   review: IReview;
+  seat: ISeat;
   studyCafe: IStudyCafe;
   user: IUser;
   visit_createdAt: Scalars['DateTime'];
