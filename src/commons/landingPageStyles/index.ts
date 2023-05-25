@@ -80,7 +80,34 @@ export const Second = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
+
+export const SecondWrapper = styled.div`
+  position: relative;
+`;
+
+export const TitleWrapper = styled.div`
+  position: absolute;
+`;
+
+export const SecondTitle1 = styled.h1`
+  color: #4f4f4f;
+  font-size: 30px;
+`;
+
+export const SecondTitle2 = styled.p``;
+
+export const SecondImg = styled.div`
+  border: 1px solid #4f4f4f;
+  width: 600px;
+  height: 600px;
+`;
+
+// ====== 세번째 랜딩페이지 ====== //
 
 export const Third = styled.div`
   width: 100vw;
