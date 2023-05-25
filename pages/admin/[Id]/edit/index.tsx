@@ -8,7 +8,5 @@ export default function AdminEditPage(): JSX.Element {
   const router = useRouter();
   const { data } = useQueryFetchOneStudyCafeForAdmin(String(router.query.Id));
 
-  console.log(data, "didkdkdkdkdkdkd");
-
   return <AdminWrite isEdit={true} data={data} />;
 }
