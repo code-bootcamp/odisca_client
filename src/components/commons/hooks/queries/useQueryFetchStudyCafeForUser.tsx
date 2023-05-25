@@ -38,6 +38,14 @@ export const FETCH_ONE_STUDY_CAFE_FOR_USER = gql`
         image_url
         image_isMain
       }
+      review {
+        user {
+          user_name
+          user_image
+        }
+        review_content
+        review_id
+      }
     }
   }
 `;

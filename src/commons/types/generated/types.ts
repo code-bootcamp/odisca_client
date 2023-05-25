@@ -355,6 +355,7 @@ export type ISeat = {
   seat_remainTime?: Maybe<Scalars['Int']>;
   studyCafe: IStudyCafe;
   user?: Maybe<IUser>;
+  visit: Array<IVisit>;
 };
 
 export type ISeatInformationInput = {
@@ -395,7 +396,7 @@ export type IUpdateLoginAdministerInput = {
 };
 
 export type IUpdateLoginUserInput = {
-  user_image: Scalars['String'];
+  user_image?: InputMaybe<Scalars['String']>;
   user_password: Scalars['String'];
   user_phone: Scalars['String'];
 };
@@ -439,6 +440,7 @@ export type IUser = {
 export type IVisit = {
   __typename?: 'Visit';
   review: IReview;
+  seat: ISeat;
   studyCafe: IStudyCafe;
   user: IUser;
   visit_createdAt: Scalars['DateTime'];

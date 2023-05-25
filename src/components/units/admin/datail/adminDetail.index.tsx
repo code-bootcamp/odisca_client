@@ -8,6 +8,8 @@ export default function AdminDetail(): JSX.Element {
   const router = useRouter();
   const { data } = useQueryFetchOneStudyCafeForAdmin(String(router.query.Id));
 
+  console.log(data, "패치한 데이터!!");
+
   return (
     <>
       <AdminDetailHeader
