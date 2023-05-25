@@ -21,6 +21,7 @@ import * as S from "./adminWrite.styles";
 import OperatingTime from "../../../commons/operatingTimeSelection/operatingTimeSelect.index";
 import { checkValidationFile } from "../../../../commons/libraries/validationFile";
 import SubmitSuccessAlertModal from "../../../commons/submitSuccessModal/submitSuccessModal.index";
+import { cafeEditSchema } from "../../../../commons/adminEditValidation/validation";
 
 // 등록 사항들 타입 지정
 interface IFormValues {
@@ -113,12 +114,24 @@ export default function AdminWrite(props): JSX.Element {
     };
   }, [address, lon, lat]);
 
+  useEffect(() => {
+    setAddress(data?.fetchOneStudyCafeForAdminister.studyCafe_address);
+    setAddressDetail(
+      data?.fetchOneStudyCafeForAdminister.studyCafe_addressDetail
+    );
+    setCity(data?.fetchOneStudyCafeForAdminister.studyCafe_city);
+    setDistrict(data?.fetchOneStudyCafeForAdminister.studyCafe_district);
+    setLat(data?.fetchOneStudyCafeForAdminister.studyCafe_lat);
+    setLon(data?.fetchOneStudyCafeForAdminister.studyCafe_lon);
+    setOpenTime(data?.fetchOneStudyCafeForAdminister.studyCafe_openTime);
+    setCloseTime(data?.fetchOneStudyCafeForAdminister.studyCafe_closeTime);
+  }, [data]);
+
   // useForm 사용
   const { handleSubmit, register, formState } = useForm({
     mode: "onChange",
-    resolver: yupResolver(cafeWriteSchema),
+    resolver: yupResolver(props.isEdit ? cafeEditSchema : cafeWriteSchema),
   });
-  // const { onClickCafeSubmit } = useCreateLoginStudyCafe({});
 
   // AddressDetail 입력값
   const AddressDetailInput = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -273,8 +286,6 @@ export default function AdminWrite(props): JSX.Element {
           : "";
       }
     }
-    console.log(results.data?.uploadImageFile[1]);
-    console.log(resultUrls, "!!!!!");
     const images = resultUrls.map((el, index) => {
       return {
         image_url: el,
@@ -322,8 +333,6 @@ export default function AdminWrite(props): JSX.Element {
   const onClickMoveCafeDetail = (): void => {
     void router.push(`/admin/${router.query.Id}`);
   };
-
-  console.log(data, "난 언제쯤..");
 
   // return 값
   return (
