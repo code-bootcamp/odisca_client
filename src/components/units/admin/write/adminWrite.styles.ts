@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `;
 export const Header = styled.header`
-  /* width: 850px; */
   weight: 100%;
   height: 100px;
   display: flex;
@@ -20,17 +19,11 @@ export const Title = styled.h1`
   font-size: 20px;
   color: #4f4f4f;
 `;
-// export const SectionTop = styled.section`
-//   width: 100%;
-//   display: flex;
-//   flex-direction: column;
-// `;
 export const SectionTopBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* padding-bottom: 20px; */
 `;
 export const InputBox = styled.div`
   width: calc(50% - 20px);
@@ -148,9 +141,6 @@ export const Address = styled.input`
 `;
 export const Error = styled.div`
   color: red;
-  /* display: block;
-  position: absolute;
-  top: calc(100% + 6px); */
 `;
 
 export const SectionMiddle = styled.section`
@@ -162,12 +152,6 @@ export const ImageSection = styled.div`
   display: flex;
   flex-direction: column;
 `;
-// export const Label = styled.label`
-//   width: 100%;
-//   font-size: 15px;
-//   color: #4f4f4f;
-//   padding-bottom: 30px;
-// `;
 export const ImageListBox = styled.div`
   display: flex;
 `;
@@ -221,8 +205,6 @@ export const SectionBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* margin-bottom: 30px; */
-  /* margin-top: 30px; */
 `;
 export const Notice = styled.textarea`
   height: 520px;

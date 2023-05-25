@@ -3,16 +3,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// 슬라이더 수정 작업 필요
 export const Body = styled.main`
-  /* width: 100%; */
   margin: 0 auto;
 `;
 export const SliderItem = styled.img`
-  /* width: 100%; */
-  /* width: 150px; */
   height: 250px;
-  /* margin: 0 auto; */
 `;
 export const StyledSlider = styled(Slider)`
   .slick-arrow {
