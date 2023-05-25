@@ -50,7 +50,7 @@ export const useQueryFetchOneStudyCafeForAdmin = (
   });
 
   const refetch = async (): Promise<void> => {
-    await query.refetch({ studyCafe_id: id });
+    await query.refetch();
   };
 
   return { ...query, refetch };

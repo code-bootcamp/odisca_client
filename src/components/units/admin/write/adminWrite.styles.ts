@@ -236,7 +236,7 @@ export const Notice = styled.textarea`
     outline: 2px solid #40e0d0;
   }
 `;
-export const Footer = styled.footer`
+export const Footer = styled.form`
   width: 850px;
   display: flex;
   flex-direction: row;
