@@ -5,7 +5,7 @@ interface CafeListItemProps {
   el: {
     studyCafe_id: string;
     studyCafe_name: string;
-    studyCafe_timeFee: string;
+    studyCafe_timeFee: number;
     studyCafe_description: string;
     studyCafe_lat: GLfloat;
     studyCafe_lon: GLfloat;
