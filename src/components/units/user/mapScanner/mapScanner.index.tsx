@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
-import styled from "@emotion/styled";
+import * as S from "./mapScanner.style";
 import { Modal } from "antd";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
 import { useQueryFetchOneStudyCafeForUser } from "../../../commons/hooks/queries/useQueryFetchStudyCafeForUser";
 import { ISeat } from "../../../../commons/types/generated/types";
 import { useMutationCreatePayment } from "../../../commons/hooks/mutations/useMutationCreatePayment";
-import PayModal from "./mapSanner.PayModal";
+import PayModal from "./mapScanner.PayModal";
 import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
 
 export default function SeatReservationPage(): JSX.Element {
@@ -71,33 +71,6 @@ export default function SeatReservationPage(): JSX.Element {
     }
   }, [data, dataCafe, router]);
 
-  const Pixel = styled.div`
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
-  `;
-
-  const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  `;
-
-  const Box = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 0.5px solid black;
-  `;
-  const Box2 = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  `;
-
   const image = (ele: any, x: number, y: number) => {
     const result = {
       borderLeft: "none",
@@ -108,12 +81,12 @@ export default function SeatReservationPage(): JSX.Element {
     };
     if (y + 1 <= stateY - 1) {
       if (ele.seatId !== map[y + 1][x].seatId) {
-        result.borderBottom = "1px solid black";
+        result.borderBottom = "1px solid #fefefe";
       }
     }
     if (x + 1 <= stateX - 1) {
       if (ele.seatId !== map[y][x + 1].seatId) {
-        result.borderRight = "1px solid black";
+        result.borderRight = "1px solid #fefefe";
       }
     }
     if (ele.status === "") {
@@ -182,28 +155,42 @@ export default function SeatReservationPage(): JSX.Element {
 
   return (
     <>
-      <div>좌석표 보기</div>
-
-      <Container>
-        <Box>
-          {map.map((el, indY) => {
-            return (
-              <Box2 key={indY}>
-                {el.map((ele, indX: number) => {
-                  return (
-                    <>
-                      <Pixel
-                        style={image(ele, indX, indY)}
-                        onClick={onClickInfo(ele)}
-                      ></Pixel>
-                    </>
-                  );
-                })}
-              </Box2>
-            );
-          })}
-        </Box>
-      </Container>
+      <S.Wrapper>
+        <S.SeatsTitle>원하는 좌석을 선택해주세요.</S.SeatsTitle>
+        <S.SeatContainer>
+          <S.SampleContainer>
+            <S.SampleCase>
+              <S.SeatSample></S.SeatSample>
+              <S.SampleFont>예약 가능 좌석</S.SampleFont>
+            </S.SampleCase>
+            <S.SampleCase>
+              <S.SeatSampleUnUsable></S.SeatSampleUnUsable>
+              <S.SampleFont>예약 불가 좌석</S.SampleFont>
+            </S.SampleCase>
+          </S.SampleContainer>
+          <S.Container>
+            <S.Box>
+              {map.map((el, indY) => {
+                return (
+                  <S.Box2 key={indY}>
+                    {el.map((ele, indX: number) => {
+                      return (
+                        <>
+                          <S.Pixel
+                            style={image(ele, indX, indY)}
+                            onClick={onClickInfo(ele)}
+                            key={String(indX) + String(indY)}
+                          ></S.Pixel>
+                        </>
+                      );
+                    })}
+                  </S.Box2>
+                );
+              })}
+            </S.Box>
+          </S.Container>
+        </S.SeatContainer>
+      </S.Wrapper>
       {isModal ? (
         <Modal
           open={isModal}

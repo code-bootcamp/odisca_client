@@ -56,27 +56,27 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
       const positions = [
         {
           content:
-            '<div class="wrap">' +
-            '    <div class="info" style="padding:10px;">' +
-            '        <div class="title" style="display: flex; flex-direction: row; justify-content: space-between; align-items:center;">' +
-            '<div style="font-size:20px;">' +
+            '<div class="wrap" style="width:250px; height:120px;  ">' +
+            '    <div class="info">' +
+            '        <div class="title" style="display: flex; flex-direction: row; justify-content: space-between; align-items:center; margin-top:15px;">' +
+            '<div style="font-size:16px; margin-left:20px;">' +
             String(el?.studyCafe_name) +
             "</div>" +
-            `            <div style="cursor:pointer; padding:10px" id="closeBtn${index}">X</div>` +
+            `            <div style="cursor:pointer; margin-right:20px;" id="closeBtn${index}">X</div>` +
             "        </div>" +
-            '        <div class="body" style="display:flex; flex-direction:row;">' +
-            '            <div class="img">' +
+            '        <div class="body">' +
+            '            <div class="img" style="display:flex; align-items : flex-start; justify-content: flex-start; margin-top:15px;">' +
             '<img src="' +
             url +
-            `" width="73" height="70" id="image${index}" style="cursor:pointer;">` +
+            `" width="73" height="70" id="image${index}" style="cursor:pointer; margin-left:20px;">` +
             "</img>" +
-            '            <div class="desc" style="margin-left:10px;">' +
-            '                <div class="ellipsis">' +
+            '                <div class="ellipsis" style="font-size:10px; margin-left:15px;">' +
             String(el?.studyCafe_address) +
             " " +
             String(el?.studyCafe_addressDetail) +
             "</div>" +
-            "            </div>" +
+            // '            <div class="desc" style="margin-left:10px;">' +
+            // "            </div>" +
             "        </div>" +
             "    </div>" +
             "</div>",
