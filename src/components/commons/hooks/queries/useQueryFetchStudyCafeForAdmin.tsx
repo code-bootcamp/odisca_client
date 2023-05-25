@@ -1,12 +1,15 @@
-import { QueryResult, gql, useQuery } from "@apollo/client";
-import { IStudyCafe } from "../../../../commons/types/generated/types";
-
-interface IFetchStudyCafeQueryResult
-  extends Omit<
-    QueryResult<{ fetchOneStudyCafe: IStudyCafe }, { studyCafe_id: string }>,
-    "refetch"
-  > {
-  refetch: () => Promise<void>;
+import { gql, useQuery, ApolloQueryResult } from "@apollo/client";
+import {
+  IQuery,
+  IQueryFetchOneStudyCafeForAdministerArgs,
+} from "../../../../commons/types/generated/types";
+interface IFetchStudyCafeQueryResult {
+  data?: Pick<IQuery, "fetchOneStudyCafeForAdminister">;
+  refetch?: (
+    variables?: Partial<IQueryFetchOneStudyCafeForAdministerArgs> | undefined
+  ) => Promise<
+    ApolloQueryResult<Pick<IQuery, "fetchOneStudyCafeForAdminister">>
+  >;
 }
 
 export const FETCH_ONE_STUDY_CAFE_FOR_ADMIN = gql`
@@ -27,10 +30,6 @@ export const FETCH_ONE_STUDY_CAFE_FOR_ADMIN = gql`
       studyCafe_seatCount
       studyCafe_floorPlanX
       studyCafe_floorPlanY
-      # administer {
-      #   administer_name
-      #   administer_email
-      # }
       images {
         image_url
         image_isMain
@@ -42,16 +41,12 @@ export const FETCH_ONE_STUDY_CAFE_FOR_ADMIN = gql`
 export const useQueryFetchOneStudyCafeForAdmin = (
   id: string
 ): IFetchStudyCafeQueryResult => {
-  const query = useQuery<
-    { fetchOneStudyCafe: IStudyCafe },
-    { studyCafe_id: string }
+  const { data, refetch } = useQuery<
+    Pick<IQuery, "fetchOneStudyCafeForAdminister">,
+    IQueryFetchOneStudyCafeForAdministerArgs
   >(FETCH_ONE_STUDY_CAFE_FOR_ADMIN, {
     variables: { studyCafe_id: id },
   });
 
-  const refetch = async (): Promise<void> => {
-    await query.refetch();
-  };
-
-  return { ...query, refetch };
+  return { data, refetch };
 };

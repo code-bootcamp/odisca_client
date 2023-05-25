@@ -126,7 +126,7 @@ export default function UserSignUpPage(): JSX.Element {
                     >
                       인증하기
                     </S.EmailValidationBtn>
-                    {isModalOpen && (
+                    {isModalOpen !== null && (
                       <S.EmailValidationModal
                         okButtonProps={{ style: { display: "none" } }}
                         cancelButtonProps={{ style: { display: "none" } }}

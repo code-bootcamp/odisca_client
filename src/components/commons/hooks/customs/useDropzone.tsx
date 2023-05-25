@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { useRecoilState } from "recoil";
 import { imageUrlsState, selectedFileState } from "../../../../commons/stores";
@@ -6,7 +6,7 @@ import * as D from "../../../units/user/mypage/userEditpage/body/UserEditBody.st
 import { useQueryFetchLoginUser } from "../queries/useQueryFetchLoginUser";
 
 interface MyDropzoneProps {
-  onFileChange: (selectedFile: File) => void;
+  onFileChange: (selectedFile: File | null) => void;
 }
 function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
   const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
@@ -15,18 +15,18 @@ function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      setSelectedFile(acceptedFiles[0] || null);
+      setSelectedFile(acceptedFiles[0]);
     },
     [setSelectedFile]
   );
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
   useEffect(() => {
-    if (selectedFile) {
+    if (selectedFile !== null) {
       const imageUrl = URL.createObjectURL(selectedFile);
       setImageUrls([imageUrl]);
       onFileChange(selectedFile);
-    } else if (data?.fetchLoginUser.user_image) {
+    } else if (data?.fetchLoginUser.user_image !== undefined) {
       const imageUrl = data.fetchLoginUser.user_image;
       setImageUrls([imageUrl]);
     } else {

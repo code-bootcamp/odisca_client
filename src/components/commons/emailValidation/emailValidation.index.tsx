@@ -1,30 +1,31 @@
 // 이메일 인증번호 보내주는 페이지(모달안에 들어갈 내용)
-
 import { Modal } from "antd";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { wrapFormAsync } from "../../../commons/libraries/asyncFunc";
+import { wrapAsync } from "../../../commons/libraries/asyncFunc";
 import { useMutationCheckVerificationCode } from "../hooks/mutations/useMutationCheckVerification";
 import * as S from "./emailValidation.styles";
 
 interface IFormValidationData {
   verificationCode: string;
 }
+interface IEmailValidationProps {
+  handleCancel: () => void;
+}
 
-export default function EmailValidationPage(props): JSX.Element {
+export default function EmailValidationPage(
+  props: IEmailValidationProps
+): JSX.Element {
   const [checkVerificationCode] = useMutationCheckVerificationCode();
   const { register, handleSubmit } = useForm<IFormValidationData>({
-    // resolver: yupResolver(signUpSchema),
     mode: "onChange",
   });
-  const [seconds, setSeconds] = useState(180); // 인증시간 180초(3분)
+  const [seconds, setSeconds] = useState(180);
 
   useEffect(() => {
-    // 1초마다 타이머를 감소
     const interval = setInterval(() => {
       setSeconds((prevSeconds) => prevSeconds - 1);
     }, 1000);
-
     // 컴포넌트가 언마운트되거나 업데이트되기 전에 타이머를 정리
     return () => {
       clearInterval(interval);
@@ -33,11 +34,10 @@ export default function EmailValidationPage(props): JSX.Element {
 
   useEffect(() => {
     if (seconds === 0) {
-      // 타이머가 만료되면 알림을 표시하고 모달을 닫음
       Modal.error({
         content: "인증시간이 만료되었습니다. 인증을 다시 진행해주세요!",
       });
-      props.handleCancel(); // src/components//user/
+      props.handleCancel();
     }
   }, [seconds]);
 
@@ -50,7 +50,7 @@ export default function EmailValidationPage(props): JSX.Element {
       });
       const verificationCode = data.verificationCode;
       console.log(checkVerificationResult);
-      if (checkVerificationResult === verificationCode) {
+      if (String(checkVerificationResult) === String(verificationCode)) {
         props.handleCancel();
       }
     } catch (error) {
@@ -84,7 +84,7 @@ export default function EmailValidationPage(props): JSX.Element {
         <S.BtnWrapper>
           <S.SubmitBtn
             type="button"
-            onClick={wrapFormAsync(handleSubmit(onClickCheckVerification))}
+            onClick={wrapAsync(handleSubmit(onClickCheckVerification))}
           >
             확인
           </S.SubmitBtn>

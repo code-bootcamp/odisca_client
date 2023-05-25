@@ -189,6 +189,7 @@ export const EmailValidationBtn = styled.button`
   background-color: #40e0d0;
   font-size: 16px;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 export const EmailValidationModal = styled(Modal)`

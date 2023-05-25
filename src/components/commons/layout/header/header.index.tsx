@@ -7,17 +7,18 @@ import { useMutationDeleteAdmin } from "../../hooks/mutations/useMutationDeleteA
 import { useMutationLogOutUser } from "../../hooks/mutations/useMutationLogoutUser";
 import { useMutationLogOutAdmin } from "../../hooks/mutations/useMutationLogoutAdmin";
 import { useRouter } from "next/router";
-import { WrapperWithoutMargin, Wrapper } from "./header.style";
+import { Wrapper } from "./header.style";
 import PayModal from "../../../units/user/mapScanner/mapSanner.PayModal";
+import { wrapAsync } from "../../../../commons/libraries/asyncFunc";
 
-export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
+export default function LayoutHeader(): JSX.Element {
   const [open, setOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const { data } = useQuery(FETCH_LOGIN_USER);
   const [logoutUser] = useMutationLogOutUser();
   const [logoutAdmin] = useMutationLogOutAdmin();
-  const HeaderWrapper =
-    isHiddenMargin === true ? WrapperWithoutMargin : Wrapper;
+  // const HeaderWrapper =
+  //   isHiddenMargin === true ? WrapperWithoutMargin : Wrapper;
 
   const showDrawer = (): void => {
     setOpen(true);
@@ -80,7 +81,7 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
 
   return (
     <>
-      <HeaderWrapper>
+      <Wrapper>
         <S.LightWrapper>
           <S.Logo src="/header.png"></S.Logo>
         </S.LightWrapper>
@@ -118,12 +119,12 @@ export default function LayoutHeader({ isHiddenMargin }): JSX.Element {
             <S.MenuList>
               <p onClick={onClickMyPage}>회원정보</p>
               <p onClick={onClickMain}>스카찾기</p>
-              <p onClick={onClickLogOut}>로그아웃</p>
-              <p onClick={onClickDeleteAdmin}>회원탈퇴</p>
+              <p onClick={wrapAsync(onClickLogOut)}>로그아웃</p>
+              <p onClick={wrapAsync(onClickDeleteAdmin)}>회원탈퇴</p>
             </S.MenuList>
           </S.MenuDrawer>
         </S.RightWrapper>
-      </HeaderWrapper>
+      </Wrapper>
 
       {/* 여기서부터 결제 쪽입니다. */}
       <PayModal isPayModal={isModal} setIsPayModal={setIsModal}></PayModal>

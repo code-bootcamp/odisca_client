@@ -5,7 +5,7 @@ import * as S from "./mapEditor.Body.style";
 import { useRouter } from "next/router";
 import { useMutationCreateSeats } from "../../../../commons/hooks/mutations/useMutationCreateSeats";
 import { useMutationCreateLoginCafeFloorPlanAndSeats } from "../../../../commons/hooks/mutations/useMutationCreateCafeFloorPlan";
-import { wrapFormAsync } from "../../../../../commons/libraries/asyncFunc";
+import { wrapAsync } from "../../../../../commons/libraries/asyncFunc";
 import { useQueryFetchOneStudyCafeForAdmin } from "../../../../commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
 
@@ -112,7 +112,6 @@ export default function MapEditor(): JSX.Element {
               return 1;
             });
             setMapArray(newMap);
-            // setSeatLength((prev) => prev - 1);
           }
           return answer;
         }),
@@ -169,7 +168,6 @@ export default function MapEditor(): JSX.Element {
     setMapArray([...newMapArray]);
     setPositionState(0);
     setSize([]);
-    // setSeatLength((prev) => prev + 1);
     setIsHover(false);
     setHoverSize([0, 0]);
     setHoverPosition([0, 0]);
@@ -229,8 +227,9 @@ export default function MapEditor(): JSX.Element {
           },
         },
       });
-      await refetch();
-
+      if (refetch !== undefined) {
+        await refetch();
+      }
       const input = seatArray.map((el, index) => {
         const seat = {
           seat: el.seats,
@@ -240,7 +239,7 @@ export default function MapEditor(): JSX.Element {
       });
       const seatsInput = {
         seatInformation: input,
-        studyCafe_id: router.query.Id,
+        studyCafe_id: String(router.query.Id),
       };
       console.log(seatsInput);
       try {
@@ -274,7 +273,7 @@ export default function MapEditor(): JSX.Element {
       <button onClick={onClick2X2}>2X2</button>
       <button onClick={onClick1X2}>1X2</button>
       <button onClick={onClickDeleteMap}>전체 삭제</button>
-      <button onClick={wrapFormAsync(onClickSave)}>저장하기</button>
+      <button onClick={wrapAsync(onClickSave)}>저장하기</button>
       <S.Container>
         <S.Box>
           {mapArray.map((el, indY) => {

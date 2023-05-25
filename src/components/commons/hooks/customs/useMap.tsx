@@ -13,7 +13,6 @@ interface Props {
 
 export default function Map({ selectedDistrict }: Props): JSX.Element {
   const router = useRouter();
-
   const [map, setMap] = useState(null);
   const { data } = useQueryFetchAllStudyCafes({
     studyCafe_city: "서울",
@@ -44,10 +43,7 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
 
     const infoWindows = [];
 
-
     data?.fetchAllStudyCafes.forEach((el: any, index: number) => {
-      console.log(el.studyCafe_lat, el.studyCafe_lon, "ddddddddd");
-
       const marker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(
           el.studyCafe_lon,
