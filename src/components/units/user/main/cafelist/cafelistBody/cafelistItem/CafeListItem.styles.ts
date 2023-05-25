@@ -25,6 +25,13 @@ export const CafeBox = styled.div`
   padding: 55px;
   cursor: pointer;
 `;
+
+export const DistrictName = styled.div`
+  font-size: 40px;
+  font-weight: 700;
+  margin-left: 45px;
+`;
+
 export const DevidedLine = styled.div`
   width: 100%;
   border-bottom: 1px solid #bdbdbd;

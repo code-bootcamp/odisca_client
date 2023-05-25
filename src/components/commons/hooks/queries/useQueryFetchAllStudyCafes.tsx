@@ -56,6 +56,9 @@ export const FETCH_ALL_STUDY_CAFES = gql`
         image_url
         image_isMain
       }
+      review {
+        review_content
+      }
     }
   }
 `;

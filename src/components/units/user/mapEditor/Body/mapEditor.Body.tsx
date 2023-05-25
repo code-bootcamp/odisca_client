@@ -63,15 +63,6 @@ export default function MapEditor(): JSX.Element {
     setMapArray([]);
     setIsHover(false);
   };
-
-  const onClick2X1 = (): void => {
-    setSize([[1, 0]]);
-    setPositionState(1);
-    if (mapArray.length !== 0) {
-      setIsHover(true);
-      setHoverSize([2, 1]);
-    }
-  };
   const onClick2X2 = (): void => {
     setSize([
       [0, 1],
@@ -82,14 +73,6 @@ export default function MapEditor(): JSX.Element {
     if (mapArray.length !== 0) {
       setIsHover(true);
       setHoverSize([2, 2]);
-    }
-  };
-  const onClick1X2 = (): void => {
-    setSize([[0, 1]]);
-    setPositionState(1);
-    if (mapArray.length !== 0) {
-      setIsHover(true);
-      setHoverSize([1, 2]);
     }
   };
   const onClickCenter = (x: number, y: number) => () => {
@@ -182,8 +165,8 @@ export default function MapEditor(): JSX.Element {
     ${stateY > hoverPosition[1] + hoverSize[1] - 1 ? "" : "display : none"};
     ${stateX > hoverPosition[0] + hoverSize[0] - 1 ? "" : "display : none"};
 
-    top: ${String(300 + hoverPosition[1] * 20) + "px"};
-    left: ${String(200 + hoverPosition[0] * 20) + "px"};
+    top: ${String(450 + hoverPosition[1] * 20) + "px"};
+    left: ${String(500 + hoverPosition[0] * 20) + "px"};
     background-color: gray;
   `;
   const onHoverTrue = (x: number, y: number) => () => {
@@ -202,11 +185,11 @@ export default function MapEditor(): JSX.Element {
     };
 
     if (ele !== mapArray[y][x + 1]) {
-      result.borderRight = "1px solid black";
+      result.borderRight = "1px solid #fefefe";
     }
     if (y + 1 <= stateY - 1) {
       if (ele !== mapArray[y + 1][x]) {
-        result.borderBottom = "1px solid black";
+        result.borderBottom = "1px solid #fefefe";
       }
     }
     if (ele >= 1) {
@@ -264,16 +247,38 @@ export default function MapEditor(): JSX.Element {
 
   return (
     <>
-      X:
-      <input type="text" onChange={onChangeMapX} />
-      Y:
-      <input type="text" onChange={onChangeMapY} />
-      <button onClick={onClickMap}>입력</button>
-      <button onClick={onClick2X1}>2X1</button>
-      <button onClick={onClick2X2}>2X2</button>
-      <button onClick={onClick1X2}>1X2</button>
-      <button onClick={onClickDeleteMap}>전체 삭제</button>
-      <button onClick={wrapAsync(onClickSave)}>저장하기</button>
+      <S.HeightDiv>
+        <S.MapEditorTitle>좌석 등록하기</S.MapEditorTitle>
+        <div>
+          <S.MapEditorInputContainer>
+            <S.MapEditorInputWrapper>
+              <S.MapEditorInputFont>가로</S.MapEditorInputFont>
+              <S.MapEditorInput
+                type="text"
+                onChange={onChangeMapX}
+                placeholder="40이하의 정수만 입력하세요."
+              />
+            </S.MapEditorInputWrapper>
+            <S.MapEditorInputWrapper>
+              <S.MapEditorInputFont>세로</S.MapEditorInputFont>
+              <S.MapEditorInput
+                type="text"
+                onChange={onChangeMapY}
+                placeholder="40이하의 정수만 입력하세요."
+              />
+            </S.MapEditorInputWrapper>
+            <S.InputButton onClick={onClickMap}>입력</S.InputButton>
+          </S.MapEditorInputContainer>
+
+          <S.ButtonContainer>
+            <S.FunctionBtn onClick={onClick2X2}>좌석 버튼</S.FunctionBtn>
+            <S.FunctionBtn onClick={onClickDeleteMap}>초기화</S.FunctionBtn>
+            <S.FunctionBtn onClick={wrapAsync(onClickSave)}>
+              저장하기
+            </S.FunctionBtn>
+          </S.ButtonContainer>
+        </div>
+      </S.HeightDiv>
       <S.Container>
         <S.Box>
           {mapArray.map((el, indY) => {

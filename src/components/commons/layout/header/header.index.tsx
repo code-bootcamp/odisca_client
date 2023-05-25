@@ -8,7 +8,7 @@ import { useMutationLogOutUser } from "../../hooks/mutations/useMutationLogoutUs
 import { useMutationLogOutAdmin } from "../../hooks/mutations/useMutationLogoutAdmin";
 import { useRouter } from "next/router";
 import { Wrapper } from "./header.style";
-import PayModal from "../../../units/user/mapScanner/mapSanner.PayModal";
+import PayModal from "../../../units/user/mapScanner/mapScanner.PayModal";
 import { wrapAsync } from "../../../../commons/libraries/asyncFunc";
 
 export default function LayoutHeader(): JSX.Element {
