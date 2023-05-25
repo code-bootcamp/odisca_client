@@ -60,7 +60,7 @@ export default function ApolloSetting(props: IApolloSettingProps): JSX.Element {
     uri: "https://odisca.store/graphql",
     headers: {
       Authorization: `Bearer ${accessToken}`,
-      "X-Apollo-Operation-Name": true,
+      "X-Apollo-Operation-Name": "true",
     },
     credentials: "include",
   });

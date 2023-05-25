@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { useQueryFetchCafeMainImage } from "../../../commons/hooks/queries/useQueryFetchCafeMainImage";
 import { useQueryFetchOneStudyCafeForAdmin } from "../../../commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
 import AdminDetailBody from "./body/AdminDetailBody.index";
 import AdminDetailFooter from "./footer/AdminDetailFooter.index";

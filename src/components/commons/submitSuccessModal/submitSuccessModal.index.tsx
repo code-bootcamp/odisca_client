@@ -36,7 +36,7 @@ export default function SubmitSuccessAlertModal(): JSX.Element {
   const router = useRouter();
 
   const onClickMoveMapEditor = (): void => {
-    void router.push(`/admin/${router.query.Id}/mapEditor`);
+    void router.push(`/admin/${String(router.query.Id)}/mapEditor`);
   };
 
   return (

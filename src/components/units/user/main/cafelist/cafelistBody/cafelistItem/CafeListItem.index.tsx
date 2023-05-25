@@ -7,8 +7,6 @@ interface CafeListItemProps {
     studyCafe_name: string;
     studyCafe_timeFee: number;
     studyCafe_description: string;
-    studyCafe_lat: GLfloat;
-    studyCafe_lon: GLfloat;
     image?: {
       image_url: string;
     };

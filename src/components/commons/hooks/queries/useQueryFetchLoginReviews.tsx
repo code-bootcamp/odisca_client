@@ -1,12 +1,11 @@
-import { gql, useQuery, QueryResult } from "@apollo/client";
-import { IQuery, IVisit } from "../../../../commons/types/generated/types";
+import { ApolloQueryResult, gql, useQuery } from "@apollo/client";
+import { IQuery, IReview } from "../../../../commons/types/generated/types";
 
-interface IFetchUserReviewQueryResult
-  extends Omit<
-    QueryResult<Pick<IQuery, "fetchLoginReviewsByUserId">, IVisit>,
-    "refetch"
-  > {
-  refetch: () => Promise<void>;
+interface IFetchUserReviewQueryResult {
+  data?: Pick<IQuery, "fetchLoginReviewsByUserId">;
+  refetch?: (
+    variables?: Partial<IReview> | undefined
+  ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchLoginReviewsByUserId">>>;
 }
 
 export const FETCH_REVIEW = gql`
@@ -20,12 +19,9 @@ export const FETCH_REVIEW = gql`
 `;
 
 export const useQueryFetchReview = (): IFetchUserReviewQueryResult => {
-  const query = useQuery<Pick<IQuery, "fetchLoginReviewsByUserId">, IVisit>(
-    FETCH_REVIEW
-  );
-  const refetchFetchReview = async (): Promise<void> => {
-    await query.refetch();
-  };
-
-  return { ...query, refetch: refetchFetchReview };
+  const { data, refetch } = useQuery<
+    Pick<IQuery, "fetchLoginReviewsByUserId">,
+    IReview
+  >(FETCH_REVIEW);
+  return { data, refetch };
 };

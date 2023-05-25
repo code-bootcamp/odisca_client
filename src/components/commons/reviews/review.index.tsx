@@ -8,7 +8,6 @@ import { getDate } from "../../../commons/libraries/utils";
 import { useQueryFetchReview } from "../hooks/queries/useQueryFetchLoginReviews";
 import { useMutationUpdateReview } from "../hooks/mutations/useMutationUpdateReview";
 import { useMutationDeleteReview } from "../hooks/mutations/useMutationDeleteReview";
-import UseModal from "../hooks/customs/useModal";
 import { useRouter } from "next/router";
 
 interface IFormReviewData {
@@ -16,16 +15,19 @@ interface IFormReviewData {
   visit_id: string;
 }
 
-export default function Review(props): JSX.Element {
+interface IReviewProps {
+  handleCancel: () => void;
+}
+
+export default function Review(props: IReviewProps): JSX.Element {
   const router = useRouter();
   const [createLoginReview] = useMutationCreateReview();
   const [updateLoginReview] = useMutationUpdateReview();
   const [deleteLoginReview] = useMutationDeleteReview();
-  const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
   const { data: reviewdata, refetch: refetchFetchReview } =
     useQueryFetchReview();
   const { data: fetchUserdata } = useQueryFetchLoginUser();
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm<IFormReviewData>({
     mode: "onChange",
   });
 
@@ -35,11 +37,13 @@ export default function Review(props): JSX.Element {
         variables: {
           createReviewInput: {
             review_content: data.review_content,
-            visit_id: fetchUserdata?.fetchLoginUser.visits[0]?.visit_id,
+            visit_id: fetchUserdata?.fetchLoginUser.visits[0]?.visit_id ?? "",
           },
         },
       });
-      await refetchFetchReview();
+      if (refetchFetchReview !== undefined) {
+        await refetchFetchReview();
+      }
       console.log(result);
       Modal.success({
         content: "리뷰가 등록되었습니다.",
@@ -59,11 +63,13 @@ export default function Review(props): JSX.Element {
         variables: {
           updateReviewInput: {
             review_content: data.review_content,
-            review_id: reviewdata?.fetchLoginReviewsByUserId[0].review_id,
+            review_id: reviewdata?.fetchLoginReviewsByUserId[0].review_id ?? "",
           },
         },
       });
-      await refetchFetchReview();
+      if (refetchFetchReview !== undefined) {
+        await refetchFetchReview();
+      }
       void router.push("/user/mypage");
 
       console.log(result);
@@ -84,7 +90,7 @@ export default function Review(props): JSX.Element {
       const result = await deleteLoginReview({
         variables: {
           cancelReviewInput: {
-            review_id: reviewdata?.fetchLoginReviewsByUserId[0].review_id,
+            review_id: reviewdata?.fetchLoginReviewsByUserId[0].review_id ?? "",
           },
         },
       });
@@ -92,8 +98,9 @@ export default function Review(props): JSX.Element {
       Modal.success({
         content: "리뷰가 삭제되었습니다.",
       });
-      await refetchFetchReview();
-
+      if (refetchFetchReview !== undefined) {
+        await refetchFetchReview();
+      }
       props.handleCancel();
     } catch (error) {
       if (error instanceof Error)
@@ -120,12 +127,12 @@ export default function Review(props): JSX.Element {
         </S.ImgWrapper>
         <S.ReviewWrapper
           onSubmit={
-            review
+            review !== null
               ? wrapFormAsync(handleSubmit(onClickUpdateReview))
               : wrapFormAsync(handleSubmit(onClickSubmitReview))
           }
         >
-          {review ? (
+          {review !== null ? (
             <S.ReviewTitle>작성된 리뷰를 수정해주세요.</S.ReviewTitle>
           ) : (
             <S.ReviewTitle>리뷰를 작성해주세요.</S.ReviewTitle>
@@ -134,10 +141,10 @@ export default function Review(props): JSX.Element {
             {...register("review_content")}
             placeholder="무분별한 비방, 욕설 등 타인을 불쾌하게 하는 리뷰는 사전 통보 없이 삭제될 수 있습니다."
             defaultValue={
-              reviewdata?.fetchLoginReviewsByUserId[0]?.review_content
+              reviewdata?.fetchLoginReviewsByUserId[0]?.review_content ?? ""
             }
           ></S.ReviewInput>
-          {review ? (
+          {review !== null ? (
             <S.BtnWrapper>
               <S.ReviewEditBtn>수정</S.ReviewEditBtn>
               <S.ReviewDeleteBtn

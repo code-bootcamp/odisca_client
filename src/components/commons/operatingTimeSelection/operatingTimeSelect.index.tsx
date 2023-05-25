@@ -1,4 +1,11 @@
 import styled from "@emotion/styled";
+import { IQuery } from "../../../commons/types/generated/types";
+
+interface ITimeProps {
+  onChangeSelectOpenTime: () => void;
+  onChangeSelectCloseTime: () => void;
+  data?: Pick<IQuery, "fetchOneStudyCafeForAdminister">;
+}
 
 const SelectOperatingTime = styled.select`
   width: 100px;
@@ -9,7 +16,7 @@ const OperatingTimeSpan = styled.span`
   margin: 0px 8px;
 `;
 
-export default function OperatingTime(props): JSX.Element {
+export default function OperatingTime(props: ITimeProps): JSX.Element {
   return (
     <>
       <SelectOperatingTime

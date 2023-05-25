@@ -2,6 +2,10 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import LayoutHeader from "./header/header.index";
 
+interface IProps {
+  children: JSX.Element;
+}
+
 const HIDDEN_HEADER = [
   "/user/login",
   "/user/signup",
@@ -14,12 +18,8 @@ const Wrapper = styled.div``;
 const Contents = styled.div``;
 const Children = styled.div``;
 
-export default function Layout(props): JSX.Element {
+export default function Layout(props: IProps): JSX.Element {
   const router = useRouter();
-  // console.log(router.asPath, "DDddd");
-  console.log(router, "ddd");
-  console.log(router.asPath, "papaap");
-  console.log(router.pathname, "ssss");
 
   const isHiddenHeader = HIDDEN_HEADER.includes(router.pathname);
   // const isMainPage = router.pathname === "/user/main";

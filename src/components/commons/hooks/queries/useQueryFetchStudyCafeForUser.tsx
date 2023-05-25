@@ -1,5 +1,4 @@
 import { QueryResult, gql, useQuery } from "@apollo/client";
-import { useRouter } from "next/router";
 import {
   IQuery,
   IQueryFetchOneStudyCafeForUserArgs,
@@ -35,10 +34,6 @@ export const FETCH_ONE_STUDY_CAFE_FOR_USER = gql`
       studyCafe_seatCount
       studyCafe_floorPlanX
       studyCafe_floorPlanY
-      # administer {
-      #   administer_name
-      #   administer_email
-      # }
       images {
         image_url
         image_isMain

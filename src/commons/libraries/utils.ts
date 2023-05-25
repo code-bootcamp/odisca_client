@@ -1,4 +1,4 @@
-export const getDate = (date: any) => {
+export const getDate = (date: any): string => {
   const _date = new Date(date);
   const yyyy = _date.getFullYear();
   const mm = _date.getMonth() + 1;
@@ -6,10 +6,9 @@ export const getDate = (date: any) => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
-export const PriceWithCommas = (x: any) => {
+export const PriceWithCommas = (x: any): string => {
   if (x == null) {
-    // x가 null 또는 undefined인 경우
-    return ""; // 빈 문자열을 반환
+    return "";
   }
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };

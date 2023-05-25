@@ -4,6 +4,10 @@ interface Props {
   map: any;
   selectedDistrict: string;
 }
+interface IResult {
+  x: number;
+  y: number;
+}
 
 declare const window: typeof globalThis & {
   kakao: any;
@@ -17,16 +21,18 @@ export function MapCenterUpdater({
     if (map !== null && selectedDistrict !== undefined) {
       const geocoder = new window.kakao.maps.services.Geocoder();
 
-      geocoder.addressSearch(selectedDistrict, function (result, status) {
-        if (status === window.kakao.maps.services.Status.OK) {
-          const { x, y } = result[0];
-
-          // 중심 좌표로 이동
-          map.setCenter(new window.kakao.maps.LatLng(y, x));
+      geocoder.addressSearch(
+        selectedDistrict,
+        function (result: IResult[], status: boolean) {
+          if (status === window.kakao.maps.services.Status.OK) {
+            const { x, y } = result[0];
+            // 중심 좌표로 이동
+            map.setCenter(new window.kakao.maps.LatLng(y, x));
+          }
         }
-      });
+      );
     }
   }, [map, selectedDistrict]);
 
-  return null;
+  return <></>;
 }
