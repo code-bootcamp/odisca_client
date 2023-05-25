@@ -6,6 +6,10 @@ interface Props {
   selectedDistrict: string;
 }
 
+interface Cafe {
+  studyCafe_district: string;
+}
+
 export default function CafeListBody(props: Props): JSX.Element {
   const { selectedDistrict } = props;
   const { data, fetchMore } = useQueryFetchAllStudyCafes({
@@ -13,26 +17,29 @@ export default function CafeListBody(props: Props): JSX.Element {
     studyCafe_district: selectedDistrict,
     page: 1,
   });
-  console.log(data, "datacafes");
   const filteredCafes = data?.fetchAllStudyCafes.filter(
-    (cafe) => cafe.studyCafe_district === selectedDistrict
+    (cafe: Cafe) => cafe.studyCafe_district === selectedDistrict
   );
 
   const onLoadMore = (): void => {
     if (data === undefined) return;
     void fetchMore({
       variables: {
-        page: Math.ceil((data?.fetchAllStudyCafes.length ?? 10) / 10) + 1,
+        fetchAllStudyCafesInput: {
+          studyCafe_city: "서울",
+          studyCafe_district: selectedDistrict,
+          page: Math.ceil((data.fetchAllStudyCafes.length ?? 10) / 10) + 1,
+        },
       },
-      updateQuery: (prev, { fetchMoreResult }) => {
+      updateQuery: (previousQueryResult, { fetchMoreResult }) => {
         if (fetchMoreResult?.fetchAllStudyCafes === undefined) {
           return {
-            fetchAllStudyCafes: [...prev.fetchAllStudyCafes],
+            fetchAllStudyCafes: [...previousQueryResult.fetchAllStudyCafes],
           };
         }
         return {
           fetchAllStudyCafes: [
-            ...prev.fetchAllStudyCafes,
+            ...previousQueryResult.fetchAllStudyCafes,
             ...fetchMoreResult.fetchAllStudyCafes,
           ],
         };
@@ -45,7 +52,7 @@ export default function CafeListBody(props: Props): JSX.Element {
       <InfiniteScroll
         pageStart={0}
         loadMore={onLoadMore}
-        hasMore={true}
+        hasMore={Boolean(data?.fetchAllStudyCafes)}
         useWindow={true}
       >
         {filteredCafes?.map((el) => (

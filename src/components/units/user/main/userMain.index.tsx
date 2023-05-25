@@ -16,7 +16,6 @@ export default function UserMain(): JSX.Element {
         width: "100vw",
         height: "100vh",
         display: "flex",
-        // position: "relative",
       }}
     >
       <div
@@ -24,7 +23,6 @@ export default function UserMain(): JSX.Element {
           overflow: "auto",
           overflowY: "scroll",
           height: "100vh",
-          // position: "absolute",
         }}
       >
         <SearchBar01

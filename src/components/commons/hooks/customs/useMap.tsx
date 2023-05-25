@@ -13,7 +13,6 @@ interface Props {
 
 export default function Map({ selectedDistrict }: Props): JSX.Element {
   const router = useRouter();
-  const infoWindows = [];
 
   const [map, setMap] = useState(null);
   const { data } = useQueryFetchAllStudyCafes({
@@ -21,11 +20,6 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
     studyCafe_district: selectedDistrict,
     page: 1,
   });
-
-  // const cafes = data?.fetchAllStudyCafes;
-  // const LatLon = data?.fetchAllStudyCafes.map((el) => {
-  //   return [el.studyCafe_lat, el.studyCafe_lon];
-  // });
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -35,7 +29,7 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
 
     script.onload = () => {
       window.kakao.maps.load(function () {
-        const container = document.getElementById("map"); // 지도를 담을 영역의 DOM 레퍼런스
+        const container = document.getElementById("map");
         const map = new window.kakao.maps.Map(container, {
           center: new window.kakao.maps.LatLng(37.514575, 127.0495556),
           level: 3,
@@ -44,14 +38,16 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
       });
     };
   }, []);
-
+  // marker와 infowindow 표시
   useEffect(() => {
-    console.log("ggggg");
-    console.log(window.kakao);
-    if (!data || !map) return;
+    if (data === undefined || map === null) return;
+
+    const infoWindows = [];
+
 
     data?.fetchAllStudyCafes.forEach((el: any, index: number) => {
       console.log(el.studyCafe_lat, el.studyCafe_lon, "ddddddddd");
+
       const marker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(
           el.studyCafe_lon,
@@ -61,7 +57,6 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
       marker.setMap(map);
 
       const url = String(el?.images[0]?.image_url ?? "/ready.png");
-      console.log(url, "url");
       const positions = [
         {
           content:
@@ -95,10 +90,12 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
           ),
         },
       ];
+
       const infowindow = new window.kakao.maps.InfoWindow({
         content: positions[0].content,
       });
       infoWindows.push(infowindow);
+
       window.kakao.maps.event.addListener(marker, "click", function () {
         closeAllInfoWindows();
         infowindow.setContent(positions[0].content);
