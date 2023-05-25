@@ -44,7 +44,10 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
 
     const infoWindows = [];
 
-    data?.fetchAllStudyCafes.forEach((el) => {
+
+    data?.fetchAllStudyCafes.forEach((el: any, index: number) => {
+      console.log(el.studyCafe_lat, el.studyCafe_lon, "ddddddddd");
+
       const marker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(
           el.studyCafe_lon,
@@ -63,13 +66,13 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
             '<div style="font-size:20px;">' +
             String(el?.studyCafe_name) +
             "</div>" +
-            '            <div style="cursor:pointer; padding:10px" id="closeBtn">X</div>' +
+            `            <div style="cursor:pointer; padding:10px" id="closeBtn${index}">X</div>` +
             "        </div>" +
             '        <div class="body" style="display:flex; flex-direction:row;">' +
             '            <div class="img">' +
             '<img src="' +
             url +
-            '" width="73" height="70" id="image" style="cursor:pointer;">' +
+            `" width="73" height="70" id="image${index}" style="cursor:pointer;">` +
             "</img>" +
             '            <div class="desc" style="margin-left:10px;">' +
             '                <div class="ellipsis">' +
@@ -100,14 +103,14 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
       });
       document.addEventListener("click", function (event) {
         const target = event.target as HTMLElement;
-        if (target.matches("#closeBtn")) {
+        if (target.matches(`#closeBtn${index}`)) {
           infowindow.close();
         }
       });
       document.addEventListener("click", function (event) {
         const target = event.target as HTMLElement;
-        if (target.matches("#image")) {
-          void router.push(`/user/${data?.studyCafe_id}`);
+        if (target.matches(`#image${index}`)) {
+          void router.push(`/user/${el?.studyCafe_id}`);
         }
       });
       const closeAllInfoWindows = (): void => {

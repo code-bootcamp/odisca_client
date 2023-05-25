@@ -19,14 +19,14 @@ export default function CafeListItem(props: CafeListItemProps): JSX.Element {
   const cafeId = props.el.studyCafe_id;
   const router = useRouter();
 
-  const handleClick = (cafeId: string): void => {
+  const handleClick = (cafeId: string) => (): void => {
     void router.push(`/user/${cafeId}`);
   };
 
   return (
     <S.Wrapper>
       <S.ListBox key={cafeId}>
-        <S.CafeBox onClick={handleClick} id={cafeId}>
+        <S.CafeBox onClick={handleClick(cafeId)} id={cafeId}>
           <S.CafeName>{props.el.studyCafe_name}</S.CafeName>
           <S.CafeList>
             <S.CafeImg

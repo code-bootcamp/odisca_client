@@ -100,8 +100,8 @@ export default function AdminWrite(props): JSX.Element {
               result[0].x,
               result[0].y
             );
-            setLat(result[0].x);
-            setLon(result[0].y);
+            setLat(result[0].y);
+            setLon(result[0].x);
           }
         });
       });
@@ -167,8 +167,9 @@ export default function AdminWrite(props): JSX.Element {
     fileReader.readAsDataURL(file);
     fileReader.onload = (event) => {
       if (typeof event.target?.result === "string") {
+        console.log(imageUrls);
+        // imageUrls !== "" ? imageUrls :
         const newTemp = [...imageUrls.filter((el) => el !== "")];
-        console.log(newTemp, "ㅇㅇㅇㅇㅇㅇㅇㅇ");
         newTemp.push(event.target?.result);
         while (newTemp.length < 5) {
           newTemp.push("");
@@ -219,8 +220,6 @@ export default function AdminWrite(props): JSX.Element {
         image_isMain: isMain[index],
       };
     });
-
-    console.log(images, resultUrls, "아아아아아아아악");
 
     try {
       const result = await createLoginStudyCafe({
@@ -280,19 +279,34 @@ export default function AdminWrite(props): JSX.Element {
       const updateResult = await updateLoginStudyCafe({
         variables: {
           updateStudyCafeInput: {
-            studyCafe_name: data.name,
+            studyCafe_id: String(router.query.Id),
+            studyCafe_name:
+              data.name !== ""
+                ? data.name
+                : props.data.fetchOneStudyCafeForAdminister.studyCafe_name,
             studyCafe_address: address,
             studyCafe_addressDetail: addressDetail,
             studyCafe_city: city,
             studyCafe_district: district,
-            studyCafe_contact: data.contact,
-            studyCafe_timeFee: Number(data.timeFee),
-            studyCafe_description: String(data.description),
+            studyCafe_contact:
+              data.contact !== ""
+                ? data.contact
+                : props.data.fetchOneStudyCafeForAdminister.studyCafe_contact,
+
+            studyCafe_timeFee:
+              data.timeFee !== ""
+                ? Number(data.timeFee)
+                : props.data.fetchOneStudyCafeForAdminister.studyCafe_timeFee,
+
+            studyCafe_description:
+              data.description !== ""
+                ? String(data.description)
+                : props.data.fetchOneStudyCafeForAdminister.description,
+
             studyCafe_openTime: openTime,
             studyCafe_closeTime: closeTime,
             studyCafe_lat: Number(lat),
             studyCafe_lon: Number(lon),
-            studyCafe_brn: data.brn,
             image: images,
           },
         },
@@ -319,19 +333,23 @@ export default function AdminWrite(props): JSX.Element {
     "집좀가자!!!!!!!!"
   );
 
+  const onClickMoveCafeDetail = (): void => {
+    void router.push(`/admin/${router.query.Id}`);
+  };
+
   // return 값
   return (
     <form
       onSubmit={
-        // props.isEdit
-        // ? wrapFormAsync(handleSubmit(onClickUpdate))
-        // wrapFormAsync(handleSubmit(onClickCafeSubmit(data)))
-        wrapFormAsync(handleSubmit(onClickCafeSubmit))
+        props.isEdit
+          ? wrapFormAsync(handleSubmit(onClickUpdateCafe))
+          : wrapFormAsync(handleSubmit(onClickCafeSubmit))
+        // wrapFormAsync(handleSubmit(onClickCafeSubmit))
       }
     >
       <S.Wrapper>
         <S.Header>
-          <S.Title>업체 등록하기</S.Title>
+          <S.Title>업체 {props.isEdit ? "수정" : "등록"}하기</S.Title>
         </S.Header>
         {/* <S.SectionTop> */}
         <S.SectionTopBox>
@@ -368,7 +386,9 @@ export default function AdminWrite(props): JSX.Element {
             <S.Input
               type="text"
               {...register("name")}
-              value={props.data?.fetchOneStudyCafeForAdminister.studyCafe_name}
+              defaultValue={
+                props.data?.fetchOneStudyCafeForAdminister.studyCafe_name
+              }
             />
             <S.Error>{formState.errors.name?.message}</S.Error>
           </S.InputBox>
@@ -468,14 +488,14 @@ export default function AdminWrite(props): JSX.Element {
                   <S.ImageBox key={el}>
                     {imageUrls[index] !== "" ||
                     props.data?.fetchOneStudyCafeForAdminister.images[index]
-                      .image_url !== undefined ? (
+                      ?.image_url !== undefined ? (
                       <>
                         <S.CafeImg
                           src={
-                            imageUrls[index] ??
-                            props.data?.fetchOneStudyCafeForAdminister.images[
-                              index
-                            ].image_url
+                            imageUrls[index] !== ""
+                              ? imageUrls[index]
+                              : props.data?.fetchOneStudyCafeForAdminister
+                                  .images[index].image_url
                           }
                           onClick={onClickUpload}
                         />
@@ -543,7 +563,9 @@ export default function AdminWrite(props): JSX.Element {
           ) : (
             <></>
           )}
-          <S.Btn type="button">취소하기</S.Btn>
+          <S.Btn type="button" onClick={onClickMoveCafeDetail}>
+            취소하기
+          </S.Btn>
         </S.Footer>
       </S.Wrapper>
     </form>
