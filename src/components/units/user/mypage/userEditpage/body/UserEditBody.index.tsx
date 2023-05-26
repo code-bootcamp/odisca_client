@@ -16,12 +16,6 @@ import { useMutationUploadImageFile } from "../../../../../commons/hooks/mutatio
 import { useCallback } from "react";
 import { useRouter } from "next/router";
 
-// interface IFormUpdateData {
-//   user_password: string;
-//   user_phone: string;
-//   user_image: string;
-// }
-
 export default function UserEditBody(): JSX.Element {
   const router = useRouter();
   const [imageUrls] = useRecoilState(imageUrlsState);

@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
 export const Pixel = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
 `;
 
 export const Container = styled.div`
@@ -17,7 +17,7 @@ export const Box = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 0.5px solid black;
+  border: 0.5px solid #bdbdbd;
 `;
 export const Box2 = styled.div`
   display: flex;
@@ -66,16 +66,16 @@ export const SampleContainer = styled.div`
 
 export const SeatSample = styled.div`
   margin: 10px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-color: #e4e4e4;
   border: 1px solid #fefefe;
 `;
 
 export const SeatSampleUnUsable = styled.div`
   margin: 10px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-color: #323232;
   border: 1px solid #fefefe;
 `;

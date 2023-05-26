@@ -31,6 +31,8 @@ export const FETCH_ONE_STUDY_CAFE_FOR_USER = gql`
       studyCafe_openTime
       studyCafe_closeTime
       studyCafe_brn
+      studyCafe_lat
+      studyCafe_lon
       studyCafe_seatCount
       studyCafe_floorPlanX
       studyCafe_floorPlanY

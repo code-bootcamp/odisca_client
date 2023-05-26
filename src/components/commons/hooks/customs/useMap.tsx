@@ -62,21 +62,23 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
             '<div style="font-size:16px; margin-left:20px;">' +
             String(el?.studyCafe_name) +
             "</div>" +
-            `            <div style="cursor:pointer; margin-right:20px;" id="closeBtn${index}">X</div>` +
+            `            <div style="cursor:pointer; margin-right:20px;" id="closeBtn${
+              String(el.studyCafe_name) + String(index)
+            }">X</div>` +
             "        </div>" +
             '        <div class="body">' +
             '            <div class="img" style="display:flex; align-items : flex-start; justify-content: flex-start; margin-top:15px;">' +
             '<img src="' +
             url +
-            `" width="73" height="70" id="image${index}" style="cursor:pointer; margin-left:20px;">` +
+            `" width="73" height="70" id="image${
+              String(el.studyCafe_name) + String(index)
+            }" style="cursor:pointer; margin-left:20px;">` +
             "</img>" +
             '                <div class="ellipsis" style="font-size:10px; margin-left:15px;">' +
             String(el?.studyCafe_address) +
             " " +
             String(el?.studyCafe_addressDetail) +
             "</div>" +
-            // '            <div class="desc" style="margin-left:10px;">' +
-            // "            </div>" +
             "        </div>" +
             "    </div>" +
             "</div>",
@@ -99,13 +101,19 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
       });
       document.addEventListener("click", function (event) {
         const target = event.target as HTMLElement;
-        if (target.matches(`#closeBtn${index}`)) {
+        if (
+          target.matches(
+            `#closeBtn${String(el.studyCafe_name) + String(index)}`
+          )
+        ) {
           infowindow.close();
         }
       });
       document.addEventListener("click", function (event) {
         const target = event.target as HTMLElement;
-        if (target.matches(`#image${index}`)) {
+        if (
+          target.matches(`#image${String(el.studyCafe_name) + String(index)}`)
+        ) {
           void router.push(`/user/${el?.studyCafe_id}`);
         }
       });
@@ -116,7 +124,7 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
       };
     });
   }, [data, map]);
-
+  console.log(data, map, "123");
   return (
     <>
       <div id="map" style={{ width: "100%", height: "100%" }}></div>
