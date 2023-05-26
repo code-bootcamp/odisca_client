@@ -2,6 +2,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import * as S from "../src/commons/landingPageStyles/index";
+import { useMoveToPage } from "../src/components/commons/hooks/customs/useMoveToPage";
 
 export default function LandingPage(): JSX.Element {
   useEffect(() => {
@@ -11,6 +12,8 @@ export default function LandingPage(): JSX.Element {
     });
     AOS.refresh();
   });
+
+  const { onClickMoveToPage } = useMoveToPage();
 
   return (
     <>
@@ -52,7 +55,7 @@ export default function LandingPage(): JSX.Element {
           <S.ThirdWrapper>
             <S.Top>
               <S.TopLeftImg data-aos="fade-in" data-aos-delay="300">
-                <S.ThirdTopImg src="/cafeImg.jpeg"></S.ThirdTopImg>
+                <S.ThirdTopImg src="/point.svg"></S.ThirdTopImg>
               </S.TopLeftImg>
               <S.TopContentsWrapper data-aos="zoom-in" data-aos-delay="0">
                 <S.TopRightContents1>
@@ -80,25 +83,54 @@ export default function LandingPage(): JSX.Element {
               </S.BottomContentsWrapper>
 
               <S.BottomRightImg data-aos="fade-in" data-aos-delay="0">
-                <S.ThirdBottomImg src="/cafeImg.jpeg"></S.ThirdBottomImg>
+                <S.ThirdBottomImg src="/map.svg"></S.ThirdBottomImg>
               </S.BottomRightImg>
             </S.Bottom>
           </S.ThirdWrapper>
         </S.Third>
 
         <S.Fourth>
-          <S.FourthTop>
-            <S.TopTiTle>어디스카 어쩌구저쩌구</S.TopTiTle>
-          </S.FourthTop>
-          <S.FourthBottom>
-            <S.FourthLeft>
-              <S.GoAdminBtn>관리자페이지</S.GoAdminBtn>
-            </S.FourthLeft>
-            <S.FourthRight>
-              <S.GoUserBtn>유저페이지</S.GoUserBtn>
-            </S.FourthRight>
-          </S.FourthBottom>
+          <S.FourthWrapper>
+            <S.FourthLeftWrapper onClick={onClickMoveToPage("/admin/login")}>
+              <S.FourthLeftImg src="/admin.svg" />
+              <S.GoAdminBtn onClick={onClickMoveToPage("/admin/login")}>
+                For Admin
+              </S.GoAdminBtn>
+            </S.FourthLeftWrapper>
+            <S.FourthRightWrapper onClick={onClickMoveToPage("/user/mainPage")}>
+              <S.FourthRightImg src="/user.svg" />
+              <S.GoUserBtn onClick={onClickMoveToPage("/user/mainPage")}>
+                For User
+              </S.GoUserBtn>
+            </S.FourthRightWrapper>
+          </S.FourthWrapper>
         </S.Fourth>
+
+        <S.Footer>
+          <S.LogoWrapper>
+            <S.Logo src="/logo_2.png" />
+          </S.LogoWrapper>
+
+          <S.AddressWrapper>
+            <S.Address>ADDRESS</S.Address>
+            <S.AddressContent>
+              {" "}
+              {`서울특별시 구로구 지밸리몰 
+                13층 12층 F1 `}
+            </S.AddressContent>
+          </S.AddressWrapper>
+          <S.ContactWrapper>
+            <S.Contact>CONTACT</S.Contact>
+            <S.ContactContent>
+              {`Tel: 010 1234 5678
+                Email:  info@mysite.com`}
+            </S.ContactContent>
+          </S.ContactWrapper>
+          <S.InfoUsWrapper>
+            <S.InfoUs>FOLLOW US</S.InfoUs>
+            <S.InfoUsContent>Facebook | Instagram | LinkedIn</S.InfoUsContent>
+          </S.InfoUsWrapper>
+        </S.Footer>
       </S.Wrapper>
     </>
   );

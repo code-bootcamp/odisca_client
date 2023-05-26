@@ -9,13 +9,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-export const Logo = styled.img`
-  width: 150px;
-  height: 150px;
-  position: absolute;
-  top: -30px;
-`;
-
 // ====== 첫번째 랜딩페이지 ====== //
 export const FirstWrapper = styled.div`
   width: 100vw;
@@ -227,6 +220,7 @@ export const ThirdTopImg = styled.img`
   width: 100%;
   height: 50vh;
   opacity: 1;
+  margin-top: 30px;
 `;
 
 export const TopContentsWrapper = styled.div`
@@ -310,29 +304,58 @@ export const Fourth = styled.div`
   background-color: #4f4f4f;
 `;
 
-export const FourthTop = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 15vh;
+export const Logo = styled.img`
+  width: 190px;
+  height: 190px;
 `;
 
-export const TopTiTle = styled.div`
-  color: #fff;
-  font-size: 50px;
-  font-weight: 600;
-`;
-
-export const FourthLeft = styled.div``;
-
-export const FourthBottom = styled.div`
+export const FourthLeftWrapper = styled.div`
+  width: 50%;
+  height: 100vh;
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 20vh;
+  align-items: center;
+  cursor: pointer;
+  :hover {
+    background-color: #fff;
+  }
+  transition: 0.4s ease-in-out;
 `;
 
-export const FourthRight = styled.div``;
+export const FourthLeftImg = styled.img`
+  position: absolute;
+  width: 35vw;
+  height: 65vh;
+`;
+
+export const FourthWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const FourthRightWrapper = styled.div`
+  width: 50%;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  :hover {
+    background-color: #fff;
+  }
+  transition: 0.4s ease-in-out;
+`;
+
+export const FourthRightImg = styled.img`
+  width: 35vw;
+  height: 65vh;
+  position: absolute;
+  left: 6vw;
+`;
 
 export const GoAdminBtn = styled.button`
   width: 180px;
@@ -343,7 +366,9 @@ export const GoAdminBtn = styled.button`
   border-radius: 30px;
   font-size: 23px;
   font-weight: 500;
-  margin-right: 1vw;
+  position: absolute;
+  top: 90vh;
+  cursor: pointer;
 `;
 
 export const GoUserBtn = styled.button`
@@ -355,4 +380,71 @@ export const GoUserBtn = styled.button`
   border-radius: 30px;
   font-size: 23px;
   font-weight: 500;
+  position: absolute;
+  top: 90vh;
+  cursor: pointer;
+`;
+
+// ====== footer ====== //
+
+export const Footer = styled.div`
+  width: 100vw;
+  height: 35vh;
+  background-color: #4f4f4f;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+export const LogoWrapper = styled.div``;
+
+export const AddressWrapper = styled.div`
+  width: 10vw;
+  border-top: 1px solid #fff;
+`;
+
+export const Address = styled.div`
+  color: #fff;
+  margin-top: 3vh;
+  margin-bottom: 4vh;
+`;
+
+export const AddressContent = styled.div`
+  color: #fff;
+  font-size: 15px;
+  white-space: pre-line;
+`;
+
+export const ContactWrapper = styled.div`
+  width: 10vw;
+  border-top: 1px solid #fff;
+`;
+
+export const Contact = styled.div`
+  color: #fff;
+  margin-top: 3vh;
+  margin-bottom: 4vh;
+`;
+
+export const ContactContent = styled.div`
+  color: #fff;
+  white-space: pre-line;
+  font-size: 15px;
+`;
+
+export const InfoUsWrapper = styled.div`
+  width: 10vw;
+  border-top: 1px solid #fff;
+`;
+
+export const InfoUs = styled.div`
+  color: #fff;
+  margin-top: 3vh;
+  margin-bottom: 4vh;
+`;
+
+export const InfoUsContent = styled.div`
+  color: #fff;
+  font-size: 15px;
 `;
