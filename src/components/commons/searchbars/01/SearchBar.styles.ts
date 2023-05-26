@@ -11,33 +11,52 @@ export const SearchBar = styled.div`
   padding: 0px 15px;
 `;
 
-export const SelectBox = styled(Select)`
-  size: 6;
-  .ant-select.ant-select-open .ant-select-selector {
-    height: 100px;
+export const SelectBox = styled.div`
+  position: relative;
+  width: 200px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  align-self: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  &::before {
+    content: "⌵";
+    position: absolute;
+    top: 1px;
+    right: 8px;
+    color: #49c181;
+    font-size: 20px;
   }
-  .select {
-    width: 100px;
-    height: 100px;
-    size: 7;
-  }
-  && {
-    .select {
-      width: 100px;
-      height: 100px;
-    }
-  }
-  && {
-    &.ant-select {
-      font-size: 12px;
-    }
-    &.ant-select-open .ant-select-selector {
-      height: 100px;
-    }
-    &.select {
-      width: 100px;
-      height: 100px;
-      font-size: 18px;
-    }
+`;
+
+export const Label = styled.label`
+  font-size: 14px;
+  margin-left: 4px;
+  text-align: center;
+`;
+
+export const SelectOptions = styled.ul`
+  position: absolute;
+  list-style: none;
+  top: 18px;
+  left: 0;
+  width: 100%;
+  overflow-y: auto;
+  height: 200px;
+  max-height: ${(props) => (props.show ? "none" : "0")};
+  padding: 0;
+  border-radius: 8px;
+  background-color: #222222;
+  color: #fefefe;
+`;
+
+export const Option = styled.li`
+  font-size: 14px;
+  padding: 6px 8px;
+  transition: background-color 0.2s ease-in;
+  &:hover {
+    background-color: #595959;
   }
 `;

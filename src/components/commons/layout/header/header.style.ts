@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { Drawer } from "antd";
 
 export const Wrapper = styled.div`
+  width: 100vw;
   height: 135px;
   display: flex;
   background-color: #40e0d0;

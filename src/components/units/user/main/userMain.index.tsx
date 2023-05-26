@@ -26,6 +26,7 @@ export default function UserMain(): JSX.Element {
           width: "22%",
           height: "100vh",
           position: "absolute",
+          // overflow: "hidden",
         }}
       >
         <DistrictName>{selectedDistrict}</DistrictName>
@@ -38,7 +39,7 @@ export default function UserMain(): JSX.Element {
           display: "flex",
           flexDirection: "column",
           position: "absolute",
-          left: "21.2vw",
+          left: "22vw",
         }}
       >
         <Map selectedDistrict={selectedDistrict} />
