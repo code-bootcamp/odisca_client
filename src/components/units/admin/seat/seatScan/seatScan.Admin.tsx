@@ -3,6 +3,7 @@ import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../../components/co
 import { useEffect, useState } from "react";
 import * as S from "./seatScan.Style";
 import { useQueryFetchOneStudyCafeForAdmin } from "../../../../../components/commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
+import { v4 as uuidv4 } from "uuid";
 
 interface SeatData {
   status: string;
@@ -69,12 +70,12 @@ export default function SeatScanPage(): JSX.Element {
     };
     if (y + 1 <= stateY - 1) {
       if (ele.seatId !== map[y + 1][x].seatId) {
-        result.borderBottom = "1px solid black";
+        result.borderBottom = "1px solid #fefefe";
       }
     }
     if (x + 1 <= stateX - 1) {
       if (ele.seatId !== map[y][x + 1].seatId) {
-        result.borderRight = "1px solid black";
+        result.borderRight = "1px solid #fefefe";
       }
     }
     if (Number(ele.number) >= 1) {
@@ -89,13 +90,11 @@ export default function SeatScanPage(): JSX.Element {
         <S.Box>
           {map.map((el, indY) => {
             return (
-              <S.Box2 key={indY}>
+              <S.Box2 key={uuidv4()}>
                 {el.map((ele, indX) => {
                   return (
                     <>
-                      <S.Pixel style={image(ele, indX, indY)}>
-                        {/* {ele.number} */}
-                      </S.Pixel>
+                      <S.Pixel style={image(ele, indX, indY)}></S.Pixel>
                     </>
                   );
                 })}

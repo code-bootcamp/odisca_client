@@ -3,6 +3,7 @@ import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../../components/co
 import { useEffect, useState } from "react";
 import * as S from "./seatScan.Style";
 import { useQueryFetchOneStudyCafeForUser } from "../../../../../components/commons/hooks/queries/useQueryFetchStudyCafeForUser";
+import { v4 as uuidv4 } from "uuid";
 
 interface SeatData {
   status: string;
@@ -95,12 +96,13 @@ export default function SeatScanPage(): JSX.Element {
         <S.Box>
           {map.map((el, indY) => {
             return (
-              <S.Box2 key={indY}>
+              <S.Box2 key={uuidv4()}>
                 {el.map((ele, indX) => {
                   return (
-                    <>
-                      <S.Pixel style={image(ele, indX, indY)}></S.Pixel>
-                    </>
+                    <S.Pixel
+                      key={uuidv4()}
+                      style={image(ele, indX, indY)}
+                    ></S.Pixel>
                   );
                 })}
               </S.Box2>
