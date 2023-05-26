@@ -25,7 +25,7 @@ export const AdminRegister = styled.div`
   right: 40px;
   cursor: pointer;
   :hover {
-    padding-right: 200px;
+    padding-right: 100px;
   }
   transition: 0.5s ease-in-out;
 `;
@@ -36,7 +36,7 @@ export const AdminFetch = styled.div`
   left: 40px;
   cursor: pointer;
   :hover {
-    padding-left: 200px;
+    padding-left: 100px;
   }
   transition: 0.5s ease-in-out;
 `;
