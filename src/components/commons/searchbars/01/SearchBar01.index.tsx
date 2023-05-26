@@ -22,13 +22,9 @@ interface SearchBar01Props {
 export default function SearchBar01({
   onSecondCityChange,
 }: SearchBar01Props): JSX.Element {
-  const [cities, setCities] = useState(cityData[provinceData[0]]);
+  const [cities] = useState(cityData[provinceData[0]]);
+  const [isShowOptions, setShowOptions] = useState(false);
   const [secondCity, setSecondCity] = useState(cityData[provinceData[0]][0]);
-
-  const handleProvinceChange = (value: string): void => {
-    setCities(cityData[value]);
-    setSecondCity(cityData[value][0]);
-  };
 
   const handleSecondCityChange = (value: string): void => {
     setSecondCity(value);
@@ -38,26 +34,16 @@ export default function SearchBar01({
   return (
     <>
       <S.SearchBar>
-        <S.SelectBox
-          className="select"
-          defaultValue={provinceData[0]}
-          style={{ marginRight: "10px" }}
-          onChange={(value: unknown): void => {
-            handleProvinceChange(value as string);
-          }}
-          options={provinceData.map((province) => ({
-            label: province,
-            value: province,
-          }))}
-        />
-        <S.SelectBox
-          style={{ width: "80px" }}
-          value={secondCity}
-          onChange={(value: unknown): void => {
-            handleSecondCityChange(value as string);
-          }}
-          options={cities.map((city) => ({ label: city, value: city }))}
-        />
+        <S.SelectBox onClick={() => setShowOptions((prev) => !prev)}>
+          <S.Label>{secondCity}</S.Label>
+          <S.SelectOptions show={isShowOptions}>
+            {cities.map((city) => (
+              <S.Option key={city} onClick={() => handleSecondCityChange(city)}>
+                {city}
+              </S.Option>
+            ))}
+          </S.SelectOptions>
+        </S.SelectBox>
       </S.SearchBar>
     </>
   );

@@ -94,7 +94,7 @@ export default function LayoutHeader(): JSX.Element {
         style={{ marginBottom: router.pathname === "/user" ? "0px" : "65px" }}
       >
         <S.LightWrapper>
-          <S.Logo src="/header.png"></S.Logo>
+          <S.Logo src="/logo_final.png"></S.Logo>
         </S.LightWrapper>
         <S.RightWrapper>
           {!isLogin ? (
