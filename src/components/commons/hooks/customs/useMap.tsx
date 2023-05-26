@@ -46,8 +46,8 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
     data?.fetchAllStudyCafes.forEach((el: IStudyCafe, index: number) => {
       const marker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(
-          el.studyCafe_lon,
-          el.studyCafe_lat
+          el.studyCafe_lat,
+          el.studyCafe_lon
         ),
       });
       marker.setMap(map);
@@ -83,8 +83,8 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
             "    </div>" +
             "</div>",
           latlng: new window.kakao.maps.LatLng(
-            el.studyCafe_lon,
-            el.studyCafe_lat
+            el.studyCafe_lat,
+            el.studyCafe_lon
           ),
         },
       ];

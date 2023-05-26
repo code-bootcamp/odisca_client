@@ -119,12 +119,12 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
             // 정상적으로 검색이 완료됐으면
             if (status === window.kakao.maps.services.Status.OK) {
               const coords = new window.kakao.maps.LatLng(
-                result[0].x,
-                result[0].y
+                result[0].y,
+                result[0].x
               );
               console.log(coords);
-              setLat(result[0].y.toString());
-              setLon(result[0].x.toString());
+              setLat(result[0].x.toString());
+              setLon(result[0].y.toString());
             }
           }
         );
@@ -186,12 +186,6 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     setIsAddressModalOpen((prev) => !prev);
     return !isAddressModalOpen;
   };
-
-  // const SubmitModal = (): boolean => {
-  //   setIsSubmitModalOpen((prev) => !prev);
-  //   return !isSubmitModalOpen;
-  // };
-
   // daumpostcode에서 주소 검색 완료 시 로직
   const onCompleteAddressSearch = (AddressData: AddressData): void => {
     AddressModal();
@@ -241,22 +235,13 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
 
   // 등록하기 버튼 눌렀을 때(admin 등록)
   const onClickCafeSubmit = async (data: FieldValues): Promise<void> => {
-    // const results = await Promise.all(
-    //   files.map((el) => el && uploadImageFile({ variables: { images: el } }))
-    // );
     const results = await uploadImageFile({
       variables: { images: files.filter((el) => el instanceof File) },
     });
     console.log(results, "results");
 
     const resultUrls = [];
-    // if (results.data?.uploadImageFile != null)  {
-    //   for (let i = 0; i < results.data?.uploadImageFile.length; i++) {
-    //     results.data?.uploadImageFile[i]
-    //       ? resultUrls.push(results.data?.uploadImageFile[i])
-    //       : "";
-    //   }
-    // }
+
     if (results.data?.uploadImageFile != null) {
       const uploadImageFile = results.data.uploadImageFile;
       for (let i = 0; i < uploadImageFile.length; i++) {
