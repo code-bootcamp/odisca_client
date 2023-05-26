@@ -10,7 +10,6 @@ interface ITimeProps {
 
 const Wrapper = styled.section`
   width: calc(100% - 90px);
-  margin-top: 12px;
   display: flex;
 `;
 

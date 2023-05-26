@@ -34,8 +34,7 @@ export const Title = styled.h1`
 export const InputBox = styled.div`
   width: calc(50% - 20px);
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  flex-direction: column;
 `;
 
 export const LabelBox = styled.label`
@@ -53,7 +52,7 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-  width: calc(100% - 90px);
+  width: 100%;
   height: 50px;
   border-radius: 10px;
   text-indent: 10px;
@@ -91,7 +90,7 @@ export const AddressLabel = styled.label`
   padding-top: 5px;
   font-size: 15px;
   color: #4f4f4f;
-  margin-right: 60px;
+  margin-right: 15px;
 `;
 
 export const TimeSectionBox = styled.div`
@@ -148,11 +147,12 @@ export const SearchBtn = styled.button`
 export const AddressBox = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   margin-top: 10px;
 `;
 
 export const Address = styled.input`
-  width: calc(100% - 25px);
+  width: 100%;
   margin-top: 15px;
   height: 40px;
   border-radius: 10px;
@@ -166,7 +166,9 @@ export const Address = styled.input`
 `;
 
 export const Error = styled.div`
+  margin: 5px 0px 0px 5px;
   color: #7744aa;
+  font-size: 14px;
 `;
 
 export const SectionMiddle = styled.section`
@@ -289,7 +291,7 @@ export const Hour = styled.div`
   margin-top: 4px;
 `;
 
-export const WrapperBtm = styled.section`
+export const WrapperBtm = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;

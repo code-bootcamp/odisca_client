@@ -395,15 +395,18 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
               />
             </S.InputBox>
             <S.InputBox>
-              <S.LabelBox>
-                <S.Label> 사업자번호</S.Label>
-              </S.LabelBox>
-              <S.Input
-                type="text"
-                placeholder="ex) 000-000-000"
-                {...register("brn")}
-                value={data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
-              />
+              <div>
+                <S.LabelBox>
+                  <S.Label> 사업자번호</S.Label>
+                </S.LabelBox>
+                <S.Input
+                  type="text"
+                  placeholder="ex) 000-000-000"
+                  {...register("brn")}
+                  value={data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
+                />
+              </div>
+
               <S.Error>{formState.errors.brn?.message}</S.Error>
             </S.InputBox>
           </S.SectionBox>
@@ -441,13 +444,15 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
         <S.WrapperMiddle>
           <S.MiddleTopSectionBox>
             <S.AddressBox>
-              <S.AddressLabel>주소</S.AddressLabel>
-              <div id="map" style={{ display: "none" }}></div>
-
-              <S.AddressInputBox>
+              <div>
+                <S.AddressLabel>주소</S.AddressLabel>
+                <div id="map" style={{ display: "none" }}></div>
                 <S.SearchBtn type="button" onClick={AddressModal}>
                   검색
                 </S.SearchBtn>
+              </div>
+
+              <S.AddressInputBox>
                 {isAddressModalOpen ? (
                   <S.AddressSearchModal
                     open={isAddressModalOpen}
@@ -571,7 +576,9 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                 <S.Error>{formState.errors.timeFee?.message}</S.Error>
               </S.InputBox>
             </S.BtmSectionBox>
-            <S.BtmSectionBox style={{ flexDirection: "column" }}>
+            <S.BtmSectionBox
+              style={{ flexDirection: "column", marginTop: "15px" }}
+            >
               <S.Label>이용안내 및 설명</S.Label>
               <S.Notice
                 {...register("description")}
