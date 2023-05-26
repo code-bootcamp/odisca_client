@@ -4,6 +4,12 @@ import { useEffect, useState } from "react";
 import * as S from "./seatScan.Style";
 import { useQueryFetchOneStudyCafeForAdmin } from "../../../../../components/commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
 
+interface SeatData {
+  status: string;
+  seatId: string;
+  number: string;
+}
+
 export default function SeatScanPage(): JSX.Element {
   const router = useRouter();
   const { data: dataCafe } = useQueryFetchOneStudyCafeForAdmin(
@@ -17,7 +23,7 @@ export default function SeatScanPage(): JSX.Element {
     dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanY ?? 40
   );
   console.log(dataCafe, "카페");
-  const [map, setMap] = useState([]);
+  const [map, setMap] = useState<SeatData[][]>([]);
 
   console.log(data, "좌석");
   useEffect(() => {
@@ -27,7 +33,7 @@ export default function SeatScanPage(): JSX.Element {
       const newArray = Array.from(
         Array(dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanY),
         () => {
-          const result = [];
+          const result: SeatData[] = [];
           for (
             let i = 0;
             i < dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanX;
@@ -39,10 +45,10 @@ export default function SeatScanPage(): JSX.Element {
         }
       );
       console.log(newArray);
-      data?.fetchAllSeatsByStudyCafeId.map((el) => {
+      data?.fetchAllSeatsByStudyCafeId.forEach((el) => {
         const seat = JSON.parse(el.seat_location);
 
-        seat.map((ele) => {
+        seat.map((ele: number[]) => {
           newArray[ele[1]][ele[0]].status = el.seat_number;
           newArray[ele[1]][ele[0]].seatId = el.seat_id;
           newArray[ele[1]][ele[0]].number = el.seat_number;
@@ -53,7 +59,7 @@ export default function SeatScanPage(): JSX.Element {
     }
   }, [data, dataCafe]);
 
-  const image = (ele: any, x: number, y: number) => {
+  const image = (ele: SeatData, x: number, y: number): React.CSSProperties => {
     const result = {
       borderLeft: "none",
       borderRight: "none",
@@ -71,7 +77,7 @@ export default function SeatScanPage(): JSX.Element {
         result.borderRight = "1px solid black";
       }
     }
-    if (ele.number >= 1) {
+    if (Number(ele.number) >= 1) {
       result.backgroundColor = "#e4e4e4";
     }
     return result;

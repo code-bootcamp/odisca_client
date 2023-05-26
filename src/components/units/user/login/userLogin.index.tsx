@@ -16,9 +16,9 @@ interface IFormData {
 export default function UserLoginPage(): JSX.Element {
   const router = useRouter();
   const [LoginUser] = useMutationUserLogin();
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const [, setAccessToken] = useRecoilState(accessTokenState);
 
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState } = useForm<IFormData>({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
@@ -39,10 +39,7 @@ export default function UserLoginPage(): JSX.Element {
       });
       console.log(data);
       const accessToken = result.data?.LoginUser;
-      // setAccessToken(accessToken);
-      // if (accessToken) {
-      //   setAccessToken(accessToken || "");
-      // }
+
       if (accessToken === undefined) {
         alert("다시 로그인해주세요.");
         return;

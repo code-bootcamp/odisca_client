@@ -6,10 +6,6 @@ interface Props {
   selectedDistrict: string;
 }
 
-interface Cafe {
-  studyCafe_district: string;
-}
-
 export default function CafeListBody(props: Props): JSX.Element {
   const { selectedDistrict } = props;
   const { data, fetchMore } = useQueryFetchAllStudyCafes({
@@ -17,8 +13,9 @@ export default function CafeListBody(props: Props): JSX.Element {
     studyCafe_district: selectedDistrict,
     page: 1,
   });
+
   const filteredCafes = data?.fetchAllStudyCafes.filter(
-    (cafe: Cafe) => cafe.studyCafe_district === selectedDistrict
+    (cafe) => cafe?.studyCafe_district === selectedDistrict
   );
 
   const onLoadMore = (): void => {

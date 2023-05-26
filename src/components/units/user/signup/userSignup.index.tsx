@@ -2,7 +2,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
+import {
+  wrapFormAsync,
+  wrapAsync,
+} from "../../../../commons/libraries/asyncFunc";
 import { signUpSchema } from "../../../../commons/validations/validation";
 import EmailValidationPage from "../../../commons/emailValidation/emailValidation.index";
 import UseModal from "../../../commons/hooks/customs/useModal";
@@ -120,9 +123,7 @@ export default function UserSignUpPage(): JSX.Element {
                   <S.Right>
                     <S.EmailValidationBtn
                       type="button"
-                      onClick={wrapFormAsync(
-                        handleSubmit(onClickSendVerification)
-                      )}
+                      onClick={wrapAsync(handleSubmit(onClickSendVerification))}
                     >
                       인증하기
                     </S.EmailValidationBtn>

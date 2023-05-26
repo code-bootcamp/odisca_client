@@ -8,6 +8,14 @@ import { ISeat } from "../../../../commons/types/generated/types";
 import { useMutationCreatePayment } from "../../../commons/hooks/mutations/useMutationCreatePayment";
 import PayModal from "./mapScanner.PayModal";
 import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
+import { wrapAsync } from "../../../../commons/libraries/asyncFunc";
+
+interface SeatData {
+  status: string;
+  seatId: string;
+  number: string;
+  time: number;
+}
 
 export default function SeatReservationPage(): JSX.Element {
   const router = useRouter();
@@ -30,7 +38,7 @@ export default function SeatReservationPage(): JSX.Element {
   const [seatStatus, setSeatStatus] = useState("");
   const [seatNumber, setSeatNumber] = useState(0);
   const [seatUsable, setSeatUsable] = useState(false);
-  const [map, setMap] = useState([]);
+  const [map, setMap] = useState<SeatData[][]>([]);
   const [duringTime, setDuringTime] = useState(1);
   const [createPayment] = useMutationCreatePayment();
   const [isPayModal, setIsPayModal] = useState(false);
@@ -55,11 +63,12 @@ export default function SeatReservationPage(): JSX.Element {
           return result;
         }
       );
-      data?.fetchAllSeatsByStudyCafeId.map((el: ISeat) => {
+      data?.fetchAllSeatsByStudyCafeId.forEach((el: ISeat) => {
         const seat = JSON.parse(el.seat_location);
 
-        seat.map((ele) => {
-          newArray[ele[1]][ele[0]].status = el.user ? el.user?.user_id : "";
+        seat.forEach((ele: number[]) => {
+          newArray[ele[1]][ele[0]].status =
+            el.user !== undefined ? el.user?.user_id ?? "" : "";
           newArray[ele[1]][ele[0]].seatId = el.seat_id;
           newArray[ele[1]][ele[0]].number = el.seat_number;
           newArray[ele[1]][ele[0]].time = Math.floor(
@@ -71,16 +80,7 @@ export default function SeatReservationPage(): JSX.Element {
     }
   }, [data, dataCafe, router]);
 
-  interface IImage {
-    borderLeft: string;
-    borderRight: string;
-    borderBottom: string;
-    borderTop: string;
-    backgroundColor: string;
-    cursor?: string;
-  }
-
-  const image = (ele: any, x: number, y: number): IImage => {
+  const image = (ele: SeatData, x: number, y: number): React.CSSProperties => {
     const result = {
       borderLeft: "none",
       borderRight: "none",
@@ -210,7 +210,7 @@ export default function SeatReservationPage(): JSX.Element {
           footer={[
             <button
               key={"reservation"}
-              onClick={submitReservation}
+              onClick={wrapAsync(submitReservation)}
               disabled={!seatUsable}
             >
               예약
