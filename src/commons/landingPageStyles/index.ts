@@ -304,11 +304,6 @@ export const Fourth = styled.div`
   background-color: #4f4f4f;
 `;
 
-export const Logo = styled.img`
-  width: 190px;
-  height: 190px;
-`;
-
 export const FourthLeftWrapper = styled.div`
   width: 50%;
   height: 100vh;
@@ -398,6 +393,12 @@ export const Footer = styled.div`
 `;
 
 export const LogoWrapper = styled.div``;
+
+export const Logo = styled.img`
+  width: 190px;
+  height: 190px;
+  margin-top: 3vh;
+`;
 
 export const AddressWrapper = styled.div`
   width: 10vw;
