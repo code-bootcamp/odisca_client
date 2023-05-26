@@ -71,13 +71,23 @@ export default function SeatReservationPage(): JSX.Element {
     }
   }, [data, dataCafe, router]);
 
-  const image = (ele: any, x: number, y: number) => {
+  interface IImage {
+    borderLeft: string;
+    borderRight: string;
+    borderBottom: string;
+    borderTop: string;
+    backgroundColor: string;
+    cursor?: string;
+  }
+
+  const image = (ele: any, x: number, y: number): IImage => {
     const result = {
       borderLeft: "none",
       borderRight: "none",
       borderBottom: "none",
       borderTop: "none",
       backgroundColor: "none",
+      cursor: "",
     };
     if (y + 1 <= stateY - 1) {
       if (ele.seatId !== map[y + 1][x].seatId) {
@@ -91,9 +101,11 @@ export default function SeatReservationPage(): JSX.Element {
     }
     if (ele.status === "") {
       result.backgroundColor = "#e4e4e4";
+      result.cursor = "pointer";
     }
     if (ele.status !== "empty" && ele.status !== "") {
       result.backgroundColor = "#323232";
+      result.cursor = "pointer";
     }
     return result;
   };
