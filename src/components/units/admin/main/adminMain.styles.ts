@@ -27,6 +27,7 @@ export const AdminRegister = styled.div`
   :hover {
     padding-right: 200px;
   }
+  transition: 0.5s ease-in-out;
 `;
 
 export const AdminFetch = styled.div`
@@ -37,6 +38,7 @@ export const AdminFetch = styled.div`
   :hover {
     padding-left: 200px;
   }
+  transition: 0.5s ease-in-out;
 `;
 
 export const Text1 = styled.h1`
