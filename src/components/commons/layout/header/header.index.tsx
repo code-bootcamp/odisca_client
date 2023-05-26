@@ -35,7 +35,7 @@ export default function LayoutHeader(): JSX.Element {
   const [deleteAdmin] = useMutationDeleteAdmin();
 
   const onClickLogOut = async (): Promise<void> => {
-    if (router.asPath.includes("admin")) {
+    if (localStorage.getItem("loginType") === "admin") {
       await logoutAdmin();
       alert("로그아웃 완료되었습니다.");
       localStorage.removeItem("accessToken");
@@ -51,7 +51,7 @@ export default function LayoutHeader(): JSX.Element {
   };
 
   const onClickMyPage = (): void => {
-    if (router.asPath.includes("admin")) {
+    if (localStorage.getItem("loginType") === "admin") {
       void router.push("/admin/adminPage");
     } else {
       void router.push("/user/mypage");

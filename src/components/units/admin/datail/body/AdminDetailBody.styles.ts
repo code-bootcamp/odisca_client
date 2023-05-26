@@ -4,10 +4,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export const Body = styled.main`
+  width: 100%;
   margin: 0 auto;
 `;
 export const SliderItem = styled.img`
+  width: 100%;
   height: 250px;
+  margin: 0 auto;
 `;
 export const StyledSlider = styled(Slider)`
   .slick-arrow {
@@ -40,7 +43,11 @@ export const StyledSlider = styled(Slider)`
     opacity: 0.6;
     transition: opacity 0.5s ease-in-out;
   }
-  .slick-center .slider-img {
+  .slick-center {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  }
+  /* .slick-center .slider-img {
     width: 80%;
     height: auto;
   }
@@ -49,7 +56,7 @@ export const StyledSlider = styled(Slider)`
     height: auto;
     opacity: 1;
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-  }
+  } */
 `;
 export const ContentsBox = styled.article`
   margin-top: 50px;
@@ -57,7 +64,4 @@ export const ContentsBox = styled.article`
 export const Contents = styled.p`
   color: #4f4f4f;
   line-height: 30px;
-`;
-export const SeatComponent = styled.img`
-  margin-top: 50px;
 `;

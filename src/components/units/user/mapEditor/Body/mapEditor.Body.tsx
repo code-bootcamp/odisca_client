@@ -167,7 +167,7 @@ export default function MapEditor(): JSX.Element {
     ${stateX > hoverPosition[0] + hoverSize[0] - 1 ? "" : "display : none"};
 
     top: ${String(450 + hoverPosition[1] * 20) + "px"};
-    left: ${String(500 + hoverPosition[0] * 20) + "px"};
+    left: ${String(600 + hoverPosition[0] * 20) + "px"};
     background-color: gray;
   `;
   const onHoverTrue = (x: number, y: number) => () => {

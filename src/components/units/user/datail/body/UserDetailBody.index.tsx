@@ -2,6 +2,7 @@ import { IImage } from "../../../../../commons/types/generated/types";
 import SeatScanPage from "../../../admin/seat/seatScan/seatScan.User";
 import * as S from "./UserDetailBody.styles";
 import { StyledSlider, SliderItem } from "./UserDetailBody.styles";
+import { v4 as uuidv4 } from "uuid";
 
 interface IPropsUserDetailBody {
   cafeDescription: string;
@@ -16,7 +17,7 @@ export default function UserDetailBody(
   props: IPropsUserDetailBody
 ): JSX.Element {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 300,
     slidesToShow: 3,
@@ -28,16 +29,23 @@ export default function UserDetailBody(
     centerPadding: "0px",
   };
 
+  const countArray = new Array(2 * Number(props.cafeImages?.length)).fill(0);
+
   return (
     <S.Body>
       <StyledSlider {...settings}>
-        {props.cafeImages.map((el: IImage): JSX.Element => {
-          return (
-            <div key={el.image_id}>
-              <SliderItem src={el.image_url ?? ""} />
+        {countArray.map(
+          (_, index: number): JSX.Element => (
+            <div key={uuidv4()}>
+              <SliderItem
+                src={
+                  props.cafeImages?.[index % Number(props.cafeImages?.length)]
+                    .image_url ?? ""
+                }
+              />
             </div>
-          );
-        })}
+          )
+        )}
       </StyledSlider>
       <S.ContentsBox>
         <S.Contents>{props.cafeDescription}</S.Contents>
