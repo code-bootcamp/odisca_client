@@ -17,7 +17,7 @@ export const Container = styled.div`
 export const Box = styled.div`
   position: absolute;
   top: 450px;
-  left: 500px;
+  left: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;

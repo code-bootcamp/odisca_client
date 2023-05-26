@@ -7,6 +7,7 @@ import {
   ContentsBox,
   Contents,
 } from "./AdminDetailBody.styles";
+import { v4 as uuidv4 } from "uuid";
 
 interface IAdminDetailProps {
   cafeImages?: IImage[];
@@ -15,7 +16,7 @@ interface IAdminDetailProps {
 
 export default function AdminDetailBody(props: IAdminDetailProps): JSX.Element {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 300,
     slidesToShow: 3,
@@ -23,34 +24,31 @@ export default function AdminDetailBody(props: IAdminDetailProps): JSX.Element {
     arrow: true,
     pauseOnHover: true,
     centerMode: true,
-    centerPadding: "100px",
+    focusOnSelect: true,
+    centerPadding: "0px",
   };
 
-  const restImageUrls: string[] =
-    props.cafeImages?.map((el) => el?.image_url ?? "") ?? [];
+  // const restImageUrls: string[] =
+  //   props.cafeImages?.map((el) => el?.image_url ?? "") ?? [];
+  const countArray = new Array(2 * Number(props.cafeImages?.length)).fill(0);
 
   return (
     <Body>
       <StyledSlider {...settings}>
-        <div>
-          <SliderItem
-            src={restImageUrls[0]}
-            style={{ width: "80%", height: "auto" }}
-          />
-        </div>
-        <div>
-          <SliderItem src={restImageUrls[1]} />
-        </div>
-        <div>
-          <SliderItem src={restImageUrls[2]} />
-        </div>
-        <div>
-          <SliderItem src={restImageUrls[3]} />
-        </div>
-        <div>
-          <SliderItem src={restImageUrls[4]} />
-        </div>
+        {countArray.map(
+          (_, index: number): JSX.Element => (
+            <div key={uuidv4()}>
+              <SliderItem
+                src={
+                  props.cafeImages?.[index % Number(props.cafeImages?.length)]
+                    .image_url ?? ""
+                }
+              />
+            </div>
+          )
+        )}
       </StyledSlider>
+
       <ContentsBox>
         <Contents>{props.cafeDescription}</Contents>
       </ContentsBox>
