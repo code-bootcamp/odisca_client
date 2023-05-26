@@ -30,6 +30,7 @@ export default function Review(props: IReviewProps): JSX.Element {
   const { register, handleSubmit } = useForm<IFormReviewData>({
     mode: "onChange",
   });
+  const review = reviewdata?.fetchLoginReviewsByUserId[0]?.review_content;
 
   const onClickSubmitReview = async (data: IFormReviewData): Promise<void> => {
     try {
@@ -110,7 +111,6 @@ export default function Review(props: IReviewProps): JSX.Element {
     }
   };
 
-  const review = reviewdata?.fetchLoginReviewsByUserId[0]?.review_content;
   return (
     <>
       <S.Wrapper>

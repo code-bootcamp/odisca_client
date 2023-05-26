@@ -8,7 +8,7 @@ export default function UserMyPageBody(): JSX.Element {
   const { data } = useQueryFetchLoginUser();
 
   const minutes = Math.floor(
-    data?.fetchLoginUser.visits[0]?.seat?.seat_remainTime / (1000 * 60)
+    data?.fetchLoginUser.visits[0]?.seat?.seat_remainTime ?? 0 / (1000 * 60)
   ); // 분으로 변환
   const remainingHours = Math.floor(minutes / 60); // 시간으로 변환
   const remainingMinutes = minutes % 60; // 남은 분 계산
@@ -36,7 +36,7 @@ export default function UserMyPageBody(): JSX.Element {
               </S.RemainingTime>
               <S.Btn>이용종료</S.Btn>
               <S.Btn onClick={showModal}>리뷰쓰기</S.Btn>
-              {isModalOpen && (
+              {isModalOpen !== undefined && (
                 <S.ReviewModal
                   okButtonProps={{ style: { display: "none" } }}
                   cancelButtonProps={{ style: { display: "none" } }}

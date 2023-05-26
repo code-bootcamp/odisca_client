@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { IStudyCafe } from "../../../../commons/types/generated/types";
 import { useQueryFetchAllStudyCafes } from "../queries/useQueryFetchAllStudyCafes";
 import { MapCenterUpdater } from "./useEffectMapCenter";
 
 declare const window: typeof globalThis & {
   kakao: any;
 };
-
 interface Props {
   selectedDistrict: string;
 }
@@ -41,9 +41,9 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
   useEffect(() => {
     if (data === undefined || map === null) return;
 
-    const infoWindows = [];
+    const infoWindows: any = [];
 
-    data?.fetchAllStudyCafes.forEach((el: any, index: number) => {
+    data?.fetchAllStudyCafes.forEach((el: IStudyCafe, index: number) => {
       const marker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(
           el.studyCafe_lon,
@@ -110,7 +110,7 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
         }
       });
       const closeAllInfoWindows = (): void => {
-        infoWindows.forEach((infowindow) => {
+        infoWindows.forEach((infowindow: any) => {
           infowindow.close();
         });
       };

@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Modal } from "antd";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { wrapFormAsync } from "../../../../../../commons/libraries/asyncFunc";
 import { userEditSchema } from "../../../../../../commons/validations/validation";
 import MyDropzone from "../../../../../commons/hooks/customs/useDropzone";
@@ -16,11 +16,11 @@ import { useMutationUploadImageFile } from "../../../../../commons/hooks/mutatio
 import { useCallback } from "react";
 import { useRouter } from "next/router";
 
-interface IFormUpdateData {
-  user_password: string;
-  user_phone: string;
-  user_image: string;
-}
+// interface IFormUpdateData {
+//   user_password: string;
+//   user_phone: string;
+//   user_image: string;
+// }
 
 export default function UserEditBody(): JSX.Element {
   const router = useRouter();
@@ -35,19 +35,21 @@ export default function UserEditBody(): JSX.Element {
     mode: "onChange",
   });
 
-  const onClickUserUpdate = async (data: IFormUpdateData) => {
+  const onClickUserUpdate = async (data: FieldValues): Promise<void> => {
     try {
       if (imageUrls.length === 0) {
         return;
       }
-      const ImageFile = await Promise.all(
-        imageUrls.map((imageUrl) => {
-          return new Promise<File>((resolve, reject) => {
+      const ImageFile: File[] = [];
+      for (let i = 0; i < imageUrls.length; i++) {
+        const imageUrl = imageUrls[i];
+        try {
+          const file = await new Promise<File>((resolve, reject) => {
             const img = new Image();
             img.onload = () => {
               const canvas = document.createElement("canvas");
               const ctx = canvas.getContext("2d");
-              if (!ctx) {
+              if (ctx === null) {
                 reject(new Error("Failed to create canvas context."));
                 return;
               }
@@ -55,13 +57,13 @@ export default function UserEditBody(): JSX.Element {
               canvas.height = img.height;
               ctx.drawImage(img, 0, 0);
               canvas.toBlob((blob) => {
-                if (!blob) {
+                if (blob === null) {
                   reject(new Error("Failed to convert canvas to blob."));
                   return;
                 }
                 const file = new File(
                   [blob],
-                  selectedFile?.name || "image.png"
+                  selectedFile?.name ?? "image.png"
                 );
                 resolve(file);
               });
@@ -71,8 +73,12 @@ export default function UserEditBody(): JSX.Element {
             };
             img.src = imageUrl;
           });
-        })
-      );
+
+          ImageFile.push(file);
+        } catch (error) {
+          console.error(error);
+        }
+      }
 
       const results = await uploadImageFile({
         variables: { images: ImageFile },
@@ -84,9 +90,9 @@ export default function UserEditBody(): JSX.Element {
       const updateResult = await updateLoginUser({
         variables: {
           updateLoginUserInput: {
-            user_password: data.user_password,
-            user_phone: data.user_phone,
-            user_image: url,
+            user_password: String(data.user_password),
+            user_phone: String(data.user_phone),
+            user_image: String(url),
           },
         },
       });
@@ -105,8 +111,12 @@ export default function UserEditBody(): JSX.Element {
     }
   };
 
-  const onFileChange = useCallback((selectedFiles: File[]) => {
-    console.log(selectedFiles);
+  const onFileChange = useCallback((selectedFiles: File[] | null) => {
+    if (selectedFiles === null) {
+      console.log("No file selected.");
+    } else {
+      console.log(selectedFiles);
+    }
   }, []);
 
   return (

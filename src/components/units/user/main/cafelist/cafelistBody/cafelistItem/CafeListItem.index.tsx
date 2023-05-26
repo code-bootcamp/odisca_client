@@ -1,19 +1,9 @@
 import { useRouter } from "next/router";
+import { IStudyCafe } from "../../../../../../../commons/types/generated/types";
 import * as S from "./CafeListItem.styles";
 
 interface CafeListItemProps {
-  el: {
-    studyCafe_id: string;
-    studyCafe_name: string;
-    studyCafe_timeFee: number;
-    studyCafe_description: string;
-    images?: {
-      image_url: string;
-    }[];
-    review?: {
-      review_content: string;
-    }[];
-  };
+  el: IStudyCafe;
 }
 
 export default function CafeListItem(props: CafeListItemProps): JSX.Element {
@@ -24,18 +14,14 @@ export default function CafeListItem(props: CafeListItemProps): JSX.Element {
     void router.push(`/user/${cafeId}`);
   };
 
+  const imageUrl = props.el.images?.[0]?.image_url ?? "/ready.png";
+
   return (
     <S.Wrapper>
       <S.ListBox key={cafeId}>
         <S.CafeBox onClick={handleClick(cafeId)} id={cafeId}>
           <S.CafeList>
-            <S.CafeImg
-              src={
-                props.el.images?.[0]?.image_url !== undefined
-                  ? `${props.el.images?.[0]?.image_url}`
-                  : "/ready.png"
-              }
-            />
+            <S.CafeImg src={imageUrl} />
             <S.CafeName>{props.el.studyCafe_name}</S.CafeName>
             <S.CafeInfo>
               <S.PriceImg src="/user/main/price.png" />

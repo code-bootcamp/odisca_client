@@ -18,7 +18,7 @@ export default function UserLoginPage(): JSX.Element {
   const router = useRouter();
   const [loginAdmin] = useMutationAdminLogin();
   const [, setAccessToken] = useRecoilState(accessTokenState);
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState } = useForm<IFormData>({
     resolver: yupResolver(schemaAdmin),
     mode: "onChange",
   });
@@ -27,7 +27,7 @@ export default function UserLoginPage(): JSX.Element {
     void router.push("/admin/signup");
   };
 
-  const onClickSubmit = async (data: IFormData): void => {
+  const onClickSubmit = async (data: IFormData): Promise<void> => {
     try {
       const result = await loginAdmin({
         variables: {
@@ -41,7 +41,11 @@ export default function UserLoginPage(): JSX.Element {
       void router.push("/admin/adminPage");
       console.log(result);
       const accessToken = result.data?.LoginAdminister;
-      if (accessToken === undefined || !data.email || !data.password) {
+      if (
+        accessToken === undefined ||
+        data.email === undefined ||
+        data.password === undefined
+      ) {
         Modal.error({
           content: "로그인에 실패! 다시 시도해 주세요!",
         });

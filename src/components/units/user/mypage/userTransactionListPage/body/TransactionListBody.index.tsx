@@ -22,7 +22,7 @@ export default function TransactionListBody(): JSX.Element {
             <S.Bottom>
               <S.Btn onClick={showModal}>결제취소</S.Btn>
             </S.Bottom>
-            {isModalOpen ? (
+            {isModalOpen !== undefined ? (
               <S.CancelPaymentModal
                 open={isModalOpen}
                 onOk={handleOk}
