@@ -68,7 +68,7 @@ export const DetailInput = styled.input`
     outline: 2px solid #40e0d0;
   }
   ::placeholder {
-    color: #4f4f4f; /* 변경하고자 하는 플레이스홀더 색상 */
+    color: #4f4f4f;
   }
 `;
 

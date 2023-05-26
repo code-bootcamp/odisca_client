@@ -16,14 +16,6 @@ const CarouselBg = styled.img`
   height: 400px;
   width: 100vw;
 `;
-
-const Text = styled.div`
-  font-weight: 600;
-  font-size: 50px;
-  color: white;
-  margin: 0;
-`;
-
 const MySlider = styled(Slider)`
   .slick-slide {
     cursor: pointer;

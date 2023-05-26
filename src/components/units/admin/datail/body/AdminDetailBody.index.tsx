@@ -1,3 +1,4 @@
+import { IImage } from "../../../../../commons/types/generated/types";
 import SeatScanPage from "../../seat/seatScan/seatScan.Admin";
 import {
   Body,
@@ -8,7 +9,7 @@ import {
 } from "./AdminDetailBody.styles";
 
 interface IAdminDetailProps {
-  cafeImages?: { image_url: string[] }[];
+  cafeImages?: IImage[];
   cafeDescription: string;
 }
 
@@ -25,12 +26,8 @@ export default function AdminDetailBody(props: IAdminDetailProps): JSX.Element {
     centerPadding: "100px",
   };
 
-  // let restImageUrls = [];
-  // if (props.cafeImages !== undefined) {
-  //   restImageUrls = props.cafeImages.map((el) => el?.image_url ?? "");
-  // }
   const restImageUrls: string[] =
-    props.cafeImages?.flatMap((el) => el?.image_url ?? "") ?? [];
+    props.cafeImages?.map((el) => el?.image_url ?? "") ?? [];
 
   return (
     <Body>

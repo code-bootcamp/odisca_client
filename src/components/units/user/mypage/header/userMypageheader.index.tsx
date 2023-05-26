@@ -7,8 +7,6 @@ export default function UserMyPageHeader(): JSX.Element {
   const router = useRouter();
   const { data } = useQueryFetchLoginUser();
 
-  console.log(data);
-
   const onClickMovePaymentList = (): void => {
     void router.push(`/user/mypage/transactionList`);
   };

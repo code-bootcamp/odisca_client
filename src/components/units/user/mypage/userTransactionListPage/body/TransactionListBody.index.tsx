@@ -1,4 +1,3 @@
-import CancelPayment from "../../../../../commons/cancelpayment/cancelPayment.index";
 import UseModal from "../../../../../commons/hooks/customs/useModal";
 import * as S from "./TransactionListBody.styles";
 
@@ -22,15 +21,13 @@ export default function TransactionListBody(): JSX.Element {
             <S.Bottom>
               <S.Btn onClick={showModal}>결제취소</S.Btn>
             </S.Bottom>
-            {isModalOpen ? (
+            {isModalOpen !== undefined ? (
               <S.CancelPaymentModal
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={null}
-              >
-                <CancelPayment handleCancel={handleCancel} />
-              </S.CancelPaymentModal>
+              ></S.CancelPaymentModal>
             ) : (
               <></>
             )}
