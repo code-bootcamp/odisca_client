@@ -18,7 +18,7 @@ export const Box = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 0.5px solid black;
+  border: 0.5px solid #bdbdbd;
 `;
 export const Box2 = styled.div`
   display: flex;

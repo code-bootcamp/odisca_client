@@ -182,6 +182,7 @@ export default function MapEditor(): JSX.Element {
       borderBottom: "none",
       borderTop: "none",
       backgroundColor: "none",
+      cursor: "",
     };
 
     if (ele !== mapArray[y][x + 1]) {
@@ -194,6 +195,7 @@ export default function MapEditor(): JSX.Element {
     }
     if (ele >= 1) {
       result.backgroundColor = "#e4e4e4";
+      result.cursor = "pointer";
     }
     return result;
   };

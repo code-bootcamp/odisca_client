@@ -64,12 +64,12 @@ export default function SeatScanPage(): JSX.Element {
     };
     if (y + 1 <= stateY - 1) {
       if (ele.seatId !== map[y + 1][x].seatId) {
-        result.borderBottom = "1px solid black";
+        result.borderBottom = "1px solid #fefefe";
       }
     }
     if (x + 1 <= stateX - 1) {
       if (ele.seatId !== map[y][x + 1].seatId) {
-        result.borderRight = "1px solid black";
+        result.borderRight = "1px solid #fefefe";
       }
     }
     if (ele.status === "") {
