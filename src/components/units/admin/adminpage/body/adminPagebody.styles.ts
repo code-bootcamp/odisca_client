@@ -10,7 +10,7 @@ export const Wrapper = styled.aside`
 export const Title = styled.a`
   font-size: 18px;
   color: #828282;
-  margin: 35px 0 15px 0;
+  margin: 50px 0 15px 0;
 `;
 
 export const MyCafeWrapper = styled.main`
