@@ -97,9 +97,9 @@ export default function LandingPage(): JSX.Element {
                 For Admin
               </S.GoAdminBtn>
             </S.FourthLeftWrapper>
-            <S.FourthRightWrapper onClick={onClickMoveToPage("/user/mainPage")}>
+            <S.FourthRightWrapper onClick={onClickMoveToPage("/user")}>
               <S.FourthRightImg src="/user.svg" />
-              <S.GoUserBtn onClick={onClickMoveToPage("/user/mainPage")}>
+              <S.GoUserBtn onClick={onClickMoveToPage("/user")}>
                 For User
               </S.GoUserBtn>
             </S.FourthRightWrapper>
