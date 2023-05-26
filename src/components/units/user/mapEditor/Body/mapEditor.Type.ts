@@ -4,6 +4,7 @@ export interface IStyle {
   borderBottom: string;
   borderTop: string;
   backgroundColor: string;
+  cursor: string;
 }
 
 type Matrix = any[][];
