@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Select } from "antd";
+
 export const SearchBar = styled.div`
   left: 280px;
   z-index: 1;
@@ -9,11 +9,13 @@ export const SearchBar = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding: 0px 15px;
+  top: 60vh;
 `;
 
 export const SelectBox = styled.div`
   position: relative;
   width: 200px;
+  top: 4vh;
   height: 40px;
   padding: 8px;
   border-radius: 12px;
