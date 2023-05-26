@@ -59,6 +59,7 @@ export default function UserSignUpPage(): JSX.Element {
           <S.LogInTitle>관리자이신가요?</S.LogInTitle>
           <S.LogInButton type="button">LOGIN</S.LogInButton>
         </S.LogInWrapper>
+
         <S.SignUpWrapper>
           <S.SignUpWrapperContainer
             onSubmit={wrapFormAsync(handleSubmit(onClickSingUp))}

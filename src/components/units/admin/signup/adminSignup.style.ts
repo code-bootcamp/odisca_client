@@ -3,8 +3,8 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.main`
   width: 1920px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
   background-color: #4f4f4f;
 `;
 
@@ -37,14 +37,17 @@ export const LogInButton = styled.button`
 `;
 
 export const SignUpWrapper = styled.div`
-  width: 1007px;
-  height: 1080px;
+  width: 1100px;
+  height: 950px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
+  margin-top: 100px;
 `;
 
 export const SignUpWrapperContainer = styled.form`
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -55,11 +58,12 @@ export const SignUpTitle = styled.h1`
   font-size: 50px;
   font-weight: 900;
   color: #ffffff;
-  margin-bottom: 7%;
+  margin-bottom: 40px;
   margin-left: 70px;
 `;
 
 export const InputContainer = styled.div`
+  width: 100%;
   height: 732px;
   display: flex;
   flex-direction: column;
@@ -68,7 +72,7 @@ export const InputContainer = styled.div`
 `;
 
 export const SignUpInputBox = styled.div`
-  width: 600px;
+  width: 60%;
   display: flex;
   flex-direction: column;
 `;
@@ -81,29 +85,40 @@ export const SignUpInputDetail = styled.div`
 
 export const SignUpInputTitle = styled.div`
   width: calc(600px - 500px);
-  font-size: 27px;
+  font-size: 20px;
   font-weight: 400;
   color: #ffffff;
   line-height: 60px;
 `;
+
 export const SignUpInput = styled.input`
   width: 500px;
   height: 54px;
-  border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
-  background-color: #f7f7f7;
-  border: 1px solid #f7f7f7;
+  /* border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%; */
+  /* background-color: #f7f7f7; */
+  background-color: #4f4f4f;
+  /* border: 1px solid #f7f7f7; */
+  border: none;
+  border-bottom: 1px solid #f7f7f7;
   font-size: 18px;
   font-weight: 600;
+  color: #fff;
   padding-left: 10px;
   :focus {
     outline: 2px solid #40e0d0;
+    border-bottom: none;
+  }
+  ::placeholder {
+    color: #d4d2d2;
+    font-weight: 400;
+    font-size: 15px;
   }
 `;
 
 export const SignUpInputEmail = styled.input`
   width: 390px;
   height: 54px;
-  border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
+  /* border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
   background-color: #f7f7f7;
   border: 1px solid #f7f7f7;
   font-size: 18px;
@@ -111,14 +126,32 @@ export const SignUpInputEmail = styled.input`
   padding-left: 10px;
   :focus {
     outline: 2px solid #40e0d0;
+  } */
+  /* border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%; */
+  /* background-color: #f7f7f7; */
+  background-color: #4f4f4f;
+  /* border: 1px solid #f7f7f7; */
+  border: none;
+  border-bottom: 1px solid #f7f7f7;
+  font-size: 18px;
+  font-weight: 600;
+  padding-left: 10px;
+  :focus {
+    outline: 2px solid #40e0d0;
+    border-bottom: none;
+  }
+  ::placeholder {
+    color: #d4d2d2;
+    font-weight: 400;
+    font-size: 15px;
   }
 `;
 
 export const ErrorMessage = styled.div`
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
-  color: #fff;
-  margin: 15px 0px 0px 105px;
+  color: #ffd600;
+  margin: 15px 0px 0px 130px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -159,9 +192,9 @@ export const PhoneButton = styled.button`
   height: 54px;
   border-radius: 10px;
   border: none;
-  color: #ffffff;
+  color: #fff;
   background-color: #40e0d0;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   cursor: pointer;
 `;

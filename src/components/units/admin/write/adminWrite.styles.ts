@@ -1,6 +1,10 @@
 import styled from "@emotion/styled";
 import { Modal } from "antd";
 
+export const Body = styled.div`
+  display: flex;
+`;
+
 export const Wrapper = styled.div`
   width: 1000px;
   margin: 0 auto;

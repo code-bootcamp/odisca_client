@@ -65,6 +65,7 @@ export default function UserLoginPage(): JSX.Element {
             SIGNUP
           </S.SignUpButton>
         </S.SignUpWrapper>
+
         <S.LogInWrapper>
           <S.LogInWrapperContainer
             onSubmit={wrapFormAsync(handleSubmit(onClickSubmit))}

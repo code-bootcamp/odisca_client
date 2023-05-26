@@ -381,72 +381,78 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
 
   // return 값
   return (
-    <S.Wrapper>
-      <form
-        onSubmit={
-          props.isEdit
-            ? wrapFormAsync(handleSubmit(onClickUpdateCafe))
-            : wrapFormAsync(handleSubmit(onClickCafeSubmit))
-        }
-      >
-        <S.Header>
-          <S.Title>업체 {props.isEdit ? "수정" : "등록"}하기</S.Title>
-        </S.Header>
-        {/* <S.SectionTop> */}
-        <S.SectionTopBox>
-          <S.InputBox>
-            <S.LabelBox>
-              <S.Label>대표자명</S.Label>
-            </S.LabelBox>
-            <S.Input
-              type="text"
-              readOnly
-              defaultValue={
-                fetchAdministerData?.fetchLoginAdminister.administer_name
-              }
-            />
-          </S.InputBox>
-          <S.InputBox>
-            <S.LabelBox>
-              <S.Label> 사업자번호</S.Label>
-            </S.LabelBox>
-            <S.Input
-              type="text"
-              placeholder="ex) 000-000-000"
-              {...register("brn")}
-              value={data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
-            />
-            <S.Error>{formState.errors.brn?.message}</S.Error>
-          </S.InputBox>
-        </S.SectionTopBox>
-        <S.SectionBox>
-          <S.InputBox>
-            <S.LabelBox>
-              <S.Label>업체명</S.Label>
-            </S.LabelBox>
-            <S.Input
-              type="text"
-              {...register("name")}
-              defaultValue={data?.fetchOneStudyCafeForAdminister.studyCafe_name}
-            />
-            <S.Error>{formState.errors.name?.message}</S.Error>
-          </S.InputBox>
-        </S.SectionBox>
-        <S.SectionBox>
-          <S.InputBox>
-            <S.LabelBox>
-              <S.Label>연락처</S.Label>
-            </S.LabelBox>
-            <S.Input
-              type="text"
-              {...register("contact")}
-              defaultValue={
-                data?.fetchOneStudyCafeForAdminister.studyCafe_contact
-              }
-            />
-            <S.Error>{formState.errors.contact?.message}</S.Error>
-          </S.InputBox>
-        </S.SectionBox>
+
+    <S.Body>
+      <S.Wrapper>
+        <form
+          onSubmit={
+            props.isEdit
+              ? wrapFormAsync(handleSubmit(onClickUpdateCafe))
+              : wrapFormAsync(handleSubmit(onClickCafeSubmit))
+            // wrapFormAsync(handleSubmit(onClickCafeSubmit))
+          }
+        >
+          <S.Header>
+            <S.Title>업체 {props.isEdit ? "수정" : "등록"}하기</S.Title>
+          </S.Header>
+          {/* <S.SectionTop> */}
+          <S.SectionTopBox>
+            <S.InputBox>
+              <S.LabelBox>
+                <S.Label>대표자명</S.Label>
+              </S.LabelBox>
+              <S.Input
+                type="text"
+                readOnly
+                defaultValue={
+                  fetchAdministerData?.fetchLoginAdminister.administer_name
+                }
+              />
+            </S.InputBox>
+            <S.InputBox>
+              <S.LabelBox>
+                <S.Label> 사업자번호</S.Label>
+              </S.LabelBox>
+              <S.Input
+                type="text"
+                placeholder="ex) 000-000-000"
+                {...register("brn")}
+                value={data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
+              />
+              <S.Error>{formState.errors.brn?.message}</S.Error>
+            </S.InputBox>
+          </S.SectionTopBox>
+          <S.SectionBox>
+            <S.InputBox>
+              <S.LabelBox>
+                <S.Label>업체명</S.Label>
+              </S.LabelBox>
+              <S.Input
+                type="text"
+                {...register("name")}
+                defaultValue={
+                  data?.fetchOneStudyCafeForAdminister.studyCafe_name
+                }
+              />
+              <S.Error>{formState.errors.name?.message}</S.Error>
+            </S.InputBox>
+          </S.SectionBox>
+          <S.SectionBox>
+            <S.InputBox>
+              <S.LabelBox>
+                <S.Label>연락처</S.Label>
+              </S.LabelBox>
+              <S.Input
+                type="text"
+                {...register("contact")}
+                defaultValue={
+                  data?.fetchOneStudyCafeForAdminister.studyCafe_contact
+                }
+              />
+              <S.Error>{formState.errors.contact?.message}</S.Error>
+            </S.InputBox>
+          </S.SectionBox>
+       
       </form>
       <S.AddressSectionBox>
         <S.AddressLabel>주소</S.AddressLabel>
@@ -555,14 +561,14 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
           <S.Label>이용 요금표</S.Label>
           <S.InputBox>
             <S.Hour>시간 당</S.Hour>
-            <S.Input
-              type="text"
-              placeholder="ex) 3,000"
-              {...register("timeFee")}
-              defaultValue={
-                data?.fetchOneStudyCafeForAdminister.studyCafe_timeFee
-              }
-            />
+               <S.Input
+                type="text"
+                placeholder="ex) 3,000"
+                {...register("timeFee")}
+                defaultValue={
+                  data?.fetchOneStudyCafeForAdminister.studyCafe_timeFee
+                }
+              />
             <S.Error>{formState.errors.timeFee?.message}</S.Error>
           </S.InputBox>
         </S.SectionBox>
@@ -602,5 +608,6 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
         </S.Btn>
       </S.Footer>
     </S.Wrapper>
+    </S.Body>
   );
 }
