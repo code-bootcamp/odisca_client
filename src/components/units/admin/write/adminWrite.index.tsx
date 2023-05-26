@@ -174,39 +174,41 @@ export default function AdminWrite(props): JSX.Element {
     fileRef.current?.click();
   };
 
-  const onChangeFile = () => async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    console.log(file);
+  const onChangeFile =
+    () =>
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      const file = event.target.files?.[0];
+      console.log(file);
 
-    const isValid = checkValidationFile(file);
-    if (!isValid) return;
+      const isValid = checkValidationFile(file);
+      if (!isValid) return;
 
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = (event) => {
-      if (typeof event.target?.result === "string") {
-        console.log(imageUrls);
-        // imageUrls !== "" ? imageUrls :
-        const newTemp = [...imageUrls.filter((el) => el !== "")];
-        newTemp.push(event.target?.result);
-        while (newTemp.length < 5) {
-          newTemp.push("");
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = (event) => {
+        if (typeof event.target?.result === "string") {
+          console.log(imageUrls);
+          // imageUrls !== "" ? imageUrls :
+          const newTemp = [...imageUrls.filter((el) => el !== "")];
+          newTemp.push(event.target?.result);
+          while (newTemp.length < 5) {
+            newTemp.push("");
+          }
+
+          // console.log(newTemp, "newTemp");
+          setImageUrls(newTemp);
+
+          const tempFiles = [...files.filter((el) => el !== "")];
+          tempFiles.push(file);
+          while (tempFiles.length < 5) {
+            tempFiles.push("");
+          }
+          setFiles(tempFiles);
+          console.log(tempFiles, "tempFiles");
+          console.log(event.target?.result);
         }
-
-        // console.log(newTemp, "newTemp");
-        setImageUrls(newTemp);
-
-        const tempFiles = [...files.filter((el) => el !== "")];
-        tempFiles.push(file);
-        while (tempFiles.length < 5) {
-          tempFiles.push("");
-        }
-        setFiles(tempFiles);
-        console.log(tempFiles, "tempFiles");
-        console.log(event.target?.result);
-      }
+      };
     };
-  };
 
   // 등록하기 버튼 눌렀을 때(admin 등록)
   const onClickCafeSubmit = async (data: IFormValues): Promise<void> => {
@@ -336,238 +338,244 @@ export default function AdminWrite(props): JSX.Element {
 
   // return 값
   return (
-    <S.Wrapper>
-      <form
-        onSubmit={
-          props.isEdit
-            ? wrapFormAsync(handleSubmit(onClickUpdateCafe))
-            : wrapFormAsync(handleSubmit(onClickCafeSubmit))
-          // wrapFormAsync(handleSubmit(onClickCafeSubmit))
-        }
-      >
-        <S.Header>
-          <S.Title>업체 {props.isEdit ? "수정" : "등록"}하기</S.Title>
-        </S.Header>
-        {/* <S.SectionTop> */}
-        <S.SectionTopBox>
-          <S.InputBox>
-            <S.LabelBox>
-              <S.Label>대표자명</S.Label>
-            </S.LabelBox>
-            <S.Input
-              type="text"
-              readOnly
-              defaultValue={
-                fetchAdministerData?.fetchLoginAdminister.administer_name
-              }
-            />
-          </S.InputBox>
-          <S.InputBox>
-            <S.LabelBox>
-              <S.Label> 사업자번호</S.Label>
-            </S.LabelBox>
-            <S.Input
-              type="text"
-              placeholder="ex) 000-000-000"
-              {...register("brn")}
-              value={data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
-            />
-            <S.Error>{formState.errors.brn?.message}</S.Error>
-          </S.InputBox>
-        </S.SectionTopBox>
-        <S.SectionBox>
-          <S.InputBox>
-            <S.LabelBox>
-              <S.Label>업체명</S.Label>
-            </S.LabelBox>
-            <S.Input
-              type="text"
-              {...register("name")}
-              defaultValue={data?.fetchOneStudyCafeForAdminister.studyCafe_name}
-            />
-            <S.Error>{formState.errors.name?.message}</S.Error>
-          </S.InputBox>
-        </S.SectionBox>
-        <S.SectionBox>
-          <S.InputBox>
-            <S.LabelBox>
-              <S.Label>연락처</S.Label>
-            </S.LabelBox>
-            <S.Input
-              type="text"
-              {...register("contact")}
-              defaultValue={
-                data?.fetchOneStudyCafeForAdminister.studyCafe_contact
-              }
-            />
-            <S.Error>{formState.errors.contact?.message}</S.Error>
-          </S.InputBox>
-        </S.SectionBox>
-      </form>
-      <S.AddressSectionBox>
-        <S.AddressLabel>주소</S.AddressLabel>
-        <div id="map" style={{ display: "none" }}></div>
-        <S.AddressInputBox>
-          <S.AddressZip>
-            {/* <S.Zipcode
+    <S.Body>
+      <S.Wrapper>
+        <form
+          onSubmit={
+            props.isEdit
+              ? wrapFormAsync(handleSubmit(onClickUpdateCafe))
+              : wrapFormAsync(handleSubmit(onClickCafeSubmit))
+            // wrapFormAsync(handleSubmit(onClickCafeSubmit))
+          }
+        >
+          <S.Header>
+            <S.Title>업체 {props.isEdit ? "수정" : "등록"}하기</S.Title>
+          </S.Header>
+          {/* <S.SectionTop> */}
+          <S.SectionTopBox>
+            <S.InputBox>
+              <S.LabelBox>
+                <S.Label>대표자명</S.Label>
+              </S.LabelBox>
+              <S.Input
+                type="text"
+                readOnly
+                defaultValue={
+                  fetchAdministerData?.fetchLoginAdminister.administer_name
+                }
+              />
+            </S.InputBox>
+            <S.InputBox>
+              <S.LabelBox>
+                <S.Label> 사업자번호</S.Label>
+              </S.LabelBox>
+              <S.Input
+                type="text"
+                placeholder="ex) 000-000-000"
+                {...register("brn")}
+                value={data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
+              />
+              <S.Error>{formState.errors.brn?.message}</S.Error>
+            </S.InputBox>
+          </S.SectionTopBox>
+          <S.SectionBox>
+            <S.InputBox>
+              <S.LabelBox>
+                <S.Label>업체명</S.Label>
+              </S.LabelBox>
+              <S.Input
+                type="text"
+                {...register("name")}
+                defaultValue={
+                  data?.fetchOneStudyCafeForAdminister.studyCafe_name
+                }
+              />
+              <S.Error>{formState.errors.name?.message}</S.Error>
+            </S.InputBox>
+          </S.SectionBox>
+          <S.SectionBox>
+            <S.InputBox>
+              <S.LabelBox>
+                <S.Label>연락처</S.Label>
+              </S.LabelBox>
+              <S.Input
+                type="text"
+                {...register("contact")}
+                defaultValue={
+                  data?.fetchOneStudyCafeForAdminister.studyCafe_contact
+                }
+              />
+              <S.Error>{formState.errors.contact?.message}</S.Error>
+            </S.InputBox>
+          </S.SectionBox>
+        </form>
+        <S.AddressSectionBox>
+          <S.AddressLabel>주소</S.AddressLabel>
+          <div id="map" style={{ display: "none" }}></div>
+          <S.AddressInputBox>
+            <S.AddressZip>
+              {/* <S.Zipcode
                 type="text"
                 placeholder="07250"
                 value={zipcode}
                 readOnly
               ></S.Zipcode> */}
-            <S.SearchBtn type="button" onClick={AddressModal}>
-              주소검색
-            </S.SearchBtn>
-            {isAddressModalOpen ? (
-              <S.AddressSearchModal
-                open={true}
-                onOk={AddressModal}
-                onCancel={AddressModal}
-              >
-                <DaumPostcodeEmbed onComplete={onCompleteAddressSearch} />
-              </S.AddressSearchModal>
-            ) : (
-              <></>
-            )}
-          </S.AddressZip>
-          <S.AddressBox>
-            <S.Address
-              type="text"
-              readOnly
-              value={
-                address !== ""
-                  ? address
-                  : data?.fetchOneStudyCafeForAdminister.studyCafe_address ?? ""
-              }
-              // defaultValue={
-              //   data?.fetchOneStudyCafeForAdminister.studyCafe_address
-              // }
-            />
-            <S.Address
-              placeholder="상세주소를 입력해주세요."
-              type="text"
-              defaultValue={
-                data?.fetchOneStudyCafeForAdminister.studyCafe_addressDetail
-              }
-              onChange={AddressDetailInput}
-            />
-          </S.AddressBox>
-        </S.AddressInputBox>
-      </S.AddressSectionBox>
-      <S.SectionBox>
-        <S.InputBox>
-          <S.LabelBox>
-            <S.Label>영업시간</S.Label>
-          </S.LabelBox>
-          <OperatingTime
-            data={data}
-            onChangeSelectOpenTime={onChangeSelectOpenTime}
-            onChangeSelectCloseTime={onChangeSelectCloseTime}
-          />
-        </S.InputBox>
-      </S.SectionBox>
-      {/* </S.SectionTop> */}
-      <S.SectionMiddle>
-        <S.ImageSection>
-          <S.Label>
-            카페 내부 사진
-            <S.LabelDetail>
-              (메인으로 올라갈 사진 한 장을 체크해주세요!)
-            </S.LabelDetail>
-          </S.Label>
-
-          <S.ImageListBox>
-            {imageButtonArray.map((el, index) => {
-              return (
-                <S.ImageBox key={el}>
-                  {imageUrls[index] !== "" ||
-                  data?.fetchOneStudyCafeForAdminister.images[index]
-                    ?.image_url !== undefined ? (
-                    <>
-                      <S.CafeImg
-                        src={
-                          imageUrls[index] !== ""
-                            ? imageUrls[index]
-                            : data?.fetchOneStudyCafeForAdminister.images[index]
-                                .image_url
-                        }
-                        onClick={onClickUpload}
-                      />
-                      <S.MainImgCheckBtn
-                        type="radio"
-                        onChange={onChangeCheckMain(index)}
-                        name="check"
-                      />
-                    </>
-                  ) : (
-                    <S.PlusIcon type="button" onClick={onClickUpload}>
-                      +
-                    </S.PlusIcon>
-                  )}
-                  <S.ImageInput
-                    type="file"
-                    onChange={onChangeFile()}
-                    ref={fileRef}
-                  />
-                </S.ImageBox>
-              );
-            })}
-          </S.ImageListBox>
-        </S.ImageSection>
-      </S.SectionMiddle>
-      <S.SectionBottom>
+              <S.SearchBtn type="button" onClick={AddressModal}>
+                주소검색
+              </S.SearchBtn>
+              {isAddressModalOpen ? (
+                <S.AddressSearchModal
+                  open={true}
+                  onOk={AddressModal}
+                  onCancel={AddressModal}
+                >
+                  <DaumPostcodeEmbed onComplete={onCompleteAddressSearch} />
+                </S.AddressSearchModal>
+              ) : (
+                <></>
+              )}
+            </S.AddressZip>
+            <S.AddressBox>
+              <S.Address
+                type="text"
+                readOnly
+                value={
+                  address !== ""
+                    ? address
+                    : data?.fetchOneStudyCafeForAdminister.studyCafe_address ??
+                      ""
+                }
+                // defaultValue={
+                //   data?.fetchOneStudyCafeForAdminister.studyCafe_address
+                // }
+              />
+              <S.Address
+                placeholder="상세주소를 입력해주세요."
+                type="text"
+                defaultValue={
+                  data?.fetchOneStudyCafeForAdminister.studyCafe_addressDetail
+                }
+                onChange={AddressDetailInput}
+              />
+            </S.AddressBox>
+          </S.AddressInputBox>
+        </S.AddressSectionBox>
         <S.SectionBox>
-          <S.Label>이용 요금표</S.Label>
           <S.InputBox>
-            <S.Hour>시간 당</S.Hour>
-            <S.Input
-              type="text"
-              placeholder="ex) 3,000"
-              {...register("timeFee")}
-              defaultValue={
-                data?.fetchOneStudyCafeForAdminister.studyCafe_timeFee
-              }
+            <S.LabelBox>
+              <S.Label>영업시간</S.Label>
+            </S.LabelBox>
+            <OperatingTime
+              data={data}
+              onChangeSelectOpenTime={onChangeSelectOpenTime}
+              onChangeSelectCloseTime={onChangeSelectCloseTime}
             />
-            <S.Error>{formState.errors.timeFee?.message}</S.Error>
           </S.InputBox>
         </S.SectionBox>
-        <S.SectionBox>
-          <S.Label>이용안내 및 설명</S.Label>
-          <S.Notice
-            type="text"
-            {...register("description")}
-            defaultValue={
-              data?.fetchOneStudyCafeForAdminister.studyCafe_description
-            }
-          />
-        </S.SectionBox>
-      </S.SectionBottom>
-      <S.Footer
-        onSubmit={
-          props.isEdit
-            ? wrapFormAsync(handleSubmit(onClickUpdateCafe))
-            : wrapFormAsync(handleSubmit(onClickCafeSubmit))
-          // wrapFormAsync(handleSubmit(onClickCafeSubmit))
-        }
-      >
-        <S.Btn>{props.isEdit ? "수정" : "등록"}하기</S.Btn>
-        {isSubmitModalOpen ? (
-          <S.SubmitSuccessModal
-            open={SubmitModal}
-            onOk={SubmitModal}
-            onCancel={SubmitModal}
-            okButtonProps={{ style: { display: "none" } }}
-            cancelButtonProps={{ style: { display: "none" } }}
-          >
-            <SubmitSuccessAlertModal url={routerURL} />
-          </S.SubmitSuccessModal>
-        ) : (
-          <></>
-        )}
-        <S.Btn type="button" onClick={onClickMoveCafeDetail}>
-          취소하기
-        </S.Btn>
-      </S.Footer>
-    </S.Wrapper>
+        {/* </S.SectionTop> */}
+        <S.SectionMiddle>
+          <S.ImageSection>
+            <S.Label>
+              카페 내부 사진
+              <S.LabelDetail>
+                (메인으로 올라갈 사진 한 장을 체크해주세요!)
+              </S.LabelDetail>
+            </S.Label>
+
+            <S.ImageListBox>
+              {imageButtonArray.map((el, index) => {
+                return (
+                  <S.ImageBox key={el}>
+                    {imageUrls[index] !== "" ||
+                    data?.fetchOneStudyCafeForAdminister.images[index]
+                      ?.image_url !== undefined ? (
+                      <>
+                        <S.CafeImg
+                          src={
+                            imageUrls[index] !== ""
+                              ? imageUrls[index]
+                              : data?.fetchOneStudyCafeForAdminister.images[
+                                  index
+                                ].image_url
+                          }
+                          onClick={onClickUpload}
+                        />
+                        <S.MainImgCheckBtn
+                          type="radio"
+                          onChange={onChangeCheckMain(index)}
+                          name="check"
+                        />
+                      </>
+                    ) : (
+                      <S.PlusIcon type="button" onClick={onClickUpload}>
+                        +
+                      </S.PlusIcon>
+                    )}
+                    <S.ImageInput
+                      type="file"
+                      onChange={onChangeFile()}
+                      ref={fileRef}
+                    />
+                  </S.ImageBox>
+                );
+              })}
+            </S.ImageListBox>
+          </S.ImageSection>
+        </S.SectionMiddle>
+        <S.SectionBottom>
+          <S.SectionBox>
+            <S.Label>이용 요금표</S.Label>
+            <S.InputBox>
+              <S.Hour>시간 당</S.Hour>
+              <S.Input
+                type="text"
+                placeholder="ex) 3,000"
+                {...register("timeFee")}
+                defaultValue={
+                  data?.fetchOneStudyCafeForAdminister.studyCafe_timeFee
+                }
+              />
+              <S.Error>{formState.errors.timeFee?.message}</S.Error>
+            </S.InputBox>
+          </S.SectionBox>
+          <S.SectionBox>
+            <S.Label>이용안내 및 설명</S.Label>
+            <S.Notice
+              type="text"
+              {...register("description")}
+              defaultValue={
+                data?.fetchOneStudyCafeForAdminister.studyCafe_description
+              }
+            />
+          </S.SectionBox>
+        </S.SectionBottom>
+        <S.Footer
+          onSubmit={
+            props.isEdit
+              ? wrapFormAsync(handleSubmit(onClickUpdateCafe))
+              : wrapFormAsync(handleSubmit(onClickCafeSubmit))
+            // wrapFormAsync(handleSubmit(onClickCafeSubmit))
+          }
+        >
+          <S.Btn>{props.isEdit ? "수정" : "등록"}하기</S.Btn>
+          {isSubmitModalOpen ? (
+            <S.SubmitSuccessModal
+              open={true}
+              onOk={SubmitModal}
+              onCancel={SubmitModal}
+              okButtonProps={{ style: { display: "none" } }}
+              cancelButtonProps={{ style: { display: "none" } }}
+            >
+              <SubmitSuccessAlertModal url={routerURL} />
+            </S.SubmitSuccessModal>
+          ) : (
+            <></>
+          )}
+          <S.Btn type="button" onClick={onClickMoveCafeDetail}>
+            취소하기
+          </S.Btn>
+        </S.Footer>
+      </S.Wrapper>
+    </S.Body>
   );
 }
