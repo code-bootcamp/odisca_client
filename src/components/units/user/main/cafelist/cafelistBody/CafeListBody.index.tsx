@@ -45,7 +45,13 @@ export default function CafeListBody(props: Props): JSX.Element {
   };
 
   return (
-    <>
+    <div
+      style={{
+        height: "100vh",
+        overflow: "auto",
+        // width: 1410,
+      }}
+    >
       <InfiniteScroll
         pageStart={0}
         loadMore={onLoadMore}
@@ -56,6 +62,6 @@ export default function CafeListBody(props: Props): JSX.Element {
           <CafeListItem key={el.studyCafe_id} el={el} />
         )) ?? <></>}
       </InfiniteScroll>
-    </>
+    </div>
   );
 }

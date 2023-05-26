@@ -10,13 +10,34 @@ export const SearchBar = styled.div`
   align-items: center;
   padding: 0px 15px;
 `;
+
 export const SelectBox = styled(Select)`
-  size: 5;
+  size: 6;
   .ant-select.ant-select-open .ant-select-selector {
     height: 100px;
   }
   .select {
     width: 100px;
     height: 100px;
+    size: 7;
+  }
+  && {
+    .select {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  && {
+    &.ant-select {
+      font-size: 12px;
+    }
+    &.ant-select-open .ant-select-selector {
+      height: 100px;
+    }
+    &.select {
+      width: 100px;
+      height: 100px;
+      font-size: 18px;
+    }
   }
 `;

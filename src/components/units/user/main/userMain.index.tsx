@@ -11,47 +11,51 @@ export default function UserMain(): JSX.Element {
   const handleSecondCityChange = (value: string): void => {
     setSelectedDistrict(value);
   };
+
   return (
     <div
       style={{
         width: "100vw",
-        height: "75vh",
+        height: "100vh",
         display: "flex",
+        position: "relative",
       }}
     >
       <div
         style={{
-          width: "600px",
-          overflow: "auto",
-          overflowY: "scroll",
-          height: "75vh",
+          width: "22%",
+          height: "100vh",
+          position: "absolute",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <DistrictName>{selectedDistrict}</DistrictName>
-          <SearchBar01
-            style={{ position: "absolute" }}
-            onSecondCityChange={handleSecondCityChange}
-          />
-        </div>
-
+        <DistrictName>{selectedDistrict}</DistrictName>
         <CafeList selectedDistrict={selectedDistrict} />
       </div>
       <div
         style={{
-          width: "1300px",
-          height: "75vh",
+          width: "78%",
+          height: "100vh",
           display: "flex",
           flexDirection: "column",
+          position: "absolute",
+          left: "21.2vw",
         }}
       >
         <Map selectedDistrict={selectedDistrict} />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          position: "absolute",
+          left: "87vw",
+        }}
+      >
+        <SearchBar01
+          style={{ position: "absolute" }}
+          onSecondCityChange={handleSecondCityChange}
+        />
       </div>
     </div>
   );

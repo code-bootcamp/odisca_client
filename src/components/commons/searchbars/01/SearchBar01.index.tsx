@@ -39,9 +39,8 @@ export default function SearchBar01({
     <>
       <S.SearchBar>
         <S.SelectBox
-          className="select"
           defaultValue={provinceData[0]}
-          style={{ marginRight: "10px" }}
+          style={{ marginRight: "10px", width: "80px" }}
           onChange={(value: unknown): void => {
             handleProvinceChange(value as string);
           }}
@@ -51,7 +50,7 @@ export default function SearchBar01({
           }))}
         />
         <S.SelectBox
-          style={{ width: "80px" }}
+          style={{ width: "80px", height: "50px" }}
           value={secondCity}
           onChange={(value: unknown): void => {
             handleSecondCityChange(value as string);

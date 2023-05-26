@@ -13,6 +13,7 @@ const HIDDEN_HEADER = [
   "/admin/signup",
   "/",
   "/admin",
+  // "/user",
 ];
 
 const Wrapper = styled.div``;

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Drawer } from "antd";
 
 export const Wrapper = styled.div`
-  height: 150px;
+  height: 135px;
   display: flex;
   background-color: #40e0d0;
   flex-direction: row;
@@ -20,9 +20,9 @@ export const RightWrapper = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 300px;
-  height: 330px;
-  margin: 23px 0 0 40px;
+  width: 230px;
+  height: 230px;
+  margin: 10px 0 0 0px;
 `;
 
 export const ProfileWrapper = styled.div`
