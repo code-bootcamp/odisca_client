@@ -47,6 +47,7 @@ export default function UserLoginPage(): JSX.Element {
       setAccessToken(accessToken);
       alert("로그인이 완료되었습니다!");
       void router.push(`/user`);
+      localStorage.setItem("loginType", "user");
       localStorage.setItem("accessToken", accessToken);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
@@ -62,52 +63,51 @@ export default function UserLoginPage(): JSX.Element {
             회원가입하기
           </S.SignUpButton>
         </S.SignUpWrapper>
+
         <S.LogInWrapper>
-          {/* login form */}
           <S.LogInWrapperContainer
             onSubmit={wrapFormAsync(handleSubmit(onClickSubmit))}
           >
-            <S.TitleWrapper>
-              <S.LoginTitle>로그인</S.LoginTitle>
-            </S.TitleWrapper>
+            <S.LoginTitle>LOGIN</S.LoginTitle>
             <S.InputContainer>
               <S.LogInInputBox>
-                <S.LogInInputTitle>email</S.LogInInputTitle>
-                <S.InputWrapper>
+                <S.LogInInputDetail>
+                  <S.LogInInputTitle>EMAIL</S.LogInInputTitle>
                   <S.LogInInput
                     type="text"
                     placeholder="이메일을 입력해주세요."
                     {...register("user_email")}
                   ></S.LogInInput>
-                  <S.ErrorMessage>
-                    {formState.errors.user_email?.message}
-                  </S.ErrorMessage>
-                </S.InputWrapper>
+                </S.LogInInputDetail>
+                <S.ErrorMessage>
+                  {formState.errors.user_email?.message}
+                </S.ErrorMessage>
               </S.LogInInputBox>
 
               <S.LogInInputBox>
-                <S.LogInInputTitle>password</S.LogInInputTitle>
-                <S.InputWrapper>
+                <S.LogInInputDetail>
+                  <S.LogInInputTitle>PASS</S.LogInInputTitle>
+
                   <S.LogInInput
                     type="password"
                     placeholder="비밀번호를 입력해주세요."
                     {...register("user_password")}
                   ></S.LogInInput>
-                  <S.ErrorMessage>
-                    {formState.errors.user_password?.message}
-                  </S.ErrorMessage>
-                </S.InputWrapper>
+                </S.LogInInputDetail>
+                <S.ErrorMessage>
+                  {formState.errors.user_password?.message}
+                </S.ErrorMessage>
               </S.LogInInputBox>
             </S.InputContainer>
             <S.ButtonContainer>
               <S.CancelButton type="button">CANCEL</S.CancelButton>
               <S.LogInButton>LOGIN</S.LogInButton>
             </S.ButtonContainer>
-            {/* 소셜 로그인 */}
+
             <S.SessionLoginContainer>
               <img src="/sessionicons.png" />
             </S.SessionLoginContainer>
-            {/* 아이디, 비밀번호 찾기 */}
+
             <S.FindContainer>
               <S.FindButton>아이디 찾기</S.FindButton>
               <S.FindButton>비밀번호 찾기</S.FindButton>

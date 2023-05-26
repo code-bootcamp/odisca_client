@@ -8,6 +8,7 @@ import { useMutationCreateLoginCafeFloorPlanAndSeats } from "../../../../commons
 import { wrapAsync } from "../../../../../commons/libraries/asyncFunc";
 import { useQueryFetchOneStudyCafeForAdmin } from "../../../../commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
+import { v4 as uuidv4 } from "uuid";
 
 export default function MapEditor(): JSX.Element {
   const [inputX, setInputX] = useState(0); // x축 범위
@@ -285,14 +286,14 @@ export default function MapEditor(): JSX.Element {
         <S.Box>
           {mapArray.map((el, indY) => {
             return (
-              <S.Box2 key={String(el) + String(indY)}>
+              <S.Box2 key={uuidv4()}>
                 {el.map((ele, indX) => {
                   return (
                     <S.Pixel
                       onClick={onClickCenter(indX, indY)}
                       style={image(ele, indX, indY)}
                       onMouseEnter={onHoverTrue(indX, indY)}
-                      key={String(el) + String(ele)}
+                      key={uuidv4()}
                     ></S.Pixel>
                   );
                 })}

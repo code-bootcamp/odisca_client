@@ -54,6 +54,7 @@ export default function UserLoginPage(): JSX.Element {
 
       setAccessToken(accessToken);
       console.log(data);
+      localStorage.setItem("loginType", "admin");
       localStorage.setItem("accessToken", accessToken);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
