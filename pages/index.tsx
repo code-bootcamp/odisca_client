@@ -108,7 +108,7 @@ export default function LandingPage(): JSX.Element {
 
         <S.Footer>
           <S.LogoWrapper>
-            <S.Logo src="/logo_2.png" />
+            <S.Logo src="/cafeLogo.png" />
           </S.LogoWrapper>
 
           <S.AddressWrapper>

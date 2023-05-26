@@ -392,11 +392,14 @@ export const Footer = styled.div`
   align-items: center;
 `;
 
-export const LogoWrapper = styled.div``;
+export const LogoWrapper = styled.div`
+  margin: 0;
+  /* background-color: pink; */
+`;
 
 export const Logo = styled.img`
-  width: 190px;
-  height: 190px;
+  width: 300px;
+  height: 200px;
   margin-top: 3vh;
 `;
 
