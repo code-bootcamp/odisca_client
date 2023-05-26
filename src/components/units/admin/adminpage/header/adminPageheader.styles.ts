@@ -81,7 +81,7 @@ export const RevenueWrapper = styled.footer`
 export const RevenueText = styled.label`
   font-size: 20px;
   color: #4f4f4f;
-  margin-right: 8px;
+  margin-right: 15px;
 `;
 
 export const Revenue = styled.label`

@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 export const WrapperTop = styled.form`
@@ -30,25 +31,16 @@ export const Title = styled.h1`
   color: #4f4f4f;
 `;
 
-export const SectionTopBox = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-`;
-
 export const InputBox = styled.div`
   width: calc(50% - 20px);
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  flex-direction: column;
 `;
 
 export const LabelBox = styled.label`
   width: 90px;
   height: 45px;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
 `;
@@ -60,7 +52,7 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-  width: calc(100% - 90px);
+  width: 100%;
   height: 50px;
   border-radius: 10px;
   text-indent: 10px;
@@ -75,34 +67,47 @@ export const Input = styled.input`
   }
 `;
 
+export const WrapperMiddle = styled.section`
+  width: 100%;
+  margin-bottom: 40px;
+`;
+
+export const MiddleTopSectionBox = styled.section`
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+`;
+
 export const AddressSectionBox = styled.section`
   width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-top: 10px;
 `;
 
 export const AddressLabel = styled.label`
-  width: 30px;
-  display: flex;
-  flex-direction: row;
+  width: 40px;
   padding-top: 5px;
   font-size: 15px;
   color: #4f4f4f;
+  margin-right: 15px;
+`;
+
+export const TimeSectionBox = styled.div`
+  width: 100%;
+  margin-top: 40px;
 `;
 
 export const LabelDetail = styled.span`
   margin-left: 10px;
   font-weight: 600;
+  color: #4f4f4f;
 `;
 
 export const AddressInputBox = styled.div`
   width: 100%;
-  margin-left: 55px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
 `;
 
 export const AddressZip = styled.div`
@@ -129,8 +134,8 @@ export const Zipcode = styled.input`
 `;
 
 export const SearchBtn = styled.button`
-  width: 80px;
-  height: 30px;
+  width: 60px;
+  height: 35px;
   border-radius: 10px;
   border: none;
   background: #40e0d0;
@@ -143,12 +148,13 @@ export const AddressBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 `;
 
 export const Address = styled.input`
   width: 100%;
-  margin-bottom: 30px;
-  height: 30px;
+  margin-top: 15px;
+  height: 40px;
   border-radius: 10px;
   text-indent: 10px;
   border: 1px solid #f7f7f7;
@@ -160,12 +166,13 @@ export const Address = styled.input`
 `;
 
 export const Error = styled.div`
-  color: red;
+  margin: 5px 0px 0px 5px;
+  color: #7744aa;
+  font-size: 14px;
 `;
 
 export const SectionMiddle = styled.section`
   width: 100%;
-  margin-top: 10px;
 `;
 
 export const ImageSection = styled.div`
@@ -231,23 +238,32 @@ export const SectionBox = styled.div`
   margin-bottom: 15px;
 `;
 
+export const BtmSectionBox = styled.section`
+  display: flex;
+  margin-bottom: 20px;
+`;
+
+export const TimeFeeBoxLeft = styled.div`
+  margin-right: 30px;
+`;
+
 export const Notice = styled.textarea`
-  height: 520px;
+  height: 500px;
   border-radius: 10px;
   text-indent: 10px;
-  margin-top: 30px;
+  margin-top: 20px;
   border: 1px solid #f7f7f7;
   background-color: #f7f7f7;
   color: #4f4f4f;
   :focus {
     outline: 2px solid #40e0d0;
   }
+  resize: none;
 `;
 
 export const Footer = styled.section`
   width: 850px;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   padding-top: 40px;
   margin-bottom: 50px;
@@ -262,7 +278,6 @@ export const Btn = styled.button`
   font-weight: 600;
   border: 1px solid #40e0d0;
   border-radius: 30px;
-  margin: 0px 12px;
   cursor: pointer;
   :hover {
     background-color: #40e0d0;
@@ -271,7 +286,17 @@ export const Btn = styled.button`
   }
 `;
 
-export const Hour = styled.div``;
+export const Hour = styled.div`
+  font-size: 15px;
+  margin-top: 4px;
+`;
+
+export const WrapperBtm = styled.form`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export const AddressSearchModal = styled(Modal)``;
 

@@ -72,7 +72,7 @@ export default function UserLoginPage(): JSX.Element {
             <S.InputContainer>
               <S.LogInInputBox>
                 <S.LogInInputDetail>
-                  <S.LogInInputTitle>EMAIL</S.LogInInputTitle>
+                  <S.LogInInputTitle>Email</S.LogInInputTitle>
                   <S.LogInInput
                     type="text"
                     placeholder="이메일을 입력해주세요."
@@ -86,7 +86,7 @@ export default function UserLoginPage(): JSX.Element {
 
               <S.LogInInputBox>
                 <S.LogInInputDetail>
-                  <S.LogInInputTitle>PASS</S.LogInInputTitle>
+                  <S.LogInInputTitle>Pass</S.LogInInputTitle>
 
                   <S.LogInInput
                     type="password"
@@ -100,18 +100,18 @@ export default function UserLoginPage(): JSX.Element {
               </S.LogInInputBox>
             </S.InputContainer>
             <S.ButtonContainer>
-              <S.CancelButton type="button">CANCEL</S.CancelButton>
-              <S.LogInButton>LOGIN</S.LogInButton>
+              <S.BtnBox>
+                <S.CancelButton type="button">CANCEL</S.CancelButton>
+              </S.BtnBox>
+              <S.BtnBox>
+                <S.LogInButton>LOGIN</S.LogInButton>
+              </S.BtnBox>
             </S.ButtonContainer>
-
             <S.SessionLoginContainer>
-              <img src="/sessionicons.png" />
+              <S.Img src="/google.png" />
+              <S.Img src="/kakao.png" />
+              <S.Img src="/naver.png" />
             </S.SessionLoginContainer>
-
-            <S.FindContainer>
-              <S.FindButton>아이디 찾기</S.FindButton>
-              <S.FindButton>비밀번호 찾기</S.FindButton>
-            </S.FindContainer>
           </S.LogInWrapperContainer>
         </S.LogInWrapper>
       </S.Wrapper>

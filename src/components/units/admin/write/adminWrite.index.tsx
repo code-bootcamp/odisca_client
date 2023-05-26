@@ -361,8 +361,8 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     console.log(newMain);
   };
 
-  const onClickMoveCafeDetail = (): void => {
-    void router.push(`/admin/adminPage}`);
+  const onClickGoBack = (): void => {
+    history.back();
   };
 
   // return 값
@@ -381,7 +381,7 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
             <S.Title>업체 {props.isEdit ? "수정" : "등록"}하기</S.Title>
           </S.Header>
           {/* <S.SectionTop> */}
-          <S.SectionTopBox>
+          <S.SectionBox>
             <S.InputBox>
               <S.LabelBox>
                 <S.Label>대표자명</S.Label>
@@ -395,18 +395,21 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
               />
             </S.InputBox>
             <S.InputBox>
-              <S.LabelBox>
-                <S.Label> 사업자번호</S.Label>
-              </S.LabelBox>
-              <S.Input
-                type="text"
-                placeholder="ex) 000-000-000"
-                {...register("brn")}
-                value={data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
-              />
+              <div>
+                <S.LabelBox>
+                  <S.Label> 사업자번호</S.Label>
+                </S.LabelBox>
+                <S.Input
+                  type="text"
+                  placeholder="ex) 000-000-000"
+                  {...register("brn")}
+                  value={data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
+                />
+              </div>
+
               <S.Error>{formState.errors.brn?.message}</S.Error>
             </S.InputBox>
-          </S.SectionTopBox>
+          </S.SectionBox>
 
           <S.SectionBox>
             <S.InputBox>
@@ -438,15 +441,18 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
           </S.SectionBox>
         </S.WrapperTop>
 
-        <section>
-          <S.AddressSectionBox>
-            <S.AddressLabel>주소</S.AddressLabel>
-            <div id="map" style={{ display: "none" }}></div>
-            <S.AddressInputBox>
-              <S.AddressZip>
+        <S.WrapperMiddle>
+          <S.MiddleTopSectionBox>
+            <S.AddressBox>
+              <div>
+                <S.AddressLabel>주소</S.AddressLabel>
+                <div id="map" style={{ display: "none" }}></div>
                 <S.SearchBtn type="button" onClick={AddressModal}>
-                  주소검색
+                  검색
                 </S.SearchBtn>
+              </div>
+
+              <S.AddressInputBox>
                 {isAddressModalOpen ? (
                   <S.AddressSearchModal
                     open={isAddressModalOpen}
@@ -458,8 +464,7 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                 ) : (
                   <></>
                 )}
-              </S.AddressZip>
-              <S.AddressBox>
+
                 <S.Address
                   type="text"
                   readOnly
@@ -478,29 +483,28 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                   }
                   onChange={AddressDetailInput}
                 />
-              </S.AddressBox>
-            </S.AddressInputBox>
-          </S.AddressSectionBox>
+              </S.AddressInputBox>
+            </S.AddressBox>
+            <S.TimeSectionBox>
+              <S.InputBox>
+                <S.LabelBox>
+                  <S.Label>영업시간</S.Label>
+                </S.LabelBox>
+                <OperatingTime
+                  data={data}
+                  onChangeSelectOpenTime={onChangeSelectOpenTime}
+                  onChangeSelectCloseTime={onChangeSelectCloseTime}
+                />
+              </S.InputBox>
+            </S.TimeSectionBox>
+          </S.MiddleTopSectionBox>
 
-          <S.SectionBox>
-            <S.InputBox>
-              <S.LabelBox>
-                <S.Label>영업시간</S.Label>
-              </S.LabelBox>
-              <OperatingTime
-                data={data}
-                onChangeSelectOpenTime={onChangeSelectOpenTime}
-                onChangeSelectCloseTime={onChangeSelectCloseTime}
-              />
-            </S.InputBox>
-          </S.SectionBox>
-          {/* </S.SectionTop> */}
           <S.SectionMiddle>
             <S.ImageSection>
-              <S.Label>
+              <S.Label style={{ marginBottom: "20px" }}>
                 카페 내부 사진
                 <S.LabelDetail>
-                  (메인으로 올라갈 사진 한 장을 체크해주세요!)
+                  (사진을 선택한 후 메인 사진 한 장을 체크해주세요!)
                 </S.LabelDetail>
               </S.Label>
 
@@ -544,9 +548,9 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
               </S.ImageListBox>
             </S.ImageSection>
           </S.SectionMiddle>
-        </section>
+        </S.WrapperMiddle>
 
-        <form
+        <S.WrapperBtm
           onSubmit={
             props.isEdit
               ? wrapFormAsync(handleSubmit(onClickUpdateCafe))
@@ -554,10 +558,13 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
           }
         >
           <S.SectionBottom>
-            <S.SectionBox>
-              <S.Label>이용 요금표</S.Label>
+            <S.BtmSectionBox>
+              <S.TimeFeeBoxLeft>
+                <S.Label>이용 요금</S.Label>
+                <S.Hour>(시간 당)</S.Hour>
+              </S.TimeFeeBoxLeft>
+
               <S.InputBox>
-                <S.Hour>시간 당</S.Hour>
                 <S.Input
                   type="text"
                   placeholder="ex) 3,000"
@@ -568,8 +575,10 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                 />
                 <S.Error>{formState.errors.timeFee?.message}</S.Error>
               </S.InputBox>
-            </S.SectionBox>
-            <S.SectionBox>
+            </S.BtmSectionBox>
+            <S.BtmSectionBox
+              style={{ flexDirection: "column", marginTop: "15px" }}
+            >
               <S.Label>이용안내 및 설명</S.Label>
               <S.Notice
                 {...register("description")}
@@ -577,11 +586,13 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                   data?.fetchOneStudyCafeForAdminister.studyCafe_description
                 }
               />
-            </S.SectionBox>
+            </S.BtmSectionBox>
           </S.SectionBottom>
 
           <S.Footer>
-            <S.Btn>{props.isEdit ? "수정" : "등록"}하기</S.Btn>
+            <S.Btn style={{ marginRight: "20px" }}>
+              {props.isEdit ? "수정" : "등록"}하기
+            </S.Btn>
             <S.SubmitSuccessModal
               open={isSubmitModalOpen}
               onOk={() => {
@@ -595,11 +606,11 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
             >
               <SubmitSuccessAlertModal url={routerURL} />
             </S.SubmitSuccessModal>
-            <S.Btn type="button" onClick={onClickMoveCafeDetail}>
+            <S.Btn type="button" onClick={onClickGoBack}>
               취소하기
             </S.Btn>
           </S.Footer>
-        </form>
+        </S.WrapperBtm>
       </S.Wrapper>
     </S.Body>
   );
