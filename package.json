@@ -26,18 +26,13 @@
     "react": "17.0.2",
     "react-daum-postcode": "^3.1.1",
     "react-dom": "17.0.2",
-<<<<<<< HEAD
-=======
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.43.9",
     "react-infinite-scroller": "^1.2.6",
->>>>>>> 58f7cef5832ba2980e360cdc9df0dbe1f4d9a5b0
     "react-slick": "^0.29.0",
     "recoil": "^0.7.7",
     "slick-carousel": "^1.8.1",
     "ts-node": "^10.9.1",
-    "react-hook-form": "^7.43.9",
-    "react-infinite-scroller": "^1.2.6",
     "uuid": "^9.0.0",
     "yup": "^1.1.1",
     "zen-observable": "^0.10.0"
