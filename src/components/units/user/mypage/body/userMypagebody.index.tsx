@@ -6,14 +6,6 @@ import * as S from "./userMypagebody.styles";
 export default function UserMyPageBody(): JSX.Element {
   const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
   const { data } = useQueryFetchLoginUser();
-  // console.log(
-  //   data?.fetchLoginUser.visits.map((visit) => visit.studyCafe.studyCafe_name),
-  //   "구매한 스터디카페 이름"
-  // );
-  // console.log(data?.fetchLoginUser.visits, "구매한 스카 목록"); // visits 배열 출력
-  // // console.log(data?.fetchLoginUser.visits[0].studyCafe.studyCafe_name); // 첫 번째 visit의 studyCafe의 studyCafe_name 출력
-  // console.log(data?.fetchLoginUser.seat[0].seat_number, "구매한 좌석"); // 첫 번째 seat의 seat_number 출력
-  // console.log(data?.fetchLoginUser.seat[0], "구매한 좌석정보");
 
   const minutes = Math.floor(
     data?.fetchLoginUser.visits[0]?.seat?.seat_remainTime / (1000 * 60)

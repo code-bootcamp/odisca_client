@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import UserEditBody from "./body/UserEditBody.index";
-import UserEditFooter from "./footer/UserEditFooter.index";
 import UserEditHeader from "./header/UserEditHeader.index";
 
 const Body = styled.div`

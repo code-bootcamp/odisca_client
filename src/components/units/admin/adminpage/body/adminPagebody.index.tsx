@@ -1,8 +1,13 @@
 import { useRouter } from "next/router";
 import * as S from "./adminPagebody.styles";
-import { wrapFormAsync } from "../../../../../commons/libraries/asyncFunc";
+import { wrapAsync } from "../../../../../commons/libraries/asyncFunc";
+import { IQuery } from "../../../../../commons/types/generated/types";
 
-export default function AdminPageBody(props): JSX.Element {
+interface IAdminBodyProps {
+  data?: Pick<IQuery, "fetchLoginAdminister">;
+}
+
+export default function AdminPageBody(props: IAdminBodyProps): JSX.Element {
   const router = useRouter();
 
   const onClickDetail = (id: string) => async (): Promise<void> => {
@@ -22,16 +27,11 @@ export default function AdminPageBody(props): JSX.Element {
             <div key={el.studyCafe_id}>
               <S.MyCafeWrapper>
                 <S.LeftWrapper>
-                  {/* <S.CafeImg
-                    // src={}
-                    src =
-                    onClick={wrapFormAsync(onClickDetail(el.studyCafe_id))}
-                  ></S.CafeImg> */}
                   {el.images.map((el2) => {
                     return el2.image_isMain ? (
                       <S.CafeImg
-                        src={el2?.image_url}
-                        onClick={wrapFormAsync(onClickDetail(el.studyCafe_id))}
+                        src={el2?.image_url ?? ""}
+                        onClick={wrapAsync(onClickDetail(el.studyCafe_id))}
                       ></S.CafeImg>
                     ) : (
                       <></>
@@ -41,7 +41,7 @@ export default function AdminPageBody(props): JSX.Element {
                 <S.RightWrapper>
                   <S.Top>
                     <S.CafeName
-                      onClick={wrapFormAsync(onClickDetail(el.studyCafe_id))}
+                      onClick={wrapAsync(onClickDetail(el.studyCafe_id))}
                     >
                       {el.studyCafe_name}
                     </S.CafeName>

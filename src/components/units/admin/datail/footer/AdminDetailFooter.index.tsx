@@ -30,8 +30,8 @@ export default function AdminDetailFooter(): JSX.Element {
 
   const { data } = useQueryFetchAllSeatsByStudyCafeId(String(router.query.Id));
 
-  const onClickEditSeats = () => {
-    router.push("/admin/" + router.query.Id + "/mapEditor");
+  const onClickEditSeats = (): void => {
+    void router.push("/admin/" + String(router.query.Id) + "/mapEditor");
   };
 
   const [isSaved, setIsSaved] = useState(false);
@@ -42,12 +42,12 @@ export default function AdminDetailFooter(): JSX.Element {
     }
   });
 
-  const onClickScanSeats = () => {
-    router.push("/admin/" + router.query.Id + "/mapScaner");
+  const onClickScanSeats = (): void => {
+    void router.push("/admin/" + String(router.query.Id) + "/mapScaner");
   };
 
   const onClickMoveEdit = (): void => {
-    void router.push(`/admin/${router.query.Id}/edit`);
+    void router.push(`/admin/${String(router.query.Id)}/edit`);
   };
 
   return (

@@ -1,3 +1,4 @@
+import { IImage } from "../../../../../commons/types/generated/types";
 import SeatScanPage from "../../../admin/seat/seatScan/seatScan.User";
 import * as S from "./UserDetailBody.styles";
 import { StyledSlider, SliderItem } from "./UserDetailBody.styles";
@@ -8,6 +9,7 @@ interface IPropsUserDetailBody {
   cafeCloseTime: string;
   cafeContact: string;
   cafeAddress: string;
+  cafeImages: IImage[];
 }
 
 export default function UserDetailBody(
@@ -29,21 +31,13 @@ export default function UserDetailBody(
   return (
     <S.Body>
       <StyledSlider {...settings}>
-        <div>
-          <SliderItem src="/cafe1.png" />
-        </div>
-        <div>
-          <SliderItem src="/cafe2.png" />
-        </div>
-        <div>
-          <SliderItem src="/cafe3.png" />
-        </div>
-        <div>
-          <SliderItem src="/cafe1.png" />
-        </div>
-        <div>
-          <SliderItem src="/cafe2.png" />
-        </div>
+        {props.cafeImages.map((el: IImage): JSX.Element => {
+          return (
+            <div key={el.image_id}>
+              <SliderItem src={el.image_url ?? ""} />
+            </div>
+          );
+        })}
       </StyledSlider>
       <S.ContentsBox>
         <S.Contents>{props.cafeDescription}</S.Contents>

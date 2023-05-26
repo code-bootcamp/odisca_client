@@ -7,13 +7,17 @@ import {
   Contents,
 } from "./AdminDetailBody.styles";
 
-export default function AdminDetailBody(props): JSX.Element {
+interface IAdminDetailProps {
+  cafeImages?: { image_url: string[] }[];
+  cafeDescription: string;
+}
+
+export default function AdminDetailBody(props: IAdminDetailProps): JSX.Element {
   const settings = {
     dots: true,
     infinite: true,
     speed: 300,
     slidesToShow: 3,
-    // slidesToScroll: 1,
     autoplay: true,
     arrow: true,
     pauseOnHover: true,
@@ -21,19 +25,18 @@ export default function AdminDetailBody(props): JSX.Element {
     centerPadding: "100px",
   };
 
-  // const restImageUrl = restImageData.map((el) => el.image_url);
-
-  let restImageUrls = [];
-  if (props.cafeImages !== undefined) {
-    restImageUrls = props.cafeImages.map((el) => el.image_url);
-  }
+  // let restImageUrls = [];
+  // if (props.cafeImages !== undefined) {
+  //   restImageUrls = props.cafeImages.map((el) => el?.image_url ?? "");
+  // }
+  const restImageUrls: string[] =
+    props.cafeImages?.flatMap((el) => el?.image_url ?? "") ?? [];
 
   return (
     <Body>
       <StyledSlider {...settings}>
         <div>
           <SliderItem
-            // src="/cafe1.png"
             src={restImageUrls[0]}
             style={{ width: "80%", height: "auto" }}
           />

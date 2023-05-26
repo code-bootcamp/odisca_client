@@ -1,6 +1,17 @@
 import * as S from "./AdminDetailHeader.styles";
 
-export default function AdminDetailHeader(props): JSX.Element {
+interface IDetailHeaderProps {
+  cafeName: string | undefined;
+  cafeBrn: string | undefined;
+  cafeContact: string | undefined;
+  cafeFee: number | undefined;
+  cafeOpenTime: string;
+  cafeClosTime: string;
+}
+
+export default function AdminDetailHeader(
+  props: IDetailHeaderProps
+): JSX.Element {
   return (
     <>
       <S.Header>

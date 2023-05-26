@@ -17,8 +17,8 @@ export default function UserDetailHeader(
     <S.Header>
       <S.Headerbox>
         <S.Title>{props.cafeName}</S.Title>
-        <S.BtnBox>
-          <S.SeatBtn onClick={onclickReservation}>좌석 예약하기</S.SeatBtn>
+        <S.BtnBox onClick={onclickReservation}>
+          <S.SeatBtn>좌석 예약하기</S.SeatBtn>
           <S.Icon src="/arrow.png" />
         </S.BtnBox>
       </S.Headerbox>

@@ -7,9 +7,12 @@ interface CafeListItemProps {
     studyCafe_name: string;
     studyCafe_timeFee: number;
     studyCafe_description: string;
-    image?: {
+    images?: {
       image_url: string;
-    };
+    }[];
+    review?: {
+      review_content: string;
+    }[];
   };
 }
 
@@ -25,24 +28,28 @@ export default function CafeListItem(props: CafeListItemProps): JSX.Element {
     <S.Wrapper>
       <S.ListBox key={cafeId}>
         <S.CafeBox onClick={handleClick(cafeId)} id={cafeId}>
-          <S.CafeName>{props.el.studyCafe_name}</S.CafeName>
           <S.CafeList>
             <S.CafeImg
               src={
-                props.el.image?.image_url !== undefined
-                  ? `https://storage.googleapis.com/${props.el.image.image_url}`
+                props.el.images?.[0]?.image_url !== undefined
+                  ? `${props.el.images?.[0]?.image_url}`
                   : "/ready.png"
               }
             />
+            <S.CafeName>{props.el.studyCafe_name}</S.CafeName>
             <S.CafeInfo>
               <S.PriceImg src="/user/main/price.png" />
               <S.Price>1시간</S.Price>
               <S.Price>{props.el.studyCafe_timeFee}원</S.Price>
             </S.CafeInfo>
             <S.CafeDetail>{props.el.studyCafe_description}</S.CafeDetail>
-            <S.CafeReview>
-              여기 깔끔하고 집중 잘돼요. 백색소음 때문인가ㅎ
-            </S.CafeReview>
+            {props.el.review?.[0]?.review_content !== undefined ? (
+              <S.CafeReview>
+                {props.el.review?.[0]?.review_content ?? ""}
+              </S.CafeReview>
+            ) : (
+              <></>
+            )}
           </S.CafeList>
         </S.CafeBox>
         <S.DevidedLine></S.DevidedLine>

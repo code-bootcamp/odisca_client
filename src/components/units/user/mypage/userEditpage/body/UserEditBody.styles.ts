@@ -31,7 +31,6 @@ export const ProfileImgEdit = styled.img`
 
 export const InputForm = styled.form`
   height: 500px;
-  /* background-color: aliceblue; */
   display: flex;
   flex-direction: column;
   align-items: center;

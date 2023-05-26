@@ -20,7 +20,8 @@ export const TitleBox = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: 20px;
+  font-size: 40px;
+  font-weight: 700;
   color: #4f4f4f;
 `;
 export const BtnBox = styled.div`
@@ -28,9 +29,13 @@ export const BtnBox = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
 `;
 export const SeatBtn = styled.button`
-  width: 100px;
+  font-size: 20px;
+  font-weight: 700;
+  width: 150px;
   border: none;
   background: none;
   cursor: pointer;

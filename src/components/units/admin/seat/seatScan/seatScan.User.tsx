@@ -91,9 +91,7 @@ export default function SeatScanPage(): JSX.Element {
                 {el.map((ele, indX) => {
                   return (
                     <>
-                      <S.Pixel style={image(ele, indX, indY)}>
-                        {/* {ele.number} */}
-                      </S.Pixel>
+                      <S.Pixel style={image(ele, indX, indY)}></S.Pixel>
                     </>
                   );
                 })}
