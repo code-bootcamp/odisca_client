@@ -1,6 +1,14 @@
 import * as S from "./adminPageheader.styles";
 
-export default function AdiminPageHeader(): JSX.Element {
+interface IAdminHeaderProps {
+  adminName: string | undefined;
+  adminMail: string | undefined;
+  adminPoint: number | undefined;
+}
+
+export default function AdiminPageHeader(
+  props: IAdminHeaderProps
+): JSX.Element {
   return (
     <>
       <S.Wrapper>
@@ -14,12 +22,12 @@ export default function AdiminPageHeader(): JSX.Element {
           </S.AdminWrapperLight>
           <S.AdminWrapperRight>
             <S.AdminInfo>
-              <S.AdminName>집게사장</S.AdminName>
-              <S.AdminMail>adminmail@gmail.com</S.AdminMail>
+              <S.AdminName>{props.adminName}</S.AdminName>
+              <S.AdminMail>{props.adminMail}</S.AdminMail>
             </S.AdminInfo>
             <S.RevenueWrapper>
               <S.RevenueText>이번달 매출</S.RevenueText>
-              <S.Revenue>3000P</S.Revenue>
+              <S.Revenue>{props.adminPoint}P</S.Revenue>
             </S.RevenueWrapper>
           </S.AdminWrapperRight>
         </S.AdminWrapper>

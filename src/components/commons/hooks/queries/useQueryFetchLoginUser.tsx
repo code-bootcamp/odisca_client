@@ -9,13 +9,34 @@ interface IFetchLoginUserQueryResult
 export const FETCH_LOGIN_USER = gql`
   query {
     fetchLoginUser {
-      _id
-      name
-      email
-      point
-      image
-      tags
-      images
+      user_id
+      user_name
+      user_email
+      user_phone
+      user_point
+      user_image
+      visits {
+        visit_id
+        visit_createdAt
+        seat {
+          seat_id
+          seat_number
+          seat_remainTime
+        }
+        studyCafe {
+          studyCafe_name
+          images {
+            image_id
+            image_url
+            image_isMain
+          }
+        }
+      }
+      # seat {
+      #   seat_id
+      #   seat_number
+      #   seat_remainTime
+      # }
     }
   }
 `;
@@ -24,9 +45,9 @@ export const useQueryFetchLoginUser = (): IFetchLoginUserQueryResult => {
   const query = useQuery<Pick<IQuery, "fetchLoginUser">, IUser>(
     FETCH_LOGIN_USER
   );
-  const refetch = async (): Promise<void> => {
+  const loginUserRefetch = async (): Promise<void> => {
     await query.refetch();
   };
 
-  return { ...query, refetch };
+  return { ...query, refetch: loginUserRefetch };
 };

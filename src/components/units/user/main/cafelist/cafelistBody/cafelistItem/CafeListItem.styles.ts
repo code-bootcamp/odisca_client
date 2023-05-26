@@ -1,26 +1,49 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.section`
-  padding: 55px;
+  width: 100%;
 `;
 
 export const Location = styled.h1`
+  width: 100%;
   font-weight: 700;
   font-size: 40px;
-  margin-bottom: 50px;
 `;
 
 export const CafeList = styled.section`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 `;
+export const ListBox = styled.div`
+  width: 100%;
+`;
+export const CafeBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 55px;
+  cursor: pointer;
+`;
 
+export const DistrictName = styled.div`
+  font-size: 40px;
+  font-weight: 700;
+  margin-left: 45px;
+`;
+
+export const DevidedLine = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #bdbdbd;
+`;
 export const CafeImg = styled.img`
   width: 500px;
   height: 200px;
-  background-color: #bdbdbd;
   margin-bottom: 27px;
+`;
+
+export const CafeInfo = styled.div`
+  display: flex;
 `;
 
 export const CafeName = styled.h2`

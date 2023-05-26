@@ -1,6 +1,20 @@
+import { useRouter } from "next/router";
+import { PriceWithCommas } from "../../../../../commons/libraries/utils";
+import { useQueryFetchLoginUser } from "../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./userMypageheader.styles";
 
 export default function UserMyPageHeader(): JSX.Element {
+  const router = useRouter();
+  const { data } = useQueryFetchLoginUser();
+
+  const onClickMovePaymentList = (): void => {
+    void router.push(`/user/mypage/transactionList`);
+  };
+
+  const onClickMoveEditMyPage = (): void => {
+    void router.push("/user/mypage/edit");
+  };
+
   return (
     <>
       <S.Wrapper>
@@ -8,19 +22,28 @@ export default function UserMyPageHeader(): JSX.Element {
         <S.UserWrapper>
           <S.UserWrapperLight>
             <S.ProfileWrapper>
-              <S.ProfileImage></S.ProfileImage>
-              <S.EditProfileIcon src="/editIcon.png"></S.EditProfileIcon>
+              <S.ProfileImage
+                src={data?.fetchLoginUser.user_image}
+              ></S.ProfileImage>
             </S.ProfileWrapper>
           </S.UserWrapperLight>
           <S.UserWrapperRight>
             <S.UserInfo>
-              <S.UserName>userName</S.UserName>
-              <S.UserMail>user@mail.com</S.UserMail>
+              <S.InfoWrapper>
+                <S.UserName>{data?.fetchLoginUser.user_name}</S.UserName>
+                <S.EditBtn onClick={onClickMoveEditMyPage}>정보수정</S.EditBtn>
+              </S.InfoWrapper>
+              <S.UserMail>{data?.fetchLoginUser.user_email}</S.UserMail>
             </S.UserInfo>
             <S.UserPointWrapper>
-              <S.Icon src="/Vector (14).png"></S.Icon>
-              <S.UserPoint>3000P</S.UserPoint>
-              <S.ChargeBtn>충전</S.ChargeBtn>
+              <S.Icon src="/point.png"></S.Icon>
+              <S.UserPoint>
+                {PriceWithCommas(data?.fetchLoginUser.user_point ?? 0)}P
+              </S.UserPoint>
+              <S.PointBtn>충전</S.PointBtn>
+              <S.PaymentBtn onClick={onClickMovePaymentList}>
+                결제내역
+              </S.PaymentBtn>
             </S.UserPointWrapper>
           </S.UserWrapperRight>
         </S.UserWrapper>

@@ -10,7 +10,7 @@ export const Wrapper = styled.aside`
 export const Title = styled.a`
   font-size: 18px;
   color: #828282;
-  margin: 35px 0 15px 0;
+  margin: 50px 0 15px 0;
 `;
 
 export const MyCafeWrapper = styled.main`
@@ -18,7 +18,7 @@ export const MyCafeWrapper = styled.main`
   background-color: #f7f7f7;
   display: flex;
   flex-direction: row;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 export const LeftWrapper = styled.div``;
@@ -77,7 +77,7 @@ export const MoveToSeatBtn = styled.button`
 `;
 
 export const CreateSeatingChart = styled.button`
-  width: 180px;
+  width: 120px;
   height: 40px;
   border: none;
   background-color: #40e0d0;
@@ -85,6 +85,7 @@ export const CreateSeatingChart = styled.button`
   color: white;
   font-size: 16px;
   font-weight: 600;
-  margin-left: calc(1000px - 180px);
+  margin-left: calc(1000px - 120px);
+  margin-bottom: 50px;
   cursor: pointer;
 `;
