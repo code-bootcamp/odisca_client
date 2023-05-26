@@ -3,6 +3,13 @@ import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../../components/co
 import { useEffect, useState } from "react";
 import * as S from "./seatScan.Style";
 import { useQueryFetchOneStudyCafeForAdmin } from "../../../../../components/commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
+import { v4 as uuidv4 } from "uuid";
+
+interface SeatData {
+  status: string;
+  seatId: string;
+  number: string;
+}
 
 export default function SeatScanPage(): JSX.Element {
   const router = useRouter();
@@ -17,7 +24,7 @@ export default function SeatScanPage(): JSX.Element {
     dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanY ?? 40
   );
   console.log(dataCafe, "카페");
-  const [map, setMap] = useState([]);
+  const [map, setMap] = useState<SeatData[][]>([]);
 
   console.log(data, "좌석");
   useEffect(() => {
@@ -27,7 +34,7 @@ export default function SeatScanPage(): JSX.Element {
       const newArray = Array.from(
         Array(dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanY),
         () => {
-          const result = [];
+          const result: SeatData[] = [];
           for (
             let i = 0;
             i < dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanX;
@@ -39,10 +46,10 @@ export default function SeatScanPage(): JSX.Element {
         }
       );
       console.log(newArray);
-      data?.fetchAllSeatsByStudyCafeId.map((el) => {
+      data?.fetchAllSeatsByStudyCafeId.forEach((el) => {
         const seat = JSON.parse(el.seat_location);
 
-        seat.map((ele) => {
+        seat.map((ele: number[]) => {
           newArray[ele[1]][ele[0]].status = el.seat_number;
           newArray[ele[1]][ele[0]].seatId = el.seat_id;
           newArray[ele[1]][ele[0]].number = el.seat_number;
@@ -53,7 +60,7 @@ export default function SeatScanPage(): JSX.Element {
     }
   }, [data, dataCafe]);
 
-  const image = (ele: any, x: number, y: number) => {
+  const image = (ele: SeatData, x: number, y: number): React.CSSProperties => {
     const result = {
       borderLeft: "none",
       borderRight: "none",
@@ -63,15 +70,15 @@ export default function SeatScanPage(): JSX.Element {
     };
     if (y + 1 <= stateY - 1) {
       if (ele.seatId !== map[y + 1][x].seatId) {
-        result.borderBottom = "1px solid black";
+        result.borderBottom = "1px solid #fefefe";
       }
     }
     if (x + 1 <= stateX - 1) {
       if (ele.seatId !== map[y][x + 1].seatId) {
-        result.borderRight = "1px solid black";
+        result.borderRight = "1px solid #fefefe";
       }
     }
-    if (ele.number >= 1) {
+    if (Number(ele.number) >= 1) {
       result.backgroundColor = "#e4e4e4";
     }
     return result;
@@ -83,13 +90,11 @@ export default function SeatScanPage(): JSX.Element {
         <S.Box>
           {map.map((el, indY) => {
             return (
-              <S.Box2 key={indY}>
+              <S.Box2 key={uuidv4()}>
                 {el.map((ele, indX) => {
                   return (
                     <>
-                      <S.Pixel style={image(ele, indX, indY)}>
-                        {/* {ele.number} */}
-                      </S.Pixel>
+                      <S.Pixel style={image(ele, indX, indY)}></S.Pixel>
                     </>
                   );
                 })}

@@ -30,6 +30,7 @@ export default function Review(props: IReviewProps): JSX.Element {
   const { register, handleSubmit } = useForm<IFormReviewData>({
     mode: "onChange",
   });
+  const review = reviewdata?.fetchLoginReviewsByUserId[0]?.review_content;
 
   const onClickSubmitReview = async (data: IFormReviewData): Promise<void> => {
     try {
@@ -109,17 +110,16 @@ export default function Review(props: IReviewProps): JSX.Element {
         });
     }
   };
-
-  const review = reviewdata?.fetchLoginReviewsByUserId[0]?.review_content;
+  console.log(review, "flqbqbqbqb");
   return (
     <>
       <S.Wrapper>
         <S.Title>
           <S.CafeName>
-            {fetchUserdata?.fetchLoginUser.visits[0].studyCafe.studyCafe_name}
+            {fetchUserdata?.fetchLoginUser.visits[0]?.studyCafe.studyCafe_name}
           </S.CafeName>
           <S.VisitDate>
-            {getDate(fetchUserdata?.fetchLoginUser.visits[0].visit_createdAt)}
+            {getDate(fetchUserdata?.fetchLoginUser.visits[0]?.visit_createdAt)}
           </S.VisitDate>
         </S.Title>
         <S.ImgWrapper>
@@ -127,12 +127,12 @@ export default function Review(props: IReviewProps): JSX.Element {
         </S.ImgWrapper>
         <S.ReviewWrapper
           onSubmit={
-            review !== null
+            review !== undefined
               ? wrapFormAsync(handleSubmit(onClickUpdateReview))
               : wrapFormAsync(handleSubmit(onClickSubmitReview))
           }
         >
-          {review !== null ? (
+          {review !== undefined ? (
             <S.ReviewTitle>작성된 리뷰를 수정해주세요.</S.ReviewTitle>
           ) : (
             <S.ReviewTitle>리뷰를 작성해주세요.</S.ReviewTitle>
@@ -144,7 +144,7 @@ export default function Review(props: IReviewProps): JSX.Element {
               reviewdata?.fetchLoginReviewsByUserId[0]?.review_content ?? ""
             }
           ></S.ReviewInput>
-          {review !== null ? (
+          {review !== undefined ? (
             <S.BtnWrapper>
               <S.ReviewEditBtn>수정</S.ReviewEditBtn>
               <S.ReviewDeleteBtn

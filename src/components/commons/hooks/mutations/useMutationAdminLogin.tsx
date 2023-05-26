@@ -1,4 +1,4 @@
-import { gql, MutationTuple, useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import {
   IMutation,
   IMutationLoginAdministerArgs,
@@ -10,13 +10,10 @@ export const ADMIN_LOG_IN = gql`
   }
 `;
 
-export const useMutationAdminLogin = (): MutationTuple<
-  Pick<IMutation, "LoginAdminister">,
-  IMutationLoginAdministerArgs
-> => {
-  const mutation = useMutation<
+export const useMutationAdminLogin = (): [typeof LoginAdminister] => {
+  const [LoginAdminister] = useMutation<
     Pick<IMutation, "LoginAdminister">,
     IMutationLoginAdministerArgs
   >(ADMIN_LOG_IN);
-  return mutation;
+  return [LoginAdminister];
 };

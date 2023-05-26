@@ -2,7 +2,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
+import {
+  wrapFormAsync,
+  wrapAsync,
+} from "../../../../commons/libraries/asyncFunc";
 import { signUpSchema } from "../../../../commons/validations/validation";
 import EmailValidationPage from "../../../commons/emailValidation/emailValidation.index";
 import UseModal from "../../../commons/hooks/customs/useModal";
@@ -28,6 +31,10 @@ export default function UserSignUpPage(): JSX.Element {
     resolver: yupResolver(signUpSchema),
     mode: "onChange",
   });
+
+  const onClickLogin = (): void => {
+    void router.push("/user/login");
+  };
 
   const onClickSendVerification = async (data: IFormData): Promise<void> => {
     try {
@@ -78,105 +85,105 @@ export default function UserSignUpPage(): JSX.Element {
       <S.Wrapper>
         <S.LogInWrapper>
           <S.LogInTitle>어디스카 회원이신가요?</S.LogInTitle>
-          <S.LogInButton type="button">로그인하기</S.LogInButton>
+          <S.LogInButton type="button" onClick={onClickLogin}>
+            LOGIN
+          </S.LogInButton>
         </S.LogInWrapper>
         <S.SignUpWrapper>
           <S.SignUpWrapperContainer
             onSubmit={wrapFormAsync(handleSubmit(onClickUserSingUp))}
           >
-            <S.TitleWrapper>
-              <S.SignUpTitle>회원가입</S.SignUpTitle>
-            </S.TitleWrapper>
-
+            <S.SignUpTitle>SIGN UP</S.SignUpTitle>
             <S.InputContainer>
               <S.SignUpInputBox>
-                <S.SignUpInputTitle>name</S.SignUpInputTitle>
-                <S.InputWrapper>
+                <S.SignUpInputDetail>
+                  <S.SignUpInputTitle>NAME</S.SignUpInputTitle>
                   <S.SignUpInput
                     type="text"
                     {...register("name")}
                     placeholder="이름"
                   ></S.SignUpInput>
-                  <S.ErrorMessage>
-                    {formState.errors.name?.message}
-                  </S.ErrorMessage>
-                </S.InputWrapper>
+                </S.SignUpInputDetail>
+
+                <S.ErrorMessage>
+                  {formState.errors.name?.message}
+                </S.ErrorMessage>
               </S.SignUpInputBox>
 
               <S.SignUpInputBox>
-                <S.SignUpInputTitle>email</S.SignUpInputTitle>
-                <S.MailInputWrapper>
-                  <S.Left>
-                    <S.SignUpInputEmail
-                      type="text"
-                      {...register("email")}
-                      placeholder="user@google.com"
-                    ></S.SignUpInputEmail>
+                <S.SignUpInputDetail>
+                  <S.SignUpInputTitle>EMAIL</S.SignUpInputTitle>
+                  <S.SignUpInputEmail
+                    type="text"
+                    {...register("email")}
+                    placeholder="user@google.com"
+                  ></S.SignUpInputEmail>
 
-                    <S.ErrorMessage>
-                      {formState.errors.email?.message}
-                    </S.ErrorMessage>
-                  </S.Left>
-                  <S.Right>
-                    <S.EmailValidationBtn
-                      type="button"
-                      onClick={wrapFormAsync(
-                        handleSubmit(onClickSendVerification)
-                      )}
-                    >
-                      인증하기
-                    </S.EmailValidationBtn>
-                    {isModalOpen !== null && (
-                      <S.EmailValidationModal
-                        okButtonProps={{ style: { display: "none" } }}
-                        cancelButtonProps={{ style: { display: "none" } }}
-                        open={isModalOpen}
-                        onOk={handleOk}
-                        onCancel={handleCancel}
-                      >
-                        <EmailValidationPage handleCancel={handleCancel} />
-                      </S.EmailValidationModal>
-                    )}
-                  </S.Right>
-                </S.MailInputWrapper>
+                  <S.PhoneButton
+                    type="button"
+                    onClick={wrapAsync(handleSubmit(onClickSendVerification))}
+                  >
+                    CLICK
+                  </S.PhoneButton>
+                </S.SignUpInputDetail>
+                <S.ErrorMessage>
+                  {formState.errors.email?.message}
+                </S.ErrorMessage>
+                {isModalOpen !== null && (
+                  <S.EmailValidationModal
+                    okButtonProps={{ style: { display: "none" } }}
+                    cancelButtonProps={{ style: { display: "none" } }}
+                    open={isModalOpen}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                  >
+                    <EmailValidationPage handleCancel={handleCancel} />
+                  </S.EmailValidationModal>
+                )}
               </S.SignUpInputBox>
 
               <S.SignUpInputBox>
-                <S.SignUpInputTitle>password</S.SignUpInputTitle>
-                <S.InputWrapper>
+                <S.SignUpInputDetail>
+                  <S.SignUpInputTitle>PASS</S.SignUpInputTitle>
                   <S.SignUpInput
                     {...register("password")}
                     type="password"
+                    placeholder="비밀번호를 입력해주세요."
                   ></S.SignUpInput>
-                  <S.ErrorMessage>
-                    {formState.errors.password?.message}
-                  </S.ErrorMessage>
-                </S.InputWrapper>
-              </S.SignUpInputBox>
-              <S.SignUpInputBox>
-                <S.SignUpInputTitle>confirm password</S.SignUpInputTitle>
-                <S.InputWrapper>
-                  <S.SignUpInput
-                    {...register("confirmPw")}
-                    type="password"
-                  ></S.SignUpInput>
-                  <S.ErrorMessage>
-                    {formState.errors.confirmPw?.message}
-                  </S.ErrorMessage>
-                </S.InputWrapper>
+                </S.SignUpInputDetail>
+                <S.ErrorMessage>
+                  {formState.errors.password?.message}
+                </S.ErrorMessage>
               </S.SignUpInputBox>
 
               <S.SignUpInputBox>
-                <S.SignUpInputTitle>Phone</S.SignUpInputTitle>
-                <S.InputWrapper>
+                <S.SignUpInputDetail>
+                  <S.SignUpInputTitle>CONFIRM</S.SignUpInputTitle>
+
+                  <S.SignUpInput
+                    {...register("confirmPw")}
+                    type="password"
+                    placeholder="비밀번호를 한번 더 입력해주세요."
+                  ></S.SignUpInput>
+                </S.SignUpInputDetail>
+                <S.ErrorMessage>
+                  {formState.errors.confirmPw?.message}
+                </S.ErrorMessage>
+              </S.SignUpInputBox>
+
+              <S.SignUpInputBox>
+                <S.SignUpInputDetail>
+                  <S.SignUpInputTitle>PHONE</S.SignUpInputTitle>
+
                   <S.SignUpInput
                     {...register("phone")}
                     type="text"
+                    placeholder="010-1234-5678"
                   ></S.SignUpInput>
-                  <S.ErrorMessage>
-                    {formState.errors.phone?.message}
-                  </S.ErrorMessage>
-                </S.InputWrapper>
+                </S.SignUpInputDetail>
+                <S.ErrorMessage>
+                  {formState.errors.phone?.message}
+                </S.ErrorMessage>
               </S.SignUpInputBox>
             </S.InputContainer>
             <S.ButtonContainer>

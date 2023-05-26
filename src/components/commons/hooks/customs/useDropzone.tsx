@@ -6,7 +6,7 @@ import * as D from "../../../units/user/mypage/userEditpage/body/UserEditBody.st
 import { useQueryFetchLoginUser } from "../queries/useQueryFetchLoginUser";
 
 interface MyDropzoneProps {
-  onFileChange: (selectedFile: File | null) => void;
+  onFileChange: (selectedFile: File[] | null) => void;
 }
 function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
   const [imageUrls, setImageUrls] = useRecoilState(imageUrlsState);
@@ -25,7 +25,7 @@ function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
     if (selectedFile !== null) {
       const imageUrl = URL.createObjectURL(selectedFile);
       setImageUrls([imageUrl]);
-      onFileChange(selectedFile);
+      onFileChange([selectedFile]);
     } else if (data?.fetchLoginUser.user_image !== undefined) {
       const imageUrl = data.fetchLoginUser.user_image;
       setImageUrls([imageUrl]);

@@ -83,14 +83,7 @@ export const ReviewModal = styled(Modal)`
     width: 800px;
     height: 900px;
   }
-  /* .ant-modal-header {
-    background-color: red;
-    // 다른 헤더 스타일 속성을 추가로 설정할 수 있습니다.
-  } */
 
   .ant-modal-body {
-    /* height: 180px;
-    background-color: rgba(64, 224, 208, 0.3); */
-    // 모달 본문의 스타일을 설정할 수 있습니다.
   }
 `;

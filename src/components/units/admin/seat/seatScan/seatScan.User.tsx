@@ -3,6 +3,14 @@ import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../../components/co
 import { useEffect, useState } from "react";
 import * as S from "./seatScan.Style";
 import { useQueryFetchOneStudyCafeForUser } from "../../../../../components/commons/hooks/queries/useQueryFetchStudyCafeForUser";
+import { v4 as uuidv4 } from "uuid";
+
+interface SeatData {
+  status: string;
+  seatId: string;
+  number: string;
+  time: number;
+}
 
 export default function SeatScanPage(): JSX.Element {
   const router = useRouter();
@@ -17,7 +25,7 @@ export default function SeatScanPage(): JSX.Element {
     dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanY ?? 40
   );
   console.log(dataCafe, "카페");
-  const [map, setMap] = useState([]);
+  const [map, setMap] = useState<SeatData[][]>([]);
 
   console.log(data, "좌석");
   useEffect(() => {
@@ -27,7 +35,7 @@ export default function SeatScanPage(): JSX.Element {
       const newArray = Array.from(
         Array(dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanY),
         () => {
-          const result = [];
+          const result: SeatData[] = [];
           for (
             let i = 0;
             i < dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX;
@@ -38,23 +46,24 @@ export default function SeatScanPage(): JSX.Element {
           return result;
         }
       );
-      data?.fetchAllSeatsByStudyCafeId.map((el: ISeat) => {
+      data?.fetchAllSeatsByStudyCafeId.forEach((el) => {
         const seat = JSON.parse(el.seat_location);
-
-        seat.map((ele) => {
-          newArray[ele[1]][ele[0]].status = el.user ? el.user?.user_id : "";
+        seat.map((ele: number[]) => {
+          newArray[ele[1]][ele[0]].status =
+            el.user !== undefined ? el.user?.user_id ?? "" : "";
           newArray[ele[1]][ele[0]].seatId = el.seat_id;
           newArray[ele[1]][ele[0]].number = el.seat_number;
           newArray[ele[1]][ele[0]].time = Math.floor(
             (el.seat_remainTime ?? 0) / 60000
           );
+          return <></>;
         });
       });
       setMap(newArray);
     }
   }, [data, dataCafe, router]);
 
-  const image = (ele: any, x: number, y: number) => {
+  const image = (ele: SeatData, x: number, y: number): React.CSSProperties => {
     const result = {
       borderLeft: "none",
       borderRight: "none",
@@ -87,12 +96,13 @@ export default function SeatScanPage(): JSX.Element {
         <S.Box>
           {map.map((el, indY) => {
             return (
-              <S.Box2 key={indY}>
+              <S.Box2 key={uuidv4()}>
                 {el.map((ele, indX) => {
                   return (
-                    <>
-                      <S.Pixel style={image(ele, indX, indY)}></S.Pixel>
-                    </>
+                    <S.Pixel
+                      key={uuidv4()}
+                      style={image(ele, indX, indY)}
+                    ></S.Pixel>
                   );
                 })}
               </S.Box2>

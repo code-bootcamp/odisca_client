@@ -8,8 +8,6 @@ export default function AdminDetail(): JSX.Element {
   const router = useRouter();
   const { data } = useQueryFetchOneStudyCafeForAdmin(String(router.query.Id));
 
-  console.log(data, "패치한 데이터!!");
-
   return (
     <>
       <AdminDetailHeader
@@ -17,13 +15,17 @@ export default function AdminDetail(): JSX.Element {
         cafeBrn={data?.fetchOneStudyCafeForAdminister.studyCafe_brn}
         cafeContact={data?.fetchOneStudyCafeForAdminister.studyCafe_contact}
         cafeFee={data?.fetchOneStudyCafeForAdminister.studyCafe_timeFee}
-        cafeOpenTime={data?.fetchOneStudyCafeForAdminister.studyCafe_openTime}
-        cafeClosTime={data?.fetchOneStudyCafeForAdminister.studyCafe_closeTime}
+        cafeOpenTime={
+          data?.fetchOneStudyCafeForAdminister.studyCafe_openTime ?? ""
+        }
+        cafeClosTime={
+          data?.fetchOneStudyCafeForAdminister.studyCafe_closeTime ?? ""
+        }
       />
       <AdminDetailBody
-        cafeImages={data?.fetchOneStudyCafeForAdminister.images}
+        cafeImages={data?.fetchOneStudyCafeForAdminister.images ?? []}
         cafeDescription={
-          data?.fetchOneStudyCafeForAdminister.studyCafe_description
+          data?.fetchOneStudyCafeForAdminister.studyCafe_description ?? ""
         }
       />
       <AdminDetailFooter />

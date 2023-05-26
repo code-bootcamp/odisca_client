@@ -17,16 +17,16 @@ export const SignUpWrapper = styled.div`
 `;
 
 export const SignUpTitle = styled.h1`
-  margin-bottom: 5%;
-  font-size: 50px;
+  margin-bottom: 80px;
+  font-size: 64px;
   font-weight: 900;
-  color: #ffffff;
+  color: #f7f7f7;
 `;
 
 export const SignUpButton = styled.button`
   width: 300px;
   height: 70px;
-  border-radius: 50px;
+  border-radius: 12% 12% 12% 12% / 50% 50% 50% 50%;
   border: none;
   color: #40e0d0;
   background-color: #ffffff;
@@ -42,9 +42,12 @@ export const LogInWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #ffffff;
 `;
 
 export const LogInWrapperContainer = styled.form`
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -58,48 +61,59 @@ export const TitleWrapper = styled.div`
 `;
 
 export const LoginTitle = styled.h1`
-  font-size: 45px;
+  font-size: 50px;
   font-weight: 900;
   color: #4f4f4f;
   margin-bottom: 7%;
-  margin: 0;
+  margin-left: 80px;
 `;
 
 export const InputContainer = styled.div`
+  width: 100%;
   height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  margin-top: 20px;
 `;
 
 export const LogInInputBox = styled.div`
-  width: 530px;
+  width: 60%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const LogInInputDetail = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 13px;
 `;
 
 export const LogInInputTitle = styled.div`
-  width: calc(530px - 400px);
   font-size: 21px;
   font-weight: 400;
   color: #4f4f4f;
+  line-height: 55px;
 `;
 export const LogInInput = styled.input`
-  width: calc(530px - 100px);
+  width: 500px;
   height: 54px;
-  border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
-  background-color: #f7f7f7;
+  background-color: #ffffff;
   border: none;
-  font-size: 13px;
-  font-weight: 400;
+  border-bottom: 1px solid #4f4f4f;
+  font-size: 18px;
+  font-weight: 600;
+  color: #4f4f4f;
   padding-left: 10px;
   :focus {
-    outline: 2px solid #40e0d0; // 이게 아웃라인 색 변경
+    outline: 2px solid #40e0d0;
+    border-bottom: none;
   }
   ::placeholder {
-    color: #999;
+    color: #d4d2d2;
+    font-weight: 400;
+    font-size: 15px;
   }
 `;
 
@@ -109,17 +123,19 @@ export const InputWrapper = styled.div`
 `;
 
 export const ErrorMessage = styled.div`
-  font-size: 13px;
+  margin-left: 130px;
+  font-size: 14px;
   font-weight: 400;
   color: #7744aa;
-  margin-top: 10px;
 `;
 
 export const ButtonContainer = styled.div`
-  width: 530px;
+  width: 355px;
+  height: 71px;
   display: flex;
-  justify-content: center;
-  margin: 5% 0;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5% 0px 5% 80px;
 `;
 
 export const CancelButton = styled.button`
@@ -129,9 +145,8 @@ export const CancelButton = styled.button`
   border: 1px solid #40e0d0;
   color: #40e0d0;
   background-color: #ffffff;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 600;
-  margin-right: 20px;
   cursor: pointer;
 `;
 
@@ -142,7 +157,7 @@ export const LogInButton = styled.button`
   border: none;
   color: #ffffff;
   background-color: #40e0d0;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 600;
   cursor: pointer;
 `;
@@ -151,7 +166,7 @@ export const SessionLoginContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 5% 0;
+  margin: 5% 0px 5% 80px;
 `;
 
 export const FindContainer = styled.div`
@@ -160,10 +175,11 @@ export const FindContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left: 80px;
 `;
 
 export const FindButton = styled.div`
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
   color: #4f4f4f;
   cursor: pointer;
