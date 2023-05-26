@@ -11,39 +11,48 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const WrapperTop = styled.form`
+  width: 100%;
+`;
+
 export const Header = styled.header`
-  weight: 100%;
+  width: 100%;
   height: 100px;
   display: flex;
-  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  margin-bottom: 30px;
 `;
+
 export const Title = styled.h1`
-  font-size: 20px;
+  font-size: 30px;
   color: #4f4f4f;
 `;
+
 export const SectionTopBox = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 15px;
 `;
+
 export const InputBox = styled.div`
   width: calc(50% - 20px);
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
 `;
+
 export const LabelBox = styled.label`
-  width: 80px;
+  width: 90px;
   height: 45px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 `;
+
 export const Label = styled.label`
   width: 100%;
   font-size: 15px;
@@ -51,8 +60,8 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-  width: 100%;
-  height: 40px;
+  width: calc(100% - 90px);
+  height: 50px;
   border-radius: 10px;
   text-indent: 10px;
   border: 1px solid #f7f7f7;
@@ -73,6 +82,7 @@ export const AddressSectionBox = styled.section`
   justify-content: flex-start;
   margin-top: 10px;
 `;
+
 export const AddressLabel = styled.label`
   width: 30px;
   display: flex;
@@ -94,11 +104,13 @@ export const AddressInputBox = styled.div`
   flex-direction: column;
   justify-content: flex-start;
 `;
+
 export const AddressZip = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 15px;
 `;
+
 export const Zipcode = styled.input`
   width: 70px;
   height: 30px;
@@ -115,6 +127,7 @@ export const Zipcode = styled.input`
     color: #bdbdbd;
   }
 `;
+
 export const SearchBtn = styled.button`
   width: 80px;
   height: 30px;
@@ -125,11 +138,13 @@ export const SearchBtn = styled.button`
   color: #fff;
   font-weight: 600;
 `;
+
 export const AddressBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
 `;
+
 export const Address = styled.input`
   width: 100%;
   margin-bottom: 30px;
@@ -143,6 +158,7 @@ export const Address = styled.input`
     outline: 2px solid #40e0d0;
   }
 `;
+
 export const Error = styled.div`
   color: red;
 `;
@@ -151,11 +167,13 @@ export const SectionMiddle = styled.section`
   width: 100%;
   margin-top: 10px;
 `;
+
 export const ImageSection = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
 `;
+
 export const ImageListBox = styled.div`
   display: flex;
 `;
@@ -205,11 +223,14 @@ export const SectionBottom = styled.section`
   display: flex;
   flex-direction: column;
 `;
+
 export const SectionBox = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 15px;
 `;
+
 export const Notice = styled.textarea`
   height: 520px;
   border-radius: 10px;
@@ -222,7 +243,8 @@ export const Notice = styled.textarea`
     outline: 2px solid #40e0d0;
   }
 `;
-export const Footer = styled.form`
+
+export const Footer = styled.section`
   width: 850px;
   display: flex;
   flex-direction: row;
@@ -230,6 +252,7 @@ export const Footer = styled.form`
   padding-top: 40px;
   margin-bottom: 50px;
 `;
+
 export const Btn = styled.button`
   width: 130px;
   height: 50px;
@@ -247,6 +270,7 @@ export const Btn = styled.button`
     border: none;
   }
 `;
+
 export const Hour = styled.div``;
 
 export const AddressSearchModal = styled(Modal)``;
