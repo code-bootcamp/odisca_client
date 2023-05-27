@@ -43,7 +43,8 @@ export const FETCH_LOGIN_USER = gql`
 
 export const useQueryFetchLoginUser = (): IFetchLoginUserQueryResult => {
   const query = useQuery<Pick<IQuery, "fetchLoginUser">, IUser>(
-    FETCH_LOGIN_USER
+    FETCH_LOGIN_USER,
+    { fetchPolicy: "network-only" }
   );
   const loginUserRefetch = async (): Promise<void> => {
     await query.refetch();
