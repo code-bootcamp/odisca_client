@@ -37,7 +37,7 @@ export default function UserLoginPage(): JSX.Element {
           },
         },
       });
-      alert("로그인 성공");
+      alert("로그인이 완료되었습니다!");
       void router.push("/admin/adminPage");
       console.log(result);
       const accessToken = result.data?.LoginAdminister;
@@ -47,7 +47,7 @@ export default function UserLoginPage(): JSX.Element {
         data.password === undefined
       ) {
         Modal.error({
-          content: "로그인에 실패! 다시 시도해 주세요!",
+          content: "로그인 실패! 다시 시도해 주세요!",
         });
         return;
       }
