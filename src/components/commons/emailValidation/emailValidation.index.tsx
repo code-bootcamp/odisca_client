@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { wrapAsync } from "../../../commons/libraries/asyncFunc";
 import { useMutationCheckVerificationCode } from "../hooks/mutations/useMutationCheckVerification";
 import * as S from "./emailValidation.styles";
+import UseModal from "../hooks/customs/useModal";
 
 interface IFormValidationData {
   verificationCode: string;
@@ -21,6 +22,7 @@ export default function EmailValidationPage(
     mode: "onChange",
   });
   const [seconds, setSeconds] = useState(180);
+  const { handleCancel } = UseModal();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,7 +39,7 @@ export default function EmailValidationPage(
       Modal.error({
         content: "인증시간이 만료되었습니다. 인증을 다시 진행해주세요!",
       });
-      props.handleCancel();
+      handleCancel();
     }
   }, [seconds]);
 
@@ -48,11 +50,9 @@ export default function EmailValidationPage(
       const checkVerificationResult = checkVerificationCode({
         variables: { verificationCode: data.verificationCode },
       });
-      const verificationCode = data.verificationCode;
+      // const verificationCode = data.verificationCode;
       console.log(checkVerificationResult);
-      if (String(checkVerificationResult) === String(verificationCode)) {
-        props.handleCancel();
-      }
+      props.handleCancel();
     } catch (error) {
       if (error instanceof Error)
         Modal.error({

@@ -26,6 +26,7 @@ export const FETCH_LOGIN_ADMINISTER = gql`
           image_url
           image_isMain
         }
+        studyCafe_seatCount
       }
     }
   }
