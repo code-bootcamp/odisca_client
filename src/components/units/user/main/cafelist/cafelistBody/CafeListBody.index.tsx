@@ -1,54 +1,67 @@
-// import { useRouter } from "next/router";
-// import { useQuery } from "@apollo/client";
-
 import InfiniteScroll from "react-infinite-scroller";
+import { useQueryFetchAllStudyCafes } from "../../../../../commons/hooks/queries/useQueryFetchAllStudyCafes";
 import CafeListItem from "./cafelistItem/CafeListItem.index";
 
-export default function CafeListBody(): JSX.Element {
-  //   const router = useRouter();
+interface Props {
+  selectedDistrict: string;
+}
 
-  // cafe data fetch 필요..
-  //   const { data, fetchMore } = useQuery<
-  //     Pick<IQuery, "fetchBoardComments">,
-  //     IQueryFetchBoardCommentsArgs
-  //   >(FETCH_BOARD_COMMENTS, {
-  //     variables: { boardId: router.query.id },
-  //   });
+export default function CafeListBody(props: Props): JSX.Element {
+  const { selectedDistrict } = props;
+  const { data, fetchMore } = useQueryFetchAllStudyCafes({
+    studyCafe_city: "서울",
+    studyCafe_district: selectedDistrict,
+    page: 1,
+  });
 
-  // 무한스크롤
-  //   const onLoadMore = (): void => {
-  //     if (data === undefined) return;
+  const filteredCafes = data?.fetchAllStudyCafes.filter(
+    (cafe) => cafe?.studyCafe_district === selectedDistrict
+  );
 
-  //     void fetchMore({
-  //       variables: {
-  //         page: Math.ceil((data?.fetchBoardComments.length ?? 10) / 10) + 1,
-  //       },
-  //       updateQuery: (prev, { fetchMoreResult }) => {
-  //         if (fetchMoreResult.fetchBoardComments === undefined) {
-  //           return {
-  //             fetchBoardComments: [...prev.fetchBoardComments],
-  //           };
-  //         }
-  //         return {
-  //           fetchBoardComments: [
-  //             ...prev.fetchBoardComments,
-  //             ...fetchMoreResult.fetchBoardComments,
-  //           ],
-  //         };
-  //       },
-  //     });
-  //   };
+  const onLoadMore = (): void => {
+    if (data === undefined) return;
+    void fetchMore({
+      variables: {
+        fetchAllStudyCafesInput: {
+          studyCafe_city: "서울",
+          studyCafe_district: selectedDistrict,
+          page: Math.ceil((data.fetchAllStudyCafes.length ?? 10) / 10) + 1,
+        },
+      },
+      updateQuery: (previousQueryResult, { fetchMoreResult }) => {
+        if (fetchMoreResult?.fetchAllStudyCafes === undefined) {
+          return {
+            fetchAllStudyCafes: [...previousQueryResult.fetchAllStudyCafes],
+          };
+        }
+        return {
+          fetchAllStudyCafes: [
+            ...previousQueryResult.fetchAllStudyCafes,
+            ...fetchMoreResult.fetchAllStudyCafes,
+          ],
+        };
+      },
+    });
+  };
 
   return (
-    <>
-      {/* <InfiniteScroll pageStart={0} loadMore={onLoadMore} hasMore={true}> */}
-
-      <CafeListItem
-      // key={el._id}
-      // el={el}
-      />
-
-      {/* </InfiniteScroll> */}
-    </>
+    <div
+      style={{
+        height: "100vh",
+        overflow: "auto",
+        // width: 1410,
+      }}
+    >
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={onLoadMore}
+        hasMore={Boolean(data?.fetchAllStudyCafes)}
+        useWindow={true}
+      >
+        {filteredCafes?.map((el) => (
+          <CafeListItem key={el.studyCafe_id} el={el} />
+        )) ?? <></>}
+      </InfiniteScroll>
+    </div>
   );
 }

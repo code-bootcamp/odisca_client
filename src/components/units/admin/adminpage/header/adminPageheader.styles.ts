@@ -9,7 +9,7 @@ export const Wrapper = styled.main`
 
 export const MyPageTitle = styled.h1`
   padding-bottom: 25px;
-  border-bottom: 1px solid #4f4f4f;
+  border-bottom: 1px solid #bdbdbd;
   font-size: 30px;
 `;
 
@@ -61,6 +61,7 @@ export const AdminInfo = styled.header`
 export const AdminName = styled.label`
   font-size: 40px;
   color: #4f4f4f;
+  margin-bottom: 6px;
 `;
 
 export const AdminMail = styled.label`
@@ -80,7 +81,7 @@ export const RevenueWrapper = styled.footer`
 export const RevenueText = styled.label`
   font-size: 20px;
   color: #4f4f4f;
-  margin-right: 8px;
+  margin-right: 15px;
 `;
 
 export const Revenue = styled.label`

@@ -11,7 +11,7 @@ export const Wrapper = styled.aside`
 export const Title = styled.a`
   font-size: 18px;
   color: #828282;
-  margin: 35px 0 20px 0;
+  margin: 40px 0 20px 0;
 `;
 
 export const ReservationWrapper = styled.main`
@@ -19,7 +19,7 @@ export const ReservationWrapper = styled.main`
   background-color: #f7f7f7;
   display: flex;
   flex-direction: row;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
 `;
 
 export const LeftWrapper = styled.div``;
@@ -83,12 +83,7 @@ export const ReviewModal = styled(Modal)`
     width: 800px;
     height: 900px;
   }
-  /* .ant-modal-header {
-    background-color: red;
-    // 다른 헤더 스타일 속성을 추가로 설정할 수 있습니다.
-  }
-  
+
   .ant-modal-body {
-    // 모달 본문의 스타일을 설정할 수 있습니다.
-  } */
+  }
 `;

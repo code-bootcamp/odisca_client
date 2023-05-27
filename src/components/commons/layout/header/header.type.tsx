@@ -4,4 +4,5 @@ export interface IRsp {
   error_msg: string;
   imp_uid: string;
   merchant_uid: string;
+  paid_amount: number;
 }

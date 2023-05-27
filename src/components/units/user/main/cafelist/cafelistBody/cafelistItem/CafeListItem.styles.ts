@@ -1,34 +1,56 @@
 import styled from "@emotion/styled";
 
-export const Wrapper = styled.section`
-  padding: 55px;
-`;
+export const Wrapper = styled.section``;
 
 export const Location = styled.h1`
+  width: 100%;
   font-weight: 700;
   font-size: 40px;
-  margin-bottom: 50px;
 `;
 
 export const CafeList = styled.section`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 `;
+export const ListBox = styled.div``;
 
+export const CafeBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  cursor: pointer;
+`;
+
+export const DistrictName = styled.div`
+  font-size: 40px;
+  font-weight: 700;
+  margin-left: 45px;
+`;
+
+export const DevidedLine = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #bdbdbd;
+`;
 export const CafeImg = styled.img`
-  width: 500px;
+  width: 390px;
   height: 200px;
-  background-color: #bdbdbd;
-  margin-bottom: 27px;
+`;
+
+export const CafeInfo = styled.div`
+  display: flex;
+  padding-left: 5px;
+  margin-top: 6px;
 `;
 
 export const CafeName = styled.h2`
   display: inline-block;
-  margin-right: 5px;
+  margin-top: 13px;
   font-weight: 700;
-  font-size: 40px;
+  font-size: 28px;
   color: #4f4f4f;
+  padding-left: 5px;
 `;
 
 export const PriceImg = styled.img`
@@ -40,13 +62,20 @@ export const Price = styled.span`
   font-size: 18px;
   margin-right: 5px;
   vertical-align: 2px;
+  color: #4f4f4f;
 `;
 
 export const CafeDetail = styled.div`
-  margin: 14px 0px 25px 0px;
-  font-size: 16px;
-  color: #bdbdbd;
+  width: 100%;
+  height: 5vh;
+  margin: 14px 0px 0px 0px;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 600;
   padding-left: 5px;
+  padding-top: 5px;
+  background-color: rgba(79, 79, 79, 0.4);
+  border-radius: 10px;
 `;
 
 export const CafeReview = styled.div`

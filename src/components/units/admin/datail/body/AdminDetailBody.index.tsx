@@ -1,56 +1,61 @@
+import { IImage } from "../../../../../commons/types/generated/types";
+import SeatScanPage from "../../seat/seatScan/seatScan.Admin";
 import {
   Body,
   StyledSlider,
   SliderItem,
   ContentsBox,
   Contents,
-  SeatComponent,
+  ContentsWrapper,
 } from "./AdminDetailBody.styles";
+import { v4 as uuidv4 } from "uuid";
 
-export default function AdminDetailBody(): JSX.Element {
+interface IAdminDetailProps {
+  cafeImages?: IImage[];
+  cafeDescription: string;
+}
+
+export default function AdminDetailBody(props: IAdminDetailProps): JSX.Element {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 300,
     slidesToShow: 3,
-    // slidesToScroll: 1,
     autoplay: true,
     arrow: true,
     pauseOnHover: true,
     centerMode: true,
-    centerPadding: "100px",
+    focusOnSelect: true,
+    centerPadding: "0px",
   };
+
+  // const restImageUrls: string[] =
+  //   props.cafeImages?.map((el) => el?.image_url ?? "") ?? [];
+  const countArray = new Array(2 * Number(props.cafeImages?.length)).fill(0);
 
   return (
     <Body>
       <StyledSlider {...settings}>
-        <div>
-          <SliderItem
-            src="/cafe1.png"
-            style={{ width: "80%", height: "auto" }}
-          />
-        </div>
-        <div>
-          <SliderItem src="/cafe2.png" />
-        </div>
-        <div>
-          <SliderItem src="/cafe3.png" />
-        </div>
-        <div>
-          <SliderItem src="/cafe1.png" />
-        </div>
-        <div>
-          <SliderItem src="/cafe2.png" />
-        </div>
+        {countArray.map(
+          (_, index: number): JSX.Element => (
+            <div key={uuidv4()}>
+              <SliderItem
+                src={
+                  props.cafeImages?.[index % Number(props.cafeImages?.length)]
+                    .image_url ?? ""
+                }
+              />
+            </div>
+          )
+        )}
       </StyledSlider>
-      <ContentsBox>
-        <Contents>
-          우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜 우리카페는
-          과자공짜 우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜
-          우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜
-        </Contents>
-      </ContentsBox>
-      <SeatComponent src="/seat.png"></SeatComponent>
+
+      <ContentsWrapper>
+        <ContentsBox>
+          <Contents>{props.cafeDescription}</Contents>
+          <SeatScanPage></SeatScanPage>
+        </ContentsBox>
+      </ContentsWrapper>
     </Body>
   );
 }

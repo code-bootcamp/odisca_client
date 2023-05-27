@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql, MutationTuple, useMutation } from "@apollo/client";
 import {
   IMutation,
   IMutationCreateAdministerArgs,
@@ -7,12 +7,15 @@ import {
 export const CREATE_ADMINISTER = gql`
   mutation createAdminister($createAdministerInput: CreateAdministerInput!) {
     createAdminister(createAdministerInput: $createAdministerInput) {
-      id
+      administer_id
     }
   }
 `;
 
-export const useMutationCreateAdminister = () => {
+export const useMutationCreateAdminister = (): MutationTuple<
+  Pick<IMutation, "createAdminister">,
+  IMutationCreateAdministerArgs
+> => {
   const mutation = useMutation<
     Pick<IMutation, "createAdminister">,
     IMutationCreateAdministerArgs

@@ -1,9 +1,24 @@
+import { IImage } from "../../../../../commons/types/generated/types";
+import SeatScanPage from "../../../admin/seat/seatScan/seatScan.User";
 import * as S from "./UserDetailBody.styles";
 import { StyledSlider, SliderItem } from "./UserDetailBody.styles";
+import { v4 as uuidv4 } from "uuid";
 
-export default function UserDetailBody(): JSX.Element {
+interface IPropsUserDetailBody {
+  cafeDescription: string;
+  cafeOpenTime: string;
+  cafeCloseTime: string;
+  cafeContact: string;
+  cafeAddress: string;
+  cafeImages: IImage[];
+  cafeFee: number | undefined;
+}
+
+export default function UserDetailBody(
+  props: IPropsUserDetailBody
+): JSX.Element {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 300,
     slidesToShow: 3,
@@ -15,33 +30,40 @@ export default function UserDetailBody(): JSX.Element {
     centerPadding: "0px",
   };
 
+  const countArray = new Array(2 * Number(props.cafeImages?.length)).fill(0);
+
   return (
     <S.Body>
       <StyledSlider {...settings}>
-        <div>
-          <SliderItem src="/cafe1.png" />
-        </div>
-        <div>
-          <SliderItem src="/cafe2.png" />
-        </div>
-        <div>
-          <SliderItem src="/cafe3.png" />
-        </div>
-        <div>
-          <SliderItem src="/cafe1.png" />
-        </div>
-        <div>
-          <SliderItem src="/cafe2.png" />
-        </div>
+        {countArray.map(
+          (_, index: number): JSX.Element => (
+            <div key={uuidv4()}>
+              <SliderItem
+                src={
+                  props.cafeImages?.[index % Number(props.cafeImages?.length)]
+                    .image_url ?? ""
+                }
+              />
+            </div>
+          )
+        )}
       </StyledSlider>
       <S.ContentsBox>
-        <S.Contents>
-          우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜 우리카페는
-          과자공짜 우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜
-          우리카페는 과자공짜 우리카페는 과자공짜 우리카페는 과자공짜
-        </S.Contents>
+        <S.Contents>{props.cafeDescription}</S.Contents>
       </S.ContentsBox>
+
       <S.InfoBox>
+        <S.Box>
+          <S.Title>
+            <S.Icon src="/won.png" />
+            <S.Label>이용요금</S.Label>
+          </S.Title>
+          <S.DevidedLine></S.DevidedLine>
+          <S.Detail>
+            <S.Contents>1시간 기준</S.Contents>
+            <S.Contents>{props.cafeFee}</S.Contents>
+          </S.Detail>
+        </S.Box>
         <S.Box>
           <S.Title>
             <S.Icon src="/clock.png" />
@@ -49,7 +71,9 @@ export default function UserDetailBody(): JSX.Element {
           </S.Title>
           <S.DevidedLine></S.DevidedLine>
           <S.Detail>
-            <S.Contents>매일 07:00 - 23:00</S.Contents>
+            <S.Contents>
+              {props.cafeOpenTime} ~ {props.cafeCloseTime}
+            </S.Contents>
             <S.Contents>공휴일 휴무</S.Contents>
           </S.Detail>
         </S.Box>
@@ -60,11 +84,12 @@ export default function UserDetailBody(): JSX.Element {
           </S.Title>
           <S.DevidedLine></S.DevidedLine>
           <S.Detail>
-            <S.Contents>서울특별시 구로구 구로구 디지털로 300</S.Contents>
-            <S.Contents>02) 2000-2000</S.Contents>
+            <S.Contents>{props.cafeAddress}</S.Contents>
+            <S.Contents>{props.cafeContact}</S.Contents>
           </S.Detail>
         </S.Box>
       </S.InfoBox>
+      {/* <SeatScanPage></SeatScanPage> */}
     </S.Body>
   );
 }

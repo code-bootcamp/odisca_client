@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import { Drawer } from "antd";
 
 export const Wrapper = styled.div`
-  height: 150px;
+  width: 100vw;
+  height: 135px;
   display: flex;
   background-color: #40e0d0;
   flex-direction: row;
@@ -11,7 +12,6 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   margin-bottom: 65px;
 `;
-
 export const LightWrapper = styled.div``;
 
 export const RightWrapper = styled.div`
@@ -21,9 +21,12 @@ export const RightWrapper = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 300px;
-  height: 330px;
-  margin: 23px 0 0 40px;
+  width: 290px;
+  height: 290px;
+  margin: -10px 0 0 30px;
+  /* font-size: 50px;
+  font-weight: 600;
+  color: white; */
 `;
 
 export const ProfileWrapper = styled.div`
@@ -33,9 +36,10 @@ export const ProfileWrapper = styled.div`
 `;
 
 export const ProfileIcon = styled.img`
-  width: 33px;
-  height: 33px;
+  width: 40px;
+  height: 40px;
   margin-right: 8px;
+  border-radius: 50px;
 `;
 export const Name = styled.div`
   font-size: 18px;
@@ -50,7 +54,7 @@ export const Text = styled.div`
   font-size: 15px;
   display: flex;
   flex-direction: row;
-  margin-top: 8px;
+  margin-top: 11px;
   color: white;
 `;
 
@@ -65,29 +69,41 @@ export const MenuIcon = styled.div`
 `;
 
 // drawer의 메뉴 리스트 속성 바꾸는 코드
-export const MenuList = styled.div`
+export const MenuListWrapper = styled.div`
   p {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: #4f4f4f;
+    font-weight: 600;
     font-size: 18px;
+    transition: margin-left 0.3s ease;
+    :hover {
+      margin-left: 30px;
+      color: #40e0d0;
+    }
+    cursor: pointer;
   }
 `;
 
 // drawer의 title 속성 바꾸는 코드
 export const MenuDrawer = styled(Drawer)`
   .ant-drawer-title {
-    font-size: 20px;
+    font-size: 25px;
   }
 `;
 
-export const PayButton = styled.button`
-  cursor: pointer;
-  background-color: #ffffff;
-  color: #40e0d0;
-  border-radius: 10px;
-  width: 48px;
-  height: 26px;
-  font-size: 15px;
-  margin-bottom: 6px;
-  border: none;
-`;
+// export const MenuList = styled.p`
+//   cursor: pointer;
+//   background-color: #ffffff;
+//   color: #40e0d0;
+//   border-radius: 10px;
+//   font-weight: 600;
+//   width: 48px;
+//   height: 26px;
+//   font-size: 18px;
+//   margin-bottom: 15px;
+//   border: none;
+//   transition: margin-left 0.3s ease;
+//   :hover {
+//     margin-left: 30px;
+//   }
+// `;

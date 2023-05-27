@@ -29,10 +29,10 @@ export default function UserSignUpPage(): JSX.Element {
       const result = await createAdminister({
         variables: {
           createAdministerInput: {
-            email: data.email,
-            name: data.name,
-            password: data.password,
-            phone: data.phone,
+            administer_email: data.email,
+            administer_name: data.name,
+            administer_password: data.password,
+            administer_phone: data.phone,
           },
         },
       });
@@ -59,6 +59,7 @@ export default function UserSignUpPage(): JSX.Element {
           <S.LogInTitle>관리자이신가요?</S.LogInTitle>
           <S.LogInButton type="button">LOGIN</S.LogInButton>
         </S.LogInWrapper>
+
         <S.SignUpWrapper>
           <S.SignUpWrapperContainer
             onSubmit={wrapFormAsync(handleSubmit(onClickSingUp))}
@@ -66,52 +67,79 @@ export default function UserSignUpPage(): JSX.Element {
             <S.SignUpTitle>SIGN UP</S.SignUpTitle>
             <S.InputContainer>
               <S.SignUpInputBox>
-                <S.SignUpInputTitle>NAME</S.SignUpInputTitle>
-                <S.SignUpInput
-                  type="text"
-                  {...register("name")}
-                  placeholder="이름"
-                ></S.SignUpInput>
+                <S.SignUpInputDetail>
+                  <S.SignUpInputTitle>NAME</S.SignUpInputTitle>
+                  <S.SignUpInput
+                    type="text"
+                    {...register("name")}
+                    placeholder="이름을 입력해주세요."
+                  ></S.SignUpInput>
+                </S.SignUpInputDetail>
+
+                <S.ErrorMessage>
+                  {formState.errors.name?.message}
+                </S.ErrorMessage>
               </S.SignUpInputBox>
-              <S.ErrorMessage>{formState.errors.name?.message}</S.ErrorMessage>
+
               <S.SignUpInputBox>
-                <S.SignUpInputTitle>EMAIL</S.SignUpInputTitle>
-                <S.SignUpInput
-                  type="text"
-                  {...register("email")}
-                  placeholder="user@google.com"
-                ></S.SignUpInput>
+                <S.SignUpInputDetail>
+                  <S.SignUpInputTitle>EMAIL</S.SignUpInputTitle>
+                  <S.SignUpInputEmail
+                    type="text"
+                    {...register("email")}
+                    placeholder="user@google.com"
+                  ></S.SignUpInputEmail>
+                  <S.PhoneButton type="button">CLICK</S.PhoneButton>
+                </S.SignUpInputDetail>
+
+                <S.ErrorMessage>
+                  {formState.errors.email?.message}
+                </S.ErrorMessage>
               </S.SignUpInputBox>
-              <S.ErrorMessage>{formState.errors.email?.message}</S.ErrorMessage>
+
               <S.SignUpInputBox>
-                <S.SignUpInputTitle>PASS</S.SignUpInputTitle>
-                <S.SignUpInput
-                  {...register("password")}
-                  type="password"
-                ></S.SignUpInput>
+                <S.SignUpInputDetail>
+                  <S.SignUpInputTitle>PASS</S.SignUpInputTitle>
+                  <S.SignUpInput
+                    {...register("password")}
+                    type="password"
+                    placeholder="비밀번호를 입력해주세요."
+                  ></S.SignUpInput>
+                </S.SignUpInputDetail>
+
+                <S.ErrorMessage>
+                  {formState.errors.password?.message}
+                </S.ErrorMessage>
               </S.SignUpInputBox>
-              <S.ErrorMessage>
-                {formState.errors.password?.message}
-              </S.ErrorMessage>
+
               <S.SignUpInputBox>
-                <S.SignUpInputTitle>PASS</S.SignUpInputTitle>
-                <S.SignUpInput
-                  {...register("confirmPw")}
-                  type="password"
-                ></S.SignUpInput>
+                <S.SignUpInputDetail>
+                  <S.SignUpInputTitle>CONFIRM</S.SignUpInputTitle>
+                  <S.SignUpInput
+                    {...register("confirmPw")}
+                    type="password"
+                    placeholder="비밀번호를 한번 더 입력해주세요."
+                  ></S.SignUpInput>
+                </S.SignUpInputDetail>
+
+                <S.ErrorMessage>
+                  {formState.errors.confirmPw?.message}
+                </S.ErrorMessage>
               </S.SignUpInputBox>
-              <S.ErrorMessage>
-                {formState.errors.confirmPw?.message}
-              </S.ErrorMessage>
+
               <S.SignUpInputBox>
-                <S.SignUpInputTitle>PHONE</S.SignUpInputTitle>
-                <S.SignUpInputPhone
-                  {...register("phone")}
-                  placeholder="010-1234-5678"
-                ></S.SignUpInputPhone>
-                <S.PhoneButton type="button">CLICK</S.PhoneButton>
+                <S.SignUpInputDetail>
+                  <S.SignUpInputTitle>PHONE</S.SignUpInputTitle>
+                  <S.SignUpInput
+                    {...register("phone")}
+                    placeholder="010-1234-5678"
+                  ></S.SignUpInput>
+                </S.SignUpInputDetail>
+
+                <S.ErrorMessage>
+                  {formState.errors.phone?.message}
+                </S.ErrorMessage>
               </S.SignUpInputBox>
-              <S.ErrorMessage>{formState.errors.phone?.message}</S.ErrorMessage>
             </S.InputContainer>
             <S.ButtonContainer>
               <S.CancelButton type="button">CANCEL</S.CancelButton>

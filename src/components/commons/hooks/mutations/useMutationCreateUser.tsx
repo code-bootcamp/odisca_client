@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql, MutationTuple, useMutation } from "@apollo/client";
 import {
   IMutation,
   IMutationCreateUserArgs,
@@ -7,12 +7,15 @@ import {
 export const CREATE_USER = gql`
   mutation createUser($createUserInput: CreateUserInput!) {
     createUser(createUserInput: $createUserInput) {
-      id
+      user_id
     }
   }
 `;
 
-export const useMutationCreateUser = () => {
+export const useMutationCreateUser = (): MutationTuple<
+  Pick<IMutation, "createUser">,
+  IMutationCreateUserArgs
+> => {
   const mutation = useMutation<
     Pick<IMutation, "createUser">,
     IMutationCreateUserArgs

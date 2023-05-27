@@ -77,7 +77,26 @@ export const ReviewInput = styled.textarea`
   // 인풋창 클릭시 아웃라인 색 변경
 `;
 
-export const ReviewBtn = styled.button`
+export const BtnWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 620px;
+`;
+
+export const ReviewEditBtn = styled.button`
+  border: none;
+  width: 140px;
+  height: 45px;
+  background-color: #40e0d0;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+export const ReviewCreateBtn = styled.button`
   border: none;
   width: 140px;
   height: 45px;
@@ -87,4 +106,18 @@ export const ReviewBtn = styled.button`
   border-radius: 20px;
   font-weight: 600;
   margin-left: calc(620px - 140px);
+  cursor: pointer;
+`;
+
+export const ReviewDeleteBtn = styled.button`
+  border: 1px solid #40e0d0;
+  width: 140px;
+  height: 45px;
+  background-color: #fff;
+  color: #40e0d0;
+  font-size: 18px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-left: 25px;
+  cursor: pointer;
 `;

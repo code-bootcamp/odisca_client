@@ -14,36 +14,41 @@ export const MyPageTitle = styled.h1`
 `;
 
 export const UserWrapper = styled.aside`
+  /* width: 100px; */
   display: flex;
   flex-direction: row;
+  align-items: center;
   margin-top: 35px;
+  /* background-color: pink; */
 `;
 
-export const UserWrapperLight = styled.aside``;
+export const UserWrapperLight = styled.aside`
+  display: flex;
+  align-items: center;
+  padding-left: 45px;
+`;
 
 export const ProfileWrapper = styled.header`
-  position: relative;
-  margin-left: 60px;
-  width: 90px;
-  height: 90px;
+  margin: 0;
 `;
 
 export const ProfileImage = styled.img`
   width: 90px;
   height: 90px;
-  background-color: #40e0d0;
   border-radius: 50px;
   display: flex;
-  position: absolute;
 `;
 
-export const EditProfileIcon = styled.img`
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  left: 60px;
-  top: 60px;
+export const EditBtn = styled.button`
   cursor: pointer;
+  height: 26px;
+  width: 70px;
+  border: 1px solid #40e0d0;
+  background-color: #ffffff;
+  color: #40e0d0;
+  border-radius: 20px;
+  margin-top: 8px;
+  margin-left: 9px;
 `;
 
 export const UserWrapperRight = styled.aside`
@@ -52,10 +57,17 @@ export const UserWrapperRight = styled.aside`
 `;
 
 export const UserInfo = styled.header`
+  width: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   margin-left: 30px;
+  /* margin-top: 8px; */
+`;
+
+export const InfoWrapper = styled.header`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 export const UserName = styled.label`
@@ -74,13 +86,13 @@ export const UserPointWrapper = styled.footer`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: calc(1000px - 580px);
+  margin-left: 205px;
 `;
 
 export const Icon = styled.img`
   width: 30px;
   height: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
   margin-right: 8px;
 `;
 
@@ -90,14 +102,28 @@ export const UserPoint = styled.label`
   margin-right: 8px;
 `;
 
-export const ChargeBtn = styled.button`
+export const PointBtn = styled.button`
+  width: 48px;
   border: none;
   background-color: #40e0d0;
   color: white;
-  border-radius: 10px;
-  width: 48px;
+  border-radius: 15px;
   height: 26px;
   font-size: 15px;
   margin-bottom: 6px;
+  margin-right: 8px;
+  cursor: pointer;
+`;
+
+export const PaymentBtn = styled.button`
+  width: 70px;
+  border: 1px solid #40e0d0;
+  background-color: #ffffff;
+  color: #40e0d0;
+  border-radius: 15px;
+  height: 26px;
+  font-size: 15px;
+  margin-bottom: 6px;
+  margin-right: 8px;
   cursor: pointer;
 `;

@@ -2,15 +2,16 @@
 
 import styled from "@emotion/styled";
 import CafeListBody from "./cafelistBody/CafeListBody.index";
+interface Props {
+  selectedDistrict: string;
+}
 
-const Wrapper = styled.div`
-  width: 610px;
-`;
+const Wrapper = styled.div``;
 
-export default function CafeList(): JSX.Element {
+export default function CafeList({ selectedDistrict }: Props): JSX.Element {
   return (
     <Wrapper>
-      <CafeListBody />
+      <CafeListBody selectedDistrict={selectedDistrict} />
     </Wrapper>
   );
 }
