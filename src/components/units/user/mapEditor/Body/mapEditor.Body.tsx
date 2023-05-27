@@ -158,16 +158,16 @@ export default function MapEditor(): JSX.Element {
   };
 
   const SizeChecker = styled.div`
-    width: ${String(hoverSize[0] * 20) + "px"};
-    height: ${String(hoverSize[1] * 20) + "px"};
+    width: ${String(hoverSize[0]) + "vw"};
+    height: ${String(hoverSize[1]) + "vw"};
     z-index: -1;
     position: absolute;
 
     ${stateY > hoverPosition[1] + hoverSize[1] - 1 ? "" : "display : none"};
     ${stateX > hoverPosition[0] + hoverSize[0] - 1 ? "" : "display : none"};
 
-    top: ${String(450 + hoverPosition[1] * 20) + "px"};
-    left: ${String(600 + hoverPosition[0] * 20) + "px"};
+    top: ${String(25 + hoverPosition[1]) + "vw"};
+    left: ${String(50 - stateX / 2 + hoverPosition[0]) + "vw"};
     background-color: gray;
   `;
   const onHoverTrue = (x: number, y: number) => () => {
@@ -249,9 +249,15 @@ export default function MapEditor(): JSX.Element {
   };
 
   return (
-    <>
+    <S.Wrapper>
       <S.HeightDiv>
-        <S.MapEditorTitle>좌석 등록하기</S.MapEditorTitle>
+        <S.MapEditorTitle>
+          <S.Title>좌석 등록</S.Title>
+          <S.Info>
+            가로와 세로 값을 입력한 후에, 좌석 버튼을 클릭해서 배치도를
+            만들어주세요!
+          </S.Info>
+        </S.MapEditorTitle>
         <div>
           <S.MapEditorInputContainer>
             <S.MapEditorInputWrapper>
@@ -283,7 +289,7 @@ export default function MapEditor(): JSX.Element {
         </div>
       </S.HeightDiv>
       <S.Container>
-        <S.Box>
+        <S.Box style={{ left: String(50 - stateX / 2) + "vw" }}>
           {mapArray.map((el, indY) => {
             return (
               <S.Box2 key={uuidv4()}>
@@ -303,6 +309,6 @@ export default function MapEditor(): JSX.Element {
         </S.Box>
       </S.Container>
       {isHover ? <SizeChecker></SizeChecker> : <></>}
-    </>
+    </S.Wrapper>
   );
 }
