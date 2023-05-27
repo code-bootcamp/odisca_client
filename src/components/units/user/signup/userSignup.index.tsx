@@ -38,12 +38,10 @@ export default function UserSignUpPage(): JSX.Element {
 
   const onClickSendVerification = async (data: IFormData): Promise<void> => {
     try {
-      const verificationResult = sendVerificationCode({
+      await sendVerificationCode({
         variables: { email: data.email },
       });
-      console.log(verificationResult);
       showModal();
-      console.log(data.email);
     } catch (error) {
       if (error instanceof Error)
         Modal.error({
@@ -54,7 +52,7 @@ export default function UserSignUpPage(): JSX.Element {
 
   const onClickUserSingUp = async (data: IFormData): Promise<void> => {
     try {
-      const result = await createUser({
+      await createUser({
         variables: {
           createUserInput: {
             user_email: data.email,
@@ -64,8 +62,6 @@ export default function UserSignUpPage(): JSX.Element {
           },
         },
       });
-      console.log(data.email);
-      console.log(result);
     } catch (error) {
       if (error instanceof Error)
         Modal.error({
@@ -78,7 +74,6 @@ export default function UserSignUpPage(): JSX.Element {
       content: "회원가입이 완료되었습니다. 로그인해주세요!",
     });
     void router.push("/user/login"); // 로그인이 된 상태로 로그인 페이지 이동함.
-    console.log(data);
   };
   return (
     <>
@@ -97,7 +92,10 @@ export default function UserSignUpPage(): JSX.Element {
             <S.InputContainer>
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>NAME</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Name</S.SignUpInputTitle>
+                  </S.TitleBox>
+
                   <S.SignUpInput
                     type="text"
                     {...register("name")}
@@ -112,7 +110,10 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>EMAIL</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Email</S.SignUpInputTitle>
+                  </S.TitleBox>
+
                   <S.SignUpInputEmail
                     type="text"
                     {...register("email")}
@@ -144,7 +145,10 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>PASS</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Pass</S.SignUpInputTitle>
+                  </S.TitleBox>
+
                   <S.SignUpInput
                     {...register("password")}
                     type="password"
@@ -158,7 +162,9 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>CONFIRM</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Confirm</S.SignUpInputTitle>
+                  </S.TitleBox>
 
                   <S.SignUpInput
                     {...register("confirmPw")}
@@ -173,7 +179,9 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>PHONE</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Phone</S.SignUpInputTitle>
+                  </S.TitleBox>
 
                   <S.SignUpInput
                     {...register("phone")}
@@ -187,8 +195,12 @@ export default function UserSignUpPage(): JSX.Element {
               </S.SignUpInputBox>
             </S.InputContainer>
             <S.ButtonContainer>
-              <S.CancelButton type="button">CANCEL</S.CancelButton>
-              <S.SignUpButton>SIGN UP</S.SignUpButton>
+              <S.BtnBox>
+                <S.CancelButton type="button">CANCEL</S.CancelButton>
+              </S.BtnBox>
+              <S.BtnBox>
+                <S.SignUpButton>SIGN UP</S.SignUpButton>
+              </S.BtnBox>
             </S.ButtonContainer>
           </S.SignUpWrapperContainer>
         </S.SignUpWrapper>

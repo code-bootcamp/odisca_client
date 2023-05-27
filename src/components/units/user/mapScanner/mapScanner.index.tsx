@@ -47,8 +47,6 @@ export default function SeatReservationPage(): JSX.Element {
   const [createPayment] = useMutationCreatePayment();
   const [isPayModal, setIsPayModal] = useState(false);
   const [remainTime, setRemainTime] = useState(0);
-
-  console.log(data?.fetchAllSeatsByStudyCafeId);
   useEffect(() => {
     if (dataCafe !== undefined && data !== undefined) {
       setStateX(dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX);
@@ -150,23 +148,24 @@ export default function SeatReservationPage(): JSX.Element {
           },
         },
       });
+      Modal.success({
+        content: "예약에 성공했습니다!",
+      });
       await refetch();
       await refetchSeat();
-      void router.push("/user");
+      void router.push("/user/mypage");
     } catch (err) {
       alert("포인트가 부족합니다.");
       setIsModal(false);
       setIsPayModal(true);
     }
 
-    console.log(seatId, seatNumber);
     setSeatUsable(false);
     setIsModal(false);
   };
 
   const onChangeTime = (event: ChangeEvent<HTMLSelectElement>): void => {
     setDuringTime(Number(event.target.value));
-    console.log(Number(event.target.value));
   };
 
   return (
@@ -210,29 +209,38 @@ export default function SeatReservationPage(): JSX.Element {
       {isModal ? (
         <Modal
           open={isModal}
-          title=""
+          title="좌석정보"
           footer={[
             <button
               key={"reservation"}
               onClick={wrapAsync(submitReservation)}
               disabled={!seatUsable}
+              style={{ width: "60px", height: "30px", margin: "10px" }}
             >
               예약
             </button>,
-            <button key={"cancel"} onClick={toggleModal}>
+            <button
+              key={"cancel"}
+              onClick={toggleModal}
+              style={{ width: "60px", height: "30px" }}
+            >
               취소
             </button>,
           ]}
         >
-          <div>좌석 번호 : {seatNumber}</div>
-          <div>좌석 종류 : {seatStatus}</div>
+          <div style={{ fontSize: "15px" }}>좌석 번호 : {seatNumber}</div>
+          <div style={{ fontSize: "15px" }}>좌석 종류 : {seatStatus}</div>
           {remainTime !== 0 ? (
             <div>{String(remainTime) + "분 남았습니다."}</div>
           ) : (
             <></>
           )}
 
-          <select onChange={onChangeTime} disabled={!seatUsable}>
+          <select
+            onChange={onChangeTime}
+            disabled={!seatUsable}
+            style={{ marginTop: "10px" }}
+          >
             <option value={1}>1시간</option>
             <option value={2}>2시간</option>
             <option value={3}>3시간</option>

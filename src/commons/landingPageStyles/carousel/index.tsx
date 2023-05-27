@@ -72,19 +72,15 @@ export default function Carousel(): JSX.Element {
       <MySlider {...settings}>
         <div>
           <CarouselBg src={"/cafeImg.jpeg"} />
-          {/* <Text>Hello</Text> */}
         </div>
         <div>
           <CarouselBg src={"/cafeImg.jpeg"} />
-          {/* <Text>Hello</Text> */}
         </div>
         <div>
           <CarouselBg src={"/cafeImg.jpeg"} />
-          {/* <Text>Hello</Text> */}
         </div>
         <div>
           <CarouselBg src={"/cafeImg.jpeg"} />
-          {/* <Text>Hello</Text> */}
         </div>
       </MySlider>
     </Wrapper>

@@ -1,5 +1,4 @@
 import { IImage } from "../../../../../commons/types/generated/types";
-import SeatScanPage from "../../../admin/seat/seatScan/seatScan.User";
 import * as S from "./UserDetailBody.styles";
 import { StyledSlider, SliderItem } from "./UserDetailBody.styles";
 import { v4 as uuidv4 } from "uuid";
@@ -89,7 +88,6 @@ export default function UserDetailBody(
           </S.Detail>
         </S.Box>
       </S.InfoBox>
-      {/* <SeatScanPage></SeatScanPage> */}
     </S.Body>
   );
 }

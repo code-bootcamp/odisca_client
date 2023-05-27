@@ -39,7 +39,6 @@ export default function UserLoginPage(): JSX.Element {
       });
       alert("로그인이 완료되었습니다!");
       void router.push("/admin/adminPage");
-      console.log(result);
       const accessToken = result.data?.LoginAdminister;
       if (
         accessToken === undefined ||
@@ -53,7 +52,6 @@ export default function UserLoginPage(): JSX.Element {
       }
 
       setAccessToken(accessToken);
-      console.log(data);
       localStorage.setItem("loginType", "admin");
       localStorage.setItem("accessToken", accessToken);
     } catch (error) {
@@ -71,7 +69,7 @@ export default function UserLoginPage(): JSX.Element {
         <S.SignUpWrapper>
           <S.SignUpTitle>가입을 시작합니다!</S.SignUpTitle>
           <S.SignUpButton type="button" onClick={onClickMoveSignUp}>
-            SIGNUP
+            SIGN UP
           </S.SignUpButton>
         </S.SignUpWrapper>
 
@@ -83,7 +81,7 @@ export default function UserLoginPage(): JSX.Element {
             <S.InputContainer>
               <S.LogInInputBox>
                 <S.LogInInputDetail>
-                  <S.LogInInputTitle>EMAIL</S.LogInInputTitle>
+                  <S.LogInInputTitle>Email</S.LogInInputTitle>
                   <S.LogInInput
                     type="text"
                     placeholder="이메일을 입력해주세요."
@@ -98,7 +96,7 @@ export default function UserLoginPage(): JSX.Element {
 
               <S.LogInInputBox>
                 <S.LogInInputDetail>
-                  <S.LogInInputTitle>PASS</S.LogInInputTitle>
+                  <S.LogInInputTitle>Pass</S.LogInInputTitle>
                   <S.LogInInput
                     type="password"
                     placeholder="비밀번호를 입력해주세요."
@@ -112,18 +110,20 @@ export default function UserLoginPage(): JSX.Element {
               </S.LogInInputBox>
             </S.InputContainer>
             <S.ButtonContainer>
-              <S.CancelButton type="button" onClick={onClickCancel}>
-                CANCEL
-              </S.CancelButton>
-              <S.LogInButton>LOGIN</S.LogInButton>
+              <S.BtnBox>
+                <S.CancelButton type="button" onClick={onClickCancel}>
+                  CANCEL
+                </S.CancelButton>
+              </S.BtnBox>
+              <S.BtnBox>
+                <S.LogInButton>LOGIN</S.LogInButton>
+              </S.BtnBox>
             </S.ButtonContainer>
             <S.SessionLoginContainer>
-              <img src="/sessionicons-admin.png" />
+              <S.Img src="/google2.png" />
+              <S.Img src="/kakao2.png" />
+              <S.Img src="/naver2.png" />
             </S.SessionLoginContainer>
-            <S.FindContainer>
-              <S.FindButton>아이디 찾기</S.FindButton>
-              <S.FindButton>비밀번호 찾기</S.FindButton>
-            </S.FindContainer>
           </S.LogInWrapperContainer>
         </S.LogInWrapper>
       </S.Wrapper>

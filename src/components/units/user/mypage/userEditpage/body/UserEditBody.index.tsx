@@ -77,11 +77,9 @@ export default function UserEditBody(): JSX.Element {
       const results = await uploadImageFile({
         variables: { images: ImageFile },
       });
-
-      console.log(results);
       const url = results.data?.uploadImageFile[0];
 
-      const updateResult = await updateLoginUser({
+      await updateLoginUser({
         variables: {
           updateLoginUserInput: {
             user_password: String(data.user_password),
@@ -92,7 +90,6 @@ export default function UserEditBody(): JSX.Element {
       });
       await loginUserRefetch();
       void router.push("/user/mypage");
-      console.log(updateResult);
 
       Modal.success({
         content: "회원정보 수정이 완료되었습니다!",
