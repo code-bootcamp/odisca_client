@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { Modal } from "antd";
 
 export const Pixel = styled.div`
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
 `;
 
 export const Container = styled.div`
@@ -18,8 +18,9 @@ export const Box = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 0.5px solid #bdbdbd;
+  border: 1px solid #bdbdbd;
 `;
+
 export const Box2 = styled.div`
   display: flex;
   flex-direction: row;
@@ -36,8 +37,9 @@ export const Wrapper = styled.div`
 
 export const SeatsTitle = styled.div`
   font-size: 36px;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 70px;
+  color: #4f4f4f;
 `;
 
 export const SeatContainer = styled.div`
@@ -54,7 +56,8 @@ export const SampleCase = styled.div`
 
 export const SampleFont = styled.div`
   font-weight: 600;
-  font-size: 24px;
+  font-size: 22px;
+  color: #4f4f4f;
 `;
 
 export const SampleContainer = styled.div`
