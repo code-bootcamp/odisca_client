@@ -16,6 +16,7 @@ export const Pixel = styled.div`
 `;
 
 export const Container = styled.div`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,6 +35,7 @@ export const Box = styled.div`
   border: 0.5px solid #bdbdbd;
   z-index: 0;
 `;
+
 export const Box2 = styled.div`
   display: flex;
   flex-direction: row;
@@ -42,18 +44,18 @@ export const Box2 = styled.div`
 `;
 
 export const HeightDiv = styled.div`
-  width: 100%;
-  height: 1080px;
+  width: 95vw;
+  height: 30vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
 export const MapEditorTitle = styled.div`
-  width: 600px;
+  width: 50vw;
   font-size: 40px;
   font-weight: 600;
-  margin: 0 0 15px 25px;
+  margin: 0 0 0 25px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -70,8 +72,8 @@ export const Info = styled.span`
 `;
 
 export const MapEditorInput = styled.input`
-  width: 180px;
-  height: 40px;
+  width: 9vw;
+  height: 4vh;
   border-radius: 10px;
   text-indent: 10px;
   border: 1px solid #f7f7f7;
@@ -91,10 +93,16 @@ export const MapEditorInputWrapper = styled.div`
   margin: 15px;
 `;
 
+export const Inputs = styled.div`
+  width: 50vw;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const MapEditorInputContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
 `;
 
 export const MapEditorInputFont = styled.div`
@@ -105,29 +113,26 @@ export const MapEditorInputFont = styled.div`
 `;
 
 export const InputButton = styled.button`
-  width: 70px;
-  height: 40px;
+  width: 4vw;
+  height: 4vh;
   border-radius: 10px;
   border: none;
   color: #fefefe;
   background-color: #40e0d0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
 `;
 
 export const ButtonContainer = styled.div`
-  width: 20vw;
-  height: 3vh;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  margin: 0 0 30px 10px;
+  justify-content: center;
 `;
 
 export const FunctionBtn = styled.button`
   width: 4vw;
-  height: 3.5vh;
+  height: 4.3vh;
   border-radius: 10px;
   border: none;
   background: #40e0d0;
@@ -135,4 +140,11 @@ export const FunctionBtn = styled.button`
   color: #fff;
   font-weight: 600;
   font-size: 15px;
+  margin-right: 10px;
+`;
+
+export const DivideLine = styled.div`
+  width: 50vw;
+  border: 1px solid #bdbdbd;
+  margin-top: 20px;
 `;
