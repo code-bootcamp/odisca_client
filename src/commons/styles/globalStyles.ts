@@ -11,4 +11,9 @@ export const globalStyles = css`
     font-family: "font";
     src: url("/font/SUIT-Variable.ttf");
   }
+
+  button,
+  a {
+    cursor: pointer;
+  }
 `;
