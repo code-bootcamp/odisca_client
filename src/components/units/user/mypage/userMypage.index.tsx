@@ -7,7 +7,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 700px;
 `;
 
 export default function UserMyPage(): JSX.Element {

@@ -38,7 +38,6 @@ export default function CafeListItem(props: CafeListItemProps): JSX.Element {
             )}
           </S.CafeList>
         </S.CafeBox>
-        <S.DevidedLine></S.DevidedLine>
       </S.ListBox>
     </S.Wrapper>
   );
