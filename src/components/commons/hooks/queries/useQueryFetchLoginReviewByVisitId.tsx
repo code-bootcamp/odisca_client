@@ -34,6 +34,7 @@ export const useQueryFetchLoginReviewByVisitId = (
 ): IFetchReviewByVisitId => {
   const query = useQuery(FETCH_REVIEW_BY_VISIT_ID, {
     variables: { visit_id: id },
+    fetchPolicy: "network-only",
   });
 
   const refetch = async (): Promise<void> => {
