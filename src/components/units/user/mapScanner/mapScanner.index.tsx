@@ -10,6 +10,7 @@ import PayModal from "./mapScanner.PayModal";
 import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
 import { wrapAsync } from "../../../../commons/libraries/asyncFunc";
 import { v4 as uuidv4 } from "uuid";
+import UseDrawer from "../../../commons/hooks/customs/useDrawer";
 
 interface SeatData {
   status: string;
@@ -21,6 +22,8 @@ interface SeatData {
 export default function SeatReservationPage(): JSX.Element {
   const router = useRouter();
   const { refetch } = useQueryFetchLoginUser();
+  // const { showDrawer, onClose, open } = UseDrawer();
+
   const { data: dataCafe } = useQueryFetchOneStudyCafeForUser(
     String(router.query.Id)
   );
@@ -207,7 +210,7 @@ export default function SeatReservationPage(): JSX.Element {
       {isModal ? (
         <Modal
           open={isModal}
-          title="Title"
+          title=""
           footer={[
             <button
               key={"reservation"}
