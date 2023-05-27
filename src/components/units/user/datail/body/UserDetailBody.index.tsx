@@ -11,6 +11,7 @@ interface IPropsUserDetailBody {
   cafeContact: string;
   cafeAddress: string;
   cafeImages: IImage[];
+  cafeFee: number | undefined;
 }
 
 export default function UserDetailBody(
@@ -50,7 +51,19 @@ export default function UserDetailBody(
       <S.ContentsBox>
         <S.Contents>{props.cafeDescription}</S.Contents>
       </S.ContentsBox>
+
       <S.InfoBox>
+        <S.Box>
+          <S.Title>
+            <S.Icon src="/won.png" />
+            <S.Label>이용요금</S.Label>
+          </S.Title>
+          <S.DevidedLine></S.DevidedLine>
+          <S.Detail>
+            <S.Contents>1시간 기준</S.Contents>
+            <S.Contents>{props.cafeFee}</S.Contents>
+          </S.Detail>
+        </S.Box>
         <S.Box>
           <S.Title>
             <S.Icon src="/clock.png" />
@@ -59,9 +72,9 @@ export default function UserDetailBody(
           <S.DevidedLine></S.DevidedLine>
           <S.Detail>
             <S.Contents>
-              {props.cafeOpenTime} - {props.cafeCloseTime}
+              {props.cafeOpenTime} ~ {props.cafeCloseTime}
             </S.Contents>
-            {/* <S.Contents>공휴일 휴무</S.Contents> */}
+            <S.Contents>공휴일 휴무</S.Contents>
           </S.Detail>
         </S.Box>
         <S.Box>
@@ -76,7 +89,7 @@ export default function UserDetailBody(
           </S.Detail>
         </S.Box>
       </S.InfoBox>
-      <SeatScanPage></SeatScanPage>
+      {/* <SeatScanPage></SeatScanPage> */}
     </S.Body>
   );
 }
