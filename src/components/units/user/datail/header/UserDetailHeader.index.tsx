@@ -3,7 +3,12 @@ import { useRouter } from "next/router";
 import * as S from "./UserDetailHeader.styles";
 
 interface IPropsUserDetailHeader {
-  cafeName: string;
+  cafeName: string | undefined;
+  cafeBrn: string | undefined;
+  cafeContact: string | undefined;
+  cafeFee: number | undefined;
+  cafeOpenTime: string;
+  cafeClosTime: string;
 }
 
 export default function UserDetailHeader(
@@ -23,6 +28,24 @@ export default function UserDetailHeader(
         </S.BtnBox>
       </S.Headerbox>
       <S.DevidedLine></S.DevidedLine>
+      <S.InfoBox>
+        <S.NumberBox>
+          <S.Icon1 src="/phone.png" />
+          <S.Number>{props.cafeContact}</S.Number>
+        </S.NumberBox>
+        <S.Slash> / </S.Slash>
+        <S.PriceBox>
+          <S.Icon src="/won.png" />
+          <S.Price>1시간 당 {props.cafeFee}원</S.Price>
+        </S.PriceBox>
+        <S.Slash> / </S.Slash>
+        <S.TimeBox>
+          <S.Icon src="/clock.png" />
+          <S.Price>
+            {props.cafeOpenTime} ~ {props.cafeClosTime}
+          </S.Price>
+        </S.TimeBox>
+      </S.InfoBox>
     </S.Header>
   );
 }

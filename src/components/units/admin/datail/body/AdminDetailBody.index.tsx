@@ -6,6 +6,7 @@ import {
   SliderItem,
   ContentsBox,
   Contents,
+  ContentsWrapper,
 } from "./AdminDetailBody.styles";
 import { v4 as uuidv4 } from "uuid";
 
@@ -49,10 +50,12 @@ export default function AdminDetailBody(props: IAdminDetailProps): JSX.Element {
         )}
       </StyledSlider>
 
-      <ContentsBox>
-        <Contents>{props.cafeDescription}</Contents>
-      </ContentsBox>
-      <SeatScanPage></SeatScanPage>
+      <ContentsWrapper>
+        <ContentsBox>
+          <Contents>{props.cafeDescription}</Contents>
+          <SeatScanPage></SeatScanPage>
+        </ContentsBox>
+      </ContentsWrapper>
     </Body>
   );
 }

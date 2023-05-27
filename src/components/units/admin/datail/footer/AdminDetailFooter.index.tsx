@@ -42,9 +42,9 @@ export default function AdminDetailFooter(): JSX.Element {
     }
   });
 
-  const onClickScanSeats = (): void => {
-    void router.push("/admin/" + String(router.query.Id) + "/mapScaner");
-  };
+  // const onClickScanSeats = (): void => {
+  //   void router.push("/admin/" + String(router.query.Id) + "/mapScaner");
+  // };
 
   const onClickMoveEdit = (): void => {
     void router.push(`/admin/${String(router.query.Id)}/edit`);
@@ -54,7 +54,7 @@ export default function AdminDetailFooter(): JSX.Element {
     <Footer>
       <Btn onClick={onClickMoveEdit}>정보수정</Btn>
       {isSaved ? <Btn onClick={onClickEditSeats}>배치도 등록</Btn> : <></>}
-      <Btn onClick={onClickScanSeats}>배치도 보기</Btn>
+      {/* <Btn onClick={onClickScanSeats}>배치도 보기</Btn> */}
       <Btn>취소하기</Btn>
     </Footer>
   );
