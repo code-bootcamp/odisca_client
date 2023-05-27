@@ -92,7 +92,6 @@ export const LogInInputTitle = styled.div`
 export const LogInInput = styled.input`
   width: 500px;
   height: 54px;
-  /* border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%; */
   background-color: #4f4f4f;
   border: none;
   border-bottom: 1px solid #f7f7f7;

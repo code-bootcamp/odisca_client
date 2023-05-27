@@ -38,12 +38,10 @@ export default function UserSignUpPage(): JSX.Element {
 
   const onClickSendVerification = async (data: IFormData): Promise<void> => {
     try {
-      const verificationResult = sendVerificationCode({
+      await sendVerificationCode({
         variables: { email: data.email },
       });
-      console.log(verificationResult);
       showModal();
-      console.log(data.email);
     } catch (error) {
       if (error instanceof Error)
         Modal.error({
@@ -54,7 +52,7 @@ export default function UserSignUpPage(): JSX.Element {
 
   const onClickUserSingUp = async (data: IFormData): Promise<void> => {
     try {
-      const result = await createUser({
+      await createUser({
         variables: {
           createUserInput: {
             user_email: data.email,
@@ -64,8 +62,6 @@ export default function UserSignUpPage(): JSX.Element {
           },
         },
       });
-      console.log(data.email);
-      console.log(result);
     } catch (error) {
       if (error instanceof Error)
         Modal.error({
@@ -78,7 +74,6 @@ export default function UserSignUpPage(): JSX.Element {
       content: "회원가입이 완료되었습니다. 로그인해주세요!",
     });
     void router.push("/user/login"); // 로그인이 된 상태로 로그인 페이지 이동함.
-    console.log(data);
   };
   return (
     <>

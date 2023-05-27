@@ -156,7 +156,6 @@ export default function SeatReservationPage(): JSX.Element {
       setIsPayModal(true);
     }
 
-    console.log(seatId, seatNumber);
     setSeatUsable(false);
     setIsModal(false);
   };

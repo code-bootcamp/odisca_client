@@ -28,9 +28,6 @@ export default function AdminDetailBody(props: IAdminDetailProps): JSX.Element {
     focusOnSelect: true,
     centerPadding: "0px",
   };
-
-  // const restImageUrls: string[] =
-  //   props.cafeImages?.map((el) => el?.image_url ?? "") ?? [];
   const countArray = new Array(2 * Number(props.cafeImages?.length)).fill(0);
 
   return (

@@ -53,6 +53,7 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
       marker.setMap(map);
 
       const url = String(el?.images[0]?.image_url ?? "/ready.png");
+      // infowindow에 들어갈 내용
       const positions = [
         {
           content:
@@ -117,6 +118,7 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
           void router.push(`/user/${el?.studyCafe_id}`);
         }
       });
+      // infowindow 닫기
       const closeAllInfoWindows = (): void => {
         infoWindows.forEach((infowindow: any) => {
           infowindow.close();
@@ -124,7 +126,6 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
       };
     });
   }, [data, map]);
-  console.log(data, map, "123");
   return (
     <>
       <div id="map" style={{ width: "100%", height: "100%" }}></div>
