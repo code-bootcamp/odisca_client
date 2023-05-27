@@ -1,3 +1,4 @@
+import { useState } from "react";
 import UseModal from "../../../../commons/hooks/customs/useModal";
 import { useQueryFetchLoginUser } from "../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import Review from "../../../../commons/reviews/review.index";
@@ -7,6 +8,14 @@ export default function UserMyPageBody(): JSX.Element {
   const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
   const { data } = useQueryFetchLoginUser();
 
+  const [Ind, setInd] = useState(0);
+  const [vId, setVId] = useState("");
+
+  const onClickSetIndex = (i: number, id: string) => (): void => {
+    setInd(i);
+    setVId(id);
+    showModal();
+  };
   return (
     <>
       <S.Wrapper>
@@ -35,7 +44,9 @@ export default function UserMyPageBody(): JSX.Element {
                     남은 이용시간 {remainingHours}시간{remainingMinutes}분
                   </S.RemainingTime>
                   <S.Btn>이용종료</S.Btn>
-                  <S.Btn onClick={showModal}>리뷰쓰기</S.Btn>
+                  <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
+                    리뷰쓰기
+                  </S.Btn>
                   {isModalOpen !== false && (
                     <S.ReviewModal
                       okButtonProps={{ style: { display: "none" } }}
@@ -44,7 +55,11 @@ export default function UserMyPageBody(): JSX.Element {
                       onOk={handleOk}
                       onCancel={handleCancel}
                     >
-                      <Review handleCancel={handleCancel} index={index} />
+                      <Review
+                        handleCancel={handleCancel}
+                        index={Ind}
+                        vId={vId}
+                      />
                     </S.ReviewModal>
                   )}
                 </S.Bottom>

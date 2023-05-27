@@ -288,6 +288,7 @@ export type IQuery = {
   fetchCafeMainImage: IImage;
   fetchLoginAdminister: IAdminister;
   fetchLoginPointTransactions: Array<IPointTransaction>;
+  fetchLoginReviewByVisitId: IReview;
   fetchLoginReviewsByUserId: Array<IReview>;
   fetchLoginUser: IUser;
   fetchOneSeatsBySeatId: ISeat;
@@ -318,6 +319,11 @@ export type IQueryFetchAllStudyCafesByAdminIdArgs = {
 
 export type IQueryFetchCafeMainImageArgs = {
   studyCafe_id: Scalars['String'];
+};
+
+
+export type IQueryFetchLoginReviewByVisitIdArgs = {
+  visit_id: Scalars['String'];
 };
 
 
