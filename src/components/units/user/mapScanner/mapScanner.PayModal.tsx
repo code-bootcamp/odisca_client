@@ -1,8 +1,8 @@
-import { Modal, Select } from "antd";
 import { useState } from "react";
 import { IRsp } from "../../../commons/layout/header/header.type";
 import { useMutationCreatePointTransaction } from "../../../commons/hooks/mutations/useMutationCreatePointTransaction";
 import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
+import * as S from "./mapScanner.style";
 
 declare const window: typeof globalThis & {
   IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
@@ -14,15 +14,18 @@ interface IPropsPayModal {
 }
 
 export default function PayModal(props: IPropsPayModal): JSX.Element {
-  const [price, setPrice] = useState(1000);
+  const [isShowOptions, setShowOptions] = useState(false);
+  const [price, setprice] = useState(1000);
   const [createLoginPointTransaction] = useMutationCreatePointTransaction();
   const { refetch } = useQueryFetchLoginUser();
   const closeModal = (): void => {
     props.setIsPayModal(false);
   };
-  const onClickPrice = (value: string): void => {
-    setPrice(Number(value));
+
+  const onClickPrice = (e: string): void => {
+    setprice(e.currentTarget.getAttribute("value"));
   };
+
   const onClickPayment = (): void => {
     console.log("시작");
     const IMP = window.IMP;
@@ -69,24 +72,38 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
   return (
     <>
       {props.isPayModal ? (
-        <Modal
-          title="포인트 결제"
+        <S.PayModal
           open={props.isPayModal}
           onOk={onClickPayment}
           onCancel={closeModal}
+          okButtonProps={{ style: { display: "none" } }}
+          cancelButtonProps={{ style: { display: "none" } }}
         >
-          <Select
-            defaultValue="1천원"
-            style={{ width: 400, boxShadow: "0 0 0 0" }}
-            onChange={onClickPrice}
-            options={[
-              { value: "1000", label: "1천원" },
-              { value: "5000", label: "5천원" },
-              { value: "30000", label: "3만원" },
-              { value: "50000", label: "5만원" },
-            ]}
-          />
-        </Modal>
+          <S.SelectBox onClick={() => setShowOptions((prev) => !prev)}>
+            <S.Label>{price}</S.Label>
+            <S.MiddileWrapper>
+              <S.SelectOptions show={isShowOptions}>
+                <S.Option value="1,000원" onClick={onClickPrice}>
+                  1,000원
+                </S.Option>
+                <S.Option value="5,000원" onClick={onClickPrice}>
+                  5,000원
+                </S.Option>
+                <S.Option value="30,000원" onClick={onClickPrice}>
+                  30,000원
+                </S.Option>
+                <S.Option value="50,000원" onClick={onClickPrice}>
+                  50,000원
+                </S.Option>
+              </S.SelectOptions>
+            </S.MiddileWrapper>
+            <S.Line></S.Line>
+
+            <S.Bottom>
+              <S.ChargeBtn onClick={onClickPayment}>충전하기</S.ChargeBtn>
+            </S.Bottom>
+          </S.SelectBox>
+        </S.PayModal>
       ) : (
         <></>
       )}

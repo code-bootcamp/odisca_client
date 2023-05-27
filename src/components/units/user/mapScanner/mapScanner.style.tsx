@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Modal } from "antd";
 
 export const Pixel = styled.div`
   width: 25px;
@@ -26,12 +27,12 @@ export const Box2 = styled.div`
   align-items: center;
 `;
 
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
+// export const Wrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+// `;
 
 export const SeatsTitle = styled.div`
   font-size: 36px;
@@ -78,4 +79,124 @@ export const SeatSampleUnUsable = styled.div`
   height: 50px;
   background-color: #323232;
   border: 1px solid #fefefe;
+`;
+
+// ======== Modal창 관련 ======== //
+
+export const PayModal = styled(Modal)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .ant-modal-content {
+    width: 800px;
+    height: 900px;
+  }
+
+  .ant-modal-body {
+  }
+`;
+
+export const Wrapper = styled.div`
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  width: 464px;
+  height: 250px;
+  margin: 0 auto;
+`;
+
+export const Top = styled.div`
+  width: 464px;
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 30px;
+  margin-bottom: 30px;
+`;
+
+export const TopTitle = styled.div`
+  font-weight: 700;
+  font-size: 20px;
+`;
+
+export const MiddileWrapper = styled.div`
+  width: 384px;
+  margin: 0 auto;
+`;
+export const Middle = styled.ul`
+  width: 384px;
+  margin: 0 auto;
+  border: none;
+`;
+export const Line = styled.div`
+  border-bottom: 2.5px solid black;
+  width: 384px;
+  margin: 0 auto;
+  margin-top: 8px;
+  margin-bottom: 20px;
+`;
+export const SelectBox = styled.div`
+  position: relative;
+  color: #fff;
+  font-size: large;
+  font-weight: 500;
+  /* left: -8vw; */
+  width: 350px;
+  top: 4vh;
+  height: 40px;
+  padding: 8px;
+  border-radius: 12px;
+  background-color: rgba(79, 79, 79, 0.8);
+  align-self: center;
+  cursor: pointer;
+  &::before {
+    content: "🔎";
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    color: #40e0d0;
+    font-size: 20px;
+  }
+`;
+
+export const Label = styled.label`
+  font-size: 14px;
+  margin-left: 4px;
+  text-align: center;
+`;
+
+export const SelectOptions = styled.ul`
+  position: absolute;
+  list-style: none;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  overflow-y: auto;
+  height: 200px;
+  max-height: ${(props) => (props.show ? "none" : "0")};
+  padding: 0;
+  border-radius: 8px;
+  background-color: rgba(79, 79, 79, 1);
+  color: #fefefe;
+`;
+
+export const Option = styled.li`
+  font-size: 14px;
+  padding: 6px 8px;
+  transition: background-color 0.2s ease-in;
+  &:hover {
+    background-color: #595959;
+  }
+`;
+
+export const Bottom = styled.div`
+  width: 384px;
+  margin: 0 auto;
+`;
+
+export const ChargeBtn = styled.button`
+  width: 384px;
+  height: 50px;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  background-color: #bdbdbd;
 `;
