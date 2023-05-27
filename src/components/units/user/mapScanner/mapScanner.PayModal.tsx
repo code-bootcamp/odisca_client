@@ -3,6 +3,7 @@ import { IRsp } from "../../../commons/layout/header/header.type";
 import { useMutationCreatePointTransaction } from "../../../commons/hooks/mutations/useMutationCreatePointTransaction";
 import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./mapScanner.style";
+import { Modal } from "antd";
 
 declare const window: typeof globalThis & {
   IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
@@ -69,6 +70,12 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
     );
   };
 
+  const onCancle = (): void => {
+    closeModal();
+    Modal.success({
+      content: "결제가 취소되었습니다.",
+    });
+  };
   return (
     <>
       {props.isPayModal ? (
@@ -79,6 +86,9 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
           okButtonProps={{ style: { display: "none" } }}
           cancelButtonProps={{ style: { display: "none" } }}
         >
+          <S.Top>
+            <S.TopTitle>충전하실 금액을 선택해주세요!</S.TopTitle>
+          </S.Top>
           <S.SelectBox onClick={() => setShowOptions((prev) => !prev)}>
             <S.Label>{price}</S.Label>
             <S.MiddileWrapper>
@@ -97,12 +107,13 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
                 </S.Option>
               </S.SelectOptions>
             </S.MiddileWrapper>
-            <S.Line></S.Line>
-
-            <S.Bottom>
-              <S.ChargeBtn onClick={onClickPayment}>충전하기</S.ChargeBtn>
-            </S.Bottom>
           </S.SelectBox>
+          <S.Line></S.Line>
+
+          <S.Bottom>
+            <S.CancleBtn onClick={onCancle}>취소</S.CancleBtn>
+            <S.ChargeBtn onClick={onClickPayment}>충전</S.ChargeBtn>
+          </S.Bottom>
         </S.PayModal>
       ) : (
         <></>
