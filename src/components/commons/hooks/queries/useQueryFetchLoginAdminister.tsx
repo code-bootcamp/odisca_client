@@ -34,7 +34,8 @@ export const FETCH_LOGIN_ADMINISTER = gql`
 export const useQueryFetchLoginAdminister =
   (): IFetchLoginAdministerQueryResult => {
     const query = useQuery<Pick<IQuery, "fetchLoginAdminister">, IAdminister>(
-      FETCH_LOGIN_ADMINISTER
+      FETCH_LOGIN_ADMINISTER,
+      { fetchPolicy: "network-only" }
     );
     const refetch = async (): Promise<void> => {
       await query.refetch();
