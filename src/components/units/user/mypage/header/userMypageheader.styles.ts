@@ -14,12 +14,10 @@ export const MyPageTitle = styled.h1`
 `;
 
 export const UserWrapper = styled.aside`
-  /* width: 100px; */
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-top: 35px;
-  /* background-color: pink; */
 `;
 
 export const UserWrapperLight = styled.aside`

@@ -44,7 +44,6 @@ export default function UserMain(): JSX.Element {
           display: "flex",
           flexDirection: "column",
           position: "absolute",
-          // left: showCafeList ? "22vw" : "0",
           transition: "left 0.5s",
           zIndex: 2,
           // 지도 레이아웃

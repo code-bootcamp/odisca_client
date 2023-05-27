@@ -39,7 +39,6 @@ export default function UserLoginPage(): JSX.Element {
       });
       alert("로그인 성공");
       void router.push("/admin/adminPage");
-      console.log(result);
       const accessToken = result.data?.LoginAdminister;
       if (
         accessToken === undefined ||
@@ -53,7 +52,6 @@ export default function UserLoginPage(): JSX.Element {
       }
 
       setAccessToken(accessToken);
-      console.log(data);
       localStorage.setItem("loginType", "admin");
       localStorage.setItem("accessToken", accessToken);
     } catch (error) {

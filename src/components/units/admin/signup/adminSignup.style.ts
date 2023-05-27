@@ -3,8 +3,6 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.main`
   width: 1920px;
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
   background-color: #4f4f4f;
 `;
 
@@ -40,8 +38,6 @@ export const SignUpWrapper = styled.div`
   width: 1100px;
   height: 950px;
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
   margin-top: 100px;
 `;
 
@@ -94,10 +90,7 @@ export const SignUpInputTitle = styled.div`
 export const SignUpInput = styled.input`
   width: 500px;
   height: 54px;
-  /* border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%; */
-  /* background-color: #f7f7f7; */
   background-color: #4f4f4f;
-  /* border: 1px solid #f7f7f7; */
   border: none;
   border-bottom: 1px solid #f7f7f7;
   font-size: 18px;
@@ -118,19 +111,7 @@ export const SignUpInput = styled.input`
 export const SignUpInputEmail = styled.input`
   width: 390px;
   height: 54px;
-  /* border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%;
-  background-color: #f7f7f7;
-  border: 1px solid #f7f7f7;
-  font-size: 18px;
-  font-weight: 600;
-  padding-left: 10px;
-  :focus {
-    outline: 2px solid #40e0d0;
-  } */
-  /* border-radius: 2% 2% 2% 2% / 20% 20% 20% 20%; */
-  /* background-color: #f7f7f7; */
   background-color: #4f4f4f;
-  /* border: 1px solid #f7f7f7; */
   border: none;
   border-bottom: 1px solid #f7f7f7;
   font-size: 18px;
