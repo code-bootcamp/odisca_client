@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Modal } from "antd";
+import { Drawer, Modal } from "antd";
 
 export const Pixel = styled.div`
   width: 22px;
@@ -210,4 +210,32 @@ export const CancleBtn = styled.button`
   background-color: #fff;
   margin-top: 35px;
   margin-left: 11px;
+`;
+
+// ======== Drawer 관련 ======== //
+// drawer의 메뉴 리스트 속성 바꾸는 코드
+export const MenuListWrapper = styled.div`
+  p {
+    margin-bottom: 15px;
+    color: #4f4f4f;
+    font-weight: 600;
+    font-size: 18px;
+    transition: margin-left 0.3s ease;
+    :hover {
+      margin-left: 30px;
+      color: #40e0d0;
+    }
+    cursor: pointer;
+  }
+
+  button {
+    background-color: #40e0d0;
+  }
+`;
+
+// drawer의 title 속성 바꾸는 코드
+export const MenuDrawer = styled(Drawer)`
+  .ant-drawer-title {
+    font-size: 27px;
+  }
 `;
