@@ -56,6 +56,5 @@ export const userEditSchema = yup.object({
   user_phone: yup
     .string()
     .nullable()
-    .required("새로운 전화번호를 입력해주세요.")
     .matches(/^(010)-\d{4}-\d{4}$/, "올바른 전화번호 형식이 아닙니다."),
 });
