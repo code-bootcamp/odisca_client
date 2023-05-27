@@ -251,13 +251,14 @@ export default function MapEditor(): JSX.Element {
     <S.Wrapper>
       <S.HeightDiv>
         <S.MapEditorTitle>
-          <S.Title>좌석 등록</S.Title>
+          <S.Title>좌석배치표 등록</S.Title>
+          <S.DivideLine></S.DivideLine>
           <S.Info>
             가로와 세로 값을 입력한 후에, 좌석 버튼을 클릭해서 배치도를
             만들어주세요!
           </S.Info>
         </S.MapEditorTitle>
-        <div>
+        <S.Inputs>
           <S.MapEditorInputContainer>
             <S.MapEditorInputWrapper>
               <S.MapEditorInputFont>가로</S.MapEditorInputFont>
@@ -285,7 +286,7 @@ export default function MapEditor(): JSX.Element {
               저장하기
             </S.FunctionBtn>
           </S.ButtonContainer>
-        </div>
+        </S.Inputs>
       </S.HeightDiv>
       <S.Container>
         <S.Box style={{ left: String(50 - stateX / 2) + "vw" }}>

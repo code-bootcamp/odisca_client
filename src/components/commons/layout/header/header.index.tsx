@@ -84,7 +84,7 @@ export default function LayoutHeader(): JSX.Element {
   };
 
   const onClickLogin = (): void => {
-    void router.push("user/login");
+    void router.push("/user/login");
     onClose();
   };
 

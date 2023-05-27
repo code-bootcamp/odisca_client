@@ -59,6 +59,10 @@ export default function UserLoginPage(): JSX.Element {
     }
   };
 
+  const onClickCancel = (): void => {
+    void router.push(`/`);
+  };
+
   return (
     <>
       <S.Wrapper>
@@ -106,7 +110,9 @@ export default function UserLoginPage(): JSX.Element {
               </S.LogInInputBox>
             </S.InputContainer>
             <S.ButtonContainer>
-              <S.CancelButton>CANCEL</S.CancelButton>
+              <S.CancelButton type="button" onClick={onClickCancel}>
+                CANCEL
+              </S.CancelButton>
               <S.LogInButton>LOGIN</S.LogInButton>
             </S.ButtonContainer>
             <S.SessionLoginContainer>

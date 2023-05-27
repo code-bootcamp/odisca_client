@@ -368,7 +368,7 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
           }
         >
           <S.Header>
-            <S.Title>업체 {props.isEdit ? "수정" : "등록"}하기</S.Title>
+            <S.Title>업체 {props.isEdit ? "수정" : "등록"}</S.Title>
           </S.Header>
           {/* <S.SectionTop> */}
           <S.SectionBox>

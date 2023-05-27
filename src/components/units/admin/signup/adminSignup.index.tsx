@@ -50,12 +50,18 @@ export default function UserSignUpPage(): JSX.Element {
     void router.push("/admin/login"); // 로그인이 된 상태로 로그인 페이지 이동함.
   };
 
+  const onClickMoveLogin = (): void => {
+    void router.push(`/admin/login`);
+  };
+
   return (
     <>
       <S.Wrapper>
         <S.LogInWrapper>
           <S.LogInTitle>관리자이신가요?</S.LogInTitle>
-          <S.LogInButton type="button">LOGIN</S.LogInButton>
+          <S.LogInButton type="button" onClick={onClickMoveLogin}>
+            LOGIN
+          </S.LogInButton>
         </S.LogInWrapper>
 
         <S.SignUpWrapper>
