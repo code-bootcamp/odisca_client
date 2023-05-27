@@ -85,7 +85,6 @@ export default function SeatScanPage(): JSX.Element {
   };
   return (
     <>
-      <div>좌석표 보기</div>
       <S.Container>
         <S.Box>
           {map.map((el, indY) => {

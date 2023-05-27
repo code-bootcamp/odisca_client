@@ -13,7 +13,7 @@ export default function AdminDetailHeader(
   props: IDetailHeaderProps
 ): JSX.Element {
   return (
-    <>
+    <S.Wrapper>
       <S.Header>
         <S.TitleBox>
           <S.Title>{props.cafeName}</S.Title>
@@ -37,6 +37,6 @@ export default function AdminDetailHeader(
           </S.TimeBox>
         </S.InfoBox>
       </S.Header>
-    </>
+    </S.Wrapper>
   );
 }
