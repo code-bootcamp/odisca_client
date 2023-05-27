@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
 import { schema } from "../../../../commons/validations/validation";
 import { useMutationUserLogin } from "../../../commons/hooks/mutations/useMutationLogin";
+import { Modal } from "antd";
 
 interface IFormData {
   user_email: string;
@@ -41,11 +42,15 @@ export default function UserLoginPage(): JSX.Element {
       const accessToken = result.data?.LoginUser;
 
       if (accessToken === undefined) {
-        alert("다시 로그인해주세요.");
+        Modal.error({
+          content: "로그인을 다시 시도해주세요.",
+        });
         return;
       }
       setAccessToken(accessToken);
-      alert("로그인이 완료되었습니다!");
+      Modal.success({
+        content: "로그인 성공!",
+      });
       void router.push(`/user`);
       localStorage.setItem("loginType", "user");
       localStorage.setItem("accessToken", accessToken);

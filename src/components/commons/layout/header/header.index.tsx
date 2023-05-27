@@ -1,6 +1,6 @@
 import * as S from "./header.style";
 import React, { useEffect, useState } from "react";
-import { Space } from "antd";
+import { Modal, Space } from "antd";
 import { useMutationDeleteAdmin } from "../../hooks/mutations/useMutationDeleteAdmin";
 import { useMutationLogOutUser } from "../../hooks/mutations/useMutationLogoutUser";
 import { useMutationLogOutAdmin } from "../../hooks/mutations/useMutationLogoutAdmin";
@@ -37,13 +37,17 @@ export default function LayoutHeader(): JSX.Element {
   const onClickLogOut = async (): Promise<void> => {
     if (router.asPath.includes("admin")) {
       await logoutAdmin();
-      alert("로그아웃 완료되었습니다.");
+      Modal.success({
+        content: "로그아웃 되었습니다!",
+      });
       localStorage.removeItem("accessToken");
       localStorage.removeItem("loginType");
       void router.push("/admin/login");
     } else {
       await logoutUser();
-      alert("로그아웃 완료되었습니다.");
+      Modal.success({
+        content: "로그아웃 되었습니다!",
+      });
       localStorage.removeItem("accessToken");
       localStorage.removeItem("loginType");
       void router.push("/user/login");
@@ -148,11 +152,11 @@ export default function LayoutHeader(): JSX.Element {
             <S.MenuListWrapper>
               {isLogin ? <></> : <p onClick={onClickLogin}>로그인</p>}
               <p onClick={onClickMyPage}>내 정보</p>
-              {localStorage.getItem("loginType") === "user" ? (
+              {/* {localStorage.getItem("loginType") === "user" ? (
                 <p onClick={showModal}>충전</p>
               ) : (
                 <></>
-              )}
+              )} */}
               <p onClick={onClickMain}>스카찾기</p>
 
               {!isLogin ? (
