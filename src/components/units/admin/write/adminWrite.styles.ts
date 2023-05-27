@@ -48,6 +48,7 @@ export const LabelBox = styled.label`
 export const Label = styled.label`
   width: 100%;
   font-size: 15px;
+  font-weight: 600;
   color: #4f4f4f;
 `;
 
@@ -91,6 +92,7 @@ export const AddressLabel = styled.label`
   font-size: 15px;
   color: #4f4f4f;
   margin-right: 15px;
+  font-weight: 600;
 `;
 
 export const TimeSectionBox = styled.div`
@@ -154,7 +156,7 @@ export const AddressBox = styled.div`
 export const Address = styled.input`
   width: 100%;
   margin-top: 15px;
-  height: 40px;
+  height: 50px;
   border-radius: 10px;
   text-indent: 10px;
   border: 1px solid #f7f7f7;

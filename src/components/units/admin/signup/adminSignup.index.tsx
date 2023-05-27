@@ -52,12 +52,18 @@ export default function UserSignUpPage(): JSX.Element {
     console.log(data);
   };
 
+  const onClickMoveLogin = (): void => {
+    void router.push(`/admin/login`);
+  };
+
   return (
     <>
       <S.Wrapper>
         <S.LogInWrapper>
           <S.LogInTitle>관리자이신가요?</S.LogInTitle>
-          <S.LogInButton type="button">LOGIN</S.LogInButton>
+          <S.LogInButton type="button" onClick={onClickMoveLogin}>
+            LOGIN
+          </S.LogInButton>
         </S.LogInWrapper>
 
         <S.SignUpWrapper>
