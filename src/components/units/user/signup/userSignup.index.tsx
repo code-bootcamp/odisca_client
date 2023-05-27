@@ -43,7 +43,6 @@ export default function UserSignUpPage(): JSX.Element {
       });
       console.log(verificationResult);
       showModal();
-      console.log(data.email);
     } catch (error) {
       if (error instanceof Error)
         Modal.error({
@@ -54,7 +53,7 @@ export default function UserSignUpPage(): JSX.Element {
 
   const onClickUserSingUp = async (data: IFormData): Promise<void> => {
     try {
-      const result = await createUser({
+      await createUser({
         variables: {
           createUserInput: {
             user_email: data.email,
@@ -64,8 +63,6 @@ export default function UserSignUpPage(): JSX.Element {
           },
         },
       });
-      console.log(data.email);
-      console.log(result);
     } catch (error) {
       if (error instanceof Error)
         Modal.error({

@@ -48,8 +48,14 @@ export default function AdminPageBody(props: IAdminBodyProps): JSX.Element {
                     <S.Remark>{el.studyCafe_description}</S.Remark>
                   </S.Top>
                   <S.Bottom>
-                    <S.OccupiedSeat>이용중인 좌석 30석</S.OccupiedSeat>
-                    <S.MoveToSeatBtn>확인하기</S.MoveToSeatBtn>
+                    <S.OccupiedSeat>
+                      전체 좌석 : {el.studyCafe_seatCount}
+                    </S.OccupiedSeat>
+                    <S.MoveToSeatBtn
+                      onClick={wrapAsync(onClickDetail(el.studyCafe_id))}
+                    >
+                      확인하기
+                    </S.MoveToSeatBtn>
                   </S.Bottom>
                 </S.RightWrapper>
               </S.MyCafeWrapper>
