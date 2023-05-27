@@ -66,9 +66,7 @@ export default function UserLoginPage(): JSX.Element {
       <S.Wrapper>
         <S.SignUpWrapper>
           <S.SignUpTitle>아직 회원이 아니신가요?</S.SignUpTitle>
-          <S.SignUpButton onClick={onClickMoveSignUp}>
-            회원가입하기
-          </S.SignUpButton>
+          <S.SignUpButton onClick={onClickMoveSignUp}>SIGN UP</S.SignUpButton>
         </S.SignUpWrapper>
 
         <S.LogInWrapper>

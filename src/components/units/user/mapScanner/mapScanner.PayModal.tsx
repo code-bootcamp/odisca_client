@@ -24,7 +24,6 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
     setPrice(Number(value));
   };
   const onClickPayment = (): void => {
-    console.log("시작");
     const IMP = window.IMP;
     IMP.init("imp56618747");
 
@@ -44,7 +43,6 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
 
       async (rsp: IRsp) => {
         if (rsp.success) {
-          console.log(rsp, "결제진행");
           try {
             await createLoginPointTransaction({
               variables: {

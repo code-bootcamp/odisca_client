@@ -21,8 +21,8 @@ import { cafeEditSchema } from "../../../../commons/adminEditValidation/validati
 import * as S from "./adminWrite.styles";
 import OperatingTime from "../../../commons/operatingTimeSelection/operatingTimeSelect.index";
 import { checkValidationFile } from "../../../../commons/libraries/validationFile";
-import SubmitSuccessAlertModal from "../../../commons/submitSuccessModal/submitSuccessModal.index";
 import { IQuery } from "../../../../commons/types/generated/types";
+import SubmitSuccessAlertModal from "../../../commons/submitSuccessModal/submitSuccessModal.index";
 
 // 등록 사항들 타입 지정
 interface IFormValues {
@@ -96,7 +96,8 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
   useEffect(() => {
     const script = document.createElement("script"); // script tag 만들기
     script.src =
-      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6583c79fd8fd9f0d519f6b325b841c09&libraries=services";
+      // "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6583c79fd8fd9f0d519f6b325b841c09&libraries=services";
+      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=12e2554bb6ebf42463e132c31315b011&libraries=services";
     document.head.appendChild(script);
 
     script.onload = () => {

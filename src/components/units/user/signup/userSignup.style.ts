@@ -2,32 +2,35 @@ import styled from "@emotion/styled";
 import { Modal } from "antd";
 
 export const Wrapper = styled.main`
-  width: 1920px;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: row;
 `;
 
 export const LogInWrapper = styled.div`
-  width: 913px;
-  height: 1080px;
+  width: 50%;
+  height: 100vh;
   background-color: #40e0d0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
-
+export const TitleBox = styled.div`
+  width: 120px;
+`;
 export const LogInTitle = styled.h1`
-  margin-bottom: 80px;
-  font-size: 64px;
-  font-weight: 900;
+  margin-bottom: 7vh;
+  font-size: 65px;
+  font-weight: 700;
   color: #ffffff;
 `;
 
 export const LogInButton = styled.button`
-  width: 300px;
+  width: 280px;
   height: 70px;
-  border-radius: 12% 12% 12% 12% / 50% 50% 50% 50%;
+  border-radius: 10% / 50%;
   border: none;
   color: #40e0d0;
   background-color: #ffffff;
@@ -37,10 +40,9 @@ export const LogInButton = styled.button`
 `;
 
 export const SignUpWrapper = styled.div`
-  width: 1100px;
-  height: 950px;
+  width: 50%;
+  height: 100vh;
   display: flex;
-  margin-top: 100px;
 `;
 
 export const SignUpWrapperContainer = styled.form`
@@ -53,104 +55,109 @@ export const SignUpWrapperContainer = styled.form`
 `;
 
 export const SignUpTitle = styled.h1`
-  font-size: 50px;
-  font-weight: 900;
+  font-size: 65px;
+  font-weight: 700;
   color: #4f4f4f;
-  margin-bottom: 40px;
-  margin-left: 70px;
+  margin-bottom: 7vh;
 `;
 
 export const InputContainer = styled.div`
-  width: 100%;
-  height: 732px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  margin-right: 120px;
 `;
 
 export const SignUpInputBox = styled.div`
-  width: 60%;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  padding: 10px;
 `;
 
 export const SignUpInputDetail = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 28px;
 `;
 
 export const SignUpInputTitle = styled.div`
-  width: calc(600px - 500px);
-  font-size: 20px;
+  font-size: 33px;
   font-weight: 400;
   color: #4f4f4f;
-  line-height: 60px;
+  line-height: 55px;
 `;
 export const SignUpInput = styled.input`
-  width: 500px;
+  width: 450px;
   height: 54px;
-
   background-color: #ffffff;
   border: none;
-  border-bottom: 1px solid #4f4f4f;
-  font-size: 18px;
+  border-bottom: 2px solid #4f4f4f;
+  font-size: 25px;
   font-weight: 600;
   color: #4f4f4f;
-  padding-left: 10px;
+  margin-left: 20px;
   :focus {
-    outline: 2px solid #40e0d0;
+    outline: 3px solid #40e0d0;
     border-bottom: none;
   }
   ::placeholder {
     color: #d4d2d2;
     font-weight: 400;
     font-size: 15px;
+    padding-left: 10px;
   }
 `;
 
 export const SignUpInputEmail = styled.input`
-  width: 390px;
+  width: 375px;
   height: 54px;
   background-color: #ffffff;
   border: none;
-  border-bottom: 1px solid #4f4f4f;
-  font-size: 18px;
+  border-bottom: 2px solid #4f4f4f;
+  font-size: 25px;
   font-weight: 600;
-  padding-left: 10px;
+  margin-left: 20px;
   color: #4f4f4f;
   :focus {
-    outline: 2px solid #40e0d0;
+    outline: 3px solid #40e0d0;
     border-bottom: none;
   }
   ::placeholder {
     color: #d4d2d2;
     font-weight: 400;
     font-size: 15px;
+    padding-left: 10px;
   }
 `;
 
 export const ErrorMessage = styled.div`
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 400;
   color: #7744aa;
-  margin: 15px 0px 0px 130px;
+  margin-left: 115px;
 `;
 
 export const ButtonContainer = styled.div`
-  width: 355px;
-  height: 71px;
+  width: 50%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin: 5% 0px 5% 70px;
+  margin: 60px;
 `;
-
+export const BtnBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+`;
 export const CancelButton = styled.button`
-  width: 162px;
-  height: 68px;
-  border-radius: 25% 25% 25% 25% / 65% 65% 65% 65%;
+  width: 170px;
+  height: 60px;
+  border-radius: 50px;
   border: 1px solid #40e0d0;
   color: #40e0d0;
   background-color: #f7f7f7;
@@ -160,9 +167,9 @@ export const CancelButton = styled.button`
 `;
 
 export const SignUpButton = styled.button`
-  width: 162px;
-  height: 68px;
-  border-radius: 25% 25% 25% 25% / 65% 65% 65% 65%;
+  width: 170px;
+  height: 60px;
+  border-radius: 50px;
   border: none;
   color: #ffffff;
   background-color: #40e0d0;
@@ -178,13 +185,16 @@ export const EmailValidationModal = styled(Modal)`
   }
 `;
 export const PhoneButton = styled.button`
-  width: 87px;
-  height: 54px;
-  border-radius: 10px;
+  width: 70px;
+  height: 40px;
+  border-radius: 24px;
   border: none;
   color: #fff;
   background-color: #40e0d0;
   font-size: 18px;
   font-weight: 600;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-top: 15px;
   cursor: pointer;
 `;
