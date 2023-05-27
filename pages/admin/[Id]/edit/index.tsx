@@ -1,5 +1,3 @@
-// admin 수정
-
 import { withAuth } from "../../../../src/commons/libraries/withAuth";
 import AdminWrite from "../../../../src/components/units/admin/write/adminWrite.index";
 

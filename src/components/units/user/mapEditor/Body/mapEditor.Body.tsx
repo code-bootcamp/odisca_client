@@ -227,7 +227,6 @@ export default function MapEditor(): JSX.Element {
         seatInformation: input,
         studyCafe_id: String(router.query.Id),
       };
-      console.log(seatsInput);
       try {
         await createSeats({
           variables: {

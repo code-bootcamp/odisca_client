@@ -17,15 +17,15 @@ export const SignUpWrapper = styled.div`
 `;
 
 export const SignUpTitle = styled.h1`
-  margin-bottom: 80px;
-  font-size: 80px;
-  font-weight: 900;
+  margin-bottom: 50px;
+  font-size: 60px;
+  font-weight: 700;
   color: #f7f7f7;
 `;
 
 export const SignUpButton = styled.button`
-  width: 350px;
-  height: 80px;
+  width: 280px;
+  height: 70px;
   border-radius: 10% / 50%;
   border: none;
   color: #40e0d0;
@@ -61,8 +61,8 @@ export const TitleWrapper = styled.div`
 `;
 
 export const LoginTitle = styled.h1`
-  font-size: 90px;
-  font-weight: 900;
+  font-size: 65px;
+  font-weight: 700;
   color: #4f4f4f;
   margin-bottom: 7vh;
 `;
@@ -72,7 +72,7 @@ export const InputContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  margin-right: 140px;
+  margin-right: 100px;
 `;
 
 export const LogInInputBox = styled.div`
@@ -92,13 +92,13 @@ export const LogInInputDetail = styled.div`
 `;
 
 export const LogInInputTitle = styled.div`
-  font-size: 48px;
+  font-size: 33px;
   font-weight: 400;
   color: #4f4f4f;
   line-height: 55px;
 `;
 export const LogInInput = styled.input`
-  width: 530px;
+  width: 450px;
   height: 54px;
   background-color: #ffffff;
   border: none;
@@ -129,7 +129,7 @@ export const ErrorMessage = styled.div`
   font-size: 18px;
   font-weight: 400;
   color: #7744aa;
-  margin-left: 155px;
+  margin-left: 115px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -138,7 +138,7 @@ export const ButtonContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 80px;
+  margin: 60px;
 `;
 export const BtnBox = styled.div`
   display: flex;
@@ -146,8 +146,8 @@ export const BtnBox = styled.div`
   padding: 10px;
 `;
 export const CancelButton = styled.button`
-  width: 180px;
-  height: 80px;
+  width: 170px;
+  height: 60px;
   border-radius: 50px;
   border: 1px solid #40e0d0;
   color: #40e0d0;
@@ -158,8 +158,8 @@ export const CancelButton = styled.button`
 `;
 
 export const LogInButton = styled.button`
-  width: 180px;
-  height: 80px;
+  width: 170px;
+  height: 60px;
   border-radius: 25% / 65%;
   border: none;
   color: #ffffff;
@@ -175,7 +175,7 @@ export const SessionLoginContainer = styled.div`
   align-items: center;
 `;
 export const Img = styled.img`
-  width: 80px;
+  width: 60px;
   margin: 10px;
   cursor: pointer;
 `;

@@ -77,11 +77,9 @@ export default function UserEditBody(): JSX.Element {
       const results = await uploadImageFile({
         variables: { images: ImageFile },
       });
-
-      console.log(results);
       const url = results.data?.uploadImageFile[0];
 
-      const updateResult = await updateLoginUser({
+      await updateLoginUser({
         variables: {
           updateLoginUserInput: {
             user_password: String(data.user_password),
@@ -92,10 +90,9 @@ export default function UserEditBody(): JSX.Element {
       });
       await loginUserRefetch();
       void router.push("/user/mypage");
-      console.log(updateResult);
 
       Modal.success({
-        content: "회원수정 완료!",
+        content: "회원정보 수정이 완료되었습니다!",
       });
     } catch (error) {
       if (error instanceof Error)
@@ -141,17 +138,20 @@ export default function UserEditBody(): JSX.Element {
             {...register("user_password")}
           />
         </S.EditList>
-        <S.AlertMessage></S.AlertMessage>
-        <S.EditList>
-          <S.ListDetail>전화번호</S.ListDetail>
-          <S.DetailInput
-            style={{ color: "#4f4f4f" }}
-            type="text"
-            defaultValue={data?.fetchLoginUser.user_phone}
-            {...register("user_phone")}
-          />
-        </S.EditList>
-        <S.AlertMessage>{formState.errors.user_phone?.message}</S.AlertMessage>
+        <S.PhoneEditList>
+          <S.PhoneInput>
+            <S.ListDetail>전화번호</S.ListDetail>
+            <S.DetailInput
+              style={{ color: "#4f4f4f" }}
+              type="text"
+              defaultValue={data?.fetchLoginUser.user_phone}
+              {...register("user_phone")}
+            />
+          </S.PhoneInput>
+          <S.AlertMessage>
+            {formState.errors.user_phone?.message}
+          </S.AlertMessage>
+        </S.PhoneEditList>
       </S.InputForm>
       <S.BtnWrapper onSubmit={wrapFormAsync(handleSubmit(onClickUserUpdate))}>
         <S.EditBtn>수정하기</S.EditBtn>
