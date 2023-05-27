@@ -6,6 +6,7 @@ export const Wrapper = styled.aside`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  margin-top: 10px;
 `;
 
 export const Title = styled.a`

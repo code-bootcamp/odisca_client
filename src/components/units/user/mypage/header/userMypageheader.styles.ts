@@ -14,24 +14,27 @@ export const MyPageTitle = styled.h1`
 `;
 
 export const UserWrapper = styled.aside`
+  /* width: 100px; */
   display: flex;
   flex-direction: row;
+  align-items: center;
   margin-top: 35px;
+  /* background-color: pink; */
 `;
 
-export const UserWrapperLight = styled.aside``;
+export const UserWrapperLight = styled.aside`
+  display: flex;
+  align-items: center;
+  padding-left: 45px;
+`;
 
 export const ProfileWrapper = styled.header`
-  position: relative;
-  margin-left: 60px;
-  width: 90px;
-  /* background-color: aliceblue; */
+  margin: 0;
 `;
 
 export const ProfileImage = styled.img`
   width: 90px;
   height: 90px;
-  background-color: #40e0d0;
   border-radius: 50px;
   display: flex;
 `;
@@ -54,10 +57,11 @@ export const UserWrapperRight = styled.aside`
 `;
 
 export const UserInfo = styled.header`
+  width: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   margin-left: 30px;
+  /* margin-top: 8px; */
 `;
 
 export const InfoWrapper = styled.header`
@@ -82,7 +86,7 @@ export const UserPointWrapper = styled.footer`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: calc(1000px - 580px);
+  margin-left: 205px;
 `;
 
 export const Icon = styled.img`
