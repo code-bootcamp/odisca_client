@@ -52,12 +52,18 @@ export default function UserSignUpPage(): JSX.Element {
     console.log(data);
   };
 
+  const onClickLogin = (): void => {
+    void router.push("/admin/login");
+  };
+
   return (
     <>
       <S.Wrapper>
         <S.LogInWrapper>
           <S.LogInTitle>관리자이신가요?</S.LogInTitle>
-          <S.LogInButton type="button">LOGIN</S.LogInButton>
+          <S.LogInButton type="button" onClick={onClickLogin}>
+            LOGIN
+          </S.LogInButton>
         </S.LogInWrapper>
 
         <S.SignUpWrapper>
@@ -68,7 +74,9 @@ export default function UserSignUpPage(): JSX.Element {
             <S.InputContainer>
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>NAME</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Name</S.SignUpInputTitle>
+                  </S.TitleBox>
                   <S.SignUpInput
                     type="text"
                     {...register("name")}
@@ -83,7 +91,10 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>EMAIL</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Email</S.SignUpInputTitle>
+                  </S.TitleBox>
+
                   <S.SignUpInputEmail
                     type="text"
                     {...register("email")}
@@ -99,7 +110,10 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>PASS</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Pass</S.SignUpInputTitle>
+                  </S.TitleBox>
+
                   <S.SignUpInput
                     {...register("password")}
                     type="password"
@@ -114,7 +128,10 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>CONFIRM</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Confirm</S.SignUpInputTitle>
+                  </S.TitleBox>
+
                   <S.SignUpInput
                     {...register("confirmPw")}
                     type="password"
@@ -129,7 +146,10 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>PHONE</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Phone</S.SignUpInputTitle>
+                  </S.TitleBox>
+
                   <S.SignUpInput
                     {...register("phone")}
                     placeholder="010-1234-5678"

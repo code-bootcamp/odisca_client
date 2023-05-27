@@ -33,7 +33,7 @@ export const SignUpButton = styled.button`
   font-size: 35px;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 26px;
+  margin-top: 15px;
 `;
 
 export const LogInWrapper = styled.div`
@@ -80,7 +80,7 @@ export const LogInInputBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 10px;
+  padding: 20px;
 `;
 
 export const LogInInputDetail = styled.div`

@@ -108,16 +108,18 @@ export default function UserLoginPage(): JSX.Element {
               </S.LogInInputBox>
             </S.InputContainer>
             <S.ButtonContainer>
-              <S.CancelButton>CANCEL</S.CancelButton>
-              <S.LogInButton>LOGIN</S.LogInButton>
+              <S.BtnBox>
+                <S.CancelButton>CANCEL</S.CancelButton>
+              </S.BtnBox>
+              <S.BtnBox>
+                <S.LogInButton>LOGIN</S.LogInButton>
+              </S.BtnBox>
             </S.ButtonContainer>
             <S.SessionLoginContainer>
-              <img src="/sessionicons-admin.png" />
+              <S.Img src="/google2.png" />
+              <S.Img src="/kakao2.png" />
+              <S.Img src="/naver2.png" />
             </S.SessionLoginContainer>
-            <S.FindContainer>
-              <S.FindButton>아이디 찾기</S.FindButton>
-              <S.FindButton>비밀번호 찾기</S.FindButton>
-            </S.FindContainer>
           </S.LogInWrapperContainer>
         </S.LogInWrapper>
       </S.Wrapper>
