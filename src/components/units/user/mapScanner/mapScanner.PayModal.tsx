@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { IRsp } from "../../../commons/layout/header/header.type";
 import { useMutationCreatePointTransaction } from "../../../commons/hooks/mutations/useMutationCreatePointTransaction";
 import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
@@ -23,8 +23,8 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
     props.setIsPayModal(false);
   };
 
-  const onClickPrice = (e: string): void => {
-    setprice(e.currentTarget.getAttribute("value"));
+  const onClickPrice = (event: MouseEvent<HTMLLIElement>): void => {
+    setprice(Number(event.currentTarget.getAttribute("value")));
   };
 
   const onClickPayment = (): void => {
@@ -87,7 +87,11 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
           <S.Top>
             <S.TopTitle>충전하실 금액을 선택해주세요!</S.TopTitle>
           </S.Top>
-          <S.SelectBox onClick={() => setShowOptions((prev) => !prev)}>
+          <S.SelectBox
+            onClick={() => {
+              setShowOptions((prev) => !prev);
+            }}
+          >
             <S.Label>{price}</S.Label>
             <S.MiddileWrapper>
               <S.SelectOptions show={isShowOptions}>
