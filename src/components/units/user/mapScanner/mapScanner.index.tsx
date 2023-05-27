@@ -10,7 +10,6 @@ import PayModal from "./mapScanner.PayModal";
 import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
 import { wrapAsync } from "../../../../commons/libraries/asyncFunc";
 import { v4 as uuidv4 } from "uuid";
-import UseDrawer from "../../../commons/hooks/customs/useDrawer";
 
 interface SeatData {
   status: string;
