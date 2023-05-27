@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export const Body = styled.main`
-  width: 100%;
+  width: 1300px;
   margin: 0 auto;
 `;
 export const SliderItem = styled.img`
@@ -58,10 +58,20 @@ export const StyledSlider = styled(Slider)`
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   } */
 `;
+
+export const ContentsWrapper = styled.section`
+  display: flex;
+  justify-content: center;
+`;
+
 export const ContentsBox = styled.article`
+  width: 1000px;
   margin-top: 50px;
 `;
 export const Contents = styled.p`
   color: #4f4f4f;
   line-height: 30px;
+  margin-bottom: 50px;
+  padding-left: 20px;
+  font-size: 18px;
 `;
