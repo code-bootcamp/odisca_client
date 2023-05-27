@@ -19,6 +19,7 @@ export default function LayoutHeader(): JSX.Element {
   const { data: dataAdmin } = useQueryFetchLoginAdminister();
   const [logoutUser] = useMutationLogOutUser();
   const [logoutAdmin] = useMutationLogOutAdmin();
+  const [loginType, setLoginType] = useState("");
 
   console.log(router, "header");
 
@@ -56,6 +57,9 @@ export default function LayoutHeader(): JSX.Element {
   };
 
   const onClickMyPage = (): void => {
+    if (localStorage.getItem("loginType") === null) {
+      void router.push("/user/loginPage");
+    }
     if (localStorage.getItem("loginType") === "admin") {
       void router.push("/admin/adminPage");
     } else {
@@ -85,11 +89,11 @@ export default function LayoutHeader(): JSX.Element {
   };
 
   useEffect(() => {
+    setLoginType(localStorage.getItem("loginType") ?? "");
     const script = document.createElement("script");
     script.src = "https://cdn.iamport.kr/v1/iamport.js";
     document.head.appendChild(script);
     script.onload = () => {};
-
     if (localStorage.getItem("loginType") === null) {
       setIsLogin(false);
     } else {
@@ -152,11 +156,7 @@ export default function LayoutHeader(): JSX.Element {
             <S.MenuListWrapper>
               {isLogin ? <></> : <p onClick={onClickLogin}>로그인</p>}
               <p onClick={onClickMyPage}>내 정보</p>
-              {/* {localStorage.getItem("loginType") === "user" ? (
-                <p onClick={showModal}>충전</p>
-              ) : (
-                <></>
-              )} */}
+              {loginType === "user" ? <p onClick={showModal}>충전</p> : <></>}
               <p onClick={onClickMain}>스카찾기</p>
 
               {!isLogin ? (
