@@ -7,7 +7,6 @@
     "build": "next build",
     "build:ssg": "next build && next export",
     "start": "next start",
-    "build:ssg": "next build && next export",
     "lint": "next lint",
     "generate": "graphql-codegen"
   },
