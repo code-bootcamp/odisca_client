@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import * as S from "./UserDetailHeader.styles";
 
 interface IPropsUserDetailHeader {
-  cafeName: string;
+  cafeName: string | undefined;
 }
 
 export default function UserDetailHeader(
@@ -18,7 +18,7 @@ export default function UserDetailHeader(
       <S.Headerbox>
         <S.Title>{props.cafeName}</S.Title>
         <S.BtnBox onClick={onclickReservation}>
-          <S.SeatBtn>좌석 예약하기</S.SeatBtn>
+          <S.SeatBtn>실시간 좌석 확인</S.SeatBtn>
           <S.Icon src="/arrow.png" />
         </S.BtnBox>
       </S.Headerbox>

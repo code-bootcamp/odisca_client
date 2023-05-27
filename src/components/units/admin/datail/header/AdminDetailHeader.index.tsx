@@ -7,13 +7,14 @@ interface IDetailHeaderProps {
   cafeFee: number | undefined;
   cafeOpenTime: string;
   cafeClosTime: string;
+  cafeAddress: string | undefined;
 }
 
 export default function AdminDetailHeader(
   props: IDetailHeaderProps
 ): JSX.Element {
   return (
-    <>
+    <S.Wrapper>
       <S.Header>
         <S.TitleBox>
           <S.Title>{props.cafeName}</S.Title>
@@ -24,6 +25,7 @@ export default function AdminDetailHeader(
           <S.NumberBox>
             <S.Icon src="/phone.png" />
             <S.Number>{props.cafeContact}</S.Number>
+            <S.Number>{props.cafeAddress}</S.Number>
           </S.NumberBox>
           <S.Slash> / </S.Slash>
           <S.PriceBox>
@@ -37,6 +39,6 @@ export default function AdminDetailHeader(
           </S.TimeBox>
         </S.InfoBox>
       </S.Header>
-    </>
+    </S.Wrapper>
   );
 }

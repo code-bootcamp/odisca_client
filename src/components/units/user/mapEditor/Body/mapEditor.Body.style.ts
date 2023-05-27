@@ -1,8 +1,17 @@
 import styled from "@emotion/styled";
 
+export const Body = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const Wrapper = styled.main`
+  padding: 40px;
+`;
+
 export const Pixel = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 1vw;
+  height: 1vw;
   border: 0.5px solid #e4e4e4;
 `;
 
@@ -16,8 +25,8 @@ export const Container = styled.div`
 
 export const Box = styled.div`
   position: absolute;
-  top: 450px;
-  left: 600px;
+  top: 25vw;
+  left: 50vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,14 +46,27 @@ export const HeightDiv = styled.div`
   height: 1080px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
 `;
 
 export const MapEditorTitle = styled.div`
+  width: 600px;
   font-size: 40px;
   font-weight: 600;
-  margin-bottom: 15px;
+  margin: 0 0 15px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+`;
+
+export const Title = styled.p`
+  font-size: 28px;
+`;
+
+export const Info = styled.span`
+  margin: 20px 0;
+  font-size: 18px;
+  font-weight: 400;
 `;
 
 export const MapEditorInput = styled.input`
@@ -77,7 +99,7 @@ export const MapEditorInputContainer = styled.div`
 
 export const MapEditorInputFont = styled.div`
   font-weight: 400;
-  font-size: 24px;
+  font-size: 20px;
   margin-right: 15px;
   color: #4f4f4f;
 `;
@@ -85,29 +107,32 @@ export const MapEditorInputFont = styled.div`
 export const InputButton = styled.button`
   width: 70px;
   height: 40px;
-  border-radius: 30px;
+  border-radius: 10px;
   border: none;
   color: #fefefe;
   background-color: #40e0d0;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
   cursor: pointer;
 `;
 
 export const ButtonContainer = styled.div`
-  width: 500px;
+  width: 20vw;
+  height: 3vh;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
+  margin: 0 0 30px 10px;
 `;
 
 export const FunctionBtn = styled.button`
-  width: 70px;
-  height: 30px;
+  width: 4vw;
+  height: 3.5vh;
   border-radius: 10px;
   border: none;
   background: #40e0d0;
   cursor: pointer;
   color: #fff;
   font-weight: 600;
+  font-size: 15px;
 `;

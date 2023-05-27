@@ -110,7 +110,7 @@ export default function Review(props: IReviewProps): JSX.Element {
         });
     }
   };
-  console.log(review, "flqbqbqbqb");
+
   return (
     <>
       <S.Wrapper>

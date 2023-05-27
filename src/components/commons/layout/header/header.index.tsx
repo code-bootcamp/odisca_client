@@ -1,6 +1,6 @@
 import * as S from "./header.style";
 import React, { useEffect, useState } from "react";
-import { Space } from "antd";
+import { Modal, Space } from "antd";
 import { useMutationDeleteAdmin } from "../../hooks/mutations/useMutationDeleteAdmin";
 import { useMutationLogOutUser } from "../../hooks/mutations/useMutationLogoutUser";
 import { useMutationLogOutAdmin } from "../../hooks/mutations/useMutationLogoutAdmin";
@@ -19,6 +19,7 @@ export default function LayoutHeader(): JSX.Element {
   const { data: dataAdmin } = useQueryFetchLoginAdminister();
   const [logoutUser] = useMutationLogOutUser();
   const [logoutAdmin] = useMutationLogOutAdmin();
+  const [loginType, setLoginType] = useState("");
 
   console.log(router, "header");
 
@@ -37,29 +38,39 @@ export default function LayoutHeader(): JSX.Element {
   const onClickLogOut = async (): Promise<void> => {
     if (localStorage.getItem("loginType") === "admin") {
       await logoutAdmin();
-      alert("로그아웃 완료되었습니다.");
+      Modal.success({
+        content: "로그아웃 되었습니다!",
+      });
       localStorage.removeItem("accessToken");
       localStorage.removeItem("loginType");
       void router.push("/admin/login");
     } else {
       await logoutUser();
-      alert("로그아웃 완료되었습니다.");
+      Modal.success({
+        content: "로그아웃 되었습니다!",
+      });
       localStorage.removeItem("accessToken");
       localStorage.removeItem("loginType");
       void router.push("/user/login");
     }
+    onClose();
   };
 
   const onClickMyPage = (): void => {
+    if (localStorage.getItem("loginType") === null) {
+      void router.push("/user/loginPage");
+    }
     if (localStorage.getItem("loginType") === "admin") {
       void router.push("/admin/adminPage");
     } else {
       void router.push("/user/mypage");
     }
+    onClose();
   };
 
   const onClickMain = (): void => {
     void router.push("/user");
+    onClose();
   };
 
   const showModal = (): void => {
@@ -69,18 +80,20 @@ export default function LayoutHeader(): JSX.Element {
   const onClickDeleteAdmin = async (): Promise<void> => {
     const result = await deleteAdmin();
     console.log(result);
+    onClose();
   };
 
   const onClickLogin = (): void => {
     void router.push("user/login");
+    onClose();
   };
 
   useEffect(() => {
+    setLoginType(localStorage.getItem("loginType") ?? "");
     const script = document.createElement("script");
     script.src = "https://cdn.iamport.kr/v1/iamport.js";
     document.head.appendChild(script);
     script.onload = () => {};
-
     if (localStorage.getItem("loginType") === null) {
       setIsLogin(false);
     } else {
@@ -91,28 +104,33 @@ export default function LayoutHeader(): JSX.Element {
   return (
     <>
       <Wrapper
-        style={{ marginBottom: router.pathname === "/user" ? "0px" : "65px" }}
+        style={{
+          marginBottom: router.pathname === "/user" ? "0px" : "65px",
+          backgroundColor: router.pathname === "/user" ? "#40e0d0" : "#40e0d0",
+        }}
       >
         <S.LightWrapper>
-          <S.Logo src="/logo_final.png"></S.Logo>
+          <S.Logo src="/로고오.png"></S.Logo>
         </S.LightWrapper>
         <S.RightWrapper>
           {!isLogin ? (
             <div></div>
           ) : (
             <S.ProfileWrapper>
-              <S.ProfileIcon src="/ProfileIcon.png"></S.ProfileIcon>
+              <S.ProfileIcon
+                src={data?.fetchLoginUser.user_image}
+              ></S.ProfileIcon>
               <S.Name>
                 {localStorage.getItem("loginType") === "user"
                   ? data?.fetchLoginUser.user_name
                   : dataAdmin?.fetchLoginAdminister.administer_name}
               </S.Name>
               <S.Text>님 안녕하세요!</S.Text>
-              {localStorage.getItem("loginType") === "user" ? (
+              {/* {localStorage.getItem("loginType") === "user" ? (
                 <S.PayButton onClick={showModal}>충전</S.PayButton>
               ) : (
                 <></>
-              )}
+              )} */}
             </S.ProfileWrapper>
           )}
 
@@ -132,20 +150,22 @@ export default function LayoutHeader(): JSX.Element {
             width={350}
             bodyStyle={{
               padding: 30,
-              backgroundColor: "rgba(189, 189, 189, 0.3)",
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
             }}
           >
-            <S.MenuList>
-              <p onClick={onClickMyPage}>회원정보</p>
-              <p onClick={onClickMain}>스카찾기</p>
+            <S.MenuListWrapper>
               {isLogin ? <></> : <p onClick={onClickLogin}>로그인</p>}
+              <p onClick={onClickMyPage}>내 정보</p>
+              {loginType === "user" ? <p onClick={showModal}>충전</p> : <></>}
+              <p onClick={onClickMain}>스카찾기</p>
+
               {!isLogin ? (
                 <></>
               ) : (
                 <p onClick={wrapAsync(onClickLogOut)}>로그아웃</p>
               )}
               <p onClick={wrapAsync(onClickDeleteAdmin)}>회원탈퇴</p>
-            </S.MenuList>
+            </S.MenuListWrapper>
           </S.MenuDrawer>
         </S.RightWrapper>
       </Wrapper>

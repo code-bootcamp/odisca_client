@@ -7,6 +7,7 @@ import UserDetailHeader from "./header/UserDetailHeader.index";
 export default function UserDetail(): JSX.Element {
   const router = useRouter();
   const { data } = useQueryFetchOneStudyCafeForUser(String(router.query.Id));
+  console.log(data?.fetchOneStudyCafeForUser.review, "ddd");
 
   return (
     <div
@@ -16,6 +17,7 @@ export default function UserDetail(): JSX.Element {
         cafeName={data?.fetchOneStudyCafeForUser.studyCafe_name ?? ""}
       />
       <UserDetailBody
+        cafeFee={data?.fetchOneStudyCafeForUser.studyCafe_timeFee}
         cafeDescription={
           data?.fetchOneStudyCafeForUser.studyCafe_description ?? ""
         }

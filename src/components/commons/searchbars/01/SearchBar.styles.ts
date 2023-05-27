@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import { Select } from "antd";
+
 export const SearchBar = styled.div`
-  left: 280px;
+  /* left: 280px; */
   z-index: 1;
   border: none;
   background: none;
@@ -9,24 +9,29 @@ export const SearchBar = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding: 0px 15px;
+  top: 60vh;
 `;
 
 export const SelectBox = styled.div`
   position: relative;
-  width: 200px;
+  color: #fff;
+  font-size: large;
+  font-weight: 500;
+  left: -8vw;
+  width: 350px;
+  top: 4vh;
   height: 40px;
   padding: 8px;
   border-radius: 12px;
-  background-color: #ffffff;
+  background-color: rgba(79, 79, 79, 0.8);
   align-self: center;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   &::before {
-    content: "⌵";
+    content: "🔎";
     position: absolute;
-    top: 1px;
+    top: 6px;
     right: 8px;
-    color: #49c181;
+    color: #40e0d0;
     font-size: 20px;
   }
 `;
@@ -40,7 +45,7 @@ export const Label = styled.label`
 export const SelectOptions = styled.ul`
   position: absolute;
   list-style: none;
-  top: 18px;
+  top: 40px;
   left: 0;
   width: 100%;
   overflow-y: auto;
@@ -48,7 +53,7 @@ export const SelectOptions = styled.ul`
   max-height: ${(props) => (props.show ? "none" : "0")};
   padding: 0;
   border-radius: 8px;
-  background-color: #222222;
+  background-color: rgba(79, 79, 79, 1);
   color: #fefefe;
 `;
 
