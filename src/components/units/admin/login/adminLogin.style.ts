@@ -167,5 +167,4 @@ export const SessionLoginContainer = styled.div`
 export const Img = styled.img`
   width: 60px;
   margin: 10px;
-  cursor: pointer;
 `;

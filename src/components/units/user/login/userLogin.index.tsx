@@ -113,9 +113,15 @@ export default function UserLoginPage(): JSX.Element {
               </S.BtnBox>
             </S.ButtonContainer>
             <S.SessionLoginContainer>
-              <S.Img src="/google.png" />
-              <S.Img src="/kakao.png" />
-              <S.Img src="/naver.png" />
+              <a href="">
+                <S.Img src="/google.png" />
+              </a>
+              <a href="">
+                <S.Img src="/kakao.png" />
+              </a>
+              <a href="">
+                <S.Img src="/naver.png" />
+              </a>
             </S.SessionLoginContainer>
           </S.LogInWrapperContainer>
         </S.LogInWrapper>
