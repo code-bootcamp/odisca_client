@@ -17,6 +17,7 @@ interface IFormReviewData {
 
 interface IReviewProps {
   handleCancel: () => void;
+  index: number;
 }
 
 export default function Review(props: IReviewProps): JSX.Element {
@@ -30,7 +31,8 @@ export default function Review(props: IReviewProps): JSX.Element {
   const { register, handleSubmit } = useForm<IFormReviewData>({
     mode: "onChange",
   });
-  const review = reviewdata?.fetchLoginReviewsByUserId[0]?.review_content;
+  const review =
+    reviewdata?.fetchLoginReviewsByUserId[props.index]?.review_content;
 
   const onClickSubmitReview = async (data: IFormReviewData): Promise<void> => {
     try {
@@ -38,7 +40,8 @@ export default function Review(props: IReviewProps): JSX.Element {
         variables: {
           createReviewInput: {
             review_content: data.review_content,
-            visit_id: fetchUserdata?.fetchLoginUser.visits[0]?.visit_id ?? "",
+            visit_id:
+              fetchUserdata?.fetchLoginUser.visits[props.index]?.visit_id ?? "",
           },
         },
       });
@@ -64,7 +67,9 @@ export default function Review(props: IReviewProps): JSX.Element {
         variables: {
           updateReviewInput: {
             review_content: data.review_content,
-            review_id: reviewdata?.fetchLoginReviewsByUserId[0].review_id ?? "",
+            review_id:
+              reviewdata?.fetchLoginReviewsByUserId[props.index].review_id ??
+              "",
           },
         },
       });
@@ -91,7 +96,9 @@ export default function Review(props: IReviewProps): JSX.Element {
       const result = await deleteLoginReview({
         variables: {
           cancelReviewInput: {
-            review_id: reviewdata?.fetchLoginReviewsByUserId[0].review_id ?? "",
+            review_id:
+              reviewdata?.fetchLoginReviewsByUserId[props.index].review_id ??
+              "",
           },
         },
       });
@@ -110,16 +117,21 @@ export default function Review(props: IReviewProps): JSX.Element {
         });
     }
   };
-
+  console.log(props.index);
   return (
     <>
       <S.Wrapper>
         <S.Title>
           <S.CafeName>
-            {fetchUserdata?.fetchLoginUser.visits[0]?.studyCafe.studyCafe_name}
+            {
+              fetchUserdata?.fetchLoginUser.visits[props.index]?.studyCafe
+                .studyCafe_name
+            }
           </S.CafeName>
           <S.VisitDate>
-            {getDate(fetchUserdata?.fetchLoginUser.visits[0]?.visit_createdAt)}
+            {getDate(
+              fetchUserdata?.fetchLoginUser.visits[props.index]?.visit_createdAt
+            )}
           </S.VisitDate>
         </S.Title>
         <S.ImgWrapper>
@@ -141,7 +153,8 @@ export default function Review(props: IReviewProps): JSX.Element {
             {...register("review_content")}
             placeholder="무분별한 비방, 욕설 등 타인을 불쾌하게 하는 리뷰는 사전 통보 없이 삭제될 수 있습니다."
             defaultValue={
-              reviewdata?.fetchLoginReviewsByUserId[0]?.review_content ?? ""
+              reviewdata?.fetchLoginReviewsByUserId[props.index]
+                ?.review_content ?? ""
             }
           ></S.ReviewInput>
           {review !== undefined ? (
