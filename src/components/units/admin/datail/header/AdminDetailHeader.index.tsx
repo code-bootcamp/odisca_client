@@ -8,6 +8,7 @@ interface IDetailHeaderProps {
   cafeOpenTime: string;
   cafeClosTime: string;
   cafeAddress: string | undefined;
+  cafeAddressDetail: string | undefined;
 }
 
 export default function AdminDetailHeader(

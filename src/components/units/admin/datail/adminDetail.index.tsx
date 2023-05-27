@@ -21,6 +21,12 @@ export default function AdminDetail(): JSX.Element {
         cafeClosTime={
           data?.fetchOneStudyCafeForAdminister.studyCafe_closeTime ?? ""
         }
+        cafeAddress={
+          data?.fetchOneStudyCafeForAdminister.studyCafe_address ?? ""
+        }
+        cafeAddressDetail={
+          data?.fetchOneStudyCafeForAdminister.studyCafe_addressDetail ?? ""
+        }
       />
       <AdminDetailBody
         cafeImages={data?.fetchOneStudyCafeForAdminister.images ?? []}

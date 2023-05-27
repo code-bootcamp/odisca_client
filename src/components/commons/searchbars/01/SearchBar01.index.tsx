@@ -34,11 +34,20 @@ export default function SearchBar01({
   return (
     <>
       <S.SearchBar>
-        <S.SelectBox onClick={() => setShowOptions((prev) => !prev)}>
+        <S.SelectBox
+          onClick={() => {
+            setShowOptions((prev) => !prev);
+          }}
+        >
           <S.Label>{secondCity}</S.Label>
-          <S.SelectOptions show={isShowOptions}>
+          <S.SelectOptions show={isShowOptions ?? true}>
             {cities.map((city) => (
-              <S.Option key={city} onClick={() => handleSecondCityChange(city)}>
+              <S.Option
+                key={city}
+                onClick={() => {
+                  handleSecondCityChange(city);
+                }}
+              >
                 {city}
               </S.Option>
             ))}
