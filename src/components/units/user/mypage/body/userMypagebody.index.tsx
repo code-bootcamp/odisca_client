@@ -22,7 +22,7 @@ export default function UserMyPageBody(): JSX.Element {
   return (
     <>
       <S.Wrapper>
-        <S.Title>예약내역</S.Title>
+        <S.Title>이용내역</S.Title>
         <S.ReservationWrapper>
           <S.LeftWrapper>
             <S.CafeImg
