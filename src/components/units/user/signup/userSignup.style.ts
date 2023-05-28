@@ -74,7 +74,6 @@ export const SignUpWrapperContainer = styled.form`
 `;
 
 export const SignUpTitle = styled.h1`
-  width: 30%;
   height: 60px;
   font-size: 50px;
   font-weight: 700;
@@ -106,7 +105,7 @@ export const SignUpInputDetail = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 export const SignUpInputTitle = styled.div`
@@ -165,10 +164,10 @@ export const SignUpInputEmail = styled.input`
 `;
 
 export const ErrorMessage = styled.div`
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 400;
   color: #7744aa;
-  margin-left: 115px;
+  margin-left: 145px;
 `;
 
 export const ButtonContainer = styled.div`

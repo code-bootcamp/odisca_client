@@ -43,7 +43,7 @@ export default function UserMyPageBody(): JSX.Element {
                   <S.RemainingTime>
                     남은 이용시간 {remainingHours}시간{remainingMinutes}분
                   </S.RemainingTime>
-                  <S.Btn>이용종료</S.Btn>
+                  {/* <S.Btn>이용종료</S.Btn> */}
                   <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
                     리뷰쓰기
                   </S.Btn>
