@@ -59,7 +59,6 @@ export const UserInfo = styled.header`
   display: flex;
   flex-direction: column;
   margin-left: 30px;
-  /* margin-top: 8px; */
 `;
 
 export const InfoWrapper = styled.header`
@@ -105,19 +104,6 @@ export const PointBtn = styled.button`
   border: none;
   background-color: #40e0d0;
   color: white;
-  border-radius: 15px;
-  height: 26px;
-  font-size: 15px;
-  margin-bottom: 6px;
-  margin-right: 8px;
-  cursor: pointer;
-`;
-
-export const PaymentBtn = styled.button`
-  width: 70px;
-  border: 1px solid #40e0d0;
-  background-color: #ffffff;
-  color: #40e0d0;
   border-radius: 15px;
   height: 26px;
   font-size: 15px;

@@ -59,7 +59,7 @@ export default function LayoutHeader(): JSX.Element {
       void router.push("/user/loginPage");
     }
     if (localStorage.getItem("loginType") === "admin") {
-      void router.push("/admin/admin");
+      void router.push("/admin");
     } else {
       void router.push("/user/mypage");
     }

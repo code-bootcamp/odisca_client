@@ -175,10 +175,6 @@ export default function SeatReservationPage(): JSX.Element {
     setSeatUsable(false);
   };
 
-  // const onChangeTime = (event: ChangeEvent<HTMLSelectElement>): void => {
-  //   setDuringTime(Number(event.target.value));
-  // };
-
   const onChangeTime = (time: number) => (): void => {
     setDuringTime(time);
     setCurrentValue(String(time) + "시간");
@@ -241,7 +237,6 @@ export default function SeatReservationPage(): JSX.Element {
       </S.Wrapper>
 
       <S.MenuDrawer
-        // open={isModal}
         title="선택 좌석 정보"
         placement="right"
         closable={false}
