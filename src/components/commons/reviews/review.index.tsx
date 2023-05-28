@@ -126,7 +126,7 @@ export default function Review(props: IReviewProps): JSX.Element {
           <S.CafeImg
             src={
               fetchUserdata?.fetchLoginUser.visits[props.index]?.studyCafe
-                .images[props.index]?.image_url
+                .images[props.index]?.image_url ?? undefined
             }
           ></S.CafeImg>
         </S.ImgWrapper>
