@@ -102,18 +102,13 @@ export default function LayoutHeader(): JSX.Element {
     }
   }, [data, dataAdmin]);
 
-  const onClickMoveMain = async (): Promise<void> => {
+  const onClickMoveMain = (): void => {
     try {
       if (loginType === "user") {
-        await router.push(`/user`);
+        void router.push(`/user`);
       } else {
-        await router.push(`/admin`);
+        void router.push(`/admin`);
       }
-      // if (router.pathname === "/user") {
-      //   void router.push(`/user`);
-      // } else {
-      //   void router.push(`/admin`);
-      // }
     } catch (error) {
       if (error instanceof Error) console.log(error.message);
     }
@@ -144,11 +139,6 @@ export default function LayoutHeader(): JSX.Element {
                   : dataAdmin?.fetchLoginAdminister.administer_name}
               </S.Name>
               <S.Text>님 안녕하세요!</S.Text>
-              {/* {localStorage.getItem("loginType") === "user" ? (
-                <S.PayButton onClick={showModal}>충전</S.PayButton>
-              ) : (
-                <></>
-              )} */}
             </S.ProfileWrapper>
           )}
 
