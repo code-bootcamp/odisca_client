@@ -26,7 +26,7 @@ export default function UserSignUpPage(): JSX.Element {
 
   const onClickSingUp = async (data: IFormData): Promise<void> => {
     try {
-      const result = await createAdminister({
+      await createAdminister({
         variables: {
           createAdministerInput: {
             administer_email: data.email,
@@ -36,7 +36,6 @@ export default function UserSignUpPage(): JSX.Element {
           },
         },
       });
-      console.log(result);
     } catch (error) {
       if (error instanceof Error)
         Modal.error({
@@ -48,12 +47,11 @@ export default function UserSignUpPage(): JSX.Element {
     Modal.success({
       content: "회원가입이 완료되었습니다. 로그인해주세요!",
     });
-    void router.push("/admin/login"); // 로그인이 된 상태로 로그인 페이지 이동함.
-    console.log(data);
+    void router.push("/admin/login");
   };
 
-  const onClickLogin = (): void => {
-    void router.push("/admin/login");
+  const onClickMoveLogin = (): void => {
+    void router.push(`/admin/login`);
   };
 
   return (
@@ -61,7 +59,7 @@ export default function UserSignUpPage(): JSX.Element {
       <S.Wrapper>
         <S.LogInWrapper>
           <S.LogInTitle>관리자이신가요?</S.LogInTitle>
-          <S.LogInButton type="button" onClick={onClickLogin}>
+          <S.LogInButton type="button" onClick={onClickMoveLogin}>
             LOGIN
           </S.LogInButton>
         </S.LogInWrapper>
@@ -77,6 +75,8 @@ export default function UserSignUpPage(): JSX.Element {
                   <S.TitleBox>
                     <S.SignUpInputTitle>Name</S.SignUpInputTitle>
                   </S.TitleBox>
+                  <S.SignUpInputTitle>Name</S.SignUpInputTitle>
+
                   <S.SignUpInput
                     type="text"
                     {...register("name")}
@@ -162,8 +162,12 @@ export default function UserSignUpPage(): JSX.Element {
               </S.SignUpInputBox>
             </S.InputContainer>
             <S.ButtonContainer>
-              <S.CancelButton type="button">CANCEL</S.CancelButton>
-              <S.SignUpButton>SIGN UP</S.SignUpButton>
+              <S.BtnBox>
+                <S.CancelButton type="button">CANCEL</S.CancelButton>
+              </S.BtnBox>
+              <S.BtnBox>
+                <S.SignUpButton>SIGN UP</S.SignUpButton>
+              </S.BtnBox>
             </S.ButtonContainer>
           </S.SignUpWrapperContainer>
         </S.SignUpWrapper>

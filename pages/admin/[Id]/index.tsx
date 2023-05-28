@@ -1,6 +1,8 @@
-// 유저 카페상세페이지
+import { withAuth } from "../../../src/commons/libraries/withAuth";
 import AdminDetail from "../../../src/components/units/admin/datail/adminDetail.index";
 
-export default function adminDetailPage(): JSX.Element {
+function adminDetailPage(): JSX.Element {
   return <AdminDetail />;
 }
+
+export default withAuth(adminDetailPage);

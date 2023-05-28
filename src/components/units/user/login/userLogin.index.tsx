@@ -8,7 +8,6 @@ import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
 import { schema } from "../../../../commons/validations/validation";
 import { useMutationUserLogin } from "../../../commons/hooks/mutations/useMutationLogin";
 import { Modal } from "antd";
-// import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
 
 interface IFormData {
   user_email: string;
@@ -19,8 +18,6 @@ export default function UserLoginPage(): JSX.Element {
   const router = useRouter();
   const [LoginUser] = useMutationUserLogin();
   const [, setAccessToken] = useRecoilState(accessTokenState);
-
-  // const { refetch } = useQueryFetchLoginUser();
 
   const { register, handleSubmit, formState } = useForm<IFormData>({
     resolver: yupResolver(schema),
@@ -41,7 +38,6 @@ export default function UserLoginPage(): JSX.Element {
           },
         },
       });
-      console.log(data);
       const accessToken = result.data?.LoginUser;
 
       if (accessToken === undefined) {
@@ -51,7 +47,6 @@ export default function UserLoginPage(): JSX.Element {
         return;
       }
       setAccessToken(accessToken);
-      // await refetch();
       Modal.success({
         content: "로그인 성공!",
         onOk() {
@@ -66,14 +61,16 @@ export default function UserLoginPage(): JSX.Element {
     }
   };
 
+  const onClickCancel = (): void => {
+    void router.push(`/`);
+  };
+
   return (
     <>
       <S.Wrapper>
         <S.SignUpWrapper>
           <S.SignUpTitle>아직 회원이 아니신가요?</S.SignUpTitle>
-          <S.SignUpButton onClick={onClickMoveSignUp}>
-            회원가입하기
-          </S.SignUpButton>
+          <S.SignUpButton onClick={onClickMoveSignUp}>SIGN UP</S.SignUpButton>
         </S.SignUpWrapper>
 
         <S.LogInWrapper>
@@ -113,17 +110,25 @@ export default function UserLoginPage(): JSX.Element {
             </S.InputContainer>
             <S.ButtonContainer>
               <S.BtnBox>
-                <S.CancelButton type="button">CANCEL</S.CancelButton>
+                <S.CancelButton type="button" onClick={onClickCancel}>
+                  CANCEL
+                </S.CancelButton>
               </S.BtnBox>
               <S.BtnBox>
                 <S.LogInButton>LOGIN</S.LogInButton>
               </S.BtnBox>
             </S.ButtonContainer>
-            <S.SessionLoginContainer>
-              <S.Img src="/google.png" />
-              <S.Img src="/kakao.png" />
-              <S.Img src="/naver.png" />
-            </S.SessionLoginContainer>
+            <S.SocialLoginContainer>
+              <a href="https://odisca.store/user/login/google">
+                <S.GoogleImg src="/google.png" />
+              </a>
+              <a href="https://odisca.store/user/login/kakao">
+                <S.Img src="/kakao.png" />
+              </a>
+              <a href="https://odisca.store/user/login/naver">
+                <S.Img src="/naver.png" />
+              </a>
+            </S.SocialLoginContainer>
           </S.LogInWrapperContainer>
         </S.LogInWrapper>
       </S.Wrapper>

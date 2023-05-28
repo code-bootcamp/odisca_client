@@ -1,9 +1,11 @@
+import { PriceWithCommas } from "../../../../../commons/libraries/utils";
 import * as S from "./adminPageheader.styles";
 
 interface IAdminHeaderProps {
   adminName: string | undefined;
   adminMail: string | undefined;
   adminPoint: number | undefined;
+  adminCafeImage: string | undefined;
 }
 
 export default function AdiminPageHeader(
@@ -16,8 +18,7 @@ export default function AdiminPageHeader(
         <S.AdminWrapper>
           <S.AdminWrapperLight>
             <S.ProfileWrapper>
-              <S.ProfileImage></S.ProfileImage>
-              <S.EditProfileIcon src="/editIcon.png"></S.EditProfileIcon>
+              <S.ProfileImage src={props.adminCafeImage}></S.ProfileImage>
             </S.ProfileWrapper>
           </S.AdminWrapperLight>
           <S.AdminWrapperRight>
@@ -27,7 +28,7 @@ export default function AdiminPageHeader(
             </S.AdminInfo>
             <S.RevenueWrapper>
               <S.RevenueText>이번달 매출</S.RevenueText>
-              <S.Revenue>{props.adminPoint}P</S.Revenue>
+              <S.Revenue>{PriceWithCommas(props.adminPoint)}P</S.Revenue>
             </S.RevenueWrapper>
           </S.AdminWrapperRight>
         </S.AdminWrapper>

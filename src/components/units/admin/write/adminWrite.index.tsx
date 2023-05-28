@@ -21,8 +21,8 @@ import { cafeEditSchema } from "../../../../commons/adminEditValidation/validati
 import * as S from "./adminWrite.styles";
 import OperatingTime from "../../../commons/operatingTimeSelection/operatingTimeSelect.index";
 import { checkValidationFile } from "../../../../commons/libraries/validationFile";
-import SubmitSuccessAlertModal from "../../../commons/submitSuccessModal/submitSuccessModal.index";
 import { IQuery } from "../../../../commons/types/generated/types";
+import SubmitSuccessAlertModal from "../../../commons/submitSuccessModal/submitSuccessModal.index";
 
 // 등록 사항들 타입 지정
 interface IFormValues {
@@ -96,7 +96,8 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
   useEffect(() => {
     const script = document.createElement("script"); // script tag 만들기
     script.src =
-      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=12e2554bb6ebf42463e132c31315b011&libraries=services";
+      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6583c79fd8fd9f0d519f6b325b841c09&libraries=services";
+    // "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=12e2554bb6ebf42463e132c31315b011&libraries=services";
     document.head.appendChild(script);
 
     script.onload = () => {
@@ -169,17 +170,13 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
   };
 
   // openTime Select
-  const onChangeSelectOpenTime = (
-    event: ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setOpenTime(event?.target.value);
+  const onChangeSelectOpenTime = (time: string) => (): void => {
+    setOpenTime(String(time));
   };
 
   // CloseTime Select
-  const onChangeSelectCloseTime = (
-    event: ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setCloseTime(event?.target.value);
+  const onChangeSelectCloseTime = (time: string) => (): void => {
+    setCloseTime(String(time));
   };
 
   const AddressModal = (): boolean => {
@@ -214,18 +211,15 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
       fileReader.readAsDataURL(file);
       fileReader.onload = (event) => {
         if (typeof event.target?.result === "string") {
-          // imageUrls !== "" ? imageUrls :
           const newTemp = [...imageUrls.filter((el) => el !== "")];
           newTemp.push(event.target?.result);
           while (newTemp.length < 5) {
             newTemp.push("");
           }
           setImageUrls(newTemp);
-          // const tempFiles = [...files.filter((el) => el !== "")];
           const tempFiles = [...files.filter((el) => el !== "")];
           tempFiles.push(file);
           while (tempFiles.length < 5) {
-            // tempFiles.push(new File([], ""));
             tempFiles.push("");
           }
           setFiles(tempFiles);
@@ -238,7 +232,6 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     const results = await uploadImageFile({
       variables: { images: files.filter((el) => el instanceof File) },
     });
-    console.log(results, "results");
 
     const resultUrls = [];
 
@@ -251,8 +244,6 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
       }
     }
 
-    console.log(results.data?.uploadImageFile[1]);
-    console.log(resultUrls, "!!!!!");
     const images = resultUrls.map((el, index) => {
       return {
         image_url: el,
@@ -281,7 +272,6 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
           },
         },
       });
-      console.log(result, "카페등록결과야!!!!!!!!!");
       setIsSubmitModalOpen(true);
       setRouterURL(result.data?.createLoginStudyCafe.studyCafe_id ?? "");
     } catch (error) {
@@ -323,7 +313,7 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     });
 
     try {
-      const updateResult = await updateLoginStudyCafe({
+      await updateLoginStudyCafe({
         variables: {
           updateStudyCafeInput: {
             studyCafe_id: String(router.query.Id),
@@ -343,7 +333,6 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
           },
         },
       });
-      console.log(updateResult, "수정결과!!!!!!!1");
       if (refetch !== undefined) {
         await refetch();
       }
@@ -358,7 +347,6 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     const newMain = new Array(5).fill(false);
     newMain[index] = true;
     setIsMain(newMain);
-    console.log(newMain);
   };
 
   const onClickGoBack = (): void => {
@@ -374,11 +362,10 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
             props.isEdit
               ? wrapFormAsync(handleSubmit(onClickUpdateCafe))
               : wrapFormAsync(handleSubmit(onClickCafeSubmit))
-            // wrapFormAsync(handleSubmit(onClickCafeSubmit))
           }
         >
           <S.Header>
-            <S.Title>업체 {props.isEdit ? "수정" : "등록"}하기</S.Title>
+            <S.Title>업체 {props.isEdit ? "수정" : "등록"}</S.Title>
           </S.Header>
           {/* <S.SectionTop> */}
           <S.SectionBox>
@@ -492,6 +479,8 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                 </S.LabelBox>
                 <OperatingTime
                   data={data}
+                  openTime={openTime}
+                  closeTime={closeTime}
                   onChangeSelectOpenTime={onChangeSelectOpenTime}
                   onChangeSelectCloseTime={onChangeSelectCloseTime}
                 />

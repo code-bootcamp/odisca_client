@@ -47,16 +47,6 @@ export const StyledSlider = styled(Slider)`
     opacity: 1;
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   }
-  /* .slick-center .slider-img {
-    width: 80%;
-    height: auto;
-  }
-  .slider-img {
-    width: 100%;
-    height: auto;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-  } */
 `;
 
 export const ContentsWrapper = styled.section`

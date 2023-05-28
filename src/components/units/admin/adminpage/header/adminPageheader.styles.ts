@@ -31,7 +31,7 @@ export const ProfileWrapper = styled.header`
 export const ProfileImage = styled.img`
   width: 90px;
   height: 90px;
-  background-color: #40e0d0;
+
   border-radius: 50px;
   display: flex;
   position: absolute;

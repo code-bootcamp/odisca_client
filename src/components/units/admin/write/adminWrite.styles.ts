@@ -48,6 +48,7 @@ export const LabelBox = styled.label`
 export const Label = styled.label`
   width: 100%;
   font-size: 15px;
+  font-weight: 600;
   color: #4f4f4f;
 `;
 
@@ -91,6 +92,7 @@ export const AddressLabel = styled.label`
   font-size: 15px;
   color: #4f4f4f;
   margin-right: 15px;
+  font-weight: 600;
 `;
 
 export const TimeSectionBox = styled.div`
@@ -154,7 +156,7 @@ export const AddressBox = styled.div`
 export const Address = styled.input`
   width: 100%;
   margin-top: 15px;
-  height: 40px;
+  height: 50px;
   border-radius: 10px;
   text-indent: 10px;
   border: 1px solid #f7f7f7;
@@ -301,3 +303,69 @@ export const WrapperBtm = styled.form`
 export const AddressSearchModal = styled(Modal)``;
 
 export const SubmitSuccessModal = styled(Modal)``;
+
+// ====== select ====== //
+
+export const SelectWrapper = styled.section`
+  width: calc(100% - 90px);
+  display: flex;
+`;
+
+export const OperatingTimeSpan = styled.span`
+  margin: 0px 15px;
+`;
+
+export const TimeSection = styled.div`
+  position: relative;
+  color: #4f4f4f;
+  font-size: large;
+  font-weight: 500;
+  width: 330px;
+  top: 0vh;
+  height: 40px;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: #f7f7f7;
+  align-self: center;
+  cursor: pointer;
+  &::before {
+    content: "⌵";
+    position: absolute;
+    top: 1px;
+    right: 8px;
+    color: #40e0d0;
+    font-size: 20px;
+  }
+`;
+
+export const TimeLabel = styled.label`
+  font-size: 14px;
+  margin-left: 4px;
+  align-self: center;
+`;
+
+export const SelectOperatingTime = styled.ul<{ show: boolean }>`
+  position: absolute;
+  list-style: none;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  overflow-y: auto;
+  height: 150px;
+  max-height: ${(props) => (props.show ? "150px" : "0")};
+  padding: 0;
+  border-radius: 10px;
+  background-color: #f7f7f7;
+  color: #4f4f4f;
+  transition: max-height 0.2s ease-in;
+  z-index: 9999999;
+`;
+
+export const Option = styled.li`
+  font-size: 14px;
+  padding: 7px 10px;
+  transition: background-color 0.2s ease-in;
+  &:hover {
+    background-color: #bdbdbd;
+  }
+`;

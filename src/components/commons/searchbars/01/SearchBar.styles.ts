@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 
 export const SearchBar = styled.div`
-  /* left: 280px; */
   z-index: 1;
   border: none;
   background: none;
@@ -42,7 +41,7 @@ export const Label = styled.label`
   text-align: center;
 `;
 
-export const SelectOptions = styled.ul`
+export const SelectOptions = styled.ul<{ show: boolean }>`
   position: absolute;
   list-style: none;
   top: 40px;
