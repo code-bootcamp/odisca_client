@@ -24,6 +24,7 @@ export const FETCH_LOGIN_USER = gql`
           seat_remainTime
         }
         studyCafe {
+          studyCafe_id
           studyCafe_name
           images {
             image_id
