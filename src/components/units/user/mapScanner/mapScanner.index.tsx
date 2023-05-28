@@ -1,5 +1,11 @@
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  LiHTMLAttributes,
+  OptionHTMLAttributes,
+  useEffect,
+  useState,
+} from "react";
 import * as S from "./mapScanner.style";
 import { Modal } from "antd";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
@@ -42,6 +48,8 @@ const CancleBtn = styled.button`
 `;
 
 export default function SeatReservationPage(): JSX.Element {
+  const [currentValue, setCurrentValue] = useState("1시간");
+  const [showOptions, setShowOptions] = useState(false);
   const router = useRouter();
   const { refetch } = useQueryFetchLoginUser();
   const [open, setOpen] = useState(false);
@@ -139,11 +147,11 @@ export default function SeatReservationPage(): JSX.Element {
       return;
     }
     if (seat.status === "") {
-      setSeatStatus("예약 가능한 좌석입니다.");
+      setSeatStatus("예약이 가능합니다.");
       setRemainTime(0);
       setSeatUsable(true);
     } else {
-      setSeatStatus("예약 불가능한 좌석입니다.");
+      setSeatStatus("예약이 불가능합니다.");
       setRemainTime(seat.time);
     }
     setSeatId(seat.seatId);
@@ -187,8 +195,12 @@ export default function SeatReservationPage(): JSX.Element {
     setIsModal(false);
   };
 
-  const onChangeTime = (event: ChangeEvent<HTMLSelectElement>): void => {
-    setDuringTime(Number(event.target.value));
+  // const onChangeTime = (event: ChangeEvent<HTMLSelectElement>): void => {
+  //   setDuringTime(Number(event.target.value));
+  // };
+
+  const onChangeTime = (e: MouseEvent<HTMLLIElement>): void => {
+    setCurrentValue(e.currentTarget.getAttribute("value"));
   };
 
   return (
@@ -254,25 +266,39 @@ export default function SeatReservationPage(): JSX.Element {
           </CancleBtn>,
         ]}
       >
-        <div style={{ fontSize: "15px" }}>좌석 번호 : {seatNumber}</div>
-        <div style={{ fontSize: "15px" }}>좌석 종류 : {seatStatus}</div>
+        <div style={{ fontSize: "20px" }}>좌석 번호 : {seatNumber}</div>
+        <div style={{ fontSize: "20px" }}>좌석 종류 : {seatStatus}</div>
         {remainTime !== 0 ? (
-          <div>{String(remainTime) + "분 남았습니다."}</div>
+          <div style={{ fontSize: "16px", color: "#7744AA" }}>
+            {String(remainTime) + "분 남았습니다."}
+          </div>
         ) : (
           <></>
         )}
 
-        <S.SelectOptions
-          onChange={onChangeTime}
-          disabled={!seatUsable}
-          style={{ marginTop: "10px" }}
+        <S.SelectBox
+          style={{ width: "300px" }}
+          onClick={() => setShowOptions((prev) => !prev)}
         >
-          <S.Option value={1}>1시간</S.Option>
-          <S.Option value={2}>2시간</S.Option>
-          <S.Option value={3}>3시간</S.Option>
-          <S.Option value={4}>4시간</S.Option>
-          <S.Option value={5}>5시간</S.Option>
-        </S.SelectOptions>
+          <S.Label>{currentValue}</S.Label>
+          <S.SelectOptions show={showOptions} disabled={!seatUsable}>
+            <S.Option value="1시간" onClick={onChangeTime}>
+              1시간
+            </S.Option>
+            <S.Option value="2시간" onClick={onChangeTime}>
+              2시간
+            </S.Option>
+            <S.Option value="3시간" onClick={onChangeTime}>
+              3시간
+            </S.Option>
+            <S.Option value="4시간" onClick={onChangeTime}>
+              4시간
+            </S.Option>
+            <S.Option value="5시간" onClick={onChangeTime}>
+              5시간
+            </S.Option>
+          </S.SelectOptions>
+        </S.SelectBox>
       </S.MenuDrawer>
 
       <PayModal

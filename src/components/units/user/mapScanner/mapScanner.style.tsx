@@ -237,5 +237,6 @@ export const MenuListWrapper = styled.div`
 export const MenuDrawer = styled(Drawer)`
   .ant-drawer-title {
     font-size: 27px;
+    color: #4f4f4f;
   }
 `;
