@@ -97,7 +97,6 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     const script = document.createElement("script"); // script tag 만들기
     script.src =
       "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6583c79fd8fd9f0d519f6b325b841c09&libraries=services";
-    // "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=12e2554bb6ebf42463e132c31315b011&libraries=services";
     document.head.appendChild(script);
 
     script.onload = () => {
