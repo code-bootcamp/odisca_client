@@ -70,7 +70,10 @@ export default function UserEditBody(): JSX.Element {
 
           ImageFile.push(file);
         } catch (error) {
-          console.error(error);
+          if (error instanceof Error)
+            Modal.error({
+              content: error.message,
+            });
         }
       }
 

@@ -235,7 +235,6 @@ export const PhoneButton = styled.button`
   background-color: #40e0d0;
   font-size: 16px;
   font-weight: 600;
-  cursor: pointer;
   margin-left: 5px;
   margin-top: 15px;
   cursor: pointer;
