@@ -154,7 +154,7 @@ export const Label = styled.label`
   align-self: center;
 `;
 
-export const SelectOptions = styled.ul`
+export const SelectOptions = styled.ul<{ show: boolean }>`
   position: absolute;
   list-style: none;
   top: 40px;

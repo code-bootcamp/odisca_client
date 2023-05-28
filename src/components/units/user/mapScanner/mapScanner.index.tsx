@@ -60,7 +60,6 @@ export default function SeatReservationPage(): JSX.Element {
   const [stateY, setStateY] = useState(
     dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanY ?? 40
   );
-  console.log(dataCafe, "카페");
   const [seatId, setSeatId] = useState("");
   const [seatStatus, setSeatStatus] = useState("");
   const [seatNumber, setSeatNumber] = useState(0);
