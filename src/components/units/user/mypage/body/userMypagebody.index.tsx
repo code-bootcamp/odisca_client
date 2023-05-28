@@ -9,10 +9,10 @@ import * as S from "./userMypagebody.styles";
 export default function UserMyPageBody(): JSX.Element {
   const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
   const { data } = useQueryFetchLoginUser();
-  const { data: reviewdata } = useQueryFetchLoginReviewByVisitId();
   const router = useRouter();
   const [Ind, setInd] = useState(0);
   const [vId, setVId] = useState("");
+  const { data: reviewdata } = useQueryFetchLoginReviewByVisitId(vId);
 
   const onClickSetIndex = (i: number, id: string) => (): void => {
     setInd(i);

@@ -102,8 +102,21 @@ export default function LayoutHeader(): JSX.Element {
     }
   }, [data, dataAdmin]);
 
-  const onClickMoveMain = (): void => {
-    void router.push(`/user`);
+  const onClickMoveMain = async (): Promise<void> => {
+    try {
+      if (loginType === "user") {
+        await router.push(`/user`);
+      } else {
+        await router.push(`/admin`);
+      }
+      // if (router.pathname === "/user") {
+      //   void router.push(`/user`);
+      // } else {
+      //   void router.push(`/admin`);
+      // }
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+    }
   };
 
   return (
@@ -119,7 +132,7 @@ export default function LayoutHeader(): JSX.Element {
         </S.LightWrapper>
         <S.RightWrapper>
           {!isLogin ? (
-            <div></div>
+            <div style={{ backgroundColor: "#40e0d0" }}></div>
           ) : (
             <S.ProfileWrapper>
               <S.ProfileIcon
