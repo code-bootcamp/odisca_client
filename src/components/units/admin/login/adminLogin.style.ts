@@ -205,7 +205,7 @@ export const Img = styled.img`
   width: 200px;
   margin: 10px;
   cursor: pointer;
-
+  border-radius: 5px;
   ${mediaQueries("macBook")} {
     margin: 7px;
   }
@@ -215,7 +215,7 @@ export const GoogleImg = styled.img`
   height: 55px;
   margin: 10px;
   cursor: pointer;
-
+  border-radius: 17px;
   ${mediaQueries("macBook")} {
     margin: 7px;
   }

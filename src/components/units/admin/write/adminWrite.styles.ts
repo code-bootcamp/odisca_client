@@ -311,33 +311,21 @@ export const SelectWrapper = styled.section`
   display: flex;
 `;
 
-// const TimeSection = styled.section`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// `;
-
-// const SelectOperatingTime = styled.select`
-//   width: 140px;
-//   height: 25px;
-// `;
-
 export const OperatingTimeSpan = styled.span`
-  margin: 0px 20px;
+  margin: 0px 15px;
 `;
 
 export const TimeSection = styled.div`
   position: relative;
-  color: #fff;
+  color: #4f4f4f;
   font-size: large;
   font-weight: 500;
-  left: 0.5vw;
   width: 330px;
-  top: 4vh;
+  top: 0vh;
   height: 40px;
   padding: 8px;
-  border-radius: 15px;
-  background-color: rgba(79, 79, 79, 0.8);
+  border-radius: 10px;
+  background-color: #f7f7f7;
   align-self: center;
   cursor: pointer;
   &::before {
@@ -362,15 +350,15 @@ export const SelectOperatingTime = styled.ul<{ show: boolean }>`
   top: 40px;
   left: 0;
   width: 100%;
-  /* overflow: hidden; */
   overflow-y: auto;
   height: 150px;
   max-height: ${(props) => (props.show ? "150px" : "0")};
   padding: 0;
-  border-radius: 15px;
-  background-color: rgba(79, 79, 79, 1);
-  color: #fefefe;
+  border-radius: 10px;
+  background-color: #f7f7f7;
+  color: #4f4f4f;
   transition: max-height 0.2s ease-in;
+  z-index: 9999999;
 `;
 
 export const Option = styled.li`
@@ -378,6 +366,6 @@ export const Option = styled.li`
   padding: 7px 10px;
   transition: background-color 0.2s ease-in;
   &:hover {
-    background-color: #595959;
+    background-color: #bdbdbd;
   }
 `;

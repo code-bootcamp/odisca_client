@@ -3,14 +3,7 @@ import DaumPostcodeEmbed from "react-daum-postcode";
 
 // hooks
 import { useRouter } from "next/router";
-import {
-  ChangeEvent,
-  EventHandler,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useMutationCreateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationCreateLoginStudyCafe";
 import { useMutationUpdateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationUpdateLoginStudyCafe";
@@ -178,12 +171,12 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
 
   // openTime Select
   const onChangeSelectOpenTime = (time: string) => (): void => {
-    setOpenTime(time);
+    setOpenTime(String(time));
   };
 
   // CloseTime Select
   const onChangeSelectCloseTime = (time: string) => (): void => {
-    setCloseTime(time);
+    setCloseTime(String(time));
   };
 
   const AddressModal = (): boolean => {
