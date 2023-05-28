@@ -119,7 +119,7 @@ export default function UserLoginPage(): JSX.Element {
                 <S.LogInButton>LOGIN</S.LogInButton>
               </S.BtnBox>
             </S.ButtonContainer>
-            <S.SessionLoginContainer>
+            <S.SocialLoginContainer>
               <a href="https://odisca.store/admin/login/google">
                 <S.Img src="/google2.png" />
               </a>
@@ -129,7 +129,7 @@ export default function UserLoginPage(): JSX.Element {
               <a href="https://odisca.store/admin/login/naver">
                 <S.Img src="/naver2.png" />
               </a>
-            </S.SessionLoginContainer>
+            </S.SocialLoginContainer>
           </S.LogInWrapperContainer>
         </S.LogInWrapper>
       </S.Wrapper>
