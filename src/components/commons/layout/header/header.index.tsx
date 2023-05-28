@@ -102,6 +102,10 @@ export default function LayoutHeader(): JSX.Element {
     }
   }, [data, dataAdmin]);
 
+  const onClickMoveMain = (): void => {
+    void router.push(`/user`);
+  };
+
   return (
     <>
       <Wrapper
@@ -111,7 +115,7 @@ export default function LayoutHeader(): JSX.Element {
         }}
       >
         <S.LightWrapper>
-          <S.Logo src="/로고오.png"></S.Logo>
+          <S.Logo src="/로고오.png" onClick={onClickMoveMain}></S.Logo>
         </S.LightWrapper>
         <S.RightWrapper>
           {!isLogin ? (

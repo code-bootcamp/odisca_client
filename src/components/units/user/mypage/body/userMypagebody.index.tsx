@@ -1,3 +1,4 @@
+// import { useRouter } from "next/router";
 import { useState } from "react";
 import UseModal from "../../../../commons/hooks/customs/useModal";
 import { useQueryFetchLoginUser } from "../../../../commons/hooks/queries/useQueryFetchLoginUser";
@@ -5,6 +6,7 @@ import Review from "../../../../commons/reviews/review.index";
 import * as S from "./userMypagebody.styles";
 
 export default function UserMyPageBody(): JSX.Element {
+  // const router = useRouter();
   const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
   const { data } = useQueryFetchLoginUser();
 
@@ -16,6 +18,13 @@ export default function UserMyPageBody(): JSX.Element {
     setVId(id);
     showModal();
   };
+
+  // const onClickMoveVisitedCafe = (): void => {
+  //   void router.push(
+  //     `/user/${String(data?.fetchLoginUser?.visits.studyCafe?.studyCafe_id)}`
+  //   );
+  // };
+
   return (
     <>
       <S.Wrapper>
@@ -32,6 +41,7 @@ export default function UserMyPageBody(): JSX.Element {
               <S.LeftWrapper>
                 <S.CafeImg
                   src={visit.studyCafe.images[0]?.image_url ?? "/cafeImg.jpeg"}
+                  // onClick={onClickMoveVisitedCafe}
                 ></S.CafeImg>
               </S.LeftWrapper>
               <S.RightWrapper>

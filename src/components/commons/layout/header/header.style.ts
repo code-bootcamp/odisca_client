@@ -24,6 +24,7 @@ export const Logo = styled.img`
   width: 290px;
   height: 290px;
   margin: -10px 0 0 30px;
+  cursor: pointer;
   /* font-size: 50px;
   font-weight: 600;
   color: white; */

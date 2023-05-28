@@ -50,7 +50,7 @@ export default function AdminPageBody(props: IAdminBodyProps): JSX.Element {
                   </S.Top>
                   <S.Bottom>
                     <S.OccupiedSeat>
-                      전체 좌석 : {el.studyCafe_seatCount}
+                      이용 중 좌석 : {el.studyCafe_inUseSeat ?? 0}석
                     </S.OccupiedSeat>
                     <S.MoveToSeatBtn
                       onClick={wrapAsync(onClickDetail(el.studyCafe_id))}
