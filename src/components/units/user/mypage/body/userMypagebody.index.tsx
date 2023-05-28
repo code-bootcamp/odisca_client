@@ -1,4 +1,3 @@
-// import { useRouter } from "next/router";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import UseModal from "../../../../commons/hooks/customs/useModal";
@@ -8,7 +7,6 @@ import Review from "../../../../commons/reviews/review.index";
 import * as S from "./userMypagebody.styles";
 
 export default function UserMyPageBody(): JSX.Element {
-  // const router = useRouter();
   const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
   const { data } = useQueryFetchLoginUser();
   const { data: reviewdata } = useQueryFetchLoginReviewByVisitId();
@@ -56,7 +54,7 @@ export default function UserMyPageBody(): JSX.Element {
                   >
                     {visit.studyCafe?.studyCafe_name}
                   </S.CafeName>
-                  <S.SeatInfo>좌석: {visit.seat?.seat_number}</S.SeatInfo>
+<S.SeatInfo>좌석번호: {visit.seat?.seat_number}</S.SeatInfo>
                 </S.Top>
                 <S.Bottom>
                   <S.RemainingTime>
