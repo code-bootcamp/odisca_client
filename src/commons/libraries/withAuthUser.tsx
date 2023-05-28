@@ -10,9 +10,9 @@ export const withAuthUser =
     const getRefreshToken = useRecoilValueLoadable(restoreAccessTokenLoadable);
     const router = useRouter();
     useEffect(() => {
-      void getRefreshToken.toPromise().then((newAccessToken) => {
+      void getRefreshToken.toPromise().then(async (newAccessToken) => {
         if (newAccessToken === undefined) {
-          void router.push("/user/login");
+          await router.push("/user/login");
         }
       });
     }, []);
