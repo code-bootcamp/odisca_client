@@ -11,10 +11,10 @@ export default function UserMyPageBody(): JSX.Element {
   // const router = useRouter();
   const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
   const { data } = useQueryFetchLoginUser();
-  const { data: reviewdata } = useQueryFetchLoginReviewByVisitId();
   const router = useRouter();
   const [Ind, setInd] = useState(0);
   const [vId, setVId] = useState("");
+  const { data: reviewdata } = useQueryFetchLoginReviewByVisitId(vId);
 
   const onClickSetIndex = (i: number, id: string) => (): void => {
     setInd(i);
@@ -70,7 +70,7 @@ export default function UserMyPageBody(): JSX.Element {
                     </S.Btn>
                   ) : (
                     <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
-                      내 리뷰
+                      내 리뷰 dd
                     </S.Btn>
                   )}
                   {/* <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
