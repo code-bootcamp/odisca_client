@@ -12,7 +12,7 @@ import { useQueryFetchLoginReviewByVisitId } from "../hooks/queries/useQueryFetc
 
 interface IFormReviewData {
   review_content: string;
-  visit_id: string;
+  visit_id: string | null;
 }
 
 interface IReviewProps {
@@ -125,7 +125,12 @@ export default function Review(props: IReviewProps): JSX.Element {
           </S.VisitDate>
         </S.Title>
         <S.ImgWrapper>
-          <S.CafeImg src="/cafeImg.jpeg"></S.CafeImg>
+          <S.CafeImg
+            src={
+              fetchUserdata?.fetchLoginUser.visits[props.index]?.studyCafe
+                .images[props.index]?.image_url
+            }
+          ></S.CafeImg>
         </S.ImgWrapper>
         <S.ReviewWrapper
           onSubmit={
