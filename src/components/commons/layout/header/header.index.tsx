@@ -92,12 +92,15 @@ export default function LayoutHeader(): JSX.Element {
     script.src = "https://cdn.iamport.kr/v1/iamport.js";
     document.head.appendChild(script);
     script.onload = () => {};
-    if (data === undefined && dataAdmin === undefined) {
+    if (
+      data?.fetchLoginUser.user_email === undefined &&
+      dataAdmin?.fetchLoginAdminister.administer_email === undefined
+    ) {
       setIsLogin(false);
     } else {
       setIsLogin(true);
     }
-  }, []);
+  }, [data, dataAdmin]);
 
   return (
     <>
