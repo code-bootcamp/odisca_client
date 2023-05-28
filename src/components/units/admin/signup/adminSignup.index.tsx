@@ -47,7 +47,7 @@ export default function UserSignUpPage(): JSX.Element {
     Modal.success({
       content: "회원가입이 완료되었습니다. 로그인해주세요!",
     });
-    void router.push("/admin/login"); // 로그인이 된 상태로 로그인 페이지 이동함.
+    void router.push("/admin/login");
   };
 
   const onClickMoveLogin = (): void => {

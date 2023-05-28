@@ -50,7 +50,6 @@ export default function EmailValidationPage(
       const checkVerificationResult = checkVerificationCode({
         variables: { verificationCode: data.verificationCode },
       });
-      // const verificationCode = data.verificationCode;
       console.log(checkVerificationResult);
       props.handleCancel();
     } catch (error) {

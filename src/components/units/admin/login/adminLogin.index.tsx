@@ -37,7 +37,9 @@ export default function UserLoginPage(): JSX.Element {
           },
         },
       });
-      alert("로그인이 완료되었습니다!");
+      Modal.success({
+        content: "로그인이 완료되었습니다!",
+      });
       void router.push("/admin/adminPage");
       const accessToken = result.data?.LoginAdminister;
       if (

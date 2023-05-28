@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 
 export const SearchBar = styled.div`
-  /* left: 280px; */
   z-index: 1;
   border: none;
   background: none;

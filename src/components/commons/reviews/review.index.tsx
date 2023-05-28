@@ -62,7 +62,7 @@ export default function Review(props: IReviewProps): JSX.Element {
 
   const onClickUpdateReview = async (data: IFormReviewData): Promise<void> => {
     try {
-      const result = await updateLoginReview({
+      await updateLoginReview({
         variables: {
           updateReviewInput: {
             review_content: data.review_content,
@@ -74,7 +74,6 @@ export default function Review(props: IReviewProps): JSX.Element {
       if (refetchFetchReview !== undefined) {
         await refetchFetchReview();
       }
-      console.log(result);
       Modal.success({
         content: "리뷰가 수정되었습니다.",
       });
@@ -89,14 +88,13 @@ export default function Review(props: IReviewProps): JSX.Element {
 
   const onClickDeleteReview = async (): Promise<void> => {
     try {
-      const result = await deleteLoginReview({
+      await deleteLoginReview({
         variables: {
           cancelReviewInput: {
             review_id: reviewdata?.fetchLoginReviewByVisitId.review_id ?? "",
           },
         },
       });
-      console.log(result);
       Modal.success({
         content: "리뷰가 삭제되었습니다.",
       });
