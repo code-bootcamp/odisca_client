@@ -1,6 +1,5 @@
 import { gql, GraphQLClient } from "graphql-request";
 import { IMutation } from "../types/generated/types";
-import { useRouter } from "next/router";
 
 const RESTORE_ACCESS_TOKEN_FOR_ADMIN = gql`
   mutation {
@@ -15,8 +14,8 @@ const RESTORE_ACCESS_TOKEN_FOR_USER = gql`
 `;
 
 export const getAccessToken = async (): Promise<string | undefined> => {
-  const router = useRouter();
-  if (router.asPath.includes("admin")) {
+  // const router = useRouter();
+  if (localStorage.getItem("loginType") === "admin") {
     try {
       const graphQLClient = new GraphQLClient(
         "https://odisca.store/graphql", // 설정부분
