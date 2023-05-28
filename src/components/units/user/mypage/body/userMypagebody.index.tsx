@@ -71,9 +71,6 @@ export default function UserMyPageBody(): JSX.Element {
                       내 리뷰
                     </S.Btn>
                   )}
-                  {/* <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
-                    리뷰쓰기
-                  </S.Btn> */}
                   {isModalOpen !== false && (
                     <S.ReviewModal
                       okButtonProps={{ style: { display: "none" } }}

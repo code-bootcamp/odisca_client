@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { mediaQueries } from "../../media/mediaQueries";
 
 export const SearchBar = styled.div`
   z-index: 1;
@@ -32,6 +33,10 @@ export const SelectBox = styled.div`
     right: 8px;
     color: #40e0d0;
     font-size: 20px;
+  }
+  ${mediaQueries("macBook")} {
+    width: 270px;
+    left: -9vw;
   }
 `;
 
