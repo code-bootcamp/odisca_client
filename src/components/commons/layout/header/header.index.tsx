@@ -56,7 +56,7 @@ export default function LayoutHeader(): JSX.Element {
 
   const onClickMyPage = (): void => {
     if (localStorage.getItem("loginType") === null) {
-      void router.push("/user/loginPage");
+      void router.push("/user/login");
     }
     if (localStorage.getItem("loginType") === "admin") {
       void router.push("/admin/adminPage");

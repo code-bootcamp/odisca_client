@@ -1,5 +1,7 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import UseModal from "../../../../commons/hooks/customs/useModal";
+import { useQueryFetchLoginReviewByVisitId } from "../../../../commons/hooks/queries/useQueryFetchLoginReviewByVisitId";
 import { useQueryFetchLoginUser } from "../../../../commons/hooks/queries/useQueryFetchLoginUser";
 import Review from "../../../../commons/reviews/review.index";
 import * as S from "./userMypagebody.styles";
@@ -7,7 +9,8 @@ import * as S from "./userMypagebody.styles";
 export default function UserMyPageBody(): JSX.Element {
   const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
   const { data } = useQueryFetchLoginUser();
-
+  const { data: reviewdata } = useQueryFetchLoginReviewByVisitId();
+  const router = useRouter();
   const [Ind, setInd] = useState(0);
   const [vId, setVId] = useState("");
 
@@ -17,11 +20,9 @@ export default function UserMyPageBody(): JSX.Element {
     showModal();
   };
 
-  // const onClickMoveVisitedCafe = (id: string) => (): void => {
-  //   void router.push(
-  //     `/user/${String(data?.fetchLoginUser?.visits.studyCafe?.studyCafe_id)}`
-  // );
-  // };
+  const onClickMoveVisitedCafe = (address: string) => (): void => {
+    void router.push(`/user/${address}`);
+  };
 
   return (
     <>
@@ -39,24 +40,40 @@ export default function UserMyPageBody(): JSX.Element {
               <S.LeftWrapper>
                 <S.CafeImg
                   src={visit.studyCafe.images[0]?.image_url ?? "/cafeImg.jpeg"}
-                  // onClick={onClickMoveVisitedCafe(
-                  //   data?.fetchLoginUser?.visits.studyCafe?.studyCafe_id
-                  // )}
+                  onClick={onClickMoveVisitedCafe(
+                    visit.studyCafe.studyCafe_id ?? ""
+                  )}
                 ></S.CafeImg>
               </S.LeftWrapper>
               <S.RightWrapper>
                 <S.Top>
-                  <S.CafeName>{visit.studyCafe?.studyCafe_name}</S.CafeName>
-                  <S.SeatInfo>좌석번호: {visit.seat?.seat_number}</S.SeatInfo>
+                  <S.CafeName
+                    onClick={onClickMoveVisitedCafe(
+                      visit.studyCafe.studyCafe_id ?? ""
+                    )}
+                  >
+                    {visit.studyCafe?.studyCafe_name}
+                  </S.CafeName>
+<S.SeatInfo>좌석번호: {visit.seat?.seat_number}</S.SeatInfo>
                 </S.Top>
                 <S.Bottom>
                   <S.RemainingTime>
                     남은 이용시간 {remainingHours}시간{remainingMinutes}분
                   </S.RemainingTime>
                   {/* <S.Btn>이용종료</S.Btn> */}
-                  <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
+                  {reviewdata?.fetchLoginReviewByVisitId.review_content !==
+                  undefined ? (
+                    <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
+                      내 리뷰
+                    </S.Btn>
+                  ) : (
+                    <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
+                      내 리뷰
+                    </S.Btn>
+                  )}
+                  {/* <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
                     리뷰쓰기
-                  </S.Btn>
+                  </S.Btn> */}
                   {isModalOpen !== false && (
                     <S.ReviewModal
                       okButtonProps={{ style: { display: "none" } }}
