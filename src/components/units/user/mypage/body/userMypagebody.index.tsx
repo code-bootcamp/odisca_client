@@ -70,7 +70,7 @@ export default function UserMyPageBody(): JSX.Element {
                     </S.Btn>
                   ) : (
                     <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
-                      내 리뷰 dd
+                      내 리뷰
                     </S.Btn>
                   )}
                   {/* <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
