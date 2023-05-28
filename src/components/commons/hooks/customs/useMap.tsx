@@ -24,7 +24,6 @@ export default function Map({ selectedDistrict }: Props): JSX.Element {
     const script = document.createElement("script");
     script.src =
       "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6583c79fd8fd9f0d519f6b325b841c09&libraries=services";
-
     document.head.appendChild(script);
 
     script.onload = () => {
