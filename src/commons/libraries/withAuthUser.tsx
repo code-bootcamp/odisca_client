@@ -3,7 +3,7 @@ import { restoreAccessTokenLoadable } from "../stores";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export const withAuth =
+export const withAuthUser =
   (Component: any) =>
   // eslint-disable-next-line react/display-name
   (props: any): JSX.Element => {
@@ -12,7 +12,7 @@ export const withAuth =
     useEffect(() => {
       void getRefreshToken.toPromise().then(async (newAccessToken) => {
         if (newAccessToken === undefined) {
-          await router.push("/admin/login");
+          await router.push("/user/login");
         }
       });
     }, []);
