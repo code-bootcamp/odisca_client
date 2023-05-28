@@ -21,8 +21,6 @@ export default function LayoutHeader(): JSX.Element {
   const [logoutAdmin] = useMutationLogOutAdmin();
   const [loginType, setLoginType] = useState("");
 
-  console.log(router, "header");
-
   const showDrawer = (): void => {
     setOpen(true);
   };

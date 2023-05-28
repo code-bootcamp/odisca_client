@@ -195,13 +195,24 @@ export const LogInButton = styled.button`
 
 export const SocialLoginContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   margin-left: 35px;
 `;
 
 export const Img = styled.img`
-  width: 60px;
+  width: 200px;
+  margin: 10px;
+  cursor: pointer;
+
+  ${mediaQueries("macBook")} {
+    margin: 7px;
+  }
+`;
+export const GoogleImg = styled.img`
+  width: 205px;
+  height: 55px;
   margin: 10px;
   cursor: pointer;
 

@@ -39,8 +39,10 @@ export default function UserLoginPage(): JSX.Element {
       });
       Modal.success({
         content: "로그인이 완료되었습니다!",
+        onOk() {
+          void router.push(`/admin`);
+        },
       });
-      void router.push("/admin/adminPage");
       const accessToken = result.data?.LoginAdminister;
       if (
         accessToken === undefined ||
@@ -123,13 +125,13 @@ export default function UserLoginPage(): JSX.Element {
             </S.ButtonContainer>
             <S.SocialLoginContainer>
               <a href="https://odisca.store/admin/login/google">
-                <S.Img src="/google2.png" />
+                <S.GoogleImg src="/google.png" />
               </a>
               <a href="https://odisca.store/admin/login/kakao">
-                <S.Img src="/kakao2.png" />
+                <S.Img src="/kakao.png" />
               </a>
               <a href="https://odisca.store/admin/login/naver">
-                <S.Img src="/naver2.png" />
+                <S.Img src="/naver.png" />
               </a>
             </S.SocialLoginContainer>
           </S.LogInWrapperContainer>
