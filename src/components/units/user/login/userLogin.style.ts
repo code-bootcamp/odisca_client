@@ -1,14 +1,17 @@
 import styled from "@emotion/styled";
+import { mediaQueries } from "../../../commons/media/mediaQueries";
 
 export const Wrapper = styled.main`
   width: 100vw;
   height: 100vh;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const SignUpWrapper = styled.div`
   width: 50%;
+  height: 100vh;
   background-color: #40e0d0;
   display: flex;
   flex-direction: column;
@@ -18,9 +21,13 @@ export const SignUpWrapper = styled.div`
 
 export const SignUpTitle = styled.h1`
   margin-bottom: 50px;
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 700;
   color: #f7f7f7;
+
+  ${mediaQueries("macBook")} {
+    font-size: 45px;
+  }
 `;
 
 export const SignUpButton = styled.button`
@@ -30,14 +37,22 @@ export const SignUpButton = styled.button`
   border: none;
   color: #40e0d0;
   background-color: #ffffff;
-  font-size: 35px;
+  font-size: 32px;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 26px;
+
+  ${mediaQueries("macBook")} {
+    font-size: 25px;
+    width: 200px;
+    height: 60px;
+    border-radius: 20px;
+    margin-top: 18px;
+  }
 `;
 
 export const LogInWrapper = styled.div`
   width: 50%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -53,26 +68,29 @@ export const LogInWrapperContainer = styled.form`
   justify-content: center;
   align-items: center;
 `;
+
 export const TitleWrapper = styled.div`
   width: 530px;
   display: flex;
-  flex-direction: row;
   justify-content: center;
 `;
 
 export const LoginTitle = styled.h1`
-  font-size: 65px;
+  font-size: 50px;
   font-weight: 700;
   color: #4f4f4f;
-  margin-bottom: 7vh;
+  margin: 0 0 7vh 4vh;
+
+  ${mediaQueries("macBook")} {
+    font-size: 40px;
+    margin: 0 0 5vh 4vh;
+  }
 `;
 
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
-  margin-right: 100px;
 `;
 
 export const LogInInputBox = styled.div`
@@ -86,16 +104,19 @@ export const LogInInputBox = styled.div`
 export const LogInInputDetail = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   margin-bottom: 13px;
 `;
 
 export const LogInInputTitle = styled.div`
-  font-size: 33px;
+  font-size: 28px;
   font-weight: 400;
   color: #4f4f4f;
   line-height: 55px;
+
+  ${mediaQueries("macBook")} {
+    font-size: 25px;
+  }
 `;
 export const LogInInput = styled.input`
   width: 450px;
@@ -115,7 +136,7 @@ export const LogInInput = styled.input`
   ::placeholder {
     color: #d4d2d2;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 15px;
     padding-left: 10px;
   }
 `;
@@ -135,10 +156,9 @@ export const ErrorMessage = styled.div`
 export const ButtonContainer = styled.div`
   width: 50%;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 60px;
+  margin: 20px 0 20px 30px;
 `;
 export const BtnBox = styled.div`
   display: flex;
@@ -146,36 +166,52 @@ export const BtnBox = styled.div`
   padding: 10px;
 `;
 export const CancelButton = styled.button`
-  width: 170px;
+  width: 150px;
   height: 60px;
   border-radius: 50px;
   border: 1px solid #40e0d0;
   color: #40e0d0;
   background-color: #ffffff;
-  font-size: 26px;
+  font-size: 23px;
   font-weight: 600;
   cursor: pointer;
+
+  ${mediaQueries("macBook")} {
+    font-size: 20px;
+    width: 130px;
+  }
 `;
 
 export const LogInButton = styled.button`
-  width: 170px;
+  width: 150px;
   height: 60px;
   border-radius: 25% / 65%;
   border: none;
   color: #ffffff;
   background-color: #40e0d0;
-  font-size: 26px;
+  font-size: 23px;
   font-weight: 600;
   cursor: pointer;
+
+  ${mediaQueries("macBook")} {
+    font-size: 20px;
+    width: 130px;
+  }
 `;
 
-export const SessionLoginContainer = styled.div`
+export const SocialLoginContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-left: 35px;
 `;
+
 export const Img = styled.img`
   width: 60px;
   margin: 10px;
   cursor: pointer;
+
+  ${mediaQueries("macBook")} {
+    margin: 7px;
+  }
 `;

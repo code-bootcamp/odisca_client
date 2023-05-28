@@ -1,11 +1,13 @@
 import styled from "@emotion/styled";
 import { Modal } from "antd";
+import { mediaQueries } from "../../../commons/media/mediaQueries";
 
 export const Wrapper = styled.main`
   width: 100vw;
   height: 100vh;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const LogInWrapper = styled.div`
@@ -17,14 +19,20 @@ export const LogInWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 export const TitleBox = styled.div`
   width: 120px;
 `;
+
 export const LogInTitle = styled.h1`
-  margin-bottom: 7vh;
-  font-size: 65px;
+  margin-bottom: 50px;
+  font-size: 50px;
   font-weight: 700;
   color: #ffffff;
+
+  ${mediaQueries("macBook")} {
+    font-size: 45px;
+  }
 `;
 
 export const LogInButton = styled.button`
@@ -37,16 +45,18 @@ export const LogInButton = styled.button`
   font-size: 32px;
   font-weight: 600;
   cursor: pointer;
+
+  ${mediaQueries("macBook")} {
+    font-size: 25px;
+    width: 200px;
+    height: 60px;
+    border-radius: 20px;
+    margin-top: 18px;
+  }
 `;
 
 export const SignUpWrapper = styled.div`
   width: 50%;
-  height: 100vh;
-  display: flex;
-`;
-
-export const SignUpWrapperContainer = styled.form`
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -54,19 +64,34 @@ export const SignUpWrapperContainer = styled.form`
   align-items: center;
 `;
 
+export const SignUpWrapperContainer = styled.form`
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const SignUpTitle = styled.h1`
-  font-size: 65px;
+  width: 30%;
+  height: 60px;
+  font-size: 50px;
   font-weight: 700;
   color: #4f4f4f;
-  margin-bottom: 7vh;
+  margin: 7vh 0 4vh 9vh;
+
+  ${mediaQueries("macBook")} {
+    font-size: 40px;
+    margin-left: 70px;
+  }
 `;
 
 export const InputContainer = styled.div`
+  width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
-  margin-right: 120px;
 `;
 
 export const SignUpInputBox = styled.div`
@@ -74,23 +99,27 @@ export const SignUpInputBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 10px;
+  padding: 5px;
 `;
 
 export const SignUpInputDetail = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 28px;
+  margin-bottom: 15px;
 `;
 
 export const SignUpInputTitle = styled.div`
-  font-size: 33px;
+  font-size: 26px;
   font-weight: 400;
   color: #4f4f4f;
-  line-height: 55px;
+  line-height: 60px;
+
+  ${mediaQueries("macBook")} {
+    font-size: 24px;
+  }
 `;
+
 export const SignUpInput = styled.input`
   width: 450px;
   height: 54px;
@@ -147,35 +176,47 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 60px;
+  margin: 20px 0 20px 60px;
 `;
+
 export const BtnBox = styled.div`
   display: flex;
   flex-direction: row;
   padding: 10px;
 `;
+
 export const CancelButton = styled.button`
-  width: 170px;
+  width: 150px;
   height: 60px;
   border-radius: 50px;
   border: 1px solid #40e0d0;
   color: #40e0d0;
   background-color: #f7f7f7;
-  font-size: 26px;
+  font-size: 23px;
   font-weight: 600;
   cursor: pointer;
+
+  ${mediaQueries("macBook")} {
+    font-size: 20px;
+    width: 130px;
+  }
 `;
 
 export const SignUpButton = styled.button`
-  width: 170px;
+  width: 150px;
   height: 60px;
   border-radius: 50px;
   border: none;
   color: #ffffff;
   background-color: #40e0d0;
-  font-size: 26px;
+  font-size: 23px;
   font-weight: 600;
   cursor: pointer;
+
+  ${mediaQueries("macBook")} {
+    font-size: 20px;
+    width: 130px;
+  }
 `;
 
 export const EmailValidationModal = styled(Modal)`
@@ -184,6 +225,7 @@ export const EmailValidationModal = styled(Modal)`
     height: 320px;
   }
 `;
+
 export const PhoneButton = styled.button`
   width: 70px;
   height: 40px;
@@ -191,7 +233,7 @@ export const PhoneButton = styled.button`
   border: none;
   color: #fff;
   background-color: #40e0d0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   margin-left: 5px;

@@ -72,9 +72,8 @@ export default function UserSignUpPage(): JSX.Element {
             <S.InputContainer>
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.TitleBox>
-                    <S.SignUpInputTitle>Name</S.SignUpInputTitle>
-                  </S.TitleBox>
+                  <S.SignUpInputTitle>Name</S.SignUpInputTitle>
+
                   <S.SignUpInput
                     type="text"
                     {...register("name")}
