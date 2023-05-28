@@ -1,5 +1,8 @@
+import { withAuth } from "../../../../src/commons/libraries/withAuth";
 import TransactionListPage from "../../../../src/components/units/user/mypage/userTransactionListPage/userTransactionListPage.index";
 
-export default function userTransactionListPage(): JSX.Element {
+function userTransactionListPage(): JSX.Element {
   return <TransactionListPage />;
 }
+
+export default withAuth(userTransactionListPage);

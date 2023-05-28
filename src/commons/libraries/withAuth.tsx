@@ -13,8 +13,11 @@ export const withAuth =
       void getRefreshToken.toPromise().then((newAccessToken) => {
         console.log(1);
         if (newAccessToken === undefined) {
-          void router.push("/admin/login");
-          console.log("막");
+          if (router.asPath.includes("admin")) {
+            void router.push("/admin/login");
+          } else {
+            void router.push("/user/login");
+          }
         }
       });
     }, []);

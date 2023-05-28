@@ -1,9 +1,10 @@
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 import { IRsp } from "../../../commons/layout/header/header.type";
 import { useMutationCreatePointTransaction } from "../../../commons/hooks/mutations/useMutationCreatePointTransaction";
 import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
 import * as S from "./mapScanner.style";
 import { Modal } from "antd";
+import { PriceWithCommas } from "../../../../commons/libraries/utils";
 
 declare const window: typeof globalThis & {
   IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
@@ -16,15 +17,15 @@ interface IPropsPayModal {
 
 export default function PayModal(props: IPropsPayModal): JSX.Element {
   const [isShowOptions, setShowOptions] = useState(false);
-  const [price, setprice] = useState(1000);
+  const [price, setprice] = useState(5000);
   const [createLoginPointTransaction] = useMutationCreatePointTransaction();
   const { refetch } = useQueryFetchLoginUser();
   const closeModal = (): void => {
     props.setIsPayModal(false);
   };
 
-  const onClickPrice = (event: MouseEvent<HTMLLIElement>): void => {
-    setprice(Number(event.currentTarget.getAttribute("value")));
+  const onClickPrice = (price: number) => (): void => {
+    setprice(price);
   };
 
   const onClickPayment = (): void => {
@@ -92,19 +93,19 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
               setShowOptions((prev) => !prev);
             }}
           >
-            <S.Label>{price}</S.Label>
+            <S.Label>{PriceWithCommas(price)}원</S.Label>
             <S.MiddileWrapper>
               <S.SelectOptions show={isShowOptions}>
-                <S.Option value="1,000원" onClick={onClickPrice}>
-                  1,000원
-                </S.Option>
-                <S.Option value="5,000원" onClick={onClickPrice}>
+                <S.Option value="5,000원" onClick={onClickPrice(5000)}>
                   5,000원
                 </S.Option>
-                <S.Option value="30,000원" onClick={onClickPrice}>
+                <S.Option value="10,000원" onClick={onClickPrice(10000)}>
+                  10,000원
+                </S.Option>
+                <S.Option value="30,000원" onClick={onClickPrice(30000)}>
                   30,000원
                 </S.Option>
-                <S.Option value="50,000원" onClick={onClickPrice}>
+                <S.Option value="50,000원" onClick={onClickPrice(50000)}>
                   50,000원
                 </S.Option>
               </S.SelectOptions>

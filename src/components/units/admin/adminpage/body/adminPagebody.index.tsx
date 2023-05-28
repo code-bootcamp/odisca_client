@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import * as S from "./adminPagebody.styles";
 import { wrapAsync } from "../../../../../commons/libraries/asyncFunc";
 import { IQuery } from "../../../../../commons/types/generated/types";
+import { v4 as uuidv4 } from "uuid";
 
 interface IAdminBodyProps {
   data?: Pick<IQuery, "fetchLoginAdminister">;
@@ -24,7 +25,7 @@ export default function AdminPageBody(props: IAdminBodyProps): JSX.Element {
         <S.Title>My Cafes</S.Title>
         {props.data?.fetchLoginAdminister.studyCafes?.map((el) => {
           return (
-            <div key={el.studyCafe_id}>
+            <div key={uuidv4()}>
               <S.MyCafeWrapper>
                 <S.LeftWrapper>
                   {el.images.map((el2) => {

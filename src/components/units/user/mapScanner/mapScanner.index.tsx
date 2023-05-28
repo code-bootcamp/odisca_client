@@ -19,17 +19,6 @@ interface SeatData {
   time: number;
 }
 
-const BookBtn = styled.button`
-  width: 90px;
-  height: 35px;
-  background-color: #40e0d0;
-  border: none;
-  color: #fff;
-  font-weight: 500;
-  font-size: 17px;
-  border-radius: 20px;
-`;
-
 const CancleBtn = styled.button`
   width: 90px;
   height: 35px;
@@ -53,7 +42,6 @@ export default function SeatReservationPage(): JSX.Element {
   const { data, refetch: refetchSeat } = useQueryFetchAllSeatsByStudyCafeId(
     String(router.query.Id)
   );
-  const [, setIsModal] = useState(false);
   const [stateX, setStateX] = useState(
     dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX ?? 40
   );
@@ -180,21 +168,38 @@ export default function SeatReservationPage(): JSX.Element {
       void router.push("/user/mypage");
     } catch (err) {
       alert("포인트가 부족합니다.");
-      setIsModal(false);
+      setOpen(false);
       setIsPayModal(true);
     }
 
     setSeatUsable(false);
-    setIsModal(false);
   };
 
   // const onChangeTime = (event: ChangeEvent<HTMLSelectElement>): void => {
   //   setDuringTime(Number(event.target.value));
   // };
 
-  const onChangeTime = (e: MouseEvent<HTMLLIElement>): void => {
-    setCurrentValue(e.currentTarget.getAttribute("value"));
+  const onChangeTime = (time: number) => (): void => {
+    setDuringTime(time);
+    setCurrentValue(String(time) + "시간");
   };
+
+  const onClickSetShowOption = (): void => {
+    if (seatUsable) {
+      setShowOptions((prev) => !prev);
+    }
+  };
+
+  const BookBtn = styled.button`
+    width: 90px;
+    height: 35px;
+    background-color: ${seatUsable ? "#40e0d0" : "#e4e4e4"};
+    border: none;
+    color: ${seatUsable ? "#ffffff" : "#c4c4c4"};
+    font-weight: 500;
+    font-size: 17px;
+    border-radius: 20px;
+  `;
 
   return (
     <>
@@ -273,25 +278,22 @@ export default function SeatReservationPage(): JSX.Element {
           <></>
         )}
 
-        <S.SelectBox
-          style={{ width: "300px" }}
-          onClick={() => setShowOptions((prev) => !prev)}
-        >
+        <S.SelectBox style={{ width: "300px" }} onClick={onClickSetShowOption}>
           <S.Label>{currentValue}</S.Label>
-          <S.SelectOptions show={showOptions} disabled={!seatUsable}>
-            <S.Option value="1시간" onClick={onChangeTime}>
+          <S.SelectOptions show={showOptions}>
+            <S.Option value="1시간" onClick={onChangeTime(1)}>
               1시간
             </S.Option>
-            <S.Option value="2시간" onClick={onChangeTime}>
+            <S.Option value="2시간" onClick={onChangeTime(2)}>
               2시간
             </S.Option>
-            <S.Option value="3시간" onClick={onChangeTime}>
+            <S.Option value="3시간" onClick={onChangeTime(3)}>
               3시간
             </S.Option>
-            <S.Option value="4시간" onClick={onChangeTime}>
+            <S.Option value="4시간" onClick={onChangeTime(4)}>
               4시간
             </S.Option>
-            <S.Option value="5시간" onClick={onChangeTime}>
+            <S.Option value="5시간" onClick={onChangeTime(5)}>
               5시간
             </S.Option>
           </S.SelectOptions>

@@ -59,7 +59,7 @@ export default function LayoutHeader(): JSX.Element {
       void router.push("/user/loginPage");
     }
     if (localStorage.getItem("loginType") === "admin") {
-      void router.push("/admin/adminPage");
+      void router.push("/admin/admin");
     } else {
       void router.push("/user/mypage");
     }
@@ -92,7 +92,7 @@ export default function LayoutHeader(): JSX.Element {
     script.src = "https://cdn.iamport.kr/v1/iamport.js";
     document.head.appendChild(script);
     script.onload = () => {};
-    if (localStorage.getItem("loginType") === null) {
+    if (data === undefined && dataAdmin === undefined) {
       setIsLogin(false);
     } else {
       setIsLogin(true);
