@@ -66,11 +66,11 @@ export default function UserMyPageBody(): JSX.Element {
                   {reviewdata?.fetchLoginReviewByVisitId.review_content !==
                   undefined ? (
                     <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
-                      리뷰수정
+                      내 리뷰
                     </S.Btn>
                   ) : (
                     <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
-                      리뷰작성
+                      내 리뷰
                     </S.Btn>
                   )}
                   {/* <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
