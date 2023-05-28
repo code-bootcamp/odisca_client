@@ -147,10 +147,14 @@ export const InputWrapper = styled.div`
 `;
 
 export const ErrorMessage = styled.div`
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 400;
   color: #7744aa;
-  margin-left: 115px;
+  margin-left: 95px;
+
+  ${mediaQueries("macBook")} {
+    font-size: 14px;
+  }
 `;
 
 export const ButtonContainer = styled.div`
