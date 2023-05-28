@@ -1,11 +1,5 @@
 import { useRouter } from "next/router";
-import {
-  ChangeEvent,
-  LiHTMLAttributes,
-  OptionHTMLAttributes,
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 import * as S from "./mapScanner.style";
 import { Modal } from "antd";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
@@ -147,11 +141,11 @@ export default function SeatReservationPage(): JSX.Element {
       return;
     }
     if (seat.status === "") {
-      setSeatStatus("예약이 가능합니다.");
+      setSeatStatus("좌석 이용이 가능합니다.");
       setRemainTime(0);
       setSeatUsable(true);
     } else {
-      setSeatStatus("예약이 불가능합니다.");
+      setSeatStatus("이미 이용중인 좌석입니다.");
       setRemainTime(seat.time);
     }
     setSeatId(seat.seatId);
@@ -266,11 +260,15 @@ export default function SeatReservationPage(): JSX.Element {
           </CancleBtn>,
         ]}
       >
-        <div style={{ fontSize: "20px" }}>좌석 번호 : {seatNumber}</div>
-        <div style={{ fontSize: "20px" }}>좌석 종류 : {seatStatus}</div>
+        <div style={{ fontSize: "20px", color: "#4f4f4f" }}>
+          좌석 번호 : {seatNumber}
+        </div>
+        <div style={{ fontSize: "20px", color: "#4f4f4f", fontWeight: "500" }}>
+          {seatStatus}
+        </div>
         {remainTime !== 0 ? (
           <div style={{ fontSize: "16px", color: "#7744AA" }}>
-            {String(remainTime) + "분 남았습니다."}
+            {"(" + String(remainTime) + "분 후 이용가능)"}
           </div>
         ) : (
           <></>
