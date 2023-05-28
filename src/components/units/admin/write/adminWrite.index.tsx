@@ -3,7 +3,14 @@ import DaumPostcodeEmbed from "react-daum-postcode";
 
 // hooks
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  EventHandler,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useMutationCreateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationCreateLoginStudyCafe";
 import { useMutationUpdateLoginStudyCafe } from "../../../commons/hooks/mutations/useMutationUpdateLoginStudyCafe";
@@ -170,17 +177,13 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
   };
 
   // openTime Select
-  const onChangeSelectOpenTime = (
-    event: ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setOpenTime(event?.target.value);
+  const onChangeSelectOpenTime = (time: string) => (): void => {
+    setOpenTime(time);
   };
 
   // CloseTime Select
-  const onChangeSelectCloseTime = (
-    event: ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setCloseTime(event?.target.value);
+  const onChangeSelectCloseTime = (time: string) => (): void => {
+    setCloseTime(time);
   };
 
   const AddressModal = (): boolean => {
@@ -483,6 +486,8 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                 </S.LabelBox>
                 <OperatingTime
                   data={data}
+                  openTime={openTime}
+                  closeTime={closeTime}
                   onChangeSelectOpenTime={onChangeSelectOpenTime}
                   onChangeSelectCloseTime={onChangeSelectCloseTime}
                 />
