@@ -37,8 +37,12 @@ export default function UserLoginPage(): JSX.Element {
           },
         },
       });
-      alert("로그인 성공");
-      void router.push("/admin/adminPage");
+      Modal.success({
+        content: "로그인이 완료되었습니다!",
+        onOk() {
+          void router.push(`/admin`);
+        },
+      });
       const accessToken = result.data?.LoginAdminister;
       if (
         accessToken === undefined ||
@@ -46,7 +50,7 @@ export default function UserLoginPage(): JSX.Element {
         data.password === undefined
       ) {
         Modal.error({
-          content: "로그인에 실패! 다시 시도해 주세요!",
+          content: "로그인 실패! 다시 시도해 주세요!",
         });
         return;
       }
@@ -69,7 +73,7 @@ export default function UserLoginPage(): JSX.Element {
         <S.SignUpWrapper>
           <S.SignUpTitle>가입을 시작합니다!</S.SignUpTitle>
           <S.SignUpButton type="button" onClick={onClickMoveSignUp}>
-            SIGNUP
+            SIGN UP
           </S.SignUpButton>
         </S.SignUpWrapper>
 
@@ -81,7 +85,7 @@ export default function UserLoginPage(): JSX.Element {
             <S.InputContainer>
               <S.LogInInputBox>
                 <S.LogInInputDetail>
-                  <S.LogInInputTitle>EMAIL</S.LogInInputTitle>
+                  <S.LogInInputTitle>Email</S.LogInInputTitle>
                   <S.LogInInput
                     type="text"
                     placeholder="이메일을 입력해주세요."
@@ -96,7 +100,7 @@ export default function UserLoginPage(): JSX.Element {
 
               <S.LogInInputBox>
                 <S.LogInInputDetail>
-                  <S.LogInInputTitle>PASS</S.LogInInputTitle>
+                  <S.LogInInputTitle>Pass</S.LogInInputTitle>
                   <S.LogInInput
                     type="password"
                     placeholder="비밀번호를 입력해주세요."
@@ -110,18 +114,26 @@ export default function UserLoginPage(): JSX.Element {
               </S.LogInInputBox>
             </S.InputContainer>
             <S.ButtonContainer>
-              <S.CancelButton type="button" onClick={onClickCancel}>
-                CANCEL
-              </S.CancelButton>
-              <S.LogInButton>LOGIN</S.LogInButton>
+              <S.BtnBox>
+                <S.CancelButton type="button" onClick={onClickCancel}>
+                  CANCEL
+                </S.CancelButton>
+              </S.BtnBox>
+              <S.BtnBox>
+                <S.LogInButton>LOGIN</S.LogInButton>
+              </S.BtnBox>
             </S.ButtonContainer>
-            <S.SessionLoginContainer>
-              <img src="/sessionicons-admin.png" />
-            </S.SessionLoginContainer>
-            <S.FindContainer>
-              <S.FindButton>아이디 찾기</S.FindButton>
-              <S.FindButton>비밀번호 찾기</S.FindButton>
-            </S.FindContainer>
+            <S.SocialLoginContainer>
+              <a href="https://odisca.store/admin/login/google">
+                <S.GoogleImg src="/google.png" />
+              </a>
+              <a href="https://odisca.store/admin/login/kakao">
+                <S.Img src="/kakao.png" />
+              </a>
+              <a href="https://odisca.store/admin/login/naver">
+                <S.Img src="/naver.png" />
+              </a>
+            </S.SocialLoginContainer>
           </S.LogInWrapperContainer>
         </S.LogInWrapper>
       </S.Wrapper>

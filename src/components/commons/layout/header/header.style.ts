@@ -90,20 +90,3 @@ export const MenuDrawer = styled(Drawer)`
     font-size: 25px;
   }
 `;
-
-// export const MenuList = styled.p`
-//   cursor: pointer;
-//   background-color: #ffffff;
-//   color: #40e0d0;
-//   border-radius: 10px;
-//   font-weight: 600;
-//   width: 48px;
-//   height: 26px;
-//   font-size: 18px;
-//   margin-bottom: 15px;
-//   border: none;
-//   transition: margin-left 0.3s ease;
-//   :hover {
-//     margin-left: 30px;
-//   }
-// `;

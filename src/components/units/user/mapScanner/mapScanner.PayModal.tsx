@@ -1,8 +1,10 @@
-import { Modal, Select } from "antd";
 import { useState } from "react";
 import { IRsp } from "../../../commons/layout/header/header.type";
 import { useMutationCreatePointTransaction } from "../../../commons/hooks/mutations/useMutationCreatePointTransaction";
 import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
+import * as S from "./mapScanner.style";
+import { Modal } from "antd";
+import { PriceWithCommas } from "../../../../commons/libraries/utils";
 
 declare const window: typeof globalThis & {
   IMP: any; // 포트원 쪽에 관련 타입이 있을 수 있음. Docs에서 발견 못함
@@ -14,17 +16,19 @@ interface IPropsPayModal {
 }
 
 export default function PayModal(props: IPropsPayModal): JSX.Element {
-  const [price, setPrice] = useState(1000);
+  const [isShowOptions, setShowOptions] = useState(false);
+  const [price, setprice] = useState(5000);
   const [createLoginPointTransaction] = useMutationCreatePointTransaction();
   const { refetch } = useQueryFetchLoginUser();
   const closeModal = (): void => {
     props.setIsPayModal(false);
   };
-  const onClickPrice = (value: string): void => {
-    setPrice(Number(value));
+
+  const onClickPrice = (price: number) => (): void => {
+    setprice(price);
   };
+
   const onClickPayment = (): void => {
-    console.log("시작");
     const IMP = window.IMP;
     IMP.init("imp56618747");
 
@@ -44,7 +48,6 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
 
       async (rsp: IRsp) => {
         if (rsp.success) {
-          console.log(rsp, "결제진행");
           try {
             await createLoginPointTransaction({
               variables: {
@@ -66,27 +69,55 @@ export default function PayModal(props: IPropsPayModal): JSX.Element {
     );
   };
 
+  const onCancle = (): void => {
+    closeModal();
+    Modal.success({
+      content: "결제가 취소되었습니다.",
+    });
+  };
   return (
     <>
       {props.isPayModal ? (
-        <Modal
-          title="포인트 결제"
+        <S.PayModal
           open={props.isPayModal}
           onOk={onClickPayment}
           onCancel={closeModal}
+          okButtonProps={{ style: { display: "none" } }}
+          cancelButtonProps={{ style: { display: "none" } }}
         >
-          <Select
-            defaultValue="1천원"
-            style={{ width: 400, boxShadow: "0 0 0 0" }}
-            onChange={onClickPrice}
-            options={[
-              { value: "1000", label: "1천원" },
-              { value: "5000", label: "5천원" },
-              { value: "30000", label: "3만원" },
-              { value: "50000", label: "5만원" },
-            ]}
-          />
-        </Modal>
+          <S.Top>
+            <S.TopTitle>충전하실 금액을 선택해주세요!</S.TopTitle>
+          </S.Top>
+          <S.SelectBox
+            onClick={() => {
+              setShowOptions((prev) => !prev);
+            }}
+          >
+            <S.Label>{PriceWithCommas(price)}원</S.Label>
+            <S.MiddileWrapper>
+              <S.SelectOptions show={isShowOptions}>
+                <S.Option value="5,000원" onClick={onClickPrice(5000)}>
+                  5,000원
+                </S.Option>
+                <S.Option value="10,000원" onClick={onClickPrice(10000)}>
+                  10,000원
+                </S.Option>
+                <S.Option value="30,000원" onClick={onClickPrice(30000)}>
+                  30,000원
+                </S.Option>
+                <S.Option value="50,000원" onClick={onClickPrice(50000)}>
+                  50,000원
+                </S.Option>
+              </S.SelectOptions>
+            </S.MiddileWrapper>
+          </S.SelectBox>
+          <S.Line></S.Line>
+
+          <S.Bottom>
+            <S.CancleBtn onClick={onCancle}>취소</S.CancleBtn>
+            <S.ChargeBtn onClick={onClickPayment}>충전</S.ChargeBtn>
+          </S.Bottom>
+        </S.PayModal>
       ) : (
         <></>
       )}

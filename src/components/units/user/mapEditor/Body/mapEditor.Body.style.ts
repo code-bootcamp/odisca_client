@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { mediaQueries } from "../../../../commons/media/mediaQueries";
 
 export const Body = styled.div`
   display: flex;
@@ -6,6 +7,8 @@ export const Body = styled.div`
 `;
 
 export const Wrapper = styled.main`
+  width: 100vw;
+  height: 100vh;
   padding: 40px;
 `;
 
@@ -16,12 +19,11 @@ export const Pixel = styled.div`
 `;
 
 export const Container = styled.div`
-  height: 100vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 70px;
 `;
 
 export const Box = styled.div`
@@ -34,6 +36,10 @@ export const Box = styled.div`
   align-items: center;
   border: 0.5px solid #bdbdbd;
   z-index: 0;
+
+  ${mediaQueries("macBook")} {
+    margin-top: 15vh;
+  }
 `;
 
 export const Box2 = styled.div`
@@ -59,6 +65,11 @@ export const MapEditorTitle = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
+  ${mediaQueries("macBook")} {
+    width: 60vw;
+    height: 15vh;
+  }
 `;
 
 export const Title = styled.p`
@@ -85,12 +96,21 @@ export const MapEditorInput = styled.input`
   ::placeholder {
     color: #bdbdbd;
   }
+
+  ${mediaQueries("macBook")} {
+    width: 13vw;
+    height: 5vh;
+  }
 `;
 
 export const MapEditorInputWrapper = styled.div`
   display: flex;
   align-items: center;
   margin: 15px;
+
+  ${mediaQueries("macBook")} {
+    margin: 15px 5px 15px 15px;
+  }
 `;
 
 export const Inputs = styled.div`
@@ -98,6 +118,10 @@ export const Inputs = styled.div`
   margin-bottom: 30px;
   display: flex;
   justify-content: space-between;
+
+  ${mediaQueries("macBook")} {
+    width: 60vw;
+  }
 `;
 
 export const MapEditorInputContainer = styled.div`
@@ -110,6 +134,11 @@ export const MapEditorInputFont = styled.div`
   font-size: 20px;
   margin-right: 15px;
   color: #4f4f4f;
+
+  ${mediaQueries("macBook")} {
+    font-size: 17px;
+    margin-right: 7px;
+  }
 `;
 
 export const InputButton = styled.button`
@@ -122,12 +151,16 @@ export const InputButton = styled.button`
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+
+  ${mediaQueries("macBook")} {
+    height: 5vh;
+  }
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 `;
 
 export const FunctionBtn = styled.button`
@@ -141,10 +174,20 @@ export const FunctionBtn = styled.button`
   font-weight: 600;
   font-size: 15px;
   margin-right: 10px;
+
+  ${mediaQueries("macBook")} {
+    width: 5.5vw;
+    height: 4.7vh;
+    margin-right: 5px;
+  }
 `;
 
 export const DivideLine = styled.div`
   width: 50vw;
   border: 1px solid #bdbdbd;
   margin-top: 20px;
+
+  ${mediaQueries("macBook")} {
+    width: 60vw;
+  }
 `;

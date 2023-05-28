@@ -21,8 +21,6 @@ export default function LayoutHeader(): JSX.Element {
   const [logoutAdmin] = useMutationLogOutAdmin();
   const [loginType, setLoginType] = useState("");
 
-  console.log(router, "header");
-
   const showDrawer = (): void => {
     setOpen(true);
   };
@@ -94,12 +92,15 @@ export default function LayoutHeader(): JSX.Element {
     script.src = "https://cdn.iamport.kr/v1/iamport.js";
     document.head.appendChild(script);
     script.onload = () => {};
-    if (localStorage.getItem("loginType") === null) {
+    if (
+      data?.fetchLoginUser.user_email === undefined &&
+      dataAdmin?.fetchLoginAdminister.administer_email === undefined
+    ) {
       setIsLogin(false);
     } else {
       setIsLogin(true);
     }
-  }, []);
+  }, [data, dataAdmin]);
 
   return (
     <>

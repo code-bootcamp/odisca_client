@@ -61,14 +61,16 @@ export default function UserLoginPage(): JSX.Element {
     }
   };
 
+  const onClickCancel = (): void => {
+    void router.push(`/`);
+  };
+
   return (
     <>
       <S.Wrapper>
         <S.SignUpWrapper>
           <S.SignUpTitle>아직 회원이 아니신가요?</S.SignUpTitle>
-          <S.SignUpButton onClick={onClickMoveSignUp}>
-            회원가입하기
-          </S.SignUpButton>
+          <S.SignUpButton onClick={onClickMoveSignUp}>SIGN UP</S.SignUpButton>
         </S.SignUpWrapper>
 
         <S.LogInWrapper>
@@ -108,17 +110,25 @@ export default function UserLoginPage(): JSX.Element {
             </S.InputContainer>
             <S.ButtonContainer>
               <S.BtnBox>
-                <S.CancelButton type="button">CANCEL</S.CancelButton>
+                <S.CancelButton type="button" onClick={onClickCancel}>
+                  CANCEL
+                </S.CancelButton>
               </S.BtnBox>
               <S.BtnBox>
                 <S.LogInButton>LOGIN</S.LogInButton>
               </S.BtnBox>
             </S.ButtonContainer>
-            <S.SessionLoginContainer>
-              <S.Img src="/google.png" />
-              <S.Img src="/kakao.png" />
-              <S.Img src="/naver.png" />
-            </S.SessionLoginContainer>
+            <S.SocialLoginContainer>
+              <a href="https://odisca.store/user/login/google">
+                <S.GoogleImg src="/google.png" />
+              </a>
+              <a href="https://odisca.store/user/login/kakao">
+                <S.Img src="/kakao.png" />
+              </a>
+              <a href="https://odisca.store/user/login/naver">
+                <S.Img src="/naver.png" />
+              </a>
+            </S.SocialLoginContainer>
           </S.LogInWrapperContainer>
         </S.LogInWrapper>
       </S.Wrapper>
