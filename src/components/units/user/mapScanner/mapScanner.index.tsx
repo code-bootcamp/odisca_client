@@ -34,7 +34,7 @@ export default function SeatReservationPage(): JSX.Element {
   const [currentValue, setCurrentValue] = useState("1시간");
   const [showOptions, setShowOptions] = useState(false);
   const router = useRouter();
-  const { refetch } = useQueryFetchLoginUser();
+  const { data: dataUser, refetch } = useQueryFetchLoginUser();
   const [open, setOpen] = useState(false);
   const { data: dataCafe } = useQueryFetchOneStudyCafeForUser(
     String(router.query.Id)
@@ -147,6 +147,16 @@ export default function SeatReservationPage(): JSX.Element {
   };
 
   const submitReservation = async (): Promise<void> => {
+    if (dataUser?.fetchLoginUser?.user_id === undefined) {
+      Modal.success({
+        content: "로그인 페이지로 이동합니다.",
+        onOk() {
+          void router.push(`/user/login`);
+        },
+      });
+
+      return;
+    }
     try {
       await createPayment({
         variables: {
