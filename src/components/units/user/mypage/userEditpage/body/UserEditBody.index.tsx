@@ -85,7 +85,6 @@ export default function UserEditBody(): JSX.Element {
       await updateLoginUser({
         variables: {
           updateLoginUserInput: {
-            user_password: String(data.user_password),
             user_phone: String(data.user_phone),
             user_image: String(url),
           },
@@ -131,14 +130,6 @@ export default function UserEditBody(): JSX.Element {
             type="text"
             defaultValue={data?.fetchLoginUser.user_email}
             readOnly
-          />
-        </S.EditList>
-        <S.EditList>
-          <S.ListDetail>비밀번호</S.ListDetail>
-          <S.DetailInput
-            type="password"
-            placeholder="새로운 비밀번호를 입력해주세요."
-            {...register("user_password")}
           />
         </S.EditList>
         <S.PhoneEditList>

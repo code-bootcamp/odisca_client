@@ -403,7 +403,7 @@ export type IUpdateLoginAdministerInput = {
 
 export type IUpdateLoginUserInput = {
   user_image?: InputMaybe<Scalars['String']>;
-  user_password: Scalars['String'];
+  user_password?: InputMaybe<Scalars['String']>;
   user_phone: Scalars['String'];
 };
 

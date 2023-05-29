@@ -3,8 +3,14 @@ import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { adminSignUpSchema } from "../../../../commons/adminValidation/validation";
-import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
+import {
+  wrapAsync,
+  wrapFormAsync,
+} from "../../../../commons/libraries/asyncFunc";
+import EmailValidationPage from "../../../commons/emailValidation/emailValidation.index";
+import UseModal from "../../../commons/hooks/customs/useModal";
 import { useMutationCreateAdminister } from "../../../commons/hooks/mutations/useMutationCreateAdminister";
+import { useMutationSendVerificationCode } from "../../../commons/hooks/mutations/useMutationSendVerification";
 import * as S from "./adminSignup.style";
 
 interface IFormData {
@@ -23,6 +29,8 @@ export default function UserSignUpPage(): JSX.Element {
   });
 
   const [createAdminister] = useMutationCreateAdminister();
+  const [sendVerificationCode] = useMutationSendVerificationCode();
+  const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
 
   const onClickSingUp = async (data: IFormData): Promise<void> => {
     try {
@@ -52,6 +60,20 @@ export default function UserSignUpPage(): JSX.Element {
 
   const onClickMoveLogin = (): void => {
     void router.push(`/admin/login`);
+  };
+
+  const onClickSendVerification = async (data: IFormData): Promise<void> => {
+    try {
+      await sendVerificationCode({
+        variables: { email: data.email },
+      });
+      showModal();
+    } catch (error) {
+      if (error instanceof Error)
+        Modal.error({
+          content: error.message,
+        });
+    }
   };
 
   return (
@@ -95,9 +117,14 @@ export default function UserSignUpPage(): JSX.Element {
                   <S.SignUpInputEmail
                     type="text"
                     {...register("email")}
-                    placeholder="user@google.com"
+                    placeholder="admin@google.com"
                   ></S.SignUpInputEmail>
-                  <S.PhoneButton type="button">CLICK</S.PhoneButton>
+                  <S.PhoneButton
+                    type="button"
+                    onClick={wrapAsync(handleSubmit(onClickSendVerification))}
+                  >
+                    CLICK
+                  </S.PhoneButton>
                 </S.SignUpInputDetail>
 
                 <S.ErrorMessage>
@@ -155,6 +182,17 @@ export default function UserSignUpPage(): JSX.Element {
                 <S.ErrorMessage>
                   {formState.errors.phone?.message}
                 </S.ErrorMessage>
+                {isModalOpen !== null && (
+                  <S.EmailValidationModal
+                    okButtonProps={{ style: { display: "none" } }}
+                    cancelButtonProps={{ style: { display: "none" } }}
+                    open={isModalOpen}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                  >
+                    <EmailValidationPage handleCancel={handleCancel} />
+                  </S.EmailValidationModal>
+                )}
               </S.SignUpInputBox>
             </S.InputContainer>
             <S.ButtonContainer>
