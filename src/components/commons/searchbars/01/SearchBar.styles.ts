@@ -36,7 +36,7 @@ export const SelectBox = styled.div`
   }
   ${mediaQueries("macBook")} {
     width: 270px;
-    left: -9vw;
+    left: -10vw;
   }
 `;
 
