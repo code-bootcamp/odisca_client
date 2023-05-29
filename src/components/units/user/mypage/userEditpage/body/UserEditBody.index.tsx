@@ -34,9 +34,11 @@ export default function UserEditBody(): JSX.Element {
       if (imageUrls.length === 0) {
         return;
       }
+
       const ImageFile: File[] = [];
       for (let i = 0; i < imageUrls.length; i++) {
         const imageUrl = imageUrls[i];
+
         try {
           const file = await new Promise<File>((resolve, reject) => {
             const img = new Image();
@@ -50,6 +52,7 @@ export default function UserEditBody(): JSX.Element {
               canvas.width = img.width;
               canvas.height = img.height;
               ctx.drawImage(img, 0, 0);
+
               canvas.toBlob((blob) => {
                 if (blob === null) {
                   reject(new Error("Failed to convert canvas to blob."));
@@ -85,11 +88,13 @@ export default function UserEditBody(): JSX.Element {
       await updateLoginUser({
         variables: {
           updateLoginUserInput: {
+            user_password: data.user_password,
             user_phone: String(data.user_phone),
             user_image: String(url),
           },
         },
       });
+
       await loginUserRefetch();
       void router.push("/user/mypage");
 
@@ -130,6 +135,14 @@ export default function UserEditBody(): JSX.Element {
             type="text"
             defaultValue={data?.fetchLoginUser.user_email}
             readOnly
+          />
+        </S.EditList>
+        <S.EditList>
+          <S.ListDetail>비밀번호</S.ListDetail>
+          <S.DetailInput
+            type="password"
+            placeholder="새로운 비밀번호를 입력해주세요."
+            {...register("user_password")}
           />
         </S.EditList>
         <S.PhoneEditList>
