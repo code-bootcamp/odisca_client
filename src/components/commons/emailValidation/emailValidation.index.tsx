@@ -78,7 +78,7 @@ export default function EmailValidationPage(
         </S.ValidationWrapper>
         <S.DivideLine></S.DivideLine>
         <S.ErrorWrapper>
-          <S.Error>인증번호가 다릅니다. 다시 진행해주세요!</S.Error>
+          <S.Error></S.Error>
         </S.ErrorWrapper>
         <S.BtnWrapper>
           <S.SubmitBtn

@@ -123,8 +123,8 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                 result[0].x
               );
               console.log(coords);
-              setLat(result[0].x.toString());
-              setLon(result[0].y.toString());
+              setLat(result[0].y.toString());
+              setLon(result[0].x.toString());
             }
           }
         );
