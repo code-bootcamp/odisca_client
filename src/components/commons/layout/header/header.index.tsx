@@ -115,7 +115,7 @@ export default function LayoutHeader(): JSX.Element {
         }}
       >
         <S.LightWrapper>
-          <S.Logo src="/로고오.png" onClick={onClickMoveMain}></S.Logo>
+          <S.Logo src="/sca2.png" onClick={onClickMoveMain}></S.Logo>
         </S.LightWrapper>
         <S.RightWrapper>
           {!isLogin ? (
