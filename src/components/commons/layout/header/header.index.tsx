@@ -103,15 +103,7 @@ export default function LayoutHeader(): JSX.Element {
   }, [data, dataAdmin]);
 
   const onClickMoveMain = (): void => {
-    try {
-      if (loginType === "user") {
-        void router.push(`/user`);
-      } else {
-        void router.push(`/admin`);
-      }
-    } catch (error) {
-      if (error instanceof Error) console.log(error.message);
-    }
+    void router.push("/");
   };
 
   return (
