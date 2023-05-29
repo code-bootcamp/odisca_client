@@ -139,26 +139,33 @@ export default function UserEditBody(): JSX.Element {
         </S.EditList>
         <S.EditList>
           <S.ListDetail>비밀번호</S.ListDetail>
-          <S.DetailInput
-            type="password"
-            placeholder="새로운 비밀번호를 입력해주세요."
-            {...register("user_password")}
-          />
+          <S.ErrorWrapper>
+            <S.DetailInput
+              type="password"
+              placeholder="새로운 비밀번호를 입력해주세요."
+              {...register("user_password")}
+            />
+            <S.AlertMessage>
+              {formState.errors.user_password?.message}
+            </S.AlertMessage>
+          </S.ErrorWrapper>
         </S.EditList>
-        <S.PhoneEditList>
-          <S.PhoneInput>
-            <S.ListDetail>전화번호</S.ListDetail>
+        <S.EditList>
+          <S.ListDetail>전화번호</S.ListDetail>
+          <S.ErrorWrapper>
             <S.DetailInput
               style={{ color: "#4f4f4f" }}
               type="text"
               defaultValue={data?.fetchLoginUser.user_phone}
               {...register("user_phone")}
             />
-          </S.PhoneInput>
-          <S.AlertMessage>
-            {formState.errors.user_phone?.message}
-          </S.AlertMessage>
-        </S.PhoneEditList>
+            <S.AlertMessage>
+              {formState.errors.user_phone?.message}
+            </S.AlertMessage>
+          </S.ErrorWrapper>
+        </S.EditList>
+
+        {/* </S.PhoneEditList> */}
       </S.InputForm>
       <S.BtnWrapper onSubmit={wrapFormAsync(handleSubmit(onClickUserUpdate))}>
         <S.EditBtn>수정하기</S.EditBtn>
