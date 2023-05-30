@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./mapScanner.style";
 import { Modal } from "antd";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
@@ -10,6 +10,7 @@ import PayModal from "./mapScanner.PayModal";
 import { useQueryFetchLoginUser } from "../../../commons/hooks/queries/useQueryFetchLoginUser";
 import { wrapAsync } from "../../../../commons/libraries/asyncFunc";
 import { v4 as uuidv4 } from "uuid";
+import styled from "@emotion/styled";
 
 interface SeatData {
   status: string;
@@ -18,23 +19,35 @@ interface SeatData {
   time: number;
 }
 
+const CancleBtn = styled.button`
+  width: 90px;
+  height: 35px;
+  background-color: #fff;
+  border: 1px solid #40e0d0;
+  color: #40e0d0;
+  font-weight: 500;
+  font-size: 17px;
+  border-radius: 20px;
+`;
+
 export default function SeatReservationPage(): JSX.Element {
+  const [currentValue, setCurrentValue] = useState("1시간");
+  const [showOptions, setShowOptions] = useState(false);
   const router = useRouter();
-  const { refetch } = useQueryFetchLoginUser();
+  const { data: dataUser, refetch } = useQueryFetchLoginUser();
+  const [open, setOpen] = useState(false);
   const { data: dataCafe } = useQueryFetchOneStudyCafeForUser(
     String(router.query.Id)
   );
   const { data, refetch: refetchSeat } = useQueryFetchAllSeatsByStudyCafeId(
     String(router.query.Id)
   );
-  const [isModal, setIsModal] = useState(false);
   const [stateX, setStateX] = useState(
     dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX ?? 40
   );
   const [stateY, setStateY] = useState(
     dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanY ?? 40
   );
-  console.log(dataCafe, "카페");
   const [seatId, setSeatId] = useState("");
   const [seatStatus, setSeatStatus] = useState("");
   const [seatNumber, setSeatNumber] = useState(0);
@@ -45,7 +58,6 @@ export default function SeatReservationPage(): JSX.Element {
   const [isPayModal, setIsPayModal] = useState(false);
   const [remainTime, setRemainTime] = useState(0);
 
-  console.log(data?.fetchAllSeatsByStudyCafeId);
   useEffect(() => {
     if (dataCafe !== undefined && data !== undefined) {
       setStateX(dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX);
@@ -116,24 +128,35 @@ export default function SeatReservationPage(): JSX.Element {
       return;
     }
     if (seat.status === "") {
-      setSeatStatus("예약 가능한 좌석입니다.");
+      setSeatStatus("좌석 이용이 가능합니다.");
       setRemainTime(0);
       setSeatUsable(true);
     } else {
-      setSeatStatus("예약 불가능한 좌석입니다.");
+      setSeatStatus("이미 이용중인 좌석입니다.");
       setRemainTime(seat.time);
     }
     setSeatId(seat.seatId);
     setSeatNumber(seat.number);
-    setIsModal(true);
+    setOpen(true);
   };
 
   const toggleModal = (): void => {
     setSeatUsable(false);
-    setIsModal(false);
+
+    setOpen(false);
   };
 
   const submitReservation = async (): Promise<void> => {
+    if (dataUser?.fetchLoginUser?.user_id === undefined) {
+      Modal.success({
+        content: "로그인 페이지로 이동합니다.",
+        onOk() {
+          void router.push(`/user/login`);
+        },
+      });
+
+      return;
+    }
     try {
       await createPayment({
         variables: {
@@ -147,23 +170,42 @@ export default function SeatReservationPage(): JSX.Element {
           },
         },
       });
+      Modal.success({
+        content: "예약에 성공했습니다!",
+      });
       await refetch();
       await refetchSeat();
-      void router.push("/user");
+      void router.push("/user/mypage");
     } catch (err) {
       alert("포인트가 부족합니다.");
-      setIsModal(false);
+      setOpen(false);
       setIsPayModal(true);
     }
 
     setSeatUsable(false);
-    setIsModal(false);
   };
 
-  const onChangeTime = (event: ChangeEvent<HTMLSelectElement>): void => {
-    setDuringTime(Number(event.target.value));
-    console.log(Number(event.target.value));
+  const onChangeTime = (time: number) => (): void => {
+    setDuringTime(time);
+    setCurrentValue(String(time) + "시간");
   };
+
+  const onClickSetShowOption = (): void => {
+    if (seatUsable) {
+      setShowOptions((prev) => !prev);
+    }
+  };
+
+  const BookBtn = styled.button`
+    width: 90px;
+    height: 35px;
+    background-color: ${seatUsable ? "#40e0d0" : "#e4e4e4"};
+    border: none;
+    color: ${seatUsable ? "#ffffff" : "#c4c4c4"};
+    font-weight: 500;
+    font-size: 17px;
+    border-radius: 20px;
+  `;
 
   return (
     <>
@@ -203,42 +245,66 @@ export default function SeatReservationPage(): JSX.Element {
           </S.Container>
         </S.SeatContainer>
       </S.Wrapper>
-      {isModal ? (
-        <Modal
-          open={isModal}
-          title="Title"
-          footer={[
-            <button
-              key={"reservation"}
-              onClick={wrapAsync(submitReservation)}
-              disabled={!seatUsable}
-            >
-              예약
-            </button>,
-            <button key={"cancel"} onClick={toggleModal}>
-              취소
-            </button>,
-          ]}
-        >
-          <div>좌석 번호 : {seatNumber}</div>
-          <div>좌석 종류 : {seatStatus}</div>
-          {remainTime !== 0 ? (
-            <div>{String(remainTime) + "분 남았습니다."}</div>
-          ) : (
-            <></>
-          )}
 
-          <select onChange={onChangeTime} disabled={!seatUsable}>
-            <option value={1}>1시간</option>
-            <option value={2}>2시간</option>
-            <option value={3}>3시간</option>
-            <option value={4}>4시간</option>
-            <option value={5}>5시간</option>
-          </select>
-        </Modal>
-      ) : (
-        <></>
-      )}
+      <S.MenuDrawer
+        title="선택 좌석 정보"
+        placement="right"
+        closable={false}
+        open={open}
+        width={350}
+        footer={[
+          <BookBtn
+            key={"reservation"}
+            onClick={wrapAsync(submitReservation)}
+            disabled={!seatUsable}
+            style={{
+              margin: "27px",
+              marginLeft: "60px",
+            }}
+          >
+            예약
+          </BookBtn>,
+          <CancleBtn key={"cancel"} onClick={toggleModal}>
+            취소
+          </CancleBtn>,
+        ]}
+      >
+        <div style={{ fontSize: "20px", color: "#4f4f4f" }}>
+          좌석 번호 : {seatNumber}
+        </div>
+        <div style={{ fontSize: "20px", color: "#4f4f4f", fontWeight: "500" }}>
+          {seatStatus}
+        </div>
+        {remainTime !== 0 ? (
+          <div style={{ fontSize: "16px", color: "#7744AA" }}>
+            {"(" + String(remainTime) + "분 후 이용가능)"}
+          </div>
+        ) : (
+          <></>
+        )}
+
+        <S.SelectBox style={{ width: "300px" }} onClick={onClickSetShowOption}>
+          <S.Label>{currentValue}</S.Label>
+          <S.SelectOptions show={showOptions}>
+            <S.Option value="1시간" onClick={onChangeTime(1)}>
+              1시간
+            </S.Option>
+            <S.Option value="2시간" onClick={onChangeTime(2)}>
+              2시간
+            </S.Option>
+            <S.Option value="3시간" onClick={onChangeTime(3)}>
+              3시간
+            </S.Option>
+            <S.Option value="4시간" onClick={onChangeTime(4)}>
+              4시간
+            </S.Option>
+            <S.Option value="5시간" onClick={onChangeTime(5)}>
+              5시간
+            </S.Option>
+          </S.SelectOptions>
+        </S.SelectBox>
+      </S.MenuDrawer>
+
       <PayModal
         isPayModal={isPayModal}
         setIsPayModal={setIsPayModal}

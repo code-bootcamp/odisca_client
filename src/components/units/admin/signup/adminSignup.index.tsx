@@ -3,8 +3,14 @@ import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { adminSignUpSchema } from "../../../../commons/adminValidation/validation";
-import { wrapFormAsync } from "../../../../commons/libraries/asyncFunc";
+import {
+  wrapAsync,
+  wrapFormAsync,
+} from "../../../../commons/libraries/asyncFunc";
+import EmailValidationPage from "../../../commons/emailValidation/emailValidation.index";
+import UseModal from "../../../commons/hooks/customs/useModal";
 import { useMutationCreateAdminister } from "../../../commons/hooks/mutations/useMutationCreateAdminister";
+import { useMutationSendVerificationCode } from "../../../commons/hooks/mutations/useMutationSendVerification";
 import * as S from "./adminSignup.style";
 
 interface IFormData {
@@ -23,6 +29,8 @@ export default function UserSignUpPage(): JSX.Element {
   });
 
   const [createAdminister] = useMutationCreateAdminister();
+  const [sendVerificationCode] = useMutationSendVerificationCode();
+  const { showModal, handleOk, handleCancel, isModalOpen } = UseModal();
 
   const onClickSingUp = async (data: IFormData): Promise<void> => {
     try {
@@ -47,7 +55,25 @@ export default function UserSignUpPage(): JSX.Element {
     Modal.success({
       content: "회원가입이 완료되었습니다. 로그인해주세요!",
     });
-    void router.push("/admin/login"); // 로그인이 된 상태로 로그인 페이지 이동함.
+    void router.push("/admin/login");
+  };
+
+  const onClickMoveLogin = (): void => {
+    void router.push(`/admin/login`);
+  };
+
+  const onClickSendVerification = async (data: IFormData): Promise<void> => {
+    try {
+      await sendVerificationCode({
+        variables: { email: data.email },
+      });
+      showModal();
+    } catch (error) {
+      if (error instanceof Error)
+        Modal.error({
+          content: error.message,
+        });
+    }
   };
 
   return (
@@ -55,7 +81,9 @@ export default function UserSignUpPage(): JSX.Element {
       <S.Wrapper>
         <S.LogInWrapper>
           <S.LogInTitle>관리자이신가요?</S.LogInTitle>
-          <S.LogInButton type="button">LOGIN</S.LogInButton>
+          <S.LogInButton type="button" onClick={onClickMoveLogin}>
+            LOGIN
+          </S.LogInButton>
         </S.LogInWrapper>
 
         <S.SignUpWrapper>
@@ -66,7 +94,8 @@ export default function UserSignUpPage(): JSX.Element {
             <S.InputContainer>
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>NAME</S.SignUpInputTitle>
+                  <S.SignUpInputTitle>Name</S.SignUpInputTitle>
+
                   <S.SignUpInput
                     type="text"
                     {...register("name")}
@@ -81,13 +110,21 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>EMAIL</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Email</S.SignUpInputTitle>
+                  </S.TitleBox>
+
                   <S.SignUpInputEmail
                     type="text"
                     {...register("email")}
-                    placeholder="user@google.com"
+                    placeholder="admin@google.com"
                   ></S.SignUpInputEmail>
-                  <S.PhoneButton type="button">CLICK</S.PhoneButton>
+                  <S.PhoneButton
+                    type="button"
+                    onClick={wrapAsync(handleSubmit(onClickSendVerification))}
+                  >
+                    CLICK
+                  </S.PhoneButton>
                 </S.SignUpInputDetail>
 
                 <S.ErrorMessage>
@@ -97,7 +134,10 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>PASS</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Pass</S.SignUpInputTitle>
+                  </S.TitleBox>
+
                   <S.SignUpInput
                     {...register("password")}
                     type="password"
@@ -112,7 +152,10 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>CONFIRM</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Confirm</S.SignUpInputTitle>
+                  </S.TitleBox>
+
                   <S.SignUpInput
                     {...register("confirmPw")}
                     type="password"
@@ -127,7 +170,9 @@ export default function UserSignUpPage(): JSX.Element {
 
               <S.SignUpInputBox>
                 <S.SignUpInputDetail>
-                  <S.SignUpInputTitle>PHONE</S.SignUpInputTitle>
+                  <S.TitleBox>
+                    <S.SignUpInputTitle>Phone</S.SignUpInputTitle>
+                  </S.TitleBox>
                   <S.SignUpInput
                     {...register("phone")}
                     placeholder="010-1234-5678"
@@ -137,11 +182,26 @@ export default function UserSignUpPage(): JSX.Element {
                 <S.ErrorMessage>
                   {formState.errors.phone?.message}
                 </S.ErrorMessage>
+                {isModalOpen !== null && (
+                  <S.EmailValidationModal
+                    okButtonProps={{ style: { display: "none" } }}
+                    cancelButtonProps={{ style: { display: "none" } }}
+                    open={isModalOpen}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                  >
+                    <EmailValidationPage handleCancel={handleCancel} />
+                  </S.EmailValidationModal>
+                )}
               </S.SignUpInputBox>
             </S.InputContainer>
             <S.ButtonContainer>
-              <S.CancelButton type="button">CANCEL</S.CancelButton>
-              <S.SignUpButton>SIGN UP</S.SignUpButton>
+              <S.BtnBox>
+                <S.CancelButton type="button">CANCEL</S.CancelButton>
+              </S.BtnBox>
+              <S.BtnBox>
+                <S.SignUpButton>SIGN UP</S.SignUpButton>
+              </S.BtnBox>
             </S.ButtonContainer>
           </S.SignUpWrapperContainer>
         </S.SignUpWrapper>

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Modal } from "antd";
+import { mediaQueries } from "../../../../commons/media/mediaQueries";
 
 export const Wrapper = styled.aside`
   width: 1000px;
@@ -82,6 +83,11 @@ export const ReviewModal = styled(Modal)`
   .ant-modal-content {
     width: 800px;
     height: 900px;
+    left: -6vw;
+    ${mediaQueries("macBook")} {
+      width: 700px;
+      left: -3vw;
+    }
   }
 
   .ant-modal-body {

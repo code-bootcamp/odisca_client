@@ -62,7 +62,7 @@ export const InfoBox = styled.div`
   flex-direction: row;
   justify-content: center;
 `;
-export const DevidedLine = styled.line`
+export const DevidedLine = styled.div`
   width: 170px;
   margin-top: 10px;
   border-bottom: 1px solid #bdbdbd;

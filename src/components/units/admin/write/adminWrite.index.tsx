@@ -21,8 +21,8 @@ import { cafeEditSchema } from "../../../../commons/adminEditValidation/validati
 import * as S from "./adminWrite.styles";
 import OperatingTime from "../../../commons/operatingTimeSelection/operatingTimeSelect.index";
 import { checkValidationFile } from "../../../../commons/libraries/validationFile";
-import SubmitSuccessAlertModal from "../../../commons/submitSuccessModal/submitSuccessModal.index";
 import { IQuery } from "../../../../commons/types/generated/types";
+import SubmitSuccessAlertModal from "../../../commons/submitSuccessModal/submitSuccessModal.index";
 
 // 등록 사항들 타입 지정
 interface IFormValues {
@@ -123,8 +123,8 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                 result[0].x
               );
               console.log(coords);
-              setLat(result[0].x.toString());
-              setLon(result[0].y.toString());
+              setLat(result[0].y.toString());
+              setLon(result[0].x.toString());
             }
           }
         );
@@ -169,17 +169,13 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
   };
 
   // openTime Select
-  const onChangeSelectOpenTime = (
-    event: ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setOpenTime(event?.target.value);
+  const onChangeSelectOpenTime = (time: string) => (): void => {
+    setOpenTime(String(time));
   };
 
   // CloseTime Select
-  const onChangeSelectCloseTime = (
-    event: ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setCloseTime(event?.target.value);
+  const onChangeSelectCloseTime = (time: string) => (): void => {
+    setCloseTime(String(time));
   };
 
   const AddressModal = (): boolean => {
@@ -368,7 +364,7 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
           }
         >
           <S.Header>
-            <S.Title>업체 {props.isEdit ? "수정" : "등록"}하기</S.Title>
+            <S.Title>업체 {props.isEdit ? "수정" : "등록"}</S.Title>
           </S.Header>
           {/* <S.SectionTop> */}
           <S.SectionBox>
@@ -482,6 +478,8 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                 </S.LabelBox>
                 <OperatingTime
                   data={data}
+                  openTime={openTime}
+                  closeTime={closeTime}
                   onChangeSelectOpenTime={onChangeSelectOpenTime}
                   onChangeSelectCloseTime={onChangeSelectCloseTime}
                 />

@@ -22,10 +22,12 @@ export const FETCH_LOGIN_ADMINISTER = gql`
         studyCafe_id
         studyCafe_name
         studyCafe_address
+        studyCafe_inUseSeat
         images {
           image_url
           image_isMain
         }
+        studyCafe_seatCount
       }
     }
   }
