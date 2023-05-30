@@ -17,6 +17,7 @@ function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
     (acceptedFiles: File[]) => {
       setSelectedFile(acceptedFiles[0]);
     },
+
     [setSelectedFile]
   );
 
@@ -39,6 +40,7 @@ function MyDropzone({ onFileChange }: MyDropzoneProps): JSX.Element {
     onFileChange,
     data?.fetchLoginUser.user_image,
   ]);
+  console.log(imageUrls[0], "ddd");
 
   return (
     <>

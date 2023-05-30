@@ -21,12 +21,10 @@ export const RightWrapper = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 290px;
-  height: 290px;
-  margin: -10px 0 0 30px;
-  /* font-size: 50px;
-  font-weight: 600;
-  color: white; */
+  width: 220px;
+  height: 200px;
+  margin-left: 20px;
+  cursor: pointer;
 `;
 
 export const ProfileWrapper = styled.div`

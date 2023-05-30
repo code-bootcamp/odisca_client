@@ -12,7 +12,7 @@ import { useQueryFetchLoginReviewByVisitId } from "../hooks/queries/useQueryFetc
 
 interface IFormReviewData {
   review_content: string;
-  visit_id: string;
+  visit_id: string | null;
 }
 
 interface IReviewProps {
@@ -35,7 +35,7 @@ export default function Review(props: IReviewProps): JSX.Element {
 
   const onClickSubmitReview = async (data: IFormReviewData): Promise<void> => {
     try {
-      const result = await createLoginReview({
+      await createLoginReview({
         variables: {
           createReviewInput: {
             review_content: data.review_content,
@@ -47,7 +47,6 @@ export default function Review(props: IReviewProps): JSX.Element {
       if (refetchFetchReview !== undefined) {
         await refetchFetchReview();
       }
-      console.log(result);
       Modal.success({
         content: "리뷰가 등록되었습니다.",
       });
@@ -107,7 +106,6 @@ export default function Review(props: IReviewProps): JSX.Element {
     }
     void router.push("/user/mypage");
   };
-  console.log(reviewdata);
   return (
     <>
       <S.Wrapper>
@@ -125,7 +123,12 @@ export default function Review(props: IReviewProps): JSX.Element {
           </S.VisitDate>
         </S.Title>
         <S.ImgWrapper>
-          <S.CafeImg src="/cafeImg.jpeg"></S.CafeImg>
+          <S.CafeImg
+            src={
+              fetchUserdata?.fetchLoginUser.visits[props.index]?.studyCafe
+                .images[props.index]?.image_url ?? undefined
+            }
+          ></S.CafeImg>
         </S.ImgWrapper>
         <S.ReviewWrapper
           onSubmit={

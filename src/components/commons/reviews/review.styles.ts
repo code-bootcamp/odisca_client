@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { mediaQueries } from "../media/mediaQueries";
 
 export const Wrapper = styled.main`
   display: flex;
@@ -52,6 +53,10 @@ export const ReviewWrapper = styled.form`
   margin-top: 50px;
   width: 620px;
   margin-left: 65px;
+  ${mediaQueries("macBook")} {
+    width: 450px;
+    margin-left: 25px;
+  }
 `;
 
 export const ReviewTitle = styled.label`
@@ -71,6 +76,9 @@ export const ReviewInput = styled.textarea`
   padding-left: 10px;
   padding-top: 10px;
   margin-bottom: 25px;
+  ${mediaQueries("macBook")} {
+    width: 600px;
+  }
   :focus {
     outline: 2px solid #40e0d0;
   }

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { mediaQueries } from "../../../commons/media/mediaQueries";
+import { Modal } from "antd";
 
 export const Wrapper = styled.main`
   width: 100vw;
@@ -151,7 +152,7 @@ export const SignUpInputEmail = styled.input`
   font-size: 25px;
   font-weight: 600;
   margin-left: 20px;
-
+  color: #fff;
   :focus {
     outline: 3px solid #40e0d0;
     border-bottom: none;
@@ -169,6 +170,13 @@ export const ErrorMessage = styled.div`
   font-weight: 400;
   color: #ffd600;
   margin-left: 150px;
+`;
+
+export const EmailValidationModal = styled(Modal)`
+  .ant-modal-content {
+    width: 450px;
+    height: 320px;
+  }
 `;
 
 export const ButtonContainer = styled.div`

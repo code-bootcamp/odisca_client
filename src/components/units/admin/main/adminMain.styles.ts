@@ -1,20 +1,22 @@
 import styled from "@emotion/styled";
+import { mediaQueries } from "../../../commons/media/mediaQueries";
 
 export const Wrapper = styled.main`
   display: flex;
-  width: 1920px;
+  width: 100vw;
+  height: 100vh;
 `;
 
 export const SectionLeft = styled.section`
   width: 50%;
-  height: 1080px;
+  height: 100vh;
   background-color: #40e0d0;
   position: relative;
 `;
 
 export const SectionRight = styled.section`
   width: 50%;
-  height: 1080px;
+  height: 100vh;
   background-color: #4f4f4f;
   position: relative;
 `;
@@ -28,6 +30,9 @@ export const AdminRegister = styled.div`
     padding-right: 100px;
   }
   transition: 0.5s ease-in-out;
+  ${mediaQueries("macBook")} {
+    bottom: 220px;
+  }
 `;
 
 export const AdminFetch = styled.div`

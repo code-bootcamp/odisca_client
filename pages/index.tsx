@@ -114,7 +114,6 @@ export default function LandingPage(): JSX.Element {
           <S.AddressWrapper>
             <S.Address>ADDRESS</S.Address>
             <S.AddressContent>
-              {" "}
               {`서울특별시 구로구 지밸리몰 
                 13층 12층 F1 `}
             </S.AddressContent>

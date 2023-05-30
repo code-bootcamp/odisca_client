@@ -97,7 +97,6 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     const script = document.createElement("script"); // script tag 만들기
     script.src =
       "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6583c79fd8fd9f0d519f6b325b841c09&libraries=services";
-    // "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=12e2554bb6ebf42463e132c31315b011&libraries=services";
     document.head.appendChild(script);
 
     script.onload = () => {
@@ -124,8 +123,8 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                 result[0].x
               );
               console.log(coords);
-              setLat(result[0].x.toString());
-              setLon(result[0].y.toString());
+              setLat(result[0].y.toString());
+              setLon(result[0].x.toString());
             }
           }
         );
@@ -170,17 +169,13 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
   };
 
   // openTime Select
-  const onChangeSelectOpenTime = (
-    event: ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setOpenTime(event?.target.value);
+  const onChangeSelectOpenTime = (time: string) => (): void => {
+    setOpenTime(String(time));
   };
 
   // CloseTime Select
-  const onChangeSelectCloseTime = (
-    event: ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setCloseTime(event?.target.value);
+  const onChangeSelectCloseTime = (time: string) => (): void => {
+    setCloseTime(String(time));
   };
 
   const AddressModal = (): boolean => {
@@ -483,6 +478,8 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                 </S.LabelBox>
                 <OperatingTime
                   data={data}
+                  openTime={openTime}
+                  closeTime={closeTime}
                   onChangeSelectOpenTime={onChangeSelectOpenTime}
                   onChangeSelectCloseTime={onChangeSelectCloseTime}
                 />
