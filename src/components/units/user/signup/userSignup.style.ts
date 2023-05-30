@@ -87,7 +87,6 @@ export const SignUpTitle = styled.h1`
 `;
 
 export const InputContainer = styled.div`
-  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -47,7 +47,7 @@ export const EditList = styled.div`
 `;
 
 export const ListDetail = styled.span`
-  width: calc(700px - 600px);
+  width: 100px;
   font-weight: 400;
   font-size: 18px;
   color: #4f4f4f;
@@ -55,7 +55,7 @@ export const ListDetail = styled.span`
 `;
 
 export const DetailInput = styled.input`
-  width: 700px;
+  width: 600px;
   height: 50px;
   display: flex;
   border: 1px solid #f7f7f7;
@@ -73,7 +73,7 @@ export const DetailInput = styled.input`
 `;
 
 export const ReadOnlyDetailInput = styled.input`
-  width: 700px;
+  width: 600px;
   height: 50px;
   border: none;
   background-color: #f7f7f7;
@@ -85,6 +85,19 @@ export const ReadOnlyDetailInput = styled.input`
     outline: none;
   }
 `;
+
+export const ErrorWrapper = styled.div`
+  width: 600px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+`;
+
+// export const AlertMessage = styled.div`
+//   /* margin-left: 9vh; */
+//   width: 600px;
+//   height: 20px;
+// `;
 
 export const PhoneEditList = styled.div`
   width: 700px;
@@ -103,10 +116,11 @@ export const PhoneInput = styled.div`
 
 export const AlertMessage = styled.div`
   width: 100%;
-  margin: 7px 0 0 90px;
+  /* margin: 7px 0 0 90px; */
   font-weight: 400;
   font-size: 14px;
   color: #7744aa;
+  margin-top: 1vh;
 `;
 
 export const BtnWrapper = styled.form`

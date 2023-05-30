@@ -56,7 +56,7 @@ export default function LayoutHeader(): JSX.Element {
 
   const onClickMyPage = (): void => {
     if (localStorage.getItem("loginType") === null) {
-      void router.push("/user/loginPage");
+      void router.push("/user/login");
     }
     if (localStorage.getItem("loginType") === "admin") {
       void router.push("/admin/adminPage");
@@ -103,7 +103,7 @@ export default function LayoutHeader(): JSX.Element {
   }, [data, dataAdmin]);
 
   const onClickMoveMain = (): void => {
-    void router.push(`/user`);
+    void router.push("/");
   };
 
   return (
@@ -115,11 +115,11 @@ export default function LayoutHeader(): JSX.Element {
         }}
       >
         <S.LightWrapper>
-          <S.Logo src="/로고오.png" onClick={onClickMoveMain}></S.Logo>
+          <S.Logo src="/sca2.png" onClick={onClickMoveMain}></S.Logo>
         </S.LightWrapper>
         <S.RightWrapper>
           {!isLogin ? (
-            <div></div>
+            <div style={{ backgroundColor: "#40e0d0" }}></div>
           ) : (
             <S.ProfileWrapper>
               <S.ProfileIcon
@@ -131,11 +131,6 @@ export default function LayoutHeader(): JSX.Element {
                   : dataAdmin?.fetchLoginAdminister.administer_name}
               </S.Name>
               <S.Text>님 안녕하세요!</S.Text>
-              {/* {localStorage.getItem("loginType") === "user" ? (
-                <S.PayButton onClick={showModal}>충전</S.PayButton>
-              ) : (
-                <></>
-              )} */}
             </S.ProfileWrapper>
           )}
 

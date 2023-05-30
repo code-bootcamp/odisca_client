@@ -48,7 +48,7 @@ export default function UserLoginPage(): JSX.Element {
       }
       setAccessToken(accessToken);
       Modal.success({
-        content: "로그인 성공!",
+        content: "로그인이 완료되었습니다!",
         onOk() {
           void router.push(`/user`);
         },

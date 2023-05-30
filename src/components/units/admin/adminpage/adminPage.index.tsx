@@ -11,8 +11,8 @@ export default function AdminPage(): JSX.Element {
         adminPoint={data?.fetchLoginAdminister.administer_point}
         adminMail={data?.fetchLoginAdminister.administer_email}
         adminCafeImage={
-          data?.fetchLoginAdminister?.studyCafes?.[0].images?.[0]?.image_url ??
-          ""
+          data?.fetchLoginAdminister?.studyCafes?.[0]?.images?.[0]?.image_url ??
+          "/ProfileIcon.png"
         }
       />
       <AdminPageBody data={data} />
