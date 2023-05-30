@@ -75,7 +75,8 @@ export const RevenueWrapper = styled.footer`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: calc(1000px - 580px);
+  margin-left: calc(1000px - 660px);
+  width: 300px;
 `;
 
 export const RevenueText = styled.label`
