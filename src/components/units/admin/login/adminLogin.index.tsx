@@ -43,6 +43,8 @@ export default function UserLoginPage(): JSX.Element {
           void router.push(`/admin`);
         },
       });
+      void router.push("/admin/adminPage");
+
       const accessToken = result.data?.LoginAdminister;
       if (
         accessToken === undefined ||

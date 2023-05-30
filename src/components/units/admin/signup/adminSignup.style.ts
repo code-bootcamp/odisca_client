@@ -62,7 +62,7 @@ export const SignUpWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center;$$
 `;
 
 export const SignUpWrapperContainer = styled.form`
