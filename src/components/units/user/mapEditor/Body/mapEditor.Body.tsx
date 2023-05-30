@@ -9,6 +9,7 @@ import { wrapAsync } from "../../../../../commons/libraries/asyncFunc";
 import { useQueryFetchOneStudyCafeForAdmin } from "../../../../commons/hooks/queries/useQueryFetchStudyCafeForAdmin";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
 import { v4 as uuidv4 } from "uuid";
+import { mediaQueries } from "../../../../commons/media/mediaQueries";
 
 export default function MapEditor(): JSX.Element {
   const [inputX, setInputX] = useState(0); // x축 범위
@@ -169,6 +170,9 @@ export default function MapEditor(): JSX.Element {
     top: ${String(25 + hoverPosition[1]) + "vw"};
     left: ${String(50 - stateX / 2 + hoverPosition[0]) + "vw"};
     background-color: gray;
+    ${mediaQueries("macBook")} {
+      margin-top: 15vh;
+    }
   `;
   const onHoverTrue = (x: number, y: number) => () => {
     if (isHover) {
