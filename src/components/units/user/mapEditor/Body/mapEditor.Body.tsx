@@ -10,6 +10,7 @@ import { useQueryFetchOneStudyCafeForAdmin } from "../../../../commons/hooks/que
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
 import { v4 as uuidv4 } from "uuid";
 import { mediaQueries } from "../../../../commons/media/mediaQueries";
+import { Modal } from "antd";
 
 export default function MapEditor(): JSX.Element {
   const [inputX, setInputX] = useState(0); // x축 범위
@@ -158,22 +159,6 @@ export default function MapEditor(): JSX.Element {
     setHoverPosition([0, 0]);
   };
 
-  const SizeChecker = styled.div`
-    width: ${String(hoverSize[0]) + "vw"};
-    height: ${String(hoverSize[1]) + "vw"};
-    z-index: -1;
-    position: absolute;
-
-    ${stateY > hoverPosition[1] + hoverSize[1] - 1 ? "" : "display : none"};
-    ${stateX > hoverPosition[0] + hoverSize[0] - 1 ? "" : "display : none"};
-
-    top: ${String(25 + hoverPosition[1]) + "vw"};
-    left: ${String(50 - stateX / 2 + hoverPosition[0]) + "vw"};
-    background-color: gray;
-    ${mediaQueries("macBook")} {
-      margin-top: 15vh;
-    }
-  `;
   const onHoverTrue = (x: number, y: number) => () => {
     if (isHover) {
       setHoverPosition([x, y]);
@@ -182,10 +167,10 @@ export default function MapEditor(): JSX.Element {
 
   const image = (ele: number, x: number, y: number): IStyle => {
     const result = {
-      borderLeft: "none",
-      borderRight: "none",
-      borderBottom: "none",
-      borderTop: "none",
+      borderLeft: positionState === 0 ? "none" : "0.5px solid #2e2e2e",
+      borderRight: positionState === 0 ? "none" : "0.5px solid #2e2e2e",
+      borderBottom: positionState === 0 ? "none" : "0.5px solid #2e2e2e",
+      borderTop: positionState === 0 ? "none" : "0.5px solid #2e2e2e",
       backgroundColor: "none",
       cursor: "",
     };
@@ -238,7 +223,12 @@ export default function MapEditor(): JSX.Element {
           },
         });
         await refetchSeat();
-        void router.push("/admin/adminPage");
+        Modal.success({
+          content: "좌석 등록이 완료되었습니다.",
+          onOk() {
+            void router.push(`/admin/adminPage`);
+          },
+        });
       } catch (error) {
         if (error instanceof Error) {
           alert("등록실패");
@@ -250,6 +240,26 @@ export default function MapEditor(): JSX.Element {
       }
     }
   };
+  const Pixel = styled.div`
+    width: 1vw;
+    height: 1vw;
+  `;
+  const SizeChecker = styled.div`
+    width: ${String(hoverSize[0]) + "vw"};
+    height: ${String(hoverSize[1]) + "vw"};
+    z-index: -1;
+    position: absolute;
+
+    ${stateY > hoverPosition[1] + hoverSize[1] - 1 ? "" : "display : none"};
+    ${stateX > hoverPosition[0] + hoverSize[0] - 1 ? "" : "display : none"};
+
+    top: ${String(25 + hoverPosition[1]) + "vw"};
+    left: ${String(50 - stateX / 2 + hoverPosition[0]) + "vw"};
+    background-color: gray;
+    ${mediaQueries("macBook")} {
+      margin-top: 15vh;
+    }
+  `;
 
   return (
     <S.Wrapper>
@@ -299,12 +309,12 @@ export default function MapEditor(): JSX.Element {
               <S.Box2 key={uuidv4()}>
                 {el.map((ele, indX) => {
                   return (
-                    <S.Pixel
+                    <Pixel
                       onClick={onClickCenter(indX, indY)}
                       style={image(ele, indX, indY)}
                       onMouseEnter={onHoverTrue(indX, indY)}
                       key={uuidv4()}
-                    ></S.Pixel>
+                    ></Pixel>
                   );
                 })}
               </S.Box2>
