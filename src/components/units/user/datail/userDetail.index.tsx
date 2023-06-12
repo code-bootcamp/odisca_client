@@ -14,13 +14,9 @@ export default function UserDetail(): JSX.Element {
     >
       <UserDetailHeader
         cafeName={data?.fetchOneStudyCafeForUser.studyCafe_name ?? ""}
-        cafeBrn={data?.fetchOneStudyCafeForUser.studyCafe_brn}
-        cafeContact={data?.fetchOneStudyCafeForUser.studyCafe_contact}
-        cafeFee={data?.fetchOneStudyCafeForUser.studyCafe_timeFee}
-        cafeOpenTime={data?.fetchOneStudyCafeForUser.studyCafe_openTime ?? ""}
-        cafeClosTime={data?.fetchOneStudyCafeForUser.studyCafe_closeTime ?? ""}
       />
       <UserDetailBody
+        cafeFee={data?.fetchOneStudyCafeForUser.studyCafe_timeFee}
         cafeDescription={
           data?.fetchOneStudyCafeForUser.studyCafe_description ?? ""
         }

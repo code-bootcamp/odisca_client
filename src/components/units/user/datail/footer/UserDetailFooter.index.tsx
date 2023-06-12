@@ -9,20 +9,29 @@ interface IReviewPageProps {
 export default function UserDetailFooter(props: IReviewPageProps): JSX.Element {
   return (
     <S.Footer>
-      <S.Icon src="/review.png" />
-      <S.Label>이용후기</S.Label>
-      {props.reviews.map((el: IReview) => {
-        return (
+      {props.reviews.length > 0 ? (
+        <S.TitleWrapper>
+          <S.Icon src="/review.png" />
+          <S.Label>이용후기</S.Label>
+        </S.TitleWrapper>
+      ) : (
+        <></>
+      )}
+      {props.reviews.length > 0 ? (
+        props.reviews.map((el: IReview) => (
           <div key={el.review_id}>
-            <div>
-              <img src={el.user?.user_image} width={"50px"} height={"50px"} />
-              <div>{el.user?.user_name}</div>
-            </div>
-
-            <div>{el.review_content}</div>
+            <S.UserWrapper>
+              <S.UserImg src={el.user?.user_image ?? "/profileIcon.png"} />
+              <S.UserName>{el.user?.user_name ?? ""}</S.UserName>
+            </S.UserWrapper>
+            <S.ContentWrapper>
+              <S.Content>{el.review_content ?? ""}</S.Content>
+            </S.ContentWrapper>
           </div>
-        );
-      })}
+        ))
+      ) : (
+        <></>
+      )}
     </S.Footer>
   );
 }

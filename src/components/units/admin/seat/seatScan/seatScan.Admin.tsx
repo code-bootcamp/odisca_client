@@ -23,10 +23,8 @@ export default function SeatScanPage(): JSX.Element {
   const [stateY, setStateY] = useState(
     dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanY ?? 40
   );
-  console.log(dataCafe, "카페");
   const [map, setMap] = useState<SeatData[][]>([]);
 
-  console.log(data, "좌석");
   useEffect(() => {
     if (dataCafe !== undefined && data !== undefined) {
       setStateX(dataCafe?.fetchOneStudyCafeForAdminister.studyCafe_floorPlanX);
@@ -45,7 +43,6 @@ export default function SeatScanPage(): JSX.Element {
           return result;
         }
       );
-      console.log(newArray);
       data?.fetchAllSeatsByStudyCafeId.forEach((el) => {
         const seat = JSON.parse(el.seat_location);
 

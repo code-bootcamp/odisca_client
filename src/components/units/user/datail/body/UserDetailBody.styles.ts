@@ -4,8 +4,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export const Body = styled.main`
-  width: 100%;
+  width: 1200px;
   margin: 0 auto;
+  margin-top: 40px;
 `;
 export const SliderItem = styled.img`
   width: 100%;
@@ -56,13 +57,13 @@ export const Contents = styled.p`
   line-height: 30px;
 `;
 export const InfoBox = styled.div`
-  border-top: 1px solid #bdbdbd;
   margin-top: 40px;
   display: flex;
   flex-direction: row;
   justify-content: center;
 `;
-export const DevidedLine = styled.line`
+export const DevidedLine = styled.div`
+  width: 170px;
   margin-top: 10px;
   border-bottom: 1px solid #bdbdbd;
 `;
@@ -70,7 +71,9 @@ export const Box = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  margin-right: 30px;
 `;
+
 export const Icon = styled.img`
   width: 20px;
   height: 20px;
@@ -86,4 +89,8 @@ export const Title = styled.div`
 `;
 export const Detail = styled.div`
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;

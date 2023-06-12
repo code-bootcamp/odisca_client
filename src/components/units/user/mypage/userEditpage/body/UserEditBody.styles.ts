@@ -47,7 +47,7 @@ export const EditList = styled.div`
 `;
 
 export const ListDetail = styled.span`
-  width: calc(700px - 600px);
+  width: 100px;
   font-weight: 400;
   font-size: 18px;
   color: #4f4f4f;
@@ -55,7 +55,7 @@ export const ListDetail = styled.span`
 `;
 
 export const DetailInput = styled.input`
-  width: 700px;
+  width: 600px;
   height: 50px;
   display: flex;
   border: 1px solid #f7f7f7;
@@ -73,7 +73,7 @@ export const DetailInput = styled.input`
 `;
 
 export const ReadOnlyDetailInput = styled.input`
-  width: 700px;
+  width: 600px;
   height: 50px;
   border: none;
   background-color: #f7f7f7;
@@ -86,27 +86,58 @@ export const ReadOnlyDetailInput = styled.input`
   }
 `;
 
+export const ErrorWrapper = styled.div`
+  width: 600px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+`;
+
+// export const AlertMessage = styled.div`
+//   /* margin-left: 9vh; */
+//   width: 600px;
+//   height: 20px;
+// `;
+
+export const PhoneEditList = styled.div`
+  width: 700px;
+  height: 50px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+export const PhoneInput = styled.div`
+  width: 700px;
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const AlertMessage = styled.div`
-  margin-left: 130px;
+  width: 100%;
+  /* margin: 7px 0 0 90px; */
   font-weight: 400;
   font-size: 14px;
   color: #7744aa;
+  margin-top: 1vh;
 `;
 
 export const BtnWrapper = styled.form`
   width: 827px;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 30px;
+  margin: 30px 0 50px 0;
 `;
 
 export const EditBtn = styled.button`
-  width: 190px;
+  width: 140px;
   height: 53px;
   border-radius: 50px;
   font-weight: 600;
-  font-size: 26px;
+  font-size: 22px;
   border: none;
   margin-right: 37px;
   color: #ffffff;
@@ -114,11 +145,11 @@ export const EditBtn = styled.button`
 `;
 
 export const DleteUserBtn = styled.button`
-  width: 190px;
+  width: 140px;
   height: 53px;
   border-radius: 50px;
   font-weight: 600;
-  font-size: 26px;
+  font-size: 22px;
   border: 1px solid #40e0d0;
   margin-right: 37px;
   color: #40e0d0;

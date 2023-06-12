@@ -19,8 +19,7 @@ export default function LayoutHeader(): JSX.Element {
   const { data: dataAdmin } = useQueryFetchLoginAdminister();
   const [logoutUser] = useMutationLogOutUser();
   const [logoutAdmin] = useMutationLogOutAdmin();
-
-  console.log(router, "header");
+  const [loginType, setLoginType] = useState("");
 
   const showDrawer = (): void => {
     setOpen(true);
@@ -56,6 +55,9 @@ export default function LayoutHeader(): JSX.Element {
   };
 
   const onClickMyPage = (): void => {
+    if (localStorage.getItem("loginType") === null) {
+      void router.push("/user/login");
+    }
     if (localStorage.getItem("loginType") === "admin") {
       void router.push("/admin/adminPage");
     } else {
@@ -80,22 +82,29 @@ export default function LayoutHeader(): JSX.Element {
   };
 
   const onClickLogin = (): void => {
-    void router.push("user/login");
+    void router.push("/user/login");
     onClose();
   };
 
   useEffect(() => {
+    setLoginType(localStorage.getItem("loginType") ?? "");
     const script = document.createElement("script");
     script.src = "https://cdn.iamport.kr/v1/iamport.js";
     document.head.appendChild(script);
     script.onload = () => {};
-
-    if (localStorage.getItem("loginType") === null) {
+    if (
+      data?.fetchLoginUser.user_email === undefined &&
+      dataAdmin?.fetchLoginAdminister.administer_email === undefined
+    ) {
       setIsLogin(false);
     } else {
       setIsLogin(true);
     }
-  }, []);
+  }, [data, dataAdmin]);
+
+  const onClickMoveMain = (): void => {
+    void router.push("/");
+  };
 
   return (
     <>
@@ -106,11 +115,11 @@ export default function LayoutHeader(): JSX.Element {
         }}
       >
         <S.LightWrapper>
-          <S.Logo src="/로고오.png"></S.Logo>
+          <S.Logo src="/sca2.png" onClick={onClickMoveMain}></S.Logo>
         </S.LightWrapper>
         <S.RightWrapper>
           {!isLogin ? (
-            <div></div>
+            <div style={{ backgroundColor: "#40e0d0" }}></div>
           ) : (
             <S.ProfileWrapper>
               <S.ProfileIcon
@@ -122,11 +131,6 @@ export default function LayoutHeader(): JSX.Element {
                   : dataAdmin?.fetchLoginAdminister.administer_name}
               </S.Name>
               <S.Text>님 안녕하세요!</S.Text>
-              {/* {localStorage.getItem("loginType") === "user" ? (
-                <S.PayButton onClick={showModal}>충전</S.PayButton>
-              ) : (
-                <></>
-              )} */}
             </S.ProfileWrapper>
           )}
 
@@ -152,11 +156,7 @@ export default function LayoutHeader(): JSX.Element {
             <S.MenuListWrapper>
               {isLogin ? <></> : <p onClick={onClickLogin}>로그인</p>}
               <p onClick={onClickMyPage}>내 정보</p>
-              {/* {localStorage.getItem("loginType") === "user" ? (
-                <p onClick={showModal}>충전</p>
-              ) : (
-                <></>
-              )} */}
+              {loginType === "user" ? <p onClick={showModal}>충전</p> : <></>}
               <p onClick={onClickMain}>스카찾기</p>
 
               {!isLogin ? (

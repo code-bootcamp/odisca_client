@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
+import { mediaQueries } from "../../media/mediaQueries";
 
 export const SearchBar = styled.div`
-  /* left: 280px; */
   z-index: 1;
   border: none;
   background: none;
@@ -34,6 +34,10 @@ export const SelectBox = styled.div`
     color: #40e0d0;
     font-size: 20px;
   }
+  ${mediaQueries("macBook")} {
+    width: 270px;
+    left: -10vw;
+  }
 `;
 
 export const Label = styled.label`
@@ -42,7 +46,7 @@ export const Label = styled.label`
   text-align: center;
 `;
 
-export const SelectOptions = styled.ul`
+export const SelectOptions = styled.ul<{ show: boolean }>`
   position: absolute;
   list-style: none;
   top: 40px;

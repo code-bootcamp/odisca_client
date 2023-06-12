@@ -41,11 +41,10 @@ export const SeatBtn = styled.button`
   background: none;
   cursor: pointer;
 `;
-export const DevidedLine = styled.line`
+export const DevidedLine = styled.div`
   width: 100%;
   border-bottom: 1px solid #4f4f4f;
-  margin-top: 15px;
-  margin-bottom: 20px;
+  margin-top: 20px;
 `;
 export const Icon = styled.img`
   width: 20px;

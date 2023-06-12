@@ -49,7 +49,6 @@ export default function CafeListBody(props: Props): JSX.Element {
       style={{
         height: "100vh",
         overflow: "auto",
-        // width: 1410,
       }}
     >
       <InfiniteScroll

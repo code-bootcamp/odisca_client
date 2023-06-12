@@ -34,7 +34,7 @@ export const DevidedLine = styled.div`
   border-bottom: 1px solid #bdbdbd;
 `;
 export const CafeImg = styled.img`
-  width: 390px;
+  width: 100%;
   height: 200px;
 `;
 
@@ -70,18 +70,20 @@ export const CafeDetail = styled.div`
   height: 5vh;
   margin: 14px 0px 0px 0px;
   font-size: 15px;
-  color: #fff;
-  font-weight: 600;
+  color: #4f4f4f;
   padding-left: 5px;
   padding-top: 5px;
-  background-color: rgba(79, 79, 79, 0.4);
-  border-radius: 10px;
+  overflow: hidden;
 `;
 
 export const CafeReview = styled.div`
   width: 100%;
-  height: 70px;
+  height: 5vh;
   background: #f7f7f7;
   padding: 12px 7px;
-  font-size: 20px;
+  background-color: rgba(79, 79, 79, 0.4);
+  border-radius: 10px;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 600;
 `;

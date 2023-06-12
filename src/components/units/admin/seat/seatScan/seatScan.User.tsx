@@ -24,10 +24,8 @@ export default function SeatScanPage(): JSX.Element {
   const [stateY, setStateY] = useState(
     dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanY ?? 40
   );
-  console.log(dataCafe, "카페");
   const [map, setMap] = useState<SeatData[][]>([]);
 
-  console.log(data, "좌석");
   useEffect(() => {
     if (dataCafe !== undefined && data !== undefined) {
       setStateX(dataCafe?.fetchOneStudyCafeForUser.studyCafe_floorPlanX);

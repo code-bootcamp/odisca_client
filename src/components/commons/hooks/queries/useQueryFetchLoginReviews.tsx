@@ -14,6 +14,9 @@ export const FETCH_REVIEW = gql`
       review_id
       review_content
       review_createdAt
+      visit {
+        visit_id
+      }
     }
   }
 `;

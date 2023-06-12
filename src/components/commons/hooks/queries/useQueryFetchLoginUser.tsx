@@ -24,6 +24,7 @@ export const FETCH_LOGIN_USER = gql`
           seat_remainTime
         }
         studyCafe {
+          studyCafe_id
           studyCafe_name
           images {
             image_id
@@ -32,18 +33,14 @@ export const FETCH_LOGIN_USER = gql`
           }
         }
       }
-      # seat {
-      #   seat_id
-      #   seat_number
-      #   seat_remainTime
-      # }
     }
   }
 `;
 
 export const useQueryFetchLoginUser = (): IFetchLoginUserQueryResult => {
   const query = useQuery<Pick<IQuery, "fetchLoginUser">, IUser>(
-    FETCH_LOGIN_USER
+    FETCH_LOGIN_USER,
+    { fetchPolicy: "network-only" }
   );
   const loginUserRefetch = async (): Promise<void> => {
     await query.refetch();

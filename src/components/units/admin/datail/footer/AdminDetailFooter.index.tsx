@@ -3,6 +3,12 @@ import { useRouter } from "next/router";
 import { useQueryFetchAllSeatsByStudyCafeId } from "../../../../commons/hooks/queries/useQueryFetchAllSeatsByStudyCafeId";
 import { useEffect, useState } from "react";
 
+const FooterWrapper = styled.main`
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 80px 0;
+`;
+
 const Footer = styled.footer`
   width: 850px;
   display: flex;
@@ -19,6 +25,7 @@ const Btn = styled.button`
   border-radius: 30px;
   margin: 0px 12px;
   cursor: pointer;
+  font-weight: 600;
   :hover {
     background-color: #40e0d0;
     color: #ffffff;
@@ -42,20 +49,21 @@ export default function AdminDetailFooter(): JSX.Element {
     }
   });
 
-  // const onClickScanSeats = (): void => {
-  //   void router.push("/admin/" + String(router.query.Id) + "/mapScaner");
-  // };
-
   const onClickMoveEdit = (): void => {
     void router.push(`/admin/${String(router.query.Id)}/edit`);
   };
 
+  const onClickGoBack = (): void => {
+    history.back();
+  };
+
   return (
-    <Footer>
-      <Btn onClick={onClickMoveEdit}>정보수정</Btn>
-      {isSaved ? <Btn onClick={onClickEditSeats}>배치도 등록</Btn> : <></>}
-      {/* <Btn onClick={onClickScanSeats}>배치도 보기</Btn> */}
-      <Btn>취소하기</Btn>
-    </Footer>
+    <FooterWrapper>
+      <Footer>
+        <Btn onClick={onClickMoveEdit}>정보수정</Btn>
+        {isSaved ? <Btn onClick={onClickEditSeats}>배치도 등록</Btn> : <></>}
+        <Btn onClick={onClickGoBack}>뒤로가기</Btn>
+      </Footer>
+    </FooterWrapper>
   );
 }

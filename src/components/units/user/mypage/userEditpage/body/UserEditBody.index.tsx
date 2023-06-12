@@ -34,9 +34,11 @@ export default function UserEditBody(): JSX.Element {
       if (imageUrls.length === 0) {
         return;
       }
+
       const ImageFile: File[] = [];
       for (let i = 0; i < imageUrls.length; i++) {
         const imageUrl = imageUrls[i];
+
         try {
           const file = await new Promise<File>((resolve, reject) => {
             const img = new Image();
@@ -50,6 +52,7 @@ export default function UserEditBody(): JSX.Element {
               canvas.width = img.width;
               canvas.height = img.height;
               ctx.drawImage(img, 0, 0);
+
               canvas.toBlob((blob) => {
                 if (blob === null) {
                   reject(new Error("Failed to convert canvas to blob."));
@@ -70,32 +73,33 @@ export default function UserEditBody(): JSX.Element {
 
           ImageFile.push(file);
         } catch (error) {
-          console.error(error);
+          if (error instanceof Error)
+            Modal.error({
+              content: error.message,
+            });
         }
       }
 
       const results = await uploadImageFile({
         variables: { images: ImageFile },
       });
-
-      console.log(results);
       const url = results.data?.uploadImageFile[0];
 
-      const updateResult = await updateLoginUser({
+      await updateLoginUser({
         variables: {
           updateLoginUserInput: {
-            user_password: String(data.user_password),
+            user_password: data.user_password,
             user_phone: String(data.user_phone),
             user_image: String(url),
           },
         },
       });
+
       await loginUserRefetch();
       void router.push("/user/mypage");
-      console.log(updateResult);
 
       Modal.success({
-        content: "회원수정 완료!",
+        content: "회원정보 수정이 완료되었습니다!",
       });
     } catch (error) {
       if (error instanceof Error)
@@ -135,23 +139,33 @@ export default function UserEditBody(): JSX.Element {
         </S.EditList>
         <S.EditList>
           <S.ListDetail>비밀번호</S.ListDetail>
-          <S.DetailInput
-            type="password"
-            placeholder="새로운 비밀번호를 입력해주세요."
-            {...register("user_password")}
-          />
+          <S.ErrorWrapper>
+            <S.DetailInput
+              type="password"
+              placeholder="새로운 비밀번호를 입력해주세요."
+              {...register("user_password")}
+            />
+            <S.AlertMessage>
+              {formState.errors.user_password?.message}
+            </S.AlertMessage>
+          </S.ErrorWrapper>
         </S.EditList>
-        <S.AlertMessage></S.AlertMessage>
         <S.EditList>
           <S.ListDetail>전화번호</S.ListDetail>
-          <S.DetailInput
-            style={{ color: "#4f4f4f" }}
-            type="text"
-            defaultValue={data?.fetchLoginUser.user_phone}
-            {...register("user_phone")}
-          />
+          <S.ErrorWrapper>
+            <S.DetailInput
+              style={{ color: "#4f4f4f" }}
+              type="text"
+              defaultValue={data?.fetchLoginUser.user_phone}
+              {...register("user_phone")}
+            />
+            <S.AlertMessage>
+              {formState.errors.user_phone?.message}
+            </S.AlertMessage>
+          </S.ErrorWrapper>
         </S.EditList>
-        <S.AlertMessage>{formState.errors.user_phone?.message}</S.AlertMessage>
+
+        {/* </S.PhoneEditList> */}
       </S.InputForm>
       <S.BtnWrapper onSubmit={wrapFormAsync(handleSubmit(onClickUserUpdate))}>
         <S.EditBtn>수정하기</S.EditBtn>
