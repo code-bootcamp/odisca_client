@@ -12,12 +12,6 @@ export const Wrapper = styled.main`
   padding: 40px;
 `;
 
-export const Pixel = styled.div`
-  width: 1vw;
-  height: 1vw;
-  border: 0.5px solid #e4e4e4;
-`;
-
 export const Container = styled.div`
   height: 80vh;
   display: flex;
