@@ -1,7 +1,7 @@
 // 메인페이지
 import CafeList from "./cafelist/CafeList.index";
 import Map from "../../../commons/hooks/customs/useMap";
-import SearchBar01 from "../../../commons/searchbars/01/SearchBar01.index";
+import SearchBar01 from "../../../commons/searchbars/SearchBar01.index";
 import { useState } from "react";
 
 export default function UserMain(): JSX.Element {

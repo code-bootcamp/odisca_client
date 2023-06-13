@@ -1,15 +1,15 @@
 import styled from "@emotion/styled";
-import { mediaQueries } from "../../media/mediaQueries";
+import { mediaQueries } from "../media/mediaQueries";
 
-export const SearchBar = styled.div`
+export const SelectBar = styled.div`
   z-index: 1;
   border: none;
   background: none;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0px 15px;
-  top: 60vh;
+  /* display: flex; */
+  /* justify-content: flex-end; */
+  /* align-items: center; */
+  /* padding: 0px 15px; */
+  /* top: 60vh; */
 `;
 
 export const SelectBox = styled.div`
@@ -17,9 +17,9 @@ export const SelectBox = styled.div`
   color: #fff;
   font-size: large;
   font-weight: 500;
-  left: -8vw;
+  /* left: -8vw; */
   width: 350px;
-  top: 4vh;
+  top: 2vh;
   height: 40px;
   padding: 8px;
   border-radius: 12px;
@@ -27,16 +27,16 @@ export const SelectBox = styled.div`
   align-self: center;
   cursor: pointer;
   &::before {
-    content: "🔎";
+    content: "⌄";
     position: absolute;
-    top: 6px;
+    top: 0px;
     right: 8px;
     color: #40e0d0;
     font-size: 20px;
   }
   ${mediaQueries("macBook")} {
     width: 270px;
-    left: -10vw;
+    /* left: -10vw; */
   }
 `;
 
