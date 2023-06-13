@@ -5,11 +5,6 @@ export const SelectBar = styled.div`
   z-index: 1;
   border: none;
   background: none;
-  /* display: flex; */
-  /* justify-content: flex-end; */
-  /* align-items: center; */
-  /* padding: 0px 15px; */
-  /* top: 60vh; */
 `;
 
 export const SelectBox = styled.div`
@@ -17,7 +12,6 @@ export const SelectBox = styled.div`
   color: #fff;
   font-size: large;
   font-weight: 500;
-  /* left: -8vw; */
   width: 350px;
   top: 2vh;
   height: 40px;
@@ -36,7 +30,6 @@ export const SelectBox = styled.div`
   }
   ${mediaQueries("macBook")} {
     width: 270px;
-    /* left: -10vw; */
   }
 `;
 

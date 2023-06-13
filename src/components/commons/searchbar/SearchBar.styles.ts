@@ -1,12 +1,11 @@
 import styled from "@emotion/styled";
 
 export const Searchbar = styled.div`
-  width: 350px;
+  width: 270px;
   height: 40px;
   border-radius: 12px;
   border: none;
   background: none;
-  padding: 0px 10px;
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -13,7 +13,7 @@ export const useSearch = (args: any): void => {
     void args.refetch({ search: value, page: 1 });
     void args.refetchCount({ search: value });
     onChangeKeyword(value);
-  }, 1000);
+  }, 300);
 
   const onChangeSearchbar = (event: ChangeEvent<HTMLInputElement>): void => {
     getDebounce(event.target.value);
