@@ -2,7 +2,13 @@ import { ChangeEvent, useState } from "react";
 import _ from "lodash";
 
 // 검색관련로직
-export const useSearch = (args: any): void => {
+export const useSearch = (
+  args: any
+): {
+  keyword: string;
+  onChangeKeyword: (value: string) => void;
+  onChangeSearchbar: (event: ChangeEvent<HTMLInputElement>) => void;
+} => {
   const [keyword, setKeyword] = useState("");
 
   const onChangeKeyword = (value: string): void => {

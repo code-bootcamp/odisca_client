@@ -6,11 +6,18 @@ import SearchBar from "../../../commons/searchbar/SearchBar.index";
 import SelectBar from "../../../commons/selectbar/SelectBar.index";
 import { useSearch } from "../../../commons/hooks/customs/useSearch";
 import * as S from "./userMain.styles";
+import { useQueryFetchAllStudyCafes } from "../../../commons/hooks/queries/useQueryFetchAllStudyCafes";
 export default function UserMain(): JSX.Element {
   const [selectedDistrict, setSelectedDistrict] = useState("강남구");
-  const [showCafeList, setShowCafeList] = useState(false); //  카페리스트 보여줄지 여부 상태
-  const { onChangeSearchbar, keyword } = useSearch({ refetch, refetchCount });
-
+  const [, setShowCafeList] = useState(false); //  카페리스트 보여줄지 여부 상태
+  const page = 1;
+  const { data, refetch } = useQueryFetchAllStudyCafes({
+    page,
+    studyCafe_city: "your_city_value",
+    studyCafe_district: "your_district_value",
+  });
+  const { onChangeSearchbar, keyword } = useSearch({ refetch });
+  console.log(data);
   const handleSecondCityChange = (value: string): void => {
     setSelectedDistrict(value);
     setShowCafeList(true); // 검색창 변경 시 카페리스트 보이도록 설정
@@ -19,7 +26,7 @@ export default function UserMain(): JSX.Element {
   return (
     <S.MainPageLayout>
       <S.CafeListLayout>
-        <CafeList selectedDistrict={selectedDistrict} />
+        <CafeList selectedDistrict={selectedDistrict} keyword={keyword} />
       </S.CafeListLayout>
       <S.MapLayout>
         <Map selectedDistrict={selectedDistrict} />

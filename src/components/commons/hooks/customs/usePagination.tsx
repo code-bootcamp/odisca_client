@@ -1,10 +1,18 @@
 import { useState } from "react";
 
-export const usePagination = (args: any): void => {
+export const usePagination = (
+  args: any
+): {
+  startPage: number;
+  lastPage: number;
+  onClickPage: (page: number) => () => void;
+  onClickPrevPage: () => void;
+  onClickNextPage: () => void;
+} => {
   const [startPage, setStartPage] = useState(1);
   const lastPage = args.count ? Math.ceil(args.count / 10) : 0;
 
-  const onClickPage = (page: number) => () => {
+  const onClickPage = (page: number) => (): void => {
     void args.refetch({ page });
   };
 
