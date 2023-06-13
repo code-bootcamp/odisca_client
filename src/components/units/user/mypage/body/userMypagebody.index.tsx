@@ -54,12 +54,17 @@ export default function UserMyPageBody(): JSX.Element {
                   >
                     {visit.studyCafe?.studyCafe_name}
                   </S.CafeName>
-<S.SeatInfo>좌석번호: {visit.seat?.seat_number}</S.SeatInfo>
+                  <S.SeatInfo>좌석번호: {visit.seat?.seat_number}</S.SeatInfo>
                 </S.Top>
                 <S.Bottom>
-                  <S.RemainingTime>
-                    남은 이용시간 {remainingHours}시간{remainingMinutes}분
-                  </S.RemainingTime>
+                  {remainingHours === 0 && remainingMinutes === 0 ? (
+                    <S.RemainingTime>이용 종료</S.RemainingTime>
+                  ) : (
+                    <S.RemainingTime>
+                      남은 이용시간 {remainingHours}시간{remainingMinutes}분
+                    </S.RemainingTime>
+                  )}
+
                   {/* <S.Btn>이용종료</S.Btn> */}
                   {reviewdata?.fetchLoginReviewByVisitId.review_content !==
                   undefined ? (

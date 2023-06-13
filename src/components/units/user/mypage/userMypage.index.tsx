@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import UserMyPageBody from "./body/userMypagebody.index";
+import UserMyPageFooter from "./footer/userMypagefooter.index";
 import UserMyPageHeader from "./header/userMypageheader.index";
 
 const Wrapper = styled.div`
@@ -14,6 +15,7 @@ export default function UserMyPage(): JSX.Element {
     <Wrapper>
       <UserMyPageHeader />
       <UserMyPageBody />
+      <UserMyPageFooter />
     </Wrapper>
   );
 }
