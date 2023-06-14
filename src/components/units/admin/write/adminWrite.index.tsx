@@ -23,6 +23,7 @@ import OperatingTime from "../../../commons/operatingTimeSelection/operatingTime
 import { checkValidationFile } from "../../../../commons/libraries/validationFile";
 import { IQuery } from "../../../../commons/types/generated/types";
 import SubmitSuccessAlertModal from "../../../commons/submitSuccessModal/submitSuccessModal.index";
+import DeleteModal from "../../../commons/deleteModal/deleteModal.index";
 
 // 등록 사항들 타입 지정
 interface IFormValues {
@@ -76,6 +77,7 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
   const [isMain, setIsMain] = useState([true, false, false, false, false]);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 
   // useRef
   const fileRef = useRef<HTMLInputElement>(null);
@@ -352,6 +354,10 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     history.back();
   };
 
+  const onClickOpenDeleteModal = (): void => {
+    setIsDeleteModalOpen(true);
+  };
+
   // return 값
   return (
     <S.Body>
@@ -598,6 +604,28 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
               취소하기
             </S.Btn>
           </S.Footer>
+          {props.isEdit ? (
+            <S.DeleteBtnBox>
+              <S.DeleteBtn onClick={onClickOpenDeleteModal}>
+                업체를 삭제하시겠습니까?
+              </S.DeleteBtn>
+            </S.DeleteBtnBox>
+          ) : (
+            <></>
+          )}
+          <S.DeleteCafeModal
+            open={isDeleteModalOpen}
+            onOk={() => {
+              setIsDeleteModalOpen((prev) => !prev);
+            }}
+            onCancel={() => {
+              setIsDeleteModalOpen((prev) => !prev);
+            }}
+            okButtonProps={{ style: { display: "none" } }}
+            cancelButtonProps={{ style: { display: "none" } }}
+          >
+            <DeleteModal />
+          </S.DeleteCafeModal>
         </S.WrapperBtm>
       </S.Wrapper>
     </S.Body>

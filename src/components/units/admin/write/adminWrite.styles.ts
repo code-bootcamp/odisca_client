@@ -268,7 +268,7 @@ export const Footer = styled.section`
   display: flex;
   justify-content: center;
   padding-top: 40px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 
 export const Btn = styled.button`
@@ -303,6 +303,8 @@ export const WrapperBtm = styled.form`
 export const AddressSearchModal = styled(Modal)``;
 
 export const SubmitSuccessModal = styled(Modal)``;
+
+export const DeleteCafeModal = styled(Modal)``;
 
 // ====== select ====== //
 
@@ -368,4 +370,18 @@ export const Option = styled.li`
   &:hover {
     background-color: #bdbdbd;
   }
+`;
+
+export const DeleteBtnBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 80px;
+`;
+
+export const DeleteBtn = styled.p`
+  color: #40e0d0;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
 `;
