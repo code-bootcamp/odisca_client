@@ -1,4 +1,4 @@
-// import * as S from "./userMypagefooter.styles";
+import * as S from "./userMypagefooter.styles";
 
 // import { Fragment, MouseEvent } from "react";
 // import { useRouter } from "next/router";
@@ -29,49 +29,50 @@
 // }
 
 import { useState } from "react";
+import UserMyPageBody from "../body/userMypagebody.index";
 
 export default function Orgchart(): JSX.Element {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const tabClickHandler = (index) => {
+  const tabClickHandler = (index: number) => {
     setActiveIndex(index);
   };
 
   const tabContArr = [
     {
       tabTitle: (
-        <li
+        <S.MenuList
           className={activeIndex === 0 ? "is-active" : ""}
           onClick={() => tabClickHandler(0)}
         >
-          {" "}
-          탭1{" "}
-        </li>
+          이용내역
+        </S.MenuList>
       ),
-      tabCont: <div> 탭1 내용 </div>,
+      tabContent: <UserMyPageBody />,
     },
     {
       tabTitle: (
-        <li
+        <S.MenuList
           className={activeIndex === 1 ? "is-active" : ""}
           onClick={() => tabClickHandler(1)}
         >
-          {" "}
-          탭2{" "}
-        </li>
+          작성한 리뷰
+        </S.MenuList>
       ),
-      tabCont: <div> 탭2 내용 </div>,
+      tabContent: (
+        <S.Contents> 리뷰목록 리뷰목록 리뷰목록 리뷰목록 </S.Contents>
+      ),
     },
   ];
 
   return (
-    <div>
-      <ul className="tabs is-boxed">
+    <S.Wrapper>
+      <S.MenuListWrapper>
         {tabContArr.map((section, index) => {
           return section.tabTitle;
         })}
-      </ul>
-      <div>{tabContArr[activeIndex].tabCont}</div>
-    </div>
+      </S.MenuListWrapper>
+      <div>{tabContArr[activeIndex].tabContent}</div>
+    </S.Wrapper>
   );
 }
