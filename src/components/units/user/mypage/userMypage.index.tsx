@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import UserMyPageBody from "./body/userMypagebody.index";
+// import UserMyPageBody from "./body/userMypagebody.index";
 import UserMyPageFooter from "./footer/userMypagefooter.index";
 import UserMyPageHeader from "./header/userMypageheader.index";
 
@@ -14,7 +14,7 @@ export default function UserMyPage(): JSX.Element {
   return (
     <Wrapper>
       <UserMyPageHeader />
-      <UserMyPageBody />
+      {/* <UserMyPageBody /> */}
       <UserMyPageFooter />
     </Wrapper>
   );

@@ -27,7 +27,7 @@ export default function UserMyPageBody(): JSX.Element {
   return (
     <>
       <S.Wrapper>
-        <S.Title>이용내역</S.Title>
+        {/* <S.Title>이용내역</S.Title> */}
         {data?.fetchLoginUser.visits.map((visit, index) => {
           const minutes = Math.floor(
             (visit.seat?.seat_remainTime ?? 0) / (1000 * 60)
@@ -69,11 +69,11 @@ export default function UserMyPageBody(): JSX.Element {
                   {reviewdata?.fetchLoginReviewByVisitId.review_content !==
                   undefined ? (
                     <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
-                      내 리뷰
+                      리뷰쓰기
                     </S.Btn>
                   ) : (
                     <S.Btn onClick={onClickSetIndex(index, visit.visit_id)}>
-                      내 리뷰
+                      리뷰쓰기
                     </S.Btn>
                   )}
                   {isModalOpen !== false && (
