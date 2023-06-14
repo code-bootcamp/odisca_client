@@ -234,7 +234,11 @@ export default function SeatReservationPage(): JSX.Element {
                             key={uuidv4()}
                             style={image(ele, indX, indY)}
                             onClick={onClickInfo(ele)}
-                          ></S.Pixel>
+                          >
+                            {ele.number === map?.[indY + 1]?.[indX + 1]?.number
+                              ? map?.[indY + 1]?.[indX + 1]?.number
+                              : ""}
+                          </S.Pixel>
                         </>
                       );
                     })}
