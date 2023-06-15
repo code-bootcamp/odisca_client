@@ -6,3 +6,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   margin: 0 auto;
 `;
+
+export const CafeName = styled.a``;
+
+export const CafeNameI = styled.img``;
