@@ -30,6 +30,7 @@ import * as S from "./userMypagefooter.styles";
 
 import { useState } from "react";
 import UserMyPageBody from "../body/userMypagebody.index";
+import UserReview from "../userReview/userReview.index";
 
 export default function Orgchart(): JSX.Element {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -59,9 +60,7 @@ export default function Orgchart(): JSX.Element {
           작성한 리뷰
         </S.MenuList>
       ),
-      tabContent: (
-        <S.Contents> 리뷰목록 리뷰목록 리뷰목록 리뷰목록 </S.Contents>
-      ),
+      tabContent: <UserReview />,
     },
   ];
 
