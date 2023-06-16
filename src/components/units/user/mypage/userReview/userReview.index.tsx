@@ -3,7 +3,7 @@ import * as S from "./userReview.styles";
 import { getDate } from "../../../../../commons/libraries/utils";
 import UseModal from "../../../../commons/hooks/customs/useModal";
 import { useState } from "react";
-import Review from "../../../../commons/reviews/review.index";
+import EditReview from "../../../../commons/reviews/editReview.index";
 
 export default function UserReview(): JSX.Element {
   const { data } = useQueryFetchReview();
@@ -11,15 +11,18 @@ export default function UserReview(): JSX.Element {
   const [Ind, setInd] = useState(0);
   const [vId, setVId] = useState("");
 
-  const onClickSetIndex = (i: number, id: string) => (): void => {
-    setInd(i);
-    setVId(id);
-    showModal();
-  };
+  const onClickSetIndex =
+    (i: number, id: string | undefined | null) => (): void => {
+      if (id !== undefined && id !== null) {
+        setInd(i);
+        setVId(id);
+        showModal();
+      }
+    };
 
   return (
     <>
-      {data?.fetchLoginReviewsByUserId.map((el) => (
+      {data?.fetchLoginReviewsByUserId.map((el, index) => (
         <div key={el.review_id}>
           <S.Wrapper>
             <S.LeftWrapper>
@@ -36,9 +39,7 @@ export default function UserReview(): JSX.Element {
                 ) : null
               )}
 
-              <S.EditReviewBtn
-                onClick={onClickSetIndex(el?.index, el?.visit?.visit_id)}
-              >
+              <S.EditReviewBtn onClick={onClickSetIndex(index, el.review_id)}>
                 리뷰수정
               </S.EditReviewBtn>
               {isModalOpen !== false && (
@@ -49,7 +50,11 @@ export default function UserReview(): JSX.Element {
                   onOk={handleOk}
                   onCancel={handleCancel}
                 >
-                  <Review handleCancel={handleCancel} index={Ind} vId={vId} />
+                  <EditReview
+                    handleCancel={handleCancel}
+                    index={Ind}
+                    vId={vId}
+                  />
                 </S.ReviewModal>
               )}
             </S.RightWrapper>
