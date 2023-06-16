@@ -14,8 +14,12 @@ export const FETCH_REVIEW = gql`
       review_id
       review_content
       review_createdAt
-      visit {
-        visit_id
+      studyCafe {
+        studyCafe_name
+        images {
+          image_url
+          image_isMain
+        }
       }
     }
   }

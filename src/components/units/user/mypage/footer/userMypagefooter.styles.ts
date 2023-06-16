@@ -20,9 +20,13 @@ export const MenuList = styled.button`
   background-color: white;
   border: none;
   &.is-active {
-    border-bottom: 2px solid #40e0d0;
+    border-bottom: 3px solid #40e0d0;
+    color: #4f4f4f;
+    font-weight: 500;
   }
   :hover {
+    color: #4f4f4f;
+    font-weight: 500;
   }
 `;
 
