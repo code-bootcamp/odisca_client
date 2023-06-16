@@ -78,6 +78,7 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [selectedSlot, setSelectedSlot] = useState(-1);
 
   // useRef
   const fileRef = useRef<HTMLInputElement>(null);
@@ -184,6 +185,7 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     setIsAddressModalOpen((prev) => !prev);
     return !isAddressModalOpen;
   };
+
   // daumpostcode에서 주소 검색 완료 시 로직
   const onCompleteAddressSearch = (AddressData: AddressData): void => {
     AddressModal();
@@ -191,11 +193,6 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     setCity(AddressData.sido);
     setDistrict(AddressData.sigungu);
     console.log(AddressData);
-  };
-
-  // + 버튼 클릭 시 이미지 파일 업로드
-  const onClickUpload = (): void => {
-    fileRef.current?.click();
   };
 
   const onChangeFile =
@@ -207,7 +204,6 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
 
       const isValid = checkValidationFile(file);
       if (!isValid) return;
-
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = (event) => {
@@ -280,6 +276,23 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     }
   };
 
+  const handleSlotClick = (index: number): void => {
+    // + 버튼 클릭 시 이미지 파일 업로드
+    fileRef.current?.click();
+
+    // 선택한 칸의 인덱스를 저장
+    setSelectedSlot(index);
+  };
+
+  // const handleFileUpload = (file: File | string): void => {
+  //   if (selectedSlot !== -1) {
+  //     // 선택한 칸의 이미지를 업데이트
+  //     const updatedImages = [...files];
+  //     updatedImages[selectedSlot] = URL.createObjectURL(file);
+  //     setFiles(updatedImages);
+  //   }
+  // };
+
   // 수정하기 버튼 눌렀을 때(admin 수정)
   const onClickUpdateCafe = async (data: FieldValues): Promise<void> => {
     const formData: IFormValues = {
@@ -334,6 +347,7 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
           },
         },
       });
+      alert("수정이 완료되었습니다.");
       if (refetch !== undefined) {
         await refetch();
       }
@@ -356,6 +370,10 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
 
   const onClickOpenDeleteModal = (): void => {
     setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = (): void => {
+    setIsDeleteModalOpen(false);
   };
 
   // return 값
@@ -518,12 +536,16 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                                     index
                                   ].image_url ?? ""
                             }
-                            onClick={onClickUpload}
+                            onClick={() => handleSlotClick(index)}
                           />
                           <S.MainImgCheckBtn
                             type="radio"
                             onChange={onChangeCheckMain(index)}
                             name="check"
+                            defaultValue={
+                              data?.fetchOneStudyCafeForAdminister.images[index]
+                                ?.image_isMain
+                            }
                           />
                         </>
                       ) : (
@@ -618,13 +640,11 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
             onOk={() => {
               setIsDeleteModalOpen((prev) => !prev);
             }}
-            onCancel={() => {
-              setIsDeleteModalOpen((prev) => !prev);
-            }}
+            onCancel={closeDeleteModal}
             okButtonProps={{ style: { display: "none" } }}
             cancelButtonProps={{ style: { display: "none" } }}
           >
-            <DeleteModal />
+            <DeleteModal onCancel={closeDeleteModal} data={data} />
           </S.DeleteCafeModal>
         </S.WrapperBtm>
       </S.Wrapper>

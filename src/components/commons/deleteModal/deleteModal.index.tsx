@@ -1,4 +1,8 @@
 import styled from "@emotion/styled";
+import { Modal } from "antd";
+// import { useRouter } from "next/router";
+import { IQuery } from "../../../commons/types/generated/types";
+import { useMutationDeleteStudyCafe } from "../hooks/mutations/useMutationDeleteStudyCafe";
 
 const Wrapper = styled.div`
   margin-top: 30px;
@@ -37,10 +41,42 @@ const Btn = styled.button`
   }
 `;
 
-export default function DeleteModal(): JSX.Element {
-  const onClickDeleteCafe = (): void => {};
+interface IProps {
+  onCancel: () => void;
+  data?: Pick<IQuery, "fetchOneStudyCafeForAdminister"> | null;
+}
 
-  const onClickCancel = (): void => {};
+export default function DeleteModal(props: IProps): JSX.Element {
+  //   const router = useRouter();
+  const [deleteLoginStudyCafe] = useMutationDeleteStudyCafe();
+
+  const onClickDeleteCafe = (): void => {
+    try {
+      const result = deleteLoginStudyCafe({
+        variables: {
+          studyCafe_id: String(
+            props.data?.fetchOneStudyCafeForAdminister.studyCafe_id
+          ),
+        },
+      });
+      console.log(result);
+      Modal.success({
+        content: "삭제가 완료되었습니다.",
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        Modal.error({
+          content: "오류가 발생했습니다.",
+        });
+        props.onCancel();
+      }
+    }
+    // void router.push("/admin/adminPage");
+  };
+
+  const onClickCancel = (): void => {
+    props.onCancel();
+  };
 
   return (
     <Wrapper>

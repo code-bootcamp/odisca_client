@@ -146,6 +146,7 @@ export type IMutation = {
   createUser: IUser;
   deleteLoginAdminister: Scalars['Boolean'];
   deleteLoginReview: Scalars['Boolean'];
+  deleteLoginStudyCafe: Scalars['Boolean'];
   deleteLoginUser: Scalars['Boolean'];
   logoutAdminister: Scalars['String'];
   logoutUser: Scalars['String'];
@@ -222,6 +223,11 @@ export type IMutationCreateUserArgs = {
 
 export type IMutationDeleteLoginReviewArgs = {
   cancelReviewInput: ICancelReviewInput;
+};
+
+
+export type IMutationDeleteLoginStudyCafeArgs = {
+  studyCafe_id: Scalars['String'];
 };
 
 
