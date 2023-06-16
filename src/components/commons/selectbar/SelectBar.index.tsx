@@ -1,6 +1,6 @@
 import { useState, CSSProperties } from "react";
 
-import * as S from "./SearchBar.styles";
+import * as S from "./SelectBar.styles";
 
 type CityData = Record<string, string[]>;
 
@@ -14,14 +14,14 @@ const cityData:CityData = {
   ],
 };
 
-interface SearchBar01Props {
+interface SelectBarProps {
   style?: CSSProperties;
   onSecondCityChange: (value: string) => void;
 }
 
-export default function SearchBar01({
+export default function SelectBar({
   onSecondCityChange,
-}: SearchBar01Props): JSX.Element {
+}: SelectBarProps): JSX.Element {
   const [cities] = useState(cityData[provinceData[0]]);
   const [isShowOptions, setShowOptions] = useState(false);
   const [secondCity, setSecondCity] = useState(cityData[provinceData[0]][0]);
@@ -32,28 +32,26 @@ export default function SearchBar01({
   };
 
   return (
-    <>
-      <S.SearchBar>
-        <S.SelectBox
-          onClick={() => {
-            setShowOptions((prev) => !prev);
-          }}
-        >
-          <S.Label>{secondCity}</S.Label>
-          <S.SelectOptions show={isShowOptions ?? true}>
-            {cities.map((city) => (
-              <S.Option
-                key={city}
-                onClick={() => {
-                  handleSecondCityChange(city);
-                }}
-              >
-                {city}
-              </S.Option>
-            ))}
-          </S.SelectOptions>
-        </S.SelectBox>
-      </S.SearchBar>
-    </>
+    <S.SelectBar>
+      <S.SelectBox
+        onClick={() => {
+          setShowOptions((prev) => !prev);
+        }}
+      >
+        <S.Label>{secondCity}</S.Label>
+        <S.SelectOptions show={isShowOptions ?? true}>
+          {cities.map((city) => (
+            <S.Option
+              key={city}
+              onClick={() => {
+                handleSecondCityChange(city);
+              }}
+            >
+              {city}
+            </S.Option>
+          ))}
+        </S.SelectOptions>
+      </S.SelectBox>
+    </S.SelectBar>
   );
 }
