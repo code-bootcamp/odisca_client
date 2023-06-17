@@ -40,7 +40,7 @@ export default function UserReview(): JSX.Element {
               )}
 
               <S.EditReviewBtn onClick={onClickSetIndex(index, el.review_id)}>
-                리뷰수정
+                리뷰보기
               </S.EditReviewBtn>
               {isModalOpen !== false && (
                 <S.ReviewModal
