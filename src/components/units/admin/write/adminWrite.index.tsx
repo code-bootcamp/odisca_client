@@ -78,7 +78,7 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-  const [selectedSlot, setSelectedSlot] = useState(-1);
+  // const [selectedSlot, setSelectedSlot] = useState(-1);
 
   // useRef
   const fileRef = useRef<HTMLInputElement>(null);
@@ -202,8 +202,10 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
 
       if (file === undefined) return;
 
+      // 이미지 파일 검증
       const isValid = checkValidationFile(file);
       if (!isValid) return;
+
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = (event) => {
@@ -214,6 +216,7 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
             newTemp.push("");
           }
           setImageUrls(newTemp);
+
           const tempFiles = [...files.filter((el) => el !== "")];
           tempFiles.push(file);
           while (tempFiles.length < 5) {
@@ -276,22 +279,15 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
     }
   };
 
-  const handleSlotClick = (index: number): void => {
-    // + 버튼 클릭 시 이미지 파일 업로드
+  const onClickUpload = (): void => {
     fileRef.current?.click();
-
-    // 선택한 칸의 인덱스를 저장
-    setSelectedSlot(index);
   };
 
-  // const handleFileUpload = (file: File | string): void => {
-  //   if (selectedSlot !== -1) {
-  //     // 선택한 칸의 이미지를 업데이트
-  //     const updatedImages = [...files];
-  //     updatedImages[selectedSlot] = URL.createObjectURL(file);
-  //     setFiles(updatedImages);
-  //   }
-  // };
+  const onClickUpdateImg = (index: number): void => {
+    const updatedImageArray = [...imageButtonArray];
+    updatedImageArray[index] = imageUrls[index];
+    setImageUrls(updatedImageArray);
+  };
 
   // 수정하기 버튼 눌렀을 때(admin 수정)
   const onClickUpdateCafe = async (data: FieldValues): Promise<void> => {
@@ -536,16 +532,20 @@ export default function AdminWrite(props: IWriteProps): JSX.Element {
                                     index
                                   ].image_url ?? ""
                             }
-                            onClick={() => handleSlotClick(index)}
+                            onClick={
+                              props.isEdit ? onClickUpdateImg : onClickUpload
+                            }
                           />
                           <S.MainImgCheckBtn
                             type="radio"
                             onChange={onChangeCheckMain(index)}
                             name="check"
-                            defaultValue={
-                              data?.fetchOneStudyCafeForAdminister.images[index]
-                                ?.image_isMain
-                            }
+                            // checked="checked"
+
+                            // defaultValue={
+                            //   data?.fetchOneStudyCafeForAdminister.images[index]
+                            //     ?.image_isMain
+                            // }
                           />
                         </>
                       ) : (
