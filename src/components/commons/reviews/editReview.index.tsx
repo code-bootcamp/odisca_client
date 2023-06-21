@@ -29,6 +29,12 @@ export default function EditReview(props: IReviewProps): JSX.Element {
     mode: "onChange",
   });
 
+  //   const mainImageUrl = allreviewdata?.fetchLoginReviewsByUserId
+  //     .map((el) =>
+  //       el?.studyCafe.images.find((image) => image?.image_isMain === true)
+  //     )
+  //     .find(Boolean)?.image_url;
+
   const onClickUpdateReview = async (data: IFormReviewData): Promise<void> => {
     try {
       await updateLoginReview({
@@ -68,6 +74,9 @@ export default function EditReview(props: IReviewProps): JSX.Element {
           },
         },
       });
+      if (refetchFetchReview !== undefined) {
+        await refetchFetchReview();
+      }
       Modal.success({
         content: "리뷰가 삭제되었습니다.",
       });
@@ -103,6 +112,7 @@ export default function EditReview(props: IReviewProps): JSX.Element {
               allreviewdata?.fetchLoginReviewsByUserId[props.index]?.studyCafe
                 ?.images[props.index]?.image_url ?? undefined
             }
+            // src={mainImageUrl}
           ></S.CafeImg>
         </S.ImgWrapper>
         <S.ReviewWrapper
