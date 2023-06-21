@@ -9,7 +9,7 @@ import * as S from "./userMain.styles";
 import { useQueryFetchAllStudyCafes } from "../../../commons/hooks/queries/useQueryFetchAllStudyCafes";
 export default function UserMain(): JSX.Element {
   const [selectedDistrict, setSelectedDistrict] = useState("강남구");
-  const [, setShowCafeList] = useState(false); //  카페리스트 보여줄지 여부 상태
+  const [showCafeList, setShowCafeList] = useState(false); //  카페리스트 보여짐 여부
   const page = 1;
   const { data, refetch } = useQueryFetchAllStudyCafes({
     page,
@@ -25,10 +25,10 @@ export default function UserMain(): JSX.Element {
 
   return (
     <S.MainPageLayout>
-      <S.CafeListLayout>
-        <CafeList selectedDistrict={selectedDistrict} keyword={keyword} />
+      <S.CafeListLayout showCafeList={showCafeList}>
+        <CafeList selectedDistrict={selectedDistrict} />
       </S.CafeListLayout>
-      <S.MapLayout>
+      <S.MapLayout showCafeList={showCafeList}>
         <Map selectedDistrict={selectedDistrict} />
       </S.MapLayout>
       <S.BarLayout>

@@ -17,7 +17,7 @@ export const useSearch = (
 
   const getDebounce = _.debounce((value: string) => {
     void args.refetch({ search: value, page: 1 });
-    void args.refetchCount({ search: value });
+    // void args.refetchCount({ search: value });
     onChangeKeyword(value);
   }, 300);
 
