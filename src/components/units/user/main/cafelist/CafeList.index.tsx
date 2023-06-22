@@ -1,17 +1,17 @@
 // 메인페이지 카페리스트
 
-import styled from "@emotion/styled";
-import CafeListBody from "./cafelistBody/CafeListBody.index";
+import CafeListBody from "./cafeListBody/CafeListBody.index";
+
+// import CafeListBody from "./cafeListBody/CafeListBody.index";
+
 interface Props {
   selectedDistrict: string;
 }
 
-const Wrapper = styled.div``;
-
 export default function CafeList({ selectedDistrict }: Props): JSX.Element {
   return (
-    <Wrapper>
+    <div>
       <CafeListBody selectedDistrict={selectedDistrict} />
-    </Wrapper>
+    </div>
   );
 }

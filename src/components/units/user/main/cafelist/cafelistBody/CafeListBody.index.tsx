@@ -1,6 +1,6 @@
 import InfiniteScroll from "react-infinite-scroller";
 import { useQueryFetchAllStudyCafes } from "../../../../../commons/hooks/queries/useQueryFetchAllStudyCafes";
-import CafeListItem from "./cafelistItem/CafeListItem.index";
+import CafeListItem from "./cafeListItem/CafeListItem.index";
 
 interface Props {
   selectedDistrict: string;

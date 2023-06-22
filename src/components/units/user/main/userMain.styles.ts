@@ -7,16 +7,15 @@ export const MainPageLayout = styled.div`
   position: relative;
   z-index: 0;
 `;
-export const CafeListLayout = styled.div`
-	width: ${(props) => (props.showCafeList ? "22%" : "0")};
+export const CafeListLayout = styled.div<{ showCafeList: boolean }>`
+  width: ${(props) => (props.showCafeList ? "22%" : "0")};
   height: 100vh;
   position: absolute;
-  z-index: 3,
+  z-index: 3;
   transition: width 0.5s;
   background-color: rgba(255, 255, 255, 0.8);
-
 `;
-export const MapLayout = styled.div`
+export const MapLayout = styled.div<{ showCafeList: boolean }>`
   width: ${(props) => (props.showCafeList ? "100%" : "100%")};
   height: 100vh;
   display: flex;

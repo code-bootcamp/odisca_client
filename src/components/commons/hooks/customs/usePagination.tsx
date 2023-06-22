@@ -10,7 +10,10 @@ export const usePagination = (
   onClickNextPage: () => void;
 } => {
   const [startPage, setStartPage] = useState(1);
-  const lastPage = args.count ? Math.ceil(args.count / 10) : 0;
+  const lastPage =
+    typeof args.count === "number"
+      ? Math.ceil(args.count / 10)
+      : (0 as any as number);
 
   const onClickPage = (page: number) => (): void => {
     void args.refetch({ page });
