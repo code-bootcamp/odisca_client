@@ -92,6 +92,3 @@
 
 - 관리자 카페 등록 및 수정 / 좌석 등록
 ![어드민등록](https://github.com/code-bootcamp/odisca_client/assets/115563322/969f2856-1b3f-4b07-90de-b0d940eb361f)
-
-
-
