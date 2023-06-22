@@ -69,9 +69,11 @@
 
 ### 서비스 시연
 - 랜딩페이지
+
 ![randing](https://github.com/code-bootcamp/odisca_client/assets/115563322/8261c6d0-7f9f-4827-8c31-e7a3c7038163)
 
 - 회원가입 페이지
+  
 ![adminsignup](https://github.com/code-bootcamp/odisca_client/assets/115563322/bcc7e81f-466b-4e28-ba8d-86130e2e9805)
 
 - 소셜 로그인
@@ -79,16 +81,21 @@
 ![ezgif com-video-to-gif (3)](https://github.com/code-bootcamp/odisca_client/assets/115563322/f1496566-4789-4a47-93fc-fa3a2cf2a671)
 
 - 메인페이지 및 카페조회하기
+  
 ![ezgif com-video-to-gif (7)](https://github.com/code-bootcamp/odisca_client/assets/115563322/60941db4-ede3-4dc0-ac96-35fdfeb3c829)
 
 - 좌석조회 / 포인트결제 및 충전
+  
 ![충천](https://github.com/code-bootcamp/odisca_client/assets/115563322/60052db8-734f-4c5e-a7bc-67ed8221a438)
 
 - 유저마이페이지
+  
 ![유저수정하기](https://github.com/code-bootcamp/odisca_client/assets/115563322/45560e4d-cb0f-4457-95c4-fa49324d76c7)
 
 - 유저댓글리뷰
+  
 ![유저리뷰](https://github.com/code-bootcamp/odisca_client/assets/115563322/0755b339-143e-4c20-927b-a3029969a98d)
 
 - 관리자 카페 등록 및 수정 / 좌석 등록
+  
 ![어드민등록](https://github.com/code-bootcamp/odisca_client/assets/115563322/969f2856-1b3f-4b07-90de-b0d940eb361f)
